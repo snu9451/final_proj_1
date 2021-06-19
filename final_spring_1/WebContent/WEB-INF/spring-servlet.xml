@@ -10,8 +10,14 @@
 		<property name="methodNameResolver" ref="test-resolver"/>
 		<property name="testLogic" ref="test-logic"/>
 	</bean>	
+	<bean id="test-interceptor" class="test.mvc.TestInterceptor"/>
 	<bean id="url-mapping" 
 	class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="test-interceptor"/>
+			</list>
+		</property>
 		<property name="mappings">
 			<props>
 				<prop key="/member/test.nds">test-controller</prop>
