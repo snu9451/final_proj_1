@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.google.gson.JsonObject;
@@ -24,7 +25,7 @@ public class TestController extends MultiActionController{
 	// 로그 출력을 위함.
 	Logger logger = Logger.getLogger(TestController.class);
 	
-	public void test(HttpServletRequest req, HttpServletResponse res)
+	public ModelAndView test(HttpServletRequest req, HttpServletResponse res)
 	throws IOException
 	{
 		logger.info("컨트롤러의 test 메소드 호출 성공!");
@@ -38,7 +39,12 @@ public class TestController extends MultiActionController{
 		res.addCookie(new Cookie("MY_ZIP", zipCodeList.get(0).get("UID_NO").toString()));
 		// 클라이언트의 브라우저에 저장되어 있는 쿠키 값을 읽어옴. - 쿠기가 여러개 저장되어 있는 경우 쿠키들을 배열로 가져온다.
 //		logger.info(req.getCookies()[0].getValue());
-		res.sendRedirect("./test.jsp");
+		
+		logger.info("setAttribute");
+		req.setAttribute("showModal", "yes");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("member/test");
+		return mav;
 	}
 	
 	public void setTestLogic(TestLogic testLogic) {
