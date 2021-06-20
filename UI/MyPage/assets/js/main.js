@@ -252,10 +252,10 @@
   $(window).on("load", function () {
     aos_init();
   });
+  ///////////////////////////////////////////////////////
 
 
-
-
+  ///////////프로필 사진////////////////////
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -272,82 +272,76 @@
   });
 
 
-  const n1 = 12345.6789;
-  
-  const cn1 = n1.toString()
-    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+
+
+  /////////내 지갑보기 페이징처리////////
+  var $setRows = $('#setRows');
+
+  $setRows.submit(function (e) {
+    e.preventDefault();
+    var rowPerPage = $('#rowPerPage').val();// 1 을  곱하여 문자열을 숫자형로 변환
+
+
+    $('#nav').remove();
+    var $products = $('#products');
+
+    $products.after('<div id="nav">');
+
+
+    var $tr = $($products).find('tbody tr');
+    var rowTotals = $tr.length;
+
+    var pageTotal = Math.ceil(rowTotals / rowPerPage);
+    var i = 0;
+
+    for (; i < pageTotal; i++) {
+      $('<a href="#"></a>')
+        .attr('rel', i)
+        .html(i + 1)
+        .appendTo('#nav');
+    }
+    $tr.addClass('off-screen')
+      .slice(0, rowPerPage)
+      .removeClass('off-screen');
+
+    var $pagingLink = $('#nav a');
+    $pagingLink.on('click', function (evt) {
+      evt.preventDefault();
+      var $this = $(this);
+      if ($this.hasClass('active')) {
+        return;
+      }
+      $pagingLink.removeClass('active');
+      $this.addClass('active');
+      // 0 => 0(0*4), 4(0*4+4)
+      // 1 => 4(1*4), 8(1*4+4)
+      // 2 => 8(2*4), 12(2*4+4)
+      // 시작 행 = 페이지 번호 * 페이지당 행수
+      // 끝 행 = 시작 행 + 페이지당 행수
+
+      var currPage = $this.attr('rel');
+      var startItem = currPage * rowPerPage;
+      var endItem = startItem + rowPerPage;
+      $tr.css('opacity', '0.0')
+        .addClass('off-screen')
+        .slice(startItem, endItem)
+        .removeClass('off-screen')
+        .animate({ opacity: 1 }, 300);
+      console.log("5");
+    });
+
+    $pagingLink.filter(':first').addClass('active');
+
+  });
+
+  $setRows.submit();
 
 
 
 
-///////////////////////////////////
-var $setRows = $('#setRows');
-
-$setRows.submit(function (e) {
-	e.preventDefault();
-	var rowPerPage = 7;// 1 을  곱하여 문자열을 숫자형로 변환
 
 
-	$('#nav').remove();
-	var $products = $('#products');
-
-	$products.after('<div id="nav">');
-
-
-	var $tr = $($products).find('tbody tr');
-	var rowTotals = $tr.length;
-
-	var pageTotal = Math.ceil(rowTotals/ rowPerPage);
-	var i = 0;
-
-	for (; i < pageTotal; i++) {
-		$('<a href="#"></a>')
-				.attr('rel', i)
-				.html(i + 1)
-				.appendTo('#nav');
-	}
-	$tr.addClass('off-screen')
-			.slice(0, rowPerPage)
-			.removeClass('off-screen');
-
-	var $pagingLink = $('#nav a');
-	$pagingLink.on('click', function (evt) {
-		evt.preventDefault();
-		var $this = $(this);
-		if ($this.hasClass('active')) {
-			return;
-		}
-		$pagingLink.removeClass('active');
-		$this.addClass('active');
-		// 0 => 0(0*4), 4(0*4+4)
-		// 1 => 4(1*4), 8(1*4+4)
-		// 2 => 8(2*4), 12(2*4+4)
-		// 시작 행 = 페이지 번호 * 페이지당 행수
-		// 끝 행 = 시작 행 + 페이지당 행수
-
-		var currPage = $this.attr('rel');
-		var startItem = currPage * rowPerPage;
-		var endItem = startItem + rowPerPage;
-		$tr.css('opacity', '0.0')
-				.addClass('off-screen')
-				.slice(startItem, endItem)
-				.removeClass('off-screen')
-				.animate({opacity: 1}, 300);
-        console.log("5");
-	});
-
-	$pagingLink.filter(':first').addClass('active');
-
-});
-
-$setRows.submit();
-/////////////////////////////////////////////
-
-
-  
-
-
-  //////////////////////////////////////////////마이페이지///////////
+  //////////////////좌측 탭바///////////////
   $(document).ready(function () {
     $(".each").each(function (index) {
       $(".each")
@@ -376,7 +370,50 @@ $setRows.submit();
           });
         });
     });
+
+
+
   });
+
+  ////////////////좋아요 버튼////////////////////
+  $(".likebutton").click(function () {
+    if ($(this).hasClass('active')) {
+      $(this).removeClass('active');
+    } else {
+      $(this).addClass('active');
+    }
+  });
+
+
+
+
+
+  /////////////////구매내역 판매내역 active///////////////
+  $(".buy").click(function () {
+    $(".sell").removeClass('active');
+    $(this).addClass('active');
+  });
+  $(".sell").click(function () {
+    $(".buy").removeClass('active');
+    $(this).addClass('active');
+  });
+
+
+
+  /////////////////심부름 내역 active///////////////
+  $(".request").click(function () {
+    $(".response").removeClass('active');
+    $(this).addClass('active');
+  });
+  $(".response").click(function () {
+    $(".request").removeClass('active');
+    $(this).addClass('active');
+  });
+
+
+
+
+  ////////////신뢰도(별점)/////////////
   ratings = { RatingScore: 4.8 }//////<-별점 inserthere
   totalRating = 5;
   table = document.querySelector('.RatingStar');
@@ -390,11 +427,5 @@ $setRows.submit();
     }
   }
   rateIt()
-
-
-
-
-
-
 
 })(jQuery);
