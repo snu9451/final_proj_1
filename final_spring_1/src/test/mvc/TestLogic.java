@@ -19,6 +19,15 @@ public class TestLogic {
 		zipCodeList = testDao.test();
 		return zipCodeList;
 	}
+	
+	// 사용자의 쿠키에 저장된 MY_ZIP에 해당하는 SIGU를 가져오자.
+	public String checkSIGU(int MY_ZIP) {
+		logger.info("checkSIGU 메소드 호출 성공!!");
+		String sigu = testDao.checkSIGU(MY_ZIP);
+		return sigu;
+	}
+	
+	
 	public void setTestDao(TestDao testDao) {
 		this.testDao = testDao;
 	}
