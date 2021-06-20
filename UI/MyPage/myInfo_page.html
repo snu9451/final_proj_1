@@ -14,7 +14,6 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Font Awesome -->
-  <script src="https://kit.fontawesome.com/a2c0486048.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 
   <!-- Google Fonts -->
@@ -127,22 +126,18 @@
         <!-- 마이페이지 네모 탭바 끝 -->
         
         <!-- 마이페이지 내 정보 시작-->
-        <div class="col-12 col-lg-9 d-flex align-items-stretch mb-5 mb-lg-0">
+        <!-- <div class="col-12 col-lg-9 d-flex align-items-stretch mb-5 mb-lg-0">
           <div class="icon-box1" data-aos="fade-up" data-aos-delay="200">
-            <div class="top">
-              <div class="top_info">
+            <div class="myinfo_top">
+              <div class="profile">
+                <form id="form" runat="server">
+                  <img id="image_section" src="./assets/img/profile/default.png" alt="your image"/>
+                </form>
               </div>
+              <input type='file' id="imgInput" accept="image/*" label="프로필 사진 변경하기"/>
             </div>
-            <div class="bottom">
-              <div class="left">
-                <div class="profile">
-                  <form id="form" runat="server">
-                    <img id="image_section" src="./assets/img/profile/default.png" alt="your image"/>
-                    <input type='file' id="imgInput" accept="image/*" label="프로필 사진 변경하기"/>
-                  </form>
-                </div>
-              </div>
-              <div class="right">
+            <div class="myinfo_bottom">
+              <div class="myinfo_left">
                 <div class="nickname">
                   <h4 class="con_title">닉네임</h4>
                   <h4 class="con_nick">insert here</h4>
@@ -152,16 +147,18 @@
                   <div class='RatingStar'>
                     <div class='RatingScore'>
                       <div class='outer-star'>
-                        <div class='inner-star'>
+                        <div class='inner-star' name="RatingScore" value="5">
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="email">
-                  <h4 class="con_title2">이메일</h4>
+                  <h4 class="con_title">이메일</h4>
                   <h4 class="con_email">insert here</h4>
                 </div>
+              </div>
+              <div class="myinfo_right">
                 <div class="pw_con">
                   <div class="pw">
                     <h4 class="con_title2">현재 비밀번호</h4>
@@ -175,18 +172,23 @@
                     <h4 class="con_title2">비밀번호 확인</h4>
                     <input type="password"/>
                   </div>
+                  <div class="pwchange_leave">
+                    <button type="button" class="btn btn-success">비밀번호 변경</button>
+                    <button type="button" class="btn btn-danger">탈퇴하기</button>
+                  </div>
+                  
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- 마이페이지 내 정보 끝-->
 
 
-        <!-- 마이페이지 내 지갑보기 시작-->
+        <!--마이페이지 내 지갑보기 시작-->
         <!-- <div class="col-12 col-lg-9 d-flex align-items-stretch mb-5 mb-lg-0">
           <div class="icon-box1" data-aos="fade-up" data-aos-delay="200">
-            <div class="top">
+            <div class="myinfo_top">
               <span class="cur_coin">
                 <h4 class="coin">보유 코인 :</h4>
                 <h4 class="coin1">inserthere</h4>
@@ -195,10 +197,10 @@
                 <button type="button" class="btn btn-outline-warning">출금</button>
               </span>
             </div>
-            <div class="bottom">
+            <div class="myinfo_bottom">
               <table class="wallet_tb" id="products">
                 <form action="" id="setRows">
-                  <input type="hidden" name="rowPerPage">
+                  <input type="hidden" name="rowPerPage" value="7" id="rowPerPage">
                 </form>
                 <thead>
                 <tr>
@@ -371,8 +373,286 @@
         </div> -->
         <!-- 마이페이지 내 지갑보기 끝-->
 
+        <!-- 찜 목록 시작 -->
+        <!-- <div class="col-12 col-lg-9 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="icon-box1" data-aos="fade-up" data-aos-delay="200">
+              <span class="total_like coin">
+                전체 : (inserthere)
+              </span>
+            <div class="like_bottom">
+              <table class="like_tb" id="products">
+                <form action="" id="setRows">
+                  <input type="hidden" name="rowPerPage" value="4" id="rowPerPage">
+                </form>
+                <thead >
+                  <tr>
+                    <th scope="cols" width="15%"></th>
+                    <th scope="cols" width="25%"></th>
+                    <th scope="cols" width="35%"></th>
+                    <th scope="cols" width="25%"></th>
+                  </tr>
+                  </thead>
+                <tbody>
+                  <tr>
+                    <td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호 inserthere</td>
+                    <td class="divider_img"><a href="http://naver.com" style="color:black"><img id="item_image" src="./assets/img/item/inserthere"></a></td>
+                    <td class="divider_con"><a href="http://naver.com" style="color:black">inserthere</a></td>
+                    <td class="divider">등록일 inserthere<br>inserthere원</td>
+                  </tr>
+                  <tr>
+                    <td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호 1</td>
+                    <td class="divider_img"><img id="item_image" src="./assets/img/item/camera.jpg"></td>
+                    <td class="divider_con">카메라 팔아요.</td>
+                    <td class="divider">등록일 2021-06-20<br>70000원</td>
+                  </tr>
+                  <tr>
+                    <td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호 1</td>
+                    <td class="divider_img"><img id="item_image" src="./assets/img/item/camera.jpg"></td>
+                    <td class="divider_con">카메라 팔아요.</td>
+                    <td class="divider">등록일 2021-06-20<br>70000원</td>
+                  </tr>
+                  <tr>
+                    <td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호 1</td>
+                    <td class="divider_img"><img id="item_image" src="./assets/img/item/camera.jpg"></td>
+                    <td class="divider_con">카메라 팔아요.</td>
+                    <td class="divider">등록일 2021-06-20<br>70000원</td>
+                  </tr>
+                  <tr>
+                    <td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호 1</td>
+                    <td class="divider_img"><img id="item_image" src="./assets/img/item/camera.jpg"></td>
+                    <td class="divider_con">카메라 팔아요.</td>
+                    <td class="divider">등록일 2021-06-20<br>70000원</td>
+                  </tr>
+                  <tr>
+                    <td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호 1</td>
+                    <td class="divider_img"><img id="item_image" src="./assets/img/item/camera.jpg"></td>
+                    <td class="divider_con">카메라 팔아요.</td>
+                    <td class="divider">등록일 2021-06-20<br>70000원</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div> -->
+        <!-- 찜 목록 끝-->
 
 
+
+
+        <!-- 중고거래 내역보기 시작-->
+        <!-- <div class="col-12 col-lg-9 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="icon-box1" data-aos="fade-up" data-aos-delay="200">
+            <div class="trade_top">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span class="total_trade buy active">
+                <h4 class="all_rec">구매내역</h4>
+              </span>
+              <span class="divider_rec"></span>
+              <span class="total_trade sell">
+                <h4 class="all_rec">판매내역</h4>
+              </span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="trade_bottom"> -->
+
+              <!-- 중고거래 내역보기(구매내역 테이블) -->
+              <!-- <span class="total_rec coin2">
+                전체 : (inserthere)
+              </span>
+              <table class="like_tb" id="products">
+                <form action="" id="setRows">
+                  <input type="hidden" name="rowPerPage" value="4" id="rowPerPage">
+                </form>
+                <thead >
+                  <tr>
+                    <th scope="cols" width="15%"></th>
+                    <th scope="cols" width="25%"></th>
+                    <th scope="cols" width="35%"></th>
+                    <th scope="cols" width="25%"></th>
+                  </tr>
+                  </thead>
+                <tbody>
+                  <tr>
+                    <td class="divider">글번호 inserthere</td>
+                    <td class="divider_img"><a href="http://naver.com" style="color:black"><img id="item_image" src="./assets/img/item/inserthere"></a></td>
+                    <td class="divider_con"><a href="http://naver.com" style="color:black">inserthere</a></td>
+                    <td class="divider">등록일 inserthere<br>inserthere원<br><button type="button" class="btn btn-danger btn-sm">삭제하기</button></td>
+                  </tr>
+                  <tr>
+                    <td class="divider">글번호 inserthere</td>
+                    <td class="divider_img"><a href="http://naver.com" style="color:black"><img id="item_image" src="./assets/img/item/inserthere"></a></td>
+                    <td class="divider_con"><a href="http://naver.com" style="color:black">inserthere</a></td>
+                    <td class="divider">등록일 inserthere<br>inserthere원<br><button type="button" class="btn btn-danger btn-sm">삭제하기</button></td>
+                  </tr>
+                  <tr>
+                    <td class="divider">글번호 inserthere</td>
+                    <td class="divider_img"><a href="http://naver.com" style="color:black"><img id="item_image" src="./assets/img/item/inserthere"></a></td>
+                    <td class="divider_con"><a href="http://naver.com" style="color:black">inserthere</a></td>
+                    <td class="divider">등록일 inserthere<br>inserthere원<br><button type="button" class="btn btn-danger btn-sm">삭제하기</button></td>
+                  </tr>
+                  <tr>
+                    <td class="divider">글번호 inserthere</td>
+                    <td class="divider_img"><a href="http://naver.com" style="color:black"><img id="item_image" src="./assets/img/item/inserthere"></a></td>
+                    <td class="divider_con"><a href="http://naver.com" style="color:black">inserthere</a></td>
+                    <td class="divider">등록일 inserthere<br>inserthere원<br><button type="button" class="btn btn-danger btn-sm">삭제하기</button></td>
+                  </tr>
+                </tbody>
+              </table> -->
+
+              <!-- 중고거래 내역보기(판매내역 테이블) -->
+              <!-- <span class="total_rec coin2">
+                전체 : (inserthere)
+              </span>
+              <table class="like_tb" id="products">
+                <form action="" id="setRows">
+                  <input type="hidden" name="rowPerPage" value="4" id="rowPerPage">
+                </form>
+                <thead >
+                  <tr>
+                    <th scope="cols" width="15%"></th>
+                    <th scope="cols" width="25%"></th>
+                    <th scope="cols" width="35%"></th>
+                    <th scope="cols" width="25%"></th>
+                  </tr>
+                  </thead>
+                <tbody>
+                  <tr>
+                    <td class="divider">글번호 inserthere</td>
+                    <td class="divider_img"><a href="http://naver.com" style="color:black"><img id="item_image" src="./assets/img/item/inserthere"></a></td>
+                    <td class="divider_con"><a href="http://naver.com" style="color:black">inserthere</a></td>
+                    <td class="divider">
+                      등록일 inserthere<br>inserthere원<br>
+                      <button type="button" class="btn btn-warning btn-sm">판매 중</button><br>
+                      <button type="button" class="btn btn-primary btn-sm">수정하기</button>
+                      <button type="button" class="btn btn-danger btn-sm">삭제하기</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="divider">글번호 inserthere</td>
+                    <td class="divider_img"><a href="http://naver.com" style="color:black"><img id="item_image" src="./assets/img/item/inserthere"></a></td>
+                    <td class="divider_con"><a href="http://naver.com" style="color:black">inserthere</a></td>
+                    <td class="divider">
+                      등록일 inserthere<br>inserthere원<br>
+                      <button type="button" class="btn btn-secondary btn-sm">판매 완료</button>
+                      <button type="button" class="btn btn-danger btn-sm">삭제하기</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="divider">글번호 inserthere</td>
+                    <td class="divider_img"><a href="http://naver.com" style="color:black"><img id="item_image" src="./assets/img/item/inserthere"></a></td>
+                    <td class="divider_con"><a href="http://naver.com" style="color:black">inserthere</a></td>
+                    <td class="divider">
+                      등록일 inserthere<br>inserthere원<br>
+                      <button type="button" class="btn btn-secondary btn-sm">판매 완료</button>
+                      <button type="button" class="btn btn-danger btn-sm">삭제하기</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="divider">글번호 inserthere</td>
+                    <td class="divider_img"><a href="http://naver.com" style="color:black"><img id="item_image" src="./assets/img/item/inserthere"></a></td>
+                    <td class="divider_con"><a href="http://naver.com" style="color:black">inserthere</a></td>
+                    <td class="divider">
+                      등록일 inserthere<br>inserthere원<br>
+                      <button type="button" class="btn btn-secondary btn-sm">판매 완료</button>
+                      <button type="button" class="btn btn-danger btn-sm">삭제하기</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="divider">글번호 inserthere</td>
+                    <td class="divider_img"><a href="http://naver.com" style="color:black"><img id="item_image" src="./assets/img/item/inserthere"></a></td>
+                    <td class="divider_con"><a href="http://naver.com" style="color:black">inserthere</a></td>
+                    <td class="divider">
+                      등록일 inserthere<br>inserthere원<br>
+                      <button type="button" class="btn btn-secondary btn-sm">판매 완료</button>
+                      <button type="button" class="btn btn-danger btn-sm">삭제하기</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div> -->
+        <!-- 중고거래 내역보기 끝-->
+        
+
+
+
+        <!-- 심부름 내역보기 시작-->
+        <div class="col-12 col-lg-9 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="icon-box1" data-aos="fade-up" data-aos-delay="200">
+            <div class="errand_top">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span class="total_errand request active">
+                <h4 class="all_rec">내가 요청한 심부름</h4>
+              </span>
+              <span class="divider_rec"></span>
+              <span class="total_errand response">
+                <h4 class="all_rec">내가 수행한 심부름</h4>
+              </span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="trade_bottom">
+
+              <!-- 심부름 내역보기(내가 요청한 심부름 테이블) -->
+              <span class="total_rec coin2">
+                전체 : (inserthere)
+              </span>
+              <table class="errand_tb" id="products">
+                <form action="" id="setRows">
+                  <input type="hidden" name="rowPerPage" value="4" id="rowPerPage">
+                </form>
+                <thead >
+                  <tr>
+                    <th scope="cols" width="9%">선택</th>
+                    <th scope="cols" width="12%">구분</th>
+                    <th scope="cols" width="22%">날짜</th>
+                    <th scope="cols" width="30%">제목</th>
+                    <th scope="cols" width="15%">가격</th>
+                    <th scope="cols" width="12%">닉네임</th>
+                  </tr>
+                  </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="customCheck1">
+                      <label class="custom-control-label" for="customCheck1"></label></div></td>
+                    <td>
+                      <button type="button" class="btn btn-warning btn-sm">진행 중</button></td>
+                    <td>2021-06-19 12:49</td>
+                    <td>내가요청한심부름내가요청한심부름내가요청한심부름내가요청한심부름</td>
+                    <td>70000원</td>
+                    <td>기설123</td>
+                  </tr>
+                  <tr>
+                    <td><button type="button" class="btn btn-outline-danger btn-smq">x</button></td>
+                    <td><button type="button" class="btn btn-danger btn-sm">요청 중</button></td>
+                    <td>글번호 inserthere</td>
+                    <td>글번호 inserthere</td>
+                    <td>글번호 inserthere</td>
+                    <td>글번호 inserthere</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- 심부름 내역보기(내가 수행한 심부름 테이블) -->
+              
+            </div>
+          </div>
+        </div>
+        <!-- 중고거래 내역보기 끝-->
+        <!-- 심부름 내역보기 끝-->
       </div>
     </section>
   <!-- 마이페이지 끝 -->
