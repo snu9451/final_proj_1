@@ -6,4 +6,9 @@
 		  FROM ZIPCODE_T 
 		 WHERE UID_NO BETWEEN 3800 AND 3802
 	</select>
+	<select id="checkSIGU" parameterType="int" resultType="java.lang.String">
+		SELECT SIGU
+		  FROM ZIPCODE_T 
+		 WHERE UID_NO = #{value}
+	</select>
 </mapper>

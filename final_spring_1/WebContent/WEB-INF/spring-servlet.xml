@@ -9,8 +9,12 @@
 	<bean id="test-controller" class="test.mvc.TestController">
 		<property name="methodNameResolver" ref="test-resolver"/>
 		<property name="testLogic" ref="test-logic"/>
-	</bean>	
-	<bean id="test-interceptor" class="test.mvc.TestInterceptor"/>
+	</bean>
+	<!-- 인터셉터에 logic 클래스를 주입 -->
+	<bean id="test-interceptor" class="test.mvc.TestInterceptor">
+		<property name="testLogic" ref="test-logic"/>	
+	</bean>
+	<!-- Url의 mapping이 이루어짐 -->
 	<bean id="url-mapping" 
 	class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="interceptors">
@@ -21,6 +25,7 @@
 		<property name="mappings">
 			<props>
 				<prop key="/member/test.nds">test-controller</prop>
+				<prop key="/member/ajaxTest.nds">test-controller</prop>
 			</props>
 		</property>
 	</bean>
@@ -28,6 +33,7 @@
 		<property name="mappings">
 			<props>
 				<prop key="/member/test.nds">test</prop>
+				<prop key="/member/ajaxTest.nds">ajaxTest</prop>
 			</props>
 		</property>
 	</bean>	
