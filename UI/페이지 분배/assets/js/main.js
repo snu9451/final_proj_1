@@ -339,17 +339,10 @@
 
 
 
-  ////////////////좋아요 버튼////////////////////
-  $(".likebutton").click(function () {
-    if ($(this).hasClass('active')) {
-      $(this).removeClass('active');
-    } else {
-      $(this).addClass('active');
-    }
-  });
 
 
-///////////////좌측 탭바 버튼 로직/////////////////
+
+  ///////////////좌측 탭바 버튼 로직/////////////////
   $(".each").click(function () {
     $(".each").removeClass('active');
     $(".each").css({
@@ -380,6 +373,15 @@
     }
   });
 
+  ////////////////좋아요 버튼////////////////////
+  $(".likebutton").click(function () {
+    if ($(this).hasClass('active')) {
+      $(this).removeClass('active');
+    } else {
+      $(this).addClass('active');
+    }
+  });
+
 
 
 
@@ -395,6 +397,10 @@
   });
 
 
+  function asdf(){
+    console.log("asdf");
+  }
+
 
   /////////////////심부름 내역 active///////////////
   $(".request").click(function () {
@@ -405,6 +411,8 @@
     $(".request").removeClass('active');
     $(this).addClass('active');
   });
+
+
 
 
   ////////////신뢰도(별점)/////////////

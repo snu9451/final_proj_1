@@ -585,7 +585,11 @@ input[type="checkbox"] {
 /*--------------------------------------------------------------
 # 마이페이지 하얀색 기본 페이지
 --------------------------------------------------------------*/
-.featured-services .icon-box1 {
+.featured-services .icon-box1,
+.featured-services .icon-box2,
+.featured-services .icon-box3,
+.featured-services .icon-box4,
+.featured-services .icon-box5 {
   width: 100%;
   margin-top: 50px;
   margin-bottom: 50px;
@@ -725,15 +729,6 @@ input[type="checkbox"] {
 .each {
   display: flex;
   border-radius: 25px;
-  cursor: pointer;
-  color: white;
-}
-.mypage_list .active {
-  display: flex;
-  border-radius: 25px;
-  cursor: pointer;
-  color: #ffc37b;
-  background: white;
 }
 
 .featured-services .icon i {
@@ -934,10 +929,11 @@ table.like_tb td {
   vertical-align: middle;
   text-align: center;
 }
-.divider_img {
+.divider_img{
   border-bottom: 1px solid #cccccc;
+
 }
-#item_image {
+#item_image{
   width: 150px;
   height: 90px;
   border-radius: 8px;
@@ -981,10 +977,13 @@ table.like_tb .divider_con {
   font-family: "Cafe24SsurroundAir";
 }
 
+
+
+
 /*--------------------------------------------------------------
 # 마이페이지 중고거래
 --------------------------------------------------------------*/
-.featured-services .trade_top {
+.featured-services .trade_top{
   display: flex;
   justify-content: space-around;
   margin-bottom: 30px;
@@ -996,7 +995,7 @@ table.like_tb .divider_con {
   width: 15%;
   min-width: 50px;
 }
-.featured-services .all_rec {
+.featured-services .all_rec { 
   color: white;
   margin: auto;
   font-weight: 600;
@@ -1022,15 +1021,18 @@ table.like_tb .divider_con {
   border-left: 3px solid #cccccc;
 }
 
+
+
+
 /*--------------------------------------------------------------
 # 마이페이지 심부름
 --------------------------------------------------------------*/
-.featured-services .errand_top {
+.featured-services .errand_top{
   display: flex;
   justify-content: space-around;
   margin-bottom: 30px;
 }
-.featured-services .all_rec {
+.featured-services .all_rec { 
   color: white;
   margin: auto;
   font-weight: 600;
@@ -1112,11 +1114,10 @@ table.errand_tb td {
   color: #fff;
 }
 
-.featured-services
-  .custom-control-input:checked
-  ~ .custom-control-label::before {
+.featured-services .custom-control-input:checked ~ .custom-control-label::before {
   border-color: #f1cf5d;
   background-color: #627ea4;
+  
 }
 .featured-services .btn-smq {
   padding: 0.15rem 0.5rem;
