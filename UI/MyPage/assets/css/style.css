@@ -1092,11 +1092,15 @@ table.errand_tb td {
   width: auto;
   text-align: center;
 }
+.delete {
+  text-align: right;
+  margin-right: 15px;
+  margin-top: -40px;
+}
 #nav a {
   display: inline-block;
   padding: 3px 5px;
   margin-right: 10px;
-  font-family: Tahoma;
   background: #ccc;
   color: #000;
   text-decoration: none;
@@ -1109,10 +1113,11 @@ table.errand_tb td {
 .featured-services .custom-control-input:checked ~ .custom-control-label::before {
   border-color: #f1cf5d;
   background-color: #627ea4;
+  
 }
 .featured-services .btn-smq {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.575rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }

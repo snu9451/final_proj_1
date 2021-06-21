@@ -279,7 +279,8 @@
 
   $setRows.submit(function (e) {
     e.preventDefault();
-    var rowPerPage = $('#rowPerPage').val();// 1 을  곱하여 문자열을 숫자형로 변환
+    var rowPerPage = $('#rowPerPage').val() * 1;
+    // 1 을  곱하여 문자열을 숫자형로 변환
 
 
     $('#nav').remove();
