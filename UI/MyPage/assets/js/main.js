@@ -362,6 +362,9 @@
     });
     $(this).addClass('active');
   });
+
+
+  
   $(".each").mouseover(function () {
     $(this).css({
       background: "white",
@@ -380,7 +383,14 @@
     }
   });
 
-
+///////
+var each = document.querySelectorAll('.each');
+for(var i = 0 ; i<each.length;i++){
+  each[i].addEventListener('click',function(){
+    each[i].style.color = "#ffc37b";
+    each[i].style.backgroundColor ="white";
+  })
+}
 
 
 

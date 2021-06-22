@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +37,7 @@
 </head>
 
 <body>
-  <div class="col-12 col-lg-9 d-flex align-items-stretch mb-5 mb-lg-0">
+<div class="col-12 col-lg-9 d-flex align-items-stretch mb-5 mb-lg-0">
           <div class="icon-box1" data-aos="fade-up" data-aos-delay="200">
             <div class="myinfo_top">
               <div class="profile">
@@ -94,11 +93,12 @@
             </div>
           </div>
         </div>
-  
-  <div id="preloader"></div>
-  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-  
-  
+
+
+
+
+
+
   <!-- ver 4.0 v -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
   integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

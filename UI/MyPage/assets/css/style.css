@@ -15,6 +15,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   color: #444444;
+  overflow-y: scroll;
 }
 
 a {
@@ -536,9 +537,9 @@ input[type="checkbox"] {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 45vh;
+  height: 15vh;
   background: url("../img/hero-bg3.jpg") top center;
-  background-size: cover;
+  background-size: contain;
   position: relative;
   background-repeat: no-repeat;
 }
@@ -565,9 +566,9 @@ input[type="checkbox"] {
   position: relative;
   overflow: hidden;
   box-shadow: 0 0 29px 0 rgba(68, 88, 144, 0.12);
-  transition: all 0.3s ease-in-out;
   border-radius: 8px;
   z-index: 1;
+  height: 75%;
 }
 
 .featured-services .icon-box::before {
@@ -728,6 +729,9 @@ input[type="checkbox"] {
   cursor: pointer;
   color: white;
 }
+.left_div{
+  margin: 10px;
+}
 .mypage_list .active {
   display: flex;
   border-radius: 25px;
@@ -738,7 +742,6 @@ input[type="checkbox"] {
 
 .featured-services .icon i {
   font-size: 38px;
-  line-height: 1;
   color: #ffc37b;
   transition: all 0.3s ease-in-out;
 }
