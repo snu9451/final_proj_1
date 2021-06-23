@@ -22,13 +22,13 @@
 <link rel="stylesheet" type="text/css" href="<%=path.toString() %>themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=path.toString() %>themes/icon.css"> 
 <!-- jEasyUI JS 시작 -->
+<script defer src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script defer src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
 <script type="text/javascript" src="<%=path.toString() %>js/jquery.min.js"></script>
 <script type="text/javascript" src="<%=path.toString() %>js/jquery.easyui.min.js"></script>   
 <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
 <script defer src="./init-firebase.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
 <script type="text/javascript">
 	let my_lat = 0.0;
 	let my_lon = 0.0;
@@ -150,25 +150,7 @@
     	}
     	console.log("locKey of updateLoc="+locKey);
     }
-    function showErrand(){
-    	let reading = firebase.database().ref("errand");
-    	reading.on("value", function(snapshot){
-    		snapshot.forEach(function(childSnapshot) {
-    			errandData = childSnapshot.val();
-	            let html =
-	                "<li id='"+childSnapshot.key+"' class=\"collection-item avatar\" onclick=\"chooseErrand(this.id);\" >" +
-	                "<i class=\"material-icons circle red\">" + errandData.mem_nickname.substr(0, 1) + "</i>" +
-	                "<span class=\"title\">" + errandData.mem_nickname + "</span>" +
-	                "<p class='txt'>" + errandData.errand_item + "<br>" +
-	                "</p>" +
-	                "<p class='time'>" + errandData.errand_content + "<br>" +
-	                "</p>" +
-	                "<a href=\"#!\" onclick=\"fn_delete_data('"+childSnapshot.key+"')\"class=\"secondary-content\"><i class=\"material-icons\">grade</i></a>"+
-	                "</li>";
-	            $(".collection").append(html);
-    		});
-	    });
-    }
+
     //라이더가 심부름 하겠다는 버튼을 눌렀을 때 심부름 테이블 rider 속성 변경
     function doErrand(errandKey){
 		let nickname = {
@@ -215,7 +197,10 @@
 </head>
 <body>
 <script type="text/javascript">
+let myMap;
+let marker;
 	$(document).ready(function() {
+		let timer = setInterval(createMyMap,100);
 		$('#dg_board').datagrid({
 			columns:[[
 				{field:'BM_NO',title:'글번호',width:100,align:'center'},
@@ -251,9 +236,54 @@
 		initLoc();
 		setInterval(updateLoc,1000);
 		showErrand();
+
+	    function createMyMap(){
+	    	if(google!=null){
+		    	myMap = new google.maps.Map(document.getElementById('div_map'),{
+		    		center : {lat:37.482706199999996
+		    				,lng:126.83310150000001},
+		    		zoom : 1,
+		    	});
+		    	clearInterval(timer);
+	    	}
+	    }
+	    function newMarker(){
+	    	marker = new google.maps.Marker({
+        		position:{lat:37.482706199999996
+        			,lng:126.83310150000001},
+        		map:myMap,
+        		animation: google.maps.Animation.BOUNCE,
+        	});
+	    }
+	    
+	    function showErrand(){
+	    	let reading = firebase.database().ref("errand");
+	    	reading.on("value", function(snapshot){
+	    		snapshot.forEach(function(childSnapshot) {
+	    			errandData = childSnapshot.val();
+		            let html =
+		                "<li id='"+childSnapshot.key+"' class=\"collection-item avatar\" onclick=\"chooseErrand(this.id);\" >" +
+		                "<i class=\"material-icons circle red\">" + errandData.mem_nickname.substr(0, 1) + "</i>" +
+		                "<span class=\"title\">" + errandData.mem_nickname + "</span>" +
+		                "<p class='txt'>" + errandData.errand_item + "<br>" +
+		                "</p>" +
+		                "<p class='time'>" + errandData.errand_content + "<br>" +
+		                "</p>" +
+		                "<a href=\"#!\" onclick=\"fn_delete_data('"+childSnapshot.key+"')\"class=\"secondary-content\"><i class=\"material-icons\">grade</i></a>"+
+		                "</li>";
+		            $(".collection").append(html);
+		            let arr = {
+		            		lat : errandData.errand_lat,
+		            		lng : errandData.errand_lon
+		            };
+		            if(marker==null){
+		            	newMarker();
+		            }
+		            marker.setPosition(new google.maps.LatLng(arr));
+	    		});
+		    });
+	    }
 		let markerContainer = new Map();
-		let myMap = new google.maps.Map($('#div_map'));
-		
 	});
 </script>
 	<table id="dg_board" class="easyui-datagrid" data-options="title:'게시판',toolbar:'#tb_board',width:1000,height:350" style="width:1000px;height:350px">
@@ -315,7 +345,11 @@ else{//조회 결과가 있는데....
 %>
 	    </tbody>	
 	</table>
-	<div id="div_map"></div>
+	<div id="div_map" style="width:1000px; height:1000px;"></div>
+	    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4pd9w90oFRuCZOILRd07MBwVAthwIbIA&callback=initMap&region=kr"
+    async></script>
+    <script src="main.js"></script>
     <div id="tb_board" style="padding:2px 5px;">
         <a id="btn_sel" href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true">조회</a>
         <a id="btn_ins" href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true">입력</a>
@@ -378,9 +412,9 @@ else{//조회 결과가 있는데....
 
     <ul class="collection"  style="padding:0; margin:0;"></ul>
     <!-- 글쓰기 화면 끝 -->
-    <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4pd9w90oFRuCZOILRd07MBwVAthwIbIA&callback=initMap&region=kr"
-    async></script>
-    <script src="main.js"></script>
+<!--     <script -->
+<!--     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4pd9w90oFRuCZOILRd07MBwVAthwIbIA&callback=initMap&region=kr" -->
+<!--     async></script> -->
+<!--     <script src="main.js"></script> -->
 </body>
 </html>
