@@ -13,19 +13,38 @@ import test.mvc.TestController;
 import test.mvc.TestLogic;
 
 public class PageController extends MultiActionController {
-	
-	public ModelAndView page(HttpServletRequest req, HttpServletResponse res)
-			throws IOException{
-		Logger logger = Logger.getLogger(PageController.class);
-		
-//	TestLogic testLogic = null;
+	private PageLogic pageLogic = null;
+	Logger logger = Logger.getLogger(PageController.class);
 
-	
-	
-	logger.info("화면 뜨나?");
-	req.setAttribute("showModal", "yes");
-	ModelAndView mav = new ModelAndView();
-	mav.setViewName("page/page_index");
-	return mav;
+	//===============================[[]]===============================
+	public ModelAndView getMyPage(HttpServletRequest req, HttpServletResponse res)
+			throws IOException{
+		return mav;
 }
+	//===============================[[]]===============================
+	public ModelAndView getMainPage(HttpServletRequest req, HttpServletResponse res)
+			throws IOException{
+		return mav;
+	}
+	//===============================[[]]===============================
+	public ModelAndView getItemInsertPage(HttpServletRequest req, HttpServletResponse res)
+			throws IOException{
+		return mav;
+	}
+	//===============================[[]]===============================
+	public ModelAndView getMemberPage(HttpServletRequest req, HttpServletResponse res)
+			throws IOException{
+		return mav;
+	}
+	//===============================[[]]===============================
+	public ModelAndView getAdminPage(HttpServletRequest req, HttpServletResponse res)
+			throws IOException{
+		return mav;
+	}
+	
+	public void setPageLogic(PageLogic pageLogic) {
+		this.pageLogic = pageLogic;
+	}
+	
+	
 }
