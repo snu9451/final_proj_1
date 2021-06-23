@@ -1,4 +1,4 @@
-package member.mvc;
+package com.util;
 
 //////////////////////////////// 회원가입 링크를 전송하기 위한 클래스 ///////////////////////////////////
 import java.util.Properties;
