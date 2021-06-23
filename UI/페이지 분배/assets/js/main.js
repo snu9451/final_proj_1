@@ -339,17 +339,10 @@
 
 
 
-  ////////////////좋아요 버튼////////////////////
-  $(".likebutton").click(function () {
-    if ($(this).hasClass('active')) {
-      $(this).removeClass('active');
-    } else {
-      $(this).addClass('active');
-    }
-  });
 
 
-///////////////좌측 탭바 버튼 로직/////////////////
+
+  ///////////////좌측 탭바 버튼 로직/////////////////
   $(".each").click(function () {
     $(".each").removeClass('active');
     $(".each").css({
@@ -362,9 +355,6 @@
     });
     $(this).addClass('active');
   });
-
-
-  
   $(".each").mouseover(function () {
     $(this).css({
       background: "white",
@@ -383,14 +373,16 @@
     }
   });
 
-///////
-var each = document.querySelectorAll('.each');
-for(var i = 0 ; i<each.length;i++){
-  each[i].addEventListener('click',function(){
-    each[i].style.color = "#ffc37b";
-    each[i].style.backgroundColor ="white";
-  })
-}
+  ////////////////좋아요 버튼////////////////////
+  $(".likebutton").click(function () {
+    if ($(this).hasClass('active')) {
+      $(this).removeClass('active');
+    } else {
+      $(this).addClass('active');
+    }
+  });
+
+
 
 
 
@@ -405,6 +397,10 @@ for(var i = 0 ; i<each.length;i++){
   });
 
 
+  function asdf(){
+    console.log("asdf");
+  }
+
 
   /////////////////심부름 내역 active///////////////
   $(".request").click(function () {
@@ -415,6 +411,8 @@ for(var i = 0 ; i<each.length;i++){
     $(".request").removeClass('active');
     $(this).addClass('active');
   });
+
+
 
 
   ////////////신뢰도(별점)/////////////
