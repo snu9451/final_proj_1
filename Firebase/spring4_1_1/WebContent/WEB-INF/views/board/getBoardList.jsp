@@ -30,9 +30,9 @@
 <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
 <script defer src="./init-firebase.js"></script>
 <script type="text/javascript">
-	let my_lat = 0.0;
-	let my_lon = 0.0;
-	let mem_email = "test@email";
+	let my_lat = 0.0;//현재 자신의 위도
+	let my_lng = 0.0;//현재 자신의 경도
+	let mem_email = "test@email";//현재 접속자의 이메일
 	let locKey = "";
 	function boardSel() {
 		$('#dg_board').datagrid({
@@ -51,24 +51,11 @@
 	function boardDel() {
 		
 	}
-	function register() {
-		const title = document.querySelector("#iTitle").value;
-		const writer = document.querySelector("#iWriter").value;
-		const email = document.querySelector("#iEmail").value;
-		const content = document.querySelector("#iContent").value;
-		const pw = document.querySelector("#iPw").value;
-		location.href = 
-				"/board/boardInsert.sp4?&bm_title="+title
-						+"&bs_file=a.txt"
-						+"&bm_writer="+writer
-						+"&bm_email="+email
-						+"&bm_content="+content
-						+"&bm_pw="+pw;
-	}
 	function insAction() {
 		console.log("입력액션 호출");
 		$("#board_ins").submit();
 	}
+	//채팅방 목록 보기
 	function chatroomList(){
 		let nickname = $('#nickname').val();
 		if(nickname==null || nickname=="")
@@ -76,12 +63,15 @@
 		else
 			$("#chat").submit();
 	}
+	//심부름 등록 폼 열기
     function openErrForm() {
     	$('#err_ins').dialog('open');
     }
+	//심부름 등록 폼 닫기
     function closeErrForm() {
     	$('#err_ins').dialog('close');
     }
+	//현재 시간을 YYYY-MM-DD HH:mm:SS 형식으로 반환
     function getTime(){
 		let today = new Date();
 
@@ -98,15 +88,17 @@
 		let rstTime = dateString+" "+timeString;
 		return rstTime;
 	}
+	//접속자의 현재 위치를 my_lat, my_lng 전역변수에 저장
     function getLoc(){
         let watchID = navigator
-        .geolocation
-        .watchPosition(function(position) {
-        	my_lat = position.coords.latitude;
-        	my_lon = position.coords.longitude;
-            console.log(position.coords.latitude, position.coords.longitude);
-        });
+	        .geolocation
+	        .watchPosition(function(position) {
+	        	my_lat = position.coords.latitude;
+	        	my_lng = position.coords.longitude;
+	            console.log(position.coords.latitude, position.coords.longitude);
+	        });
     }
+	//심부름을 파이어베이스에 등록
     function insertErr() {
 		let reading = firebase.database().ref("errand");
 		reading.push().set({
@@ -118,11 +110,15 @@
 			errand_content : $('#errand_content').val(),
 			mem_email : $('#mem_email').val(),
 			errand_lat : my_lat,
-			errand_lon : my_lon,
+			errand_lng : my_lng,
 			rider_email : "",
-			status : "W" 
+			status : 0
 		});
+		closeErrForm();
     }
+	//loc테이블에서 사용자의 이메일로 검색,
+	//저장된 좌표값이 있으면 해당 데이터가 있는 테이블의 key값을 locKey 전역변수에 저장
+	//저장된 좌표값이 없으면(처음 사용한다면) 새로운 테이블을 만든 뒤, 그 key값을 locKey 전역변수에 저장
     function initLoc() {
 		let refLoc = firebase.database().ref("loc").orderByChild("mem_email").equalTo(mem_email);
 		refLoc.once('value', function(snapshot){
@@ -138,12 +134,13 @@
 			}
 		});
     }
+	//사용자의 현재 좌표를 파이어베이스에 저장
     function updateLoc() {
     	if(locKey != "") {
         	getLoc();
 	    	let locData = {
 	    		lat : my_lat,
-	    		lon : my_lon,
+	    		lng : my_lng,
 	    		mem_email : mem_email
 	    	}
 	    	firebase.database().ref("loc/"+locKey).update(locData);
@@ -197,10 +194,10 @@
 </head>
 <body>
 <script type="text/javascript">
-let myMap;
-let marker;
+	let markerContainer = new Map();//마커들을 담을 Map타입의 변수(지도아님)
+	let myMap;//지도
+	let timer = setInterval(createMyMap,100);//0.1초마다 createMyMap 실행
 	$(document).ready(function() {
-		let timer = setInterval(createMyMap,100);
 		$('#dg_board').datagrid({
 			columns:[[
 				{field:'BM_NO',title:'글번호',width:100,align:'center'},
@@ -235,56 +232,77 @@ let marker;
 		getLoc();
 		initLoc();
 		setInterval(updateLoc,1000);
-		showErrand();
-
-	    function createMyMap(){
-	    	if(google!=null){
-		    	myMap = new google.maps.Map(document.getElementById('div_map'),{
-		    		center : {lat:37.482706199999996
-		    				,lng:126.83310150000001},
-		    		zoom : 1,
-		    	});
-		    	clearInterval(timer);
-	    	}
-	    }
-	    function newMarker(){
-	    	marker = new google.maps.Marker({
-        		position:{lat:37.482706199999996
-        			,lng:126.83310150000001},
-        		map:myMap,
-        		animation: google.maps.Animation.BOUNCE,
-        	});
-	    }
-	    
-	    function showErrand(){
-	    	let reading = firebase.database().ref("errand");
-	    	reading.on("value", function(snapshot){
-	    		snapshot.forEach(function(childSnapshot) {
-	    			errandData = childSnapshot.val();
-		            let html =
-		                "<li id='"+childSnapshot.key+"' class=\"collection-item avatar\" onclick=\"chooseErrand(this.id);\" >" +
-		                "<i class=\"material-icons circle red\">" + errandData.mem_nickname.substr(0, 1) + "</i>" +
-		                "<span class=\"title\">" + errandData.mem_nickname + "</span>" +
-		                "<p class='txt'>" + errandData.errand_item + "<br>" +
-		                "</p>" +
-		                "<p class='time'>" + errandData.errand_content + "<br>" +
-		                "</p>" +
-		                "<a href=\"#!\" onclick=\"fn_delete_data('"+childSnapshot.key+"')\"class=\"secondary-content\"><i class=\"material-icons\">grade</i></a>"+
-		                "</li>";
-		            $(".collection").append(html);
-		            let arr = {
-		            		lat : errandData.errand_lat,
-		            		lng : errandData.errand_lon
-		            };
-		            if(marker==null){
-		            	newMarker();
-		            }
-		            marker.setPosition(new google.maps.LatLng(arr));
-	    		});
-		    });
-	    }
-		let markerContainer = new Map();
+		addErrand();//마커 추가 감시
+    	changeErrand();//마커 변경 감시
+    	removeErrand();//마커 삭제 감시
 	});
+	//구글맵api가 로드됐는지, 사용자의 현재 위치가 갱신됐는지 확인 후
+	//사용자의 현재 위치 기준으로 맵 생성
+    function createMyMap(){
+    	if(google!=null && my_lat!="" && my_lng!=""){
+	    	myMap = new google.maps.Map(document.getElementById('div_map'),{
+	    		center : {
+	    			lat:my_lat,
+	    			lng:my_lng
+	    		},
+	    		zoom : 1,
+	    	});
+	    	clearInterval(timer);
+    	}
+    }
+	//받아온 심부름 정보를 가진 마커 생성
+    function newMarker(arr){
+    	marker = new google.maps.Marker(arr);
+    	markerContainer.set(arr.errandKey, marker);
+    	console.log(markerContainer);
+    }
+	//심부름이 새로 추가되면 html에 심부름 정보를 적고 새로운 마커를 생성(심부름 정보를 html에 추가할 지? 마커의 속성에 다 넣을지?)
+	//페이지가 로드되면서 파이어베이스의 데이터를 처음 읽어올 때 child_added로 적용된다.
+    function addErrand(){
+    	let reading = firebase.database().ref("errand");
+    	reading.on("child_added", function(childSnapshot){
+   			errandData = childSnapshot.val();
+            let html =
+                "<li id='"+childSnapshot.key+"' class=\"collection-item avatar\" onclick=\"chooseErrand(this.id);\" >" +
+                "<i class=\"material-icons circle red\">" + errandData.mem_email.substr(0, 1) + "</i>" +
+                "<span class=\"title\">" + errandData.mem_email + "</span>" +
+                "<p class='txt'>" + errandData.errand_item + "<br>" +
+                "</p>" +
+                "<p class='time'>" + errandData.errand_content + "<br>" +
+                "</p>" +
+                "<a href=\"#!\" onclick=\"fn_delete_data('"+childSnapshot.key+"')\"class=\"secondary-content\"><i class=\"material-icons\">grade</i></a>"+
+                "</li>";
+            $(".collection").append(html);
+            let arr = {
+            		position:{
+	            		lat : errandData.errand_lat,
+	            		lng : errandData.errand_lng
+            		},
+            		map:myMap,
+            		errandKey : childSnapshot.key
+            };
+        	let marker = null;
+            newMarker(arr);
+	    });
+    }
+	//사용자의 위치가 변경되면 마커의 위치를 변경(심부름은 위치가 변경될 일 없으니 라이더에 적용예정)
+    function changeErrand(){
+    	let reading = firebase.database().ref("errand");
+    	reading.on("child_changed", function(childSnapshot){
+   			errandData = childSnapshot.val();
+   			markerContainer.get(childSnapshot.key)
+						   .setPosition(new google.maps.LatLng(
+								   errandData.errand_lat, errandData.errand_lng));
+	    });
+    }
+	//심부름이 삭제되면 지도에서 해당 마커도 삭제
+    function removeErrand(){
+       	let reading = firebase.database().ref("errand");
+    	reading.on("child_removed", function(childSnapshot){
+   			markerContainer.get(childSnapshot.key)
+						   .setMap(null);
+	    });
+    }
 </script>
 	<table id="dg_board" class="easyui-datagrid" data-options="title:'게시판',toolbar:'#tb_board',width:1000,height:350" style="width:1000px;height:350px">
 	  <!--   <thead>
