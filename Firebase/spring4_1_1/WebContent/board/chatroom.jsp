@@ -24,14 +24,55 @@
 	content="width=device-width, initial-scale=1.0" />
 <style>
 ::-webkit-scrollbar {
-	display: none;
+	/* display: none; */
 }
-
-.collection {
-	cursor: pointer;
+html, body {
+	width: 100%;
+	height: 100%;
+}
+.dest{
+	font-size: 16px;
+	background-color: white;
+	padding: 10px;
+	margin: 0 10px 0 10px;
+	align: left;
+	display:inline-block;
+	border-radius: 10px 10px 10px 10px;
+}
+.me{
+	font-size: 16px;
+	background-color: #ffc37b;
+	padding: 10px;
+	margin: 0 10px 0 10px;
+	align: right;
+	display:inline-block;
+	border-radius: 10px 10px 10px 10px;
+}
+.divchat {
+	height: 2px;
+}
+.timeline {
+	color: white;
+	height: 20px;
+	width: 80%;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #536a8a;
+	border-radius: 10px 10px 10px 10px;
+	margin: auto;
+}
+.timestamp {
+	color: white;
+	display:inline-block;
+}
+.roomName {
+	color: white;
+	font-size: 36px;
+	background-color: #536a8a;
+	display: fixed;
 }
 </style>
-<title>Insert title11211 here</title>
+<title></title>
 </head>
 <body>
       <!--Import jQuery before materialize.js-->
@@ -45,26 +86,64 @@
 	<script type="text/javascript">
 	let roomKey = "<%=request.getParameter("roomKey")%>";
 	let nickname = "<%=request.getParameter("nickname")%>";
+	let dest = "<%=request.getParameter("dest")%>";
+	let prevTime = "0000-00-00";
 	$(document).ready(function(){
+		if(roomKey=="null") {
+			let checkRoom = firebase.database().ref("chatrooms").orderByChild("users/"+nickname).equalTo(true);
+			checkRoom.once('value', function(snapshot){
+				if(snapshot.val()==null) {
+					createRoom();
+				}
+				else {
+					let reading = firebase.database().ref("chatrooms").orderByChild("users/"+nickname).equalTo(true);
+					reading.once('child_added',function(snapshot){
+						roomKey = snapshot.key;
+						init();
+					});
+				}
+			});
+		}
+		else
+			init();
+	});
+	function init(){
+		$(".roomName").text(dest);
+		$("title").text(dest+"님과의 채팅방");
 		let reading = firebase.database().ref("chatrooms/"+roomKey+"/comments");
 		reading.on('child_added', getChatMsg);
-	});
+	}
+	function createRoom() {
+		let newKey = firebase.database().ref("chatrooms").push().key;
+		roomKey = newKey;
+		let reading = firebase.database().ref("chatrooms/"+newKey+"/users");
+		reading.set({
+			<%=request.getParameter("nickname")%> : true,
+			<%=request.getParameter("dest")%> : true
+		});
+		init();
+	}
 	function getChatMsg(comments){
 		let msgKey = comments.key;
 		let msg = comments.val().message;
 		let timestamp = comments.val().timestamp;
+		let dayStamp = timestamp.substr(0,10);
+		let hourStamp = timestamp.substr(11,5);
 		let sender = comments.val().uid;
-        let html =
-            "<li id='"+msgKey+"' class=\"collection-item avatar\" onclick=\"fn_get_data_one(this.id);\" >" +
-            "<i class=\"material-icons circle red\">" + sender.substr(0, 1) + "</i>" +
-            "<span class=\"title\">" + sender + "</span>" +
-            "<p class='txt'>" + msg + "<br>" +
-            "</p>" +
-            "<p class='time'>" + timestamp + "<br>" +
-            "</p>" +
-            "<a href=\"#!\" onclick=\"fn_delete_data('"+msgKey+"')\"class=\"secondary-content\"><i class=\"material-icons\">grade</i></a>"+
-            "</li>";
+        let html = "<div class='divchat'></div>";
+		if(prevTime!=dayStamp) {
+			html += "<div style='height:18px;'></div>";
+			html += "<div class='timeline'>"+dayStamp+"</div>";
+			html += "<div style='height:20px;'></div>";
+			prevTime = dayStamp;
+		}
+        if(nickname==sender)
+        	html += "<div align='right'><div class='timestamp'>"+hourStamp+"</div><div class='me'>"+msg+"</div></div>";
+        else
+        	html += "<div align='left'><div class='dest'>"+msg+"</div><div class='timestamp'>"+hourStamp+"</div></div>";
+        html += "<div class='divchat'></div>";
         $(".collection").append(html);
+		$('.col').scrollTop(document.querySelector(".col").scrollHeight);
 	}
 	function sendMsg() {
 		let msg_input = $("#input_msg").val();
@@ -92,31 +171,22 @@
 		let rstTime = dateString+" "+timeString;
 		return rstTime;
 	}
-	function enterKey(){
+	function enterkey(){
 		if (window.event.keyCode == 13) {
 			sendMsg();
        }
 	}
 	</script>
 <body>
-      <div>
-        <div class="col s3" style="padding:0; margin:0; overflow-y:auto; overflow-x:hidden; height:1080px; -ms-overflow-style: none;">
-          <!-- Grey navigation panel -->
-          <ul class="collection"  style="padding:0; margin:0;"></ul>
+    <div style="width:100%; height:100%;">
+        <div class="col s3" style="background-color: #627ea4; padding:0; margin:0; overflow-y:auto; overflow-x:hidden; height:90%; -ms-overflow-style: none;">
+          <div class="roomName">상대방</div>
+          <div class="divchat"></div>
+          <!-- insert here : 대화 공지사항 -->
+          <ul class="collection"  style="padding:0; margin:0; border:none;"></ul>
         </div>
-    <input id="input_msg" onkeyup="enterkey();" style="width:1000px;"><button id="btn_msg" onClick="sendMsg()">전송</button>
+    <div align="center" style="background-color: white; height:10%;"><input id="input_msg" onkeyup="enterkey();" style="width:80%; padding:10px;"><button id="btn_msg" style="width:10%;" onClick="sendMsg()">전송</button></div>
 
-    <div class="preloader-wrapper big active" style="position:absolute; z-index:1000; left:50%; top:50%; display:none;">
-        <div class="spinner-layer spinner-blue-only">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div><div class="gap-patch">
-            <div class="circle"></div>
-          </div><div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
-        </div>
-      </div>
   </div>
 <script>
       </script>
