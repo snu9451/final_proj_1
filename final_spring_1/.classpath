@@ -25,7 +25,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-tx-4.3.30.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web-4.3.30.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-4.3.30.RELEASE.jar"/>
-	<classpathentry kind="lib" path="D:/programming/git_final_proj_1/final_spring_1/WebContent/WEB-INF/lib/gson-2.8.6.jar"/>
-	<classpathentry kind="lib" path="D:/programming/git_final_proj_1/final_spring_1/WebContent/WEB-INF/lib/javax.mail-1.5.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/gson-2.8.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.mail-1.5.6.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
