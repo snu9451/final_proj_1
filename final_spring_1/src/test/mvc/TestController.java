@@ -36,6 +36,7 @@ public class TestController extends MultiActionController{
 		// 테스트용 페이지 - WebContent/member에 만들어 둔 test.jsp로 이동
 //		logger.info(zipCodeList.get(0).get("UID_NO").toString());
 		// 쿠키에 값 넣기 - 사용자가 직접 삭제하지 않으면 남아있다.
+		res.addCookie(new Cookie("SID", req.getRequestedSessionId()));
 		res.addCookie(new Cookie("MY_ZIP", zipCodeList.get(0).get("UID_NO").toString()));
 		// 클라이언트의 브라우저에 저장되어 있는 쿠키 값을 읽어옴. - 쿠기가 여러개 저장되어 있는 경우 쿠키들을 배열로 가져온다.
 //		logger.info(req.getCookies()[0].getValue());
