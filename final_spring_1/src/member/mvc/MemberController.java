@@ -1,9 +1,13 @@
 package member.mvc;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +17,9 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.util.AjaxDataPrinter;
 import com.util.HashMapBinder;
 
 public class MemberController extends MultiActionController {
@@ -61,7 +68,8 @@ public class MemberController extends MultiActionController {
 		logger.info("issueTempPw 메소드 호출 성공!");
 		
 	}
-	public ModelAndView reqLoginView(HttpServletRequest req, HttpServletResponse res) {
+	public void reqLoginView(HttpServletRequest req, HttpServletResponse res) {
+//	public ModelAndView reqLoginView(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("reqLoginView 메소드 호출 성공!");
 		ModelAndView mav = new ModelAndView();
 //		req.getSession().setAttribute("login", "로그인중");
@@ -76,29 +84,37 @@ public class MemberController extends MultiActionController {
 				// 또 유효하다면 로그인창에 아이디를 띄워주기 위해, DB에서 세션키로 해당하는 정보를 가져온다.
 				Map<String, Object> rmap = new HashMap<>();
 				rmap = memberLogic.selectOneBySessionKey(sessionKey);
-				// sid_expired는 DB에서 미리 비교 후 valid/expired로 반환해서 가져오자. - 프로시저//////////////////////////////////////////////
-				// 아이디 저장이 유효하다면(즉, 만료되지 않았다면)
-				if("valid".equals((String)rmap.get("sid_expired"))) {
-					// 아이디를 로그인창에 띄워줄 수 있도록 request 객체에 담아준다.
-					String mem_email = (String)rmap.get("mem_email");
-					req.setAttribute("mem_email", mem_email);
+				// NDS_SKEY가 있더라도 기간이 만료되었으면 rmap = null이 된다.
+				if(rmap != null) {
+					// 권한 허용 범위가 S(SaveID)인 경우
+					if("S".equals((String)rmap.get("sid_expired"))) {
+						// 아이디를 로그인창에 띄워줄 수 있도록 request 객체에 담아준다.
+						String mem_email = (String)rmap.get("mem_email");
+						req.setAttribute("mem_email", mem_email);
+					}
+				} else {
+					logger.info("유효하지 않은 세션키입니다.");
 				}
 			}
 		}
+		Gson g = new Gson();
+		String jo = g.toJson("[{\"name\":\"은영\"}]");
+		AjaxDataPrinter.out(res, "application/json", jo);
 //		logger.info(req.getSession().getAttribute("login"));
-		mav.setViewName("mainpage/mainpage");
-		return mav;
+		// mainpage.jsp로 이동해서 Front에서 처리해주면 됨. (mem_email이 req에 있으면 이메일을 화면에 띄워주기) 
+//		mav.setViewName("mainpage/mainpage");
+//		return mav;
 	}
 	// 로그인 버튼이 클릭되었을 때 실행되는 메소드
 	public void doLogin(HttpServletRequest req, HttpServletResponse res) {
-		HttpSession session = req.getSession();
+		// 사용자가 자동로그인 체크박스와 아이디저장 체크박스에 체크 했는지 여부를 담을 변수 선언
 		String isAutoLoginChecked = null;
 		String isSavedIdChecked = null;
 		// req에 담긴 정보(input_email, input_pw)를 map으로 옮겨 담는 작업
 		Map<String, Object> pmap = null;
 		HashMapBinder hmb = new HashMapBinder(req);
 		// pmap의 원본을 파라미터로 넘기고 있기 때문에 리턴으로 받아서 담지 않아도 map에 옮겨진다.
-		hmb.bind(pmap);	// pmap에 담긴 정보: input_email, input_pw
+		hmb.bindPost(pmap);	// pmap에 담긴 정보: input_email, input_pw
 		// 입력된 사용자의 정보를 가지고 DB에서 조회한다.
 		// resultMsg ===> "존재하지 앟는 아이디입니다." | "잘못된 비밀번호입니다." | mem_nickname
 		String resultMsg = memberLogic.selectMemberInfo(pmap);
@@ -113,26 +129,57 @@ public class MemberController extends MultiActionController {
 			if("true".equals(isSavedIdChecked)) {
 				// 세션키 만료일 갱신 또는 session 테이블에 insert (auth_range = S)
 				// 해당 이메일로 session 테이블에서 조회한 결과가 1이면 update, 0이면 insert ================================= [[ 프로시저1 ]]
-				logger.info("[1:success/0:fail]아이디 저장 처리 결과 ===> "+memberLogic.saveId(pmap));
+				int result = memberLogic.saveId(pmap);
+				logger.info("[1:success/0:fail]아이디 저장 처리 결과 ===> "+result);
 			}
 			// 자동로그인에 체크했다면 - isAutoLoginChecked(프론트에서 담아줘야 함) == true
 			isAutoLoginChecked = (String)pmap.get("isAutoLoginChecked");
 			if("true".equals(isAutoLoginChecked)) {
 				// 세션키 만료일 갱신 또는 session 테이블에 insert (auth_range = A)
 				// 해당 이메일로 session 테이블에서 조회한 결과가 1이면 update, 0이면 insert ================================= [[ 프로시저1 ]]
-				logger.info("[1:success/0:fail]자동로그인 처리 결과 ===> "+memberLogic.setAutoLogin(pmap));
+				int result = memberLogic.setAutoLogin(pmap);
+				logger.info("[1:success/0:fail]자동로그인 처리 결과 ===> "+result);
 			}
 			// 로그인 성공시 공통적으로 처리해 줄 사항; 세션에 이메일 아이디 담아주기.
+			// Front에서는 session에 login이 있는지를 체크함으로써 로그인 성공여부를 판단할 수 있음.
 			String mem_email = (String)pmap.get("mem_email");
+			HttpSession session = req.getSession();
 			session.setAttribute("login", mem_email);
 		}
 	}
+	
 	public void withdraw(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("withdraw 메소드 호출 성공!");
 	}
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	// =================================================== [[ 테스트용 url ]] ===================================================
+	public ModelAndView membertest(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("membertest 메소드 호출 성공!");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("member/membertest");	// /WEB-INF/views/xxx.jsp
+		return mav;
+	}
+	public void ajaxHtml(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("ajaxHtml 메소드 호출 성공!");
+		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/member/ajaxHtml.jsp");
+		try {
+			rd.forward(req, res);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	// =======================================================================================================================
 	// 스프링에 의해 setter 객체 주입법으로 객체를 주입 받는다.
 	public void setMemberLogic(MemberLogic memberLogic) {
 		this.memberLogic = memberLogic;

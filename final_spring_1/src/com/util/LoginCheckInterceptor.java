@@ -49,7 +49,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		}
 	}
 	
-	@Override
+	@Override	// 컨트롤러가 수행되고 화면이 보여지기 직전에 호출되는 메소드이다.
 	public void postHandle(HttpServletRequest req, HttpServletResponse res, Object handler, ModelAndView mav)
 			throws Exception {
 	}

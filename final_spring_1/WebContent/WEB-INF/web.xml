@@ -30,8 +30,8 @@
 			<param-value>
 				/WEB-INF/spring-servlet.xml,
 				/WEB-INF/member-servlet.xml,
-				/WEB-INF/item-servlet.xml,
-				/WEB-INF/admin-servlet.xml
+<!-- 				/WEB-INF/item-servlet.xml, -->
+<!-- 				/WEB-INF/admin-servlet.xml -->
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
