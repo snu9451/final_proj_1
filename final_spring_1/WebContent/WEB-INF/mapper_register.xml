@@ -8,5 +8,6 @@
 	</typeAliases>
 	<mappers>
 		<mapper resource="com/mybatis/mapper/member.xml" />
+		<mapper resource="com/mybatis/mapper/page.xml" />
 	</mappers>
 </configuration>
