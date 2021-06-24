@@ -39,8 +39,7 @@ public class TestController extends MultiActionController{
 		res.addCookie(new Cookie("MY_ZIP", zipCodeList.get(0).get("UID_NO").toString()));
 		// 클라이언트의 브라우저에 저장되어 있는 쿠키 값을 읽어옴. - 쿠기가 여러개 저장되어 있는 경우 쿠키들을 배열로 가져온다.
 //		logger.info(req.getCookies()[0].getValue());
-		
-		logger.info("setAttribute");
+		logger.info(req.getRequestURI());
 		req.setAttribute("showModal", "yes");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("member/test");
