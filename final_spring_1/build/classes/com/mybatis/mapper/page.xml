@@ -5,4 +5,5 @@
 		SELECT category_name 
 		  FROM category
 	</select>
+	
 </mapper>
