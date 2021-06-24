@@ -13,6 +13,8 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.util.HashMapBinder;
+
 public class MemberController extends MultiActionController {
 	
 	// 스프링에 의해 객체주입을 받을 것이므로, 인스턴스화 하지 않고 null로 선언만 해둠.
@@ -92,25 +94,37 @@ public class MemberController extends MultiActionController {
 		HttpSession session = req.getSession();
 		String isAutoLoginChecked = null;
 		String isSavedIdChecked = null;
-		//////////////////////////////////////////////공통코드 작성해야 함- req에 담긴 정보를 Map에 옮겨줄 공통코드
+		// req에 담긴 정보(input_email, input_pw)를 map으로 옮겨 담는 작업
+		Map<String, Object> pmap = null;
+		HashMapBinder hmb = new HashMapBinder(req);
+		// pmap의 원본을 파라미터로 넘기고 있기 때문에 리턴으로 받아서 담지 않아도 map에 옮겨진다.
+		hmb.bind(pmap);	// pmap에 담긴 정보: input_email, input_pw
 		// 입력된 사용자의 정보를 가지고 DB에서 조회한다.
-		// insert here
-		// 로그인 성공 시
-		if(memberLogic.selectMemberInfo() == 1) {
+		// resultMsg ===> "존재하지 앟는 아이디입니다." | "잘못된 비밀번호입니다." | mem_nickname
+		String resultMsg = memberLogic.selectMemberInfo(pmap);
+		// 로그인 실패 시 "존재하지 앟는 아이디입니다." 또는 "잘못된 비밀번호입니다." 메세지 띄워주어야 함.
+		if("존재하지 않는 아이디입니다.".equals(resultMsg) || "잘못된 비밀번호입니다.".equals(resultMsg)) {
+			// resultMsg를 전송 (AJAX)
+			req.setAttribute("loginResult", resultMsg);
+		}
+		else {	// 로그인 성공 시(해당 email과 pw로 조회한 결과가 row 하나인 경우) - resultMsg: 사용자 닉네임
 			// 아이디 저장에 체크했다면 - isSavedIdChecked(프론트에서 담아줘야 함) == true
+			isSavedIdChecked = (String)pmap.get("isSavedIdChecked");
 			if("true".equals(isSavedIdChecked)) {
-				// insert here - 세션키 만료일 갱신 또는 session 테이블에 insert (auth_range = S)
+				// 세션키 만료일 갱신 또는 session 테이블에 insert (auth_range = S)
+				// 해당 이메일로 session 테이블에서 조회한 결과가 1이면 update, 0이면 insert ================================= [[ 프로시저1 ]]
+				logger.info("[1:success/0:fail]아이디 저장 처리 결과 ===> "+memberLogic.saveId(pmap));
 			}
 			// 자동로그인에 체크했다면 - isAutoLoginChecked(프론트에서 담아줘야 함) == true
+			isAutoLoginChecked = (String)pmap.get("isAutoLoginChecked");
 			if("true".equals(isAutoLoginChecked)) {
-				// insert here - 세션키 만료일 갱신 또는 session 테이블에 insert (auth_range = A)
+				// 세션키 만료일 갱신 또는 session 테이블에 insert (auth_range = A)
+				// 해당 이메일로 session 테이블에서 조회한 결과가 1이면 update, 0이면 insert ================================= [[ 프로시저1 ]]
+				logger.info("[1:success/0:fail]자동로그인 처리 결과 ===> "+memberLogic.setAutoLogin(pmap));
 			}
 			// 로그인 성공시 공통적으로 처리해 줄 사항; 세션에 이메일 아이디 담아주기.
-			// insert here - request 객체에서 입력된 mem_email 꺼내서 mem_eamil 변수에 담기
+			String mem_email = (String)pmap.get("mem_email");
 			session.setAttribute("login", mem_email);
-		// 로그인 실패 시 "아이디 또는 비번 틀림" 또는 "없는 사용자" 메세지 띄워주어야 함. 
-		} else if(memberLogic.selectMemberInfo() == 0) {
-			// insert here - AJAX 데이터 전송
 		}
 	}
 	public void withdraw(HttpServletRequest req, HttpServletResponse res) {
