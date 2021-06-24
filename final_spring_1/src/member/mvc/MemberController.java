@@ -87,7 +87,7 @@ public class MemberController extends MultiActionController {
 		mav.setViewName("mainpage/mainpage");
 		return mav;
 	}
-	// 로그인 버튼이 클릭되었을 때 실행되는 메소드//////////////////////////////////////////////이 메소드부터 이어서 작성
+	// 로그인 버튼이 클릭되었을 때 실행되는 메소드
 	public void doLogin(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 		String isAutoLoginChecked = null;
