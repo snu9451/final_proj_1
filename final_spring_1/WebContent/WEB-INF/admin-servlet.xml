@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- ==================================================== [[ 컨트롤러 영역 ]] ==================================================== -->
+	<bean id="admin-controller" class="insert_here">
+		<property name="methodNameResolver" ref="insert_here"/>
+		<property name="insert_here" ref="insert_here"/>
+	</bean>
+	<!-- ========================================= [[ url과 컨트롤러 mapping ]] ========================================== -->
+	<!-- Url의 mapping이 이루어짐 -->
+	<bean id="admin-url-mapping" 
+	class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="insert_here">insert_here</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- ========================================= [[ url과 메소드 mapping ]] ========================================== -->
+	<bean id="admin-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="insert_here">insert_here</prop>
+			</props>
+		</property>
+	</bean>	
+</beans>
