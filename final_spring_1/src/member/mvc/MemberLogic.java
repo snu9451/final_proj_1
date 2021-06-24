@@ -1,5 +1,7 @@
 package member.mvc;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 public class MemberLogic {
@@ -13,6 +15,16 @@ public class MemberLogic {
 	
 	public void setMemberDao(MemberDao memberDao) {
 		this.memberDao = memberDao;
+	}
+
+
+
+
+
+	public Map<String, Object> selectOneBySessionKey(String sessionKey) {
+		Map<String, Object> rmap = null;
+		rmap = memberDao.selectOneBySessionKey(sessionKey);
+		return rmap;
 	}
 	
 }

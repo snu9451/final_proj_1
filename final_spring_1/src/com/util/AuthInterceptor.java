@@ -16,25 +16,24 @@ public class AuthInterceptor implements HandlerInterceptor {
 	MemberLogic memberLogic = null;
 
 	@Override
-	public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2) throws Exception {
+	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
+		
 		return false;
 	}
 	
-	@Override
-	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
-			throws Exception {
-		
-	}
 	
 	@Override
-	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
+	public void postHandle(HttpServletRequest req, HttpServletResponse res, Object handler, ModelAndView mav)
 			throws Exception {
-
 	}
-	
+	@Override
+	public void afterCompletion(HttpServletRequest req, HttpServletResponse res, Object handler, Exception e)
+			throws Exception {
+	}
 	// 스프링에 의해 setter 객체 주입법으로 객체를 주입 받는다.
 	public void setMemberLogic(MemberLogic memberLogic) {
 		this.memberLogic = memberLogic;
 	}
+
 
 }

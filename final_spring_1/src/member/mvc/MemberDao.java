@@ -1,5 +1,7 @@
 package member.mvc;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -17,5 +19,17 @@ public class MemberDao {
 	
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
+
+
+
+
+
+
+
+	public Map<String, Object> selectOneBySessionKey(String sessionKey) {
+		Map<String, Object> rmap = null;
+		rmap = sqlSessionTemplate.selectOne("selectOneBySessionKey", sessionKey);
+		return null;
 	}
 }

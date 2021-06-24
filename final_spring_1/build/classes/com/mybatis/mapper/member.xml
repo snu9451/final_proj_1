@@ -11,4 +11,8 @@
 		  FROM ZIPCODE_T 
 		 WHERE UID_NO = #{value}
 	</select>
+	<!-- SELECT mem_email,  -->
+	<select id="selectOneBySessionKey" statementType="STATEMENT">
+<!-- 		{CALL}		 -->
+	</select>
 </mapper>
