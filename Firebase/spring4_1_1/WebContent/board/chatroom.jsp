@@ -34,7 +34,7 @@ html, body {
 	font-size: 16px;
 	background-color: white;
 	padding: 10px;
-	margin: 0 10px 0 10px;
+	margin: 2px 10px 2px 10px;
 	align: left;
 	display:inline-block;
 	border-radius: 10px 10px 10px 10px;
@@ -43,7 +43,7 @@ html, body {
 	font-size: 16px;
 	background-color: #ffc37b;
 	padding: 10px;
-	margin: 0 10px 0 10px;
+	margin: 2px 10px 2px 10px;
 	align: right;
 	display:inline-block;
 	border-radius: 10px 10px 10px 10px;
@@ -60,6 +60,8 @@ html, body {
 	background-color: #536a8a;
 	border-radius: 10px 10px 10px 10px;
 	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 .timestamp {
 	color: white;
@@ -130,11 +132,9 @@ html, body {
 		let dayStamp = timestamp.substr(0,10);
 		let hourStamp = timestamp.substr(11,5);
 		let sender = comments.val().uid;
-        let html = "<div class='divchat'></div>";
+        let html = "";
 		if(prevTime!=dayStamp) {
-			html += "<div style='height:18px;'></div>";
 			html += "<div class='timeline'>"+dayStamp+"</div>";
-			html += "<div style='height:20px;'></div>";
 			prevTime = dayStamp;
 		}
         if(nickname==sender)
@@ -147,6 +147,8 @@ html, body {
 	}
 	function sendMsg() {
 		let msg_input = $("#input_msg").val();
+		if(msg_input.trim()=="")
+			return;
 		$("#input_msg").val("");
 		let reading = firebase.database().ref("chatrooms/" + roomKey + "/comments");
 		reading.push().set({
