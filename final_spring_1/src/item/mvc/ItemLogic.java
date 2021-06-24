@@ -20,5 +20,13 @@ public class ItemLogic {
 		return a;
 		
 	}
+	public static List<Map<String, Object>> selectByCategory(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public static List<Map<String, Object>> selectBySearch(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
