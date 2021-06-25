@@ -69,8 +69,41 @@
     }
   );
 
+
   // Activate smooth scroll on page load with hash links in the url
   $(document).ready(function () {
+ 	var subPage = new Array;
+	subPage[0] = "myInfo";
+	subPage[1] = "myWallet";
+	subPage[2] = "myLike";
+	subPage[3] = "myTrade";
+	subPage[4] = "myErrand";
+	var url = location.href;
+	var getAr0 = url.indexOf(subPage[0]);
+	var getAr1 = url.indexOf(subPage[1]);
+	var getAr2 = url.indexOf(subPage[2]);
+	var getAr3 = url.indexOf(subPage[3]);
+	var getAr4 = url.indexOf(subPage[4]);
+	if (getAr0 != -1) {
+		$("#each1").addClass("active");
+	}
+	;
+	if (getAr1 != -1) {
+		$("#each2").addClass("active");
+	}
+	;
+	if (getAr2 != -1) {
+		$("#each3").addClass("active");
+	}
+	;
+	if (getAr3 != -1) {
+		$("#each4").addClass("active");
+	}
+	;
+	if (getAr4 != -1) {
+		$("#each5").addClass("active");
+	}
+	;
     if (window.location.hash) {
       var initial_nav = window.location.hash;
       if ($(initial_nav).length) {
@@ -255,6 +288,7 @@
   ///////////////////////////////////////////////////////
 
 
+
   ///////////프로필 사진////////////////////
   function readURL(input) {
     if (input.files && input.files[0]) {
@@ -338,62 +372,6 @@
   $setRows.submit();
 
 
-
-  ////////////////좋아요 버튼////////////////////
-  $(".likebutton").click(function () {
-    if ($(this).hasClass('active')) {
-      $(this).removeClass('active');
-    } else {
-      $(this).addClass('active');
-    }
-  });
-
-
-///////////////좌측 탭바 버튼 로직/////////////////
-  $(".each").click(function () {
-    $(".each").removeClass('active');
-    $(".each").css({
-      background: "#627ea4",
-      color: "white"
-    });
-    $(this).css({
-      background: "white",
-      color: "#ffc37b"
-    });
-    $(this).addClass('active');
-  });
-
-
-  
-  $(".each").mouseover(function () {
-    $(this).css({
-      background: "white",
-      color: "#ffc37b"
-    });
-  });
-  $(".each").mouseout(function () {
-    if ($(this).hasClass('active')) {
-    }
-    else {
-
-      $(this).css({
-        background: "#627ea4",
-        color: "white"
-      });
-    }
-  });
-
-///////
-var each = document.querySelectorAll('.each');
-for(var i = 0 ; i<each.length;i++){
-  each[i].addEventListener('click',function(){
-    each[i].style.color = "#ffc37b";
-    each[i].style.backgroundColor ="white";
-  })
-}
-
-
-
   /////////////////구매내역 판매내역 active///////////////
   $(".buy").click(function () {
     $(".sell").removeClass('active');
@@ -403,7 +381,6 @@ for(var i = 0 ; i<each.length;i++){
     $(".buy").removeClass('active');
     $(this).addClass('active');
   });
-
 
 
   /////////////////심부름 내역 active///////////////
@@ -417,8 +394,11 @@ for(var i = 0 ; i<each.length;i++){
   });
 
 
+  
+  
+  
   ////////////신뢰도(별점)/////////////
-  ratings = { RatingScore: 4.8 }//////<-별점 inserthere
+  ratings = { RatingScore: 4.1 }//////<-별점 inserthere
   totalRating = 5;
   table = document.querySelector('.RatingStar');
   function rateIt() {
@@ -431,5 +411,5 @@ for(var i = 0 ; i<each.length;i++){
     }
   }
   rateIt()
-
+  
 })(jQuery);
