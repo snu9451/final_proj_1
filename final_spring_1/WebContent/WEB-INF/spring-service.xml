@@ -5,4 +5,5 @@
 	<bean id="test-logic" class="test.mvc.TestLogic">
 		<property name="testDao" ref="test-dao"/>
 	</bean>
+	
 </beans>
