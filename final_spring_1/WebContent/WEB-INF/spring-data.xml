@@ -26,5 +26,6 @@
  	<bean id="test-dao" class="test.mvc.TestDao">
  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
+	
 
 </beans>

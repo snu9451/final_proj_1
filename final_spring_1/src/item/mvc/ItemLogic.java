@@ -1,5 +1,8 @@
 package item.mvc;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 public class ItemLogic {
@@ -14,5 +17,5 @@ public class ItemLogic {
 	public void setItemDao(ItemDao itemDao) {
 		this.itemDao = itemDao;
 	}
-	
+
 }

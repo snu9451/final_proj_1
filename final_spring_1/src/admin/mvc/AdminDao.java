@@ -14,18 +14,29 @@ public class AdminDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
-	public List<Map<String, Object>> selectMemberReportDetail(String memEmail) {
-		List<Map<String, Object>> memberReportDetail = null;
-		memberReportDetail = sqlSessionTemplate.selectList("selectMemberReportDetail", memEmail);
+
+
+	public List<Map<String, Object>> selectBoardBySearch(String gubun, String keyword) {
+		logger.info("selectBoardBySearch 메소드 호출");
+
+		return null;
+	}
+	
+	public Map<String, Object> selectMemberReportDetail(String memEmail) {
+		logger.info("selectMemberReportDetail 메소드 호출");
+		
+		Map<String, Object> memberReportDetail = null;
+		memberReportDetail = (Map<String, Object>) sqlSessionTemplate.selectList("memberReportDetail", memEmail);
 		
 		return memberReportDetail;
-	}
+	}	
 
-	public List<Map<String, Object>> selectBoardReportDetail(int bmNo) {
-		List<Map<String, Object>> boardReportDetail = null;
-		boardReportDetail = sqlSessionTemplate.selectList("selectBoardReportDetail", bmNo);
+	public Map<String, Object> selectBoardReportDetail(int bmNo) {
+		logger.info("selectBoardReportDetail 메소드 호출");
+		
+		Map<String, Object> boardReportDetail = null;
+		boardReportDetail = (Map<String, Object>) sqlSessionTemplate.selectList("boardReportDetail", bmNo);
 		
 		return boardReportDetail;
 	}
-	
 }
