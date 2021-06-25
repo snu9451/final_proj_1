@@ -28,5 +28,55 @@ public class ItemLogic {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	//상품의 내용만 가져옴 - 사용자가 상품 수정 버튼 클릭 시 상품의 정보를 다 가져와야하니까 있음
+	public static Map<String, Object> editItemContext(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	//상품의 사진만 가져옴 - 사용자가 상품 수정 버튼 클릭 시 상품의 정보를 다 가져와야하니까 있음
+	public static Map<String, Object> editItemImgs(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	//상품의 내용만 가져옴 - 사용자가 상품하나를 자세히 볼 때
+	public static Map<String, Object> selectItemDetailContext(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	//상품의 사진만 가져옴 - 사용자가 상품하나를 자세히 볼 때
+	public static Map<String, Object> selectItemDetailImgs(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	//상품 삭제 시
+	public static Map<String, Object> deleteItem(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	//상품 판매 완료 처리 
+	public static String updateItemToConfirm(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	//상품 찜하기
+	public static int likeItem(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	//댓글 달기. 대댓글 달기
+	public static Map<String, Object> insertComment(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	//댓글 or 대댓글 삭제
+	public static void deleteComment(Map<String, Object> pmap) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
