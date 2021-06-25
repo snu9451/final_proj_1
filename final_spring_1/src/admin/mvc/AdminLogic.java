@@ -33,13 +33,19 @@ public class AdminLogic {
 	
 	public Map<String, Object> selectMemberReportDetail(String memEmail) {
 		logger.info("selectMemberReportDetail 메소드 호출");
-		return null;
+		
+		List<Map<String, Object>> memberReportDetail = null;
+		memberReportDetail = adminDao.selectMemberReportDetail(memEmail);
+		
+		return (Map<String, Object>) memberReportDetail;
 	}
 	
 	public Map<String, Object> selectBoardReportDetail(int bmNo) {
 		logger.info("selectBoardReportDetail 메소드 호출");
-		return null;
 		
+		List<Map<String, Object>> boardReportDetail = null;
+		boardReportDetail = adminDao.selectBoardReportDetail(bmNo);
 		
+		return (Map<String, Object>) boardReportDetail;
 	}
 }

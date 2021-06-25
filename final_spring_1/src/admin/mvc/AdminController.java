@@ -13,8 +13,14 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.util.HashMapBinder;
 
+import item.mvc.ItemLogic;
+import member.mvc.MemberLogic;
+
 public class AdminController extends MultiActionController {
 	Logger logger = Logger.getLogger(AdminController.class);
+	
+	private MemberLogic memberLogic = null;
+	private ItemLogic itemLogic = null;
 	
  // 스프링에 의해 객체주입을 받을 것이므로, 인스턴스화 하지 않고 null로 선언만 해둠.
 	private AdminLogic adminLogic = null;
@@ -28,7 +34,6 @@ public class AdminController extends MultiActionController {
 	public ModelAndView outMember(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("outMember 메소드 호출");
 		
-	 // 한글 처리
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.bind(pmap);
@@ -41,8 +46,6 @@ public class AdminController extends MultiActionController {
  // (회원, 게시글)신고횟수 초기화 시키기
 	public ModelAndView initReportNumber(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("initReportNumber 메소드 호출");
-		
-		
 		
 		ModelAndView mav = new ModelAndView();
 		return mav;
@@ -60,14 +63,6 @@ public class AdminController extends MultiActionController {
 	public ModelAndView selectBoardBySearch(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectBoardBySearch 메소드 호출");
 		
-		ModelAndView mav = new ModelAndView();
-		return mav;
-	}
-	
-	public ModelAndView selectMemberReportDetail(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		logger.info("selectMemberReportDetail 메소드 호출");
-		
-	 // 한글처리
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.bind(pmap);
@@ -76,11 +71,39 @@ public class AdminController extends MultiActionController {
 		return mav;
 	}
 	
+ // 신고된 회원 상세보기
+	public ModelAndView selectMemberReportDetail(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		logger.info("selectMemberReportDetail 메소드 호출");
+		
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.bind(pmap);
+		
+		List<Map<String,Object>> memberReportDetail = null;
+		memberReportDetail = memberLogic.selectMemberInfo(pmap);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/adminTest");
+		mav.addObject("memberReportDetail", memberReportDetail);
+
+		return mav;
+	}
+	
+ // 신고된 게시글 상세보기
 	public ModelAndView selectBoardReportDetail(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectBoardReportDetail 메소드 호출");
 		
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.bind(pmap);
+		
+		List<Map<String,Object>> boardReportDetail = null;
+		boardReportDetail = adminLogic.getBoarReportList(pmap);
 		
 		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/adminTest");
+		mav.addObject("boardReportDetail", boardReportDetail);
+		
 		return mav;
 	}
 }
