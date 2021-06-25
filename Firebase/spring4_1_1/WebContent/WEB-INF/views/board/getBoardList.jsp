@@ -37,11 +37,13 @@
 	let markerContainer = new Map();//마커들을 담을 Map타입의 변수(지도아님)
 	let myMap;//지도
 	let timer = setInterval(createMyMap,100);//0.1초마다 createMyMap 실행
-	let refErrand = "";
-	let refAlert = "";
+	let riderTimer = setInterval(insertRider, 5000);//라이더 위치 갱신용 타이머(5초마다)
+	let refErrand = "";//errand테이블 접근할 주소
+	let refRider = "";//rider테이블 접근할 주소
+	let refAlert = "";//alert테이블 접근할 주소
 	let my_lat = 0.0;//현재 자신의 위도
 	let my_lng = 0.0;//현재 자신의 경도
-	let mem_email = "test@email";//현재 접속자의 이메일
+	let mem_email = "rider@email";//현재 접속자의 이메일
 	let locKey = "";
 	$(document).ready(function() {
 		$('#dg_board').datagrid({
@@ -77,13 +79,12 @@
 		});
 		refErrand = firebase.database().ref("errand");
 		refAlert = firebase.database().ref("alert/"+mem_email);
+		refRider = firebase.database().ref("rider");
 		initAlert();
-		getLoc();
-		initLoc();
-		setInterval(updateLoc,5000);
-		addErrand();//마커 추가 감시
-    	changeErrand();//마커 변경 감시
-    	removeErrand();//마커 삭제 감시
+ 		getLoc();
+//		initLoc();
+//		setInterval(updateLoc,5000);
+		switchRider();
 	});
 	function boardSel() {
 		$('#dg_board').datagrid({
@@ -135,6 +136,30 @@
 		let rstTime = dateString+" "+timeString;
 		return rstTime;
 	}
+	//심부름 요청자/라이더 전환(미완)
+	function switchRider() {
+		if ($("#switchRider").is(":checked")) {
+			removeAllMarkers();
+			markerContainer = new Map();
+			refRider.off();
+			clearInterval(riderTimer);
+			console.log("라이더");
+			insertRider();//자신의 위치를 rider테이블에 저장
+			riderTimer = setInterval(insertRider, 5000);//5초마다 위치 갱신
+			addErrand();//심부름 마커 추가 감시
+			changeErrand();//심부름 마커 변경 감시
+			removeErrand();//심부름 마커 삭제 감시
+		} else {
+			removeAllMarkers();
+			markerContainer = new Map();
+			refErrand.off();
+			clearInterval(riderTimer);
+			console.log("요청자");
+			addRider();//라이더 마커 추가 감시
+			changeRider();//라이더 마커 변경 감시
+			removeRider();//라이더 마커 삭제 감시
+		}
+	}
 	
 //////////////////////////////////////////알림
 	//alert테이블에서 사용자의 이메일로 검색,
@@ -145,7 +170,9 @@
 			if (snapshot.val() == null) {
 				let alertData = {
 					content: "",
-					timestamp : getTime()
+					type: "init",
+					timestamp : getTime(),
+					active : 0
 				};
 				firebase.database().ref("alert/"+mem_email).push().update(alertData);
 			}
@@ -154,31 +181,79 @@
 	}
 	//새로운 알림이 오는 것을 감지, 알림의 종류에 맞는 함수를 실행
 	function runAlert() {
+		let alertData = { active : 0 };
 		refAlert.on('child_added',function(snapshot){
-			if(snapshot.val().insertErr != null) {
-				console.log("insertErr");
+			console.log(snapshot.key);
+			console.log(snapshot.val());
+			let snapVal = snapshot.val();
+			let type = snapshot.val().type;
+			if(snapVal.active == 1) {
+				if(type=="insertErrand") {
+					console.log("insertErrand");
+					$.messager.confirm('Comfirm', snapVal.content, function(r){
+						if(r) {
+							$("#dlg_agreed").dialog('close');
+							refAlert.child(snapshot.key).update(alertData);//확인했으니 active를 0으로 설정
+						}
+					});
+				}
+				else if(type=="agreeErrand") {
+					console.log("agreeErrand");
+					$.messager.confirm('Comfirm', snapVal.content, function(r){
+						if(r) {
+							$("#dlg_agreed").dialog('close');
+							refAlert.child(snapshot.key).update(alertData);//확인했으니 active를 0으로 설정
+						}
+					});
+				}
+				else if(type=="agreedErrand") {
+					console.log("agreedErrand");
+					$.messager.confirm('Comfirm', snapVal.content, function(r){
+						if(r) {
+							$("#dlg_agreed").dialog('close');
+							refAlert.child(snapshot.key).update(alertData);//확인했으니 active를 0으로 설정
+						}
+					});
+				}
+				else if(type=="degreeErrand") {
+					console.log("degreeErrand");
+					$.messager.confirm('Comfirm', snapVal.content, function(r){
+						if(r) {
+							$("#dlg_agreed").dialog('close');
+							refAlert.child(snapshot.key).update(alertData);//확인했으니 active를 0으로 설정
+						}
+					});
+				}
+				else if(type=="degreedErrand") {
+					console.log("degreedErrand");
+					$.messager.confirm('Comfirm', snapVal.content, function(r){
+						if(r) {
+							$("#dlg_agreed").dialog('close');
+							refAlert.child(snapshot.key).update(alertData);//확인했으니 active를 0으로 설정
+						}
+					});
+				}
+				else if(type=="doErrand") {
+					console.log("doErrand");
+					$.messager.confirm('Comfirm', snapVal.content, function(r){
+						if(r) {
+							$("#dlg_agreed").dialog('close');
+							refAlert.child(snapshot.key).update(alertData);//확인했으니 active를 0으로 설정
+						}
+					});
+				}
+				else if(type=="getErrand") {
+					console.log("getErrand");
+					confirmModal(snapshot.key, snapVal.errandKey, snapVal.rider);
+				}
+				else
+					console.log("nothing");
 			}
-			else if(snapshot.val().agreedErrand != null) {
-				console.log("agreedErrand");
-				$.messager.confirm('Comfirm', snapshot.val().content, function(r){
-					if(r) {
-						$("#dlg_agreed").dialog('close');
-					}
-				});
-			}
-			else if(snapshot.val().doErrand != null) {
-				console.log("doErrand");
-			}
-			else if(snapshot.val().getErrand != null) {
-				console.log("getErrand");
-				confirmModal(snapshot.val().getErrand, snapshot.val().rider);
-			}
-			else
-				console.log("nothing");
 		});
 	}
 
 //////////////////////////////////////////위치
+/*
 	//loc테이블에서 사용자의 이메일로 검색,
 	//저장된 좌표값이 있으면 해당 데이터가 있는 테이블의 key값을 locKey 전역변수에 저장
 	//저장된 좌표값이 없으면(처음 사용한다면) 새로운 테이블을 만든 뒤, 그 key값을 locKey 전역변수에 저장
@@ -210,6 +285,7 @@
 		}
 		console.log("locKey of updateLoc=" + locKey);
 	}
+*/
 	//접속자의 현재 위치를 my_lat, my_lng 전역변수에 저장
 	function getLoc() {
 		let watchID = navigator.geolocation.watchPosition(function(position) {
@@ -235,10 +311,22 @@
 		}
 	}
 	//받아온 심부름 정보를 가진 마커 생성
-	function newMarker(arr) {
+	function newErrandMarker(arr) {
 		marker = new google.maps.Marker(arr);
 		markerContainer.set(arr.errandKey, marker);
 		console.log(markerContainer);
+	}
+	//받아온 라이더 정보를 가진 마커 생성
+	function newRiderMarker(arr) {
+		marker = new google.maps.Marker(arr);
+		markerContainer.set(arr.mem_email, marker);
+		console.log(markerContainer);
+	}
+	//마커 전부 제거
+	function removeAllMarkers(){
+		for(let i of markerContainer) {
+			i[1].setMap(null);
+		}
 	}
 
 //////////////////////////////////////////심부름요청자
@@ -251,7 +339,7 @@
 		$('#err_ins').dialog('close');
 	}
 	//심부름을 파이어베이스에 등록
-	function insertErr() {
+	function insertErrand() {
 		let reading = firebase.database().ref("errand");
 		let newErrandKey = reading.push().key;
 		reading.child(newErrandKey).set(
@@ -271,8 +359,10 @@
 				});
 		let alertData = {
 				content : "심부름이 등록되었습니다.",
-				insertErr : newErrandKey,
-				timestamp : getTime()
+				type : "insertErrand",
+				timestamp : getTime(),
+				active : 0,
+				errandKey : newErrandKey
 		};
 		refAlert.push().update(alertData);
 		closeErrForm();
@@ -315,72 +405,10 @@
 								errandKey : childSnapshot.key
 							};
 							let marker = null;
-							newMarker(arr);
+							newErrandMarker(arr);
 						});
 	}
-	//라이더가 심부름 하겠다는 버튼을 눌렀을 때 요청자에게 띄우는 모달창
- 	function confirmModal(errandKey, rider) {
-		$.messager.confirm('Comfirm', rider + "님이 배달을 희망합니다. 수락하시겠습니까?", function(r){
-			if(r) {
-				agreeErrand(errandKey, rider);
-			}
-			else {
-				degreeErrand(errandKey, rider);
-			}
-		});
-		$("#dlg_confirmModal").dialog('close');
-	}
- 	//심부름이 삭제되면 지도에서 해당 마커도 삭제
-	function removeErrand() {
-		refErrand.on("child_removed", function(childSnapshot) {
-			markerContainer.get(childSnapshot.key).setMap(null);
-		});
-	}
-	//수락할 시 status를 1로 설정
-	function agreeErrand(errandKey, rider) {
-		refErrand.child(errandKey).once('value', function(snapshot){
-			let alertData = {
-					content : snapshot.val().errand_item+" 심부름 배달 요청이 수락되었습니다. 심부름을 시작하세요!",
-					agreedErrand : errandKey,
-					requester : mem_email,
-					timestamp : getTime()
-			};
-			firebase.database().ref("alert/"+rider).push().update(alertData);
-			alertData = {
-					content : snapshot.val().errand_item+" 심부름 배달 요청을 수락하셨습니다. 심부름이 시작됩니다!",
-					agreeErrand : errandKey,
-					rider : rider,
-					timestamp : getTime()
-			};
-			refAlert.push().update(alertData);
-		});
-		let updData = {
-			status : 1
-		};
-		refErrand.child(errandKey).update(updData);
-	}
-	//거부할 시 rider를 ""로 설정
-	function degreeErrand(errandKey, rider) {
-		refErrand.child(errandKey).once('value', function(snapshot){
-			let alertData = {
-					content : snapshot.val().errand_item+" 심부름 배달 요청이 거절되었습니다.",
-					timestamp : getTime()
-			};
-			firebase.database().ref("alert/"+rider).push().update(alertData);
-			alertData = {
-					content : snapshot.val().errand_item+" 심부름 배달 요청을 거절하셨습니다.",
-					timestamp : getTime()
-			};
-			refAlert.push().update(alertData);
-		});
-		let updData = {
-			rider : ""
-		};
-		refErrand.child(errandKey).update(updData);
-	}
-
-//////////////////////////////////////////라이더
-	//사용자의 위치가 변경되면 마커의 위치를 변경(심부름은 위치가 변경될 일 없으니 라이더에 적용예정)
+	//심부름의 상태가 변경되면(누군가 이미 이 심부름을 배달하겠다고 요청중이면) 마커를 변경해야함(미완)
 	function changeErrand() {
 		refErrand.on("child_changed", function(childSnapshot) {
 			errandData = childSnapshot.val();
@@ -389,38 +417,148 @@
 							errandData.errand_lng));
 		});
 	}
+ 	//심부름이 삭제되면 지도에서 해당 마커도 삭제
+	function removeErrand() {
+		refErrand.on("child_removed", function(childSnapshot) {
+			markerContainer.get(childSnapshot.key).setMap(null);
+		});
+	}
+	//라이더가 심부름 하겠다는 버튼을 눌렀을 때 요청자에게 띄우는 모달창
+ 	function confirmModal(alertKey, errandKey, rider) {
+		$.messager.confirm('Comfirm', rider + "님이 배달을 희망합니다. 수락하시겠습니까?", function(r){
+			if(r) {
+				agreeErrand(errandKey, rider);
+			}
+			else {
+				degreeErrand(errandKey, rider);
+			}
+			$("#dlg_confirmModal").dialog('close');
+			let alertData = { active : 0 };
+			refAlert.child(alertKey).update(alertData);
+		});
+	}
+	//수락할 시 status를 1로 설정
+	function agreeErrand(errandKey, rider) {
+		refErrand.child(errandKey).once('value', function(snapshot){
+			let alertData = {
+					content : snapshot.val().errand_item+" 심부름 배달 요청이 수락되었습니다. 심부름을 시작하세요!",
+					type : "agreedErrand",
+					timestamp : getTime(),
+					active : 1,
+					errandKey : errandKey,
+					requester : mem_email
+			};
+			firebase.database().ref("alert/"+rider).push().update(alertData);
+			alertData = {
+					content : snapshot.val().errand_item+" 심부름 배달 요청을 수락하셨습니다. 심부름이 시작됩니다!",
+					type : "agreeErrand",
+					timestamp : getTime(),
+					active : 1,
+					errandKey : errandKey,
+					rider : rider
+			};
+			refAlert.push().update(alertData);
+			let updData = {
+				status : 1
+			};
+			refErrand.child(errandKey).update(updData);
+		});
+	}
+	//거부할 시 rider를 ""로 설정
+	function degreeErrand(errandKey, rider) {
+		refErrand.child(errandKey).once('value', function(snapshot){
+			let alertData = {
+					content : snapshot.val().errand_item+" 심부름 배달 요청이 거절되었습니다.",
+					type : "degreedErrand",
+					timestamp : getTime(),
+					active : 1
+			};
+			firebase.database().ref("alert/"+rider).push().update(alertData);
+			alertData = {
+					content : snapshot.val().errand_item+" 심부름 배달 요청을 거절하셨습니다.",
+					type : "degreeErrand",
+					timestamp : getTime(),
+					active : 1
+			};
+			refAlert.push().update(alertData);
+			let updData = {
+				rider : ""
+			};
+			refErrand.child(errandKey).update(updData);
+		});
+	}
+
+//////////////////////////////////////////라이더
+	//rider테이블에서 사용자의 이메일로 검색,
+	//해당 사용자에 대한 테이블이 없으면(처음 사용한다면) 값을 넣어 테이블을 생성
+	function insertRider() {
+		getLoc();
+		let riderData = {
+			lat : my_lat,
+			lng : my_lng,
+			//mem_email : mem_email,
+			timestamp : getTime()
+		};
+		refRider.child(mem_email).update(riderData);
+		console.log(mem_email+" rider loc updated. lat="+my_lat+" lng="+my_lng);
+	}
+	//파이어베이스에 저장된 라이더들의 위치를 마커로 표시 & 추가될 때 마다 마커 추가
+	function addRider() {
+		refRider.on("child_added", function(childSnapshot) {
+			riderData = childSnapshot.val();
+			let arr = {
+				position : {
+					lat : riderData.lat,
+					lng : riderData.lng
+				},
+				map : myMap,
+				mem_email : childSnapshot.key
+			};
+			let marker = null;
+			newRiderMarker(arr);
+		});
+	}
+	//라이더의 위치가 변경되면 마커의 위치도 변경
+	function changeRider() {
+		refRider.on("child_changed", function(childSnapshot) {
+			riderData = childSnapshot.val();
+			markerContainer.get(childSnapshot.key).setPosition(
+					new google.maps.LatLng(riderData.lat,
+							riderData.lng));
+		});
+	}
+	//심부름이 삭제되면 지도에서 해당 마커도 삭제
+	function removeRider() {
+		refRider.on("child_removed", function(childSnapshot) {
+			markerContainer.get(childSnapshot.key).setMap(null);
+		});
+	}
 	//라이더가 심부름 하겠다는 버튼을 눌렀을 때 심부름 테이블 rider 속성 변경
 	function doErrand(errandKey) {
-		let nickname = {
-			rider : $('#nickname').val()
-		}
+		let riderEmail = { rider : mem_email };
 		let observeRider = firebase.database().ref("errand/" + errandKey);
-		observeRider.update(nickname);
+		observeRider.update(riderEmail);
 		observeRider.once('value', function(snapshot){
 			//라이더의 알림 추가
 			let alertData = {
 					content : snapshot.val().errand_item+" 심부름 배달 요청을 보냈습니다.",
-					doErrand : errandKey,
-					timestamp : getTime()
+					type : "doErrand",
+					timestamp : getTime(),
+					active : 1,
+					errandKey : errandKey
 			};
 			refAlert.push().update(alertData);
 			//심부름 요청자의 알림 추가
 			alertData = {
 					content : snapshot.val().errand_item+" 심부름을 희망하는 라이더가 있습니다.",
-					getErrand : errandKey,
-					rider : $('#nickname').val(),
-					timestamp : getTime()
+					type : "getErrand",
+					timestamp : getTime(),
+					active : 1,
+					rider : mem_email,
+					errandKey : errandKey
 			};
 			firebase.database().ref("alert/"+snapshot.val().mem_email).push().update(alertData);
 		});
-	}
-
-	//심부름 요청자/라이더 전환(미완)
-	function switchRider() {
-		if ($("#switchRider").is(":checked") == true) {
-			console.log("라이더");
-		} else
-			console.log("요청자");
 	}
 </script>
 	<table id="dg_board" class="easyui-datagrid" data-options="title:'게시판',toolbar:'#tb_board',width:1000,height:350" style="width:1000px;height:350px">
@@ -520,7 +658,7 @@ else{//조회 결과가 있는데....
 			</div>
 		</form>
     </div>
-    <input type="checkbox" id="switchRider" onclick="switchRider()"><label for="switchRider">요청자/라이더 전환</label>
+    <input type="checkbox" id="switchRider" onclick="switchRider()" checked><label for="switchRider">요청자/라이더 전환</label>
     <form id="chat" action="chatroomList.jsp" method="post">
     <input id="nickname" name="nickname" class="easyui-textbox" data-options="prompt:'닉네임'">
 	<a href="javascript:chatroomList()" class="easyui-linkbutton" iconCls="icon-help" plain="true">내 채팅방 목록</a>
@@ -542,7 +680,7 @@ else{//조회 결과가 있는데....
             <input id="mem_email" class="easyui-textbox" label="닉네임:" labelPosition="top" style="width:100%;">
         </div>
 		<div id="ft_ins">
-			<a href="javascript:insertErr()" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">저장</a>
+			<a href="javascript:insertErrand()" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">저장</a>
 			<a href="javascript:closeErrForm()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">취소</a>
 		</div>
     </div>
@@ -550,10 +688,6 @@ else{//조회 결과가 있는데....
 
     <ul class="collection"  style="padding:0; margin:0;"></ul>
     <!-- 글쓰기 화면 끝 -->
-<!--     <script -->
-<!--     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4pd9w90oFRuCZOILRd07MBwVAthwIbIA&callback=initMap&region=kr" -->
-<!--     async></script> -->
-<!--     <script src="main.js"></script> -->
 	<div id="dlg_confirmModal" title="배달 수락/거절" class="easyui-dialog" style="width:600px;height:400px;padding:10px" data-options="closed:'true',modal:'true'">
 	</div>	
 	<div id="dlg_agreed" title="배달 수락됨" class="easyui-dialog" style="width:600px;height:400px;padding:10px" data-options="closed:'true',modal:'true'">
