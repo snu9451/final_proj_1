@@ -31,6 +31,8 @@
 <!-- 				<prop key="/member/reqLoginView.nds">member-controller</prop> -->
 				<prop key="/member/reqLoginView.nds">member-controller</prop>
 				<prop key="/member/ajaxHtml.nds">member-controller</prop>
+				<prop key="/member/issueTempPw.nds">member-controller</prop>
+				<prop key="/member/doLogin.nds">member-controller</prop>
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 			</props>
 		</property>
@@ -43,6 +45,8 @@
 				<prop key="/member/membertest.nds">membertest</prop>
 				<prop key="/member/reqLoginView.nds">reqLoginView</prop>
 				<prop key="/member/ajaxHtml.nds">ajaxHtml</prop>
+				<prop key="/member/issueTempPw.nds">issueTempPw</prop>
+				<prop key="/member/doLogin.nds">doLogin</prop>
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 			</props>
 		</property>

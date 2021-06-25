@@ -1,4 +1,4 @@
-package com.util;
+package nds.util;
 
 import java.io.IOException;
 import java.io.PrintWriter;

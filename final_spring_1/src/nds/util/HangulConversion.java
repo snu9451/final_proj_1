@@ -1,4 +1,4 @@
-package com.util;
+package nds.util;
 
 public class HangulConversion {
 	public static String toUTF(String en) {

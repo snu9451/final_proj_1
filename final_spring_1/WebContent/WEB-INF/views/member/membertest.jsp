@@ -33,9 +33,11 @@
 		$('#bt').on('click',function(){
 			console.log('안ㄴ녕ㅇ');
 			$.ajax({
-				url: "${pageContext.request.contextPath}/member/reqLoginView.nds",				
-// 				url: '${pageContext.request.contextPath}/member/ajaxHtml.nds',
-// 				type: 'post',
+// 				url: '${pageContext.request.contextPath}/member/issueTempPw.nds?mem_email=snu9451',				
+// 				url: "${pageContext.request.contextPath}/member/reqLoginView.nds",				
+				url: '/member/ajaxHtml.nds',
+				type: 'get',
+				dataType: "html",
 				success: function(data){
 					// 위에서 적은 url 요청의 결과로 받아오는 data
 					// pase 작업이 필요하다. (그냥 꺼내 쓸 수 없음)
@@ -44,10 +46,11 @@
 // 					$('.ajax').text(data1.data);
 // 					console.log("출력===>"+$('#ex > p').text());
 					// ===================[[ ▼ contentType이 json인 data 받아서 처리하기 ]]
-					let imsi = JSON.parse(data);
-					console.log(imsi[0].name);
-					$('#myButton').html(data.name);
+// 					let imsi = JSON.parse(data);
+// 					console.log(imsi[0].name);
+					$('#myButton').html(data);
 					// ===================[[ ▲ contentType이 json인 data 받아서 처리하기 ]]
+// 					alert(data);
 				}
 			})
 		})
@@ -69,6 +72,6 @@
 		<p>회원가입창입니다.</p>
 		<a>Close</a>
 	</div>
-	<div id="myButton" style="width: 500px; height: fit-content;"><button id="bt">버튼 누르세요</button></div>
+	<div id="myButton" style="width: 500px; height: fit-content;"><button id="bt">버튼 누르면 메일전송</button></div>
 </body>
 </html>

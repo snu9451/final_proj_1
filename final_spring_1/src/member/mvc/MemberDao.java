@@ -27,9 +27,9 @@ public class MemberDao {
 
 
 
-	public Map<String, Object> selectOneBySessionKey(String sessionKey) {
+	public Map<String, Object> selectOneBySession(String sessionValue) {
 		Map<String, Object> rmap = null;
-		rmap = sqlSessionTemplate.selectOne("selectOneBySessionKey", sessionKey);
+		rmap = sqlSessionTemplate.selectOne("selectOneBySession", sessionValue);
 		return rmap;
 	}
 	public int saveId(Map<String, Object> pmap) {
@@ -44,4 +44,5 @@ public class MemberDao {
 		result = sqlSessionTemplate.selectOne("uiToSession", pmap);
 		return result;
 	}
+
 }
