@@ -59,7 +59,7 @@ public class ItemDao {
 		//결과 값 ref커서를 반환 받을통
 		map.put("p_temp",p_temp);
 		//프로시져 돌리기
-		sqlSessionTemplate.selectList("proc_board_main_categori",map);
+		sqlSessionTemplate.selectList("proc_board_search",map);
 		//결과 값만 전송
 		return (List<Map<String, Object>>)map.get("p_temp");
 	}
@@ -76,11 +76,11 @@ public class ItemDao {
 	//상품의 사진만 가져옴 - 사용자가 상품하나를 자세히 볼 때
 	public List<String> editItemImg(int pr_bm_no) {
 		logger.info("Dao : editItemImg메소드 호출");
-		List<String> map = new ArrayList();
+		List<String> list = new ArrayList();
 		//select문 돌림
-		map = sqlSessionTemplate.selectList("editItemImg",pr_bm_no);
+		list = sqlSessionTemplate.selectList("editItemImg",pr_bm_no);
 		//결과 값만 전송
-		return map;
+		return list;
 	}
 	//사용자가 상품 수정 버튼의 수정 완료를 누른다면 상품이 업데이트 되어야함.+++++++++++++++++++++++++++++++++++++++++++++++++++++
 	public void updateItem(Map<String, Object> pmap, List<String> itemImgs, int pr_bm_no) {
@@ -88,16 +88,17 @@ public class ItemDao {
 		//프로시져 사용 - 상품 정보 저장 
 		sqlSessionTemplate.selectList("proc_board_update",pmap);
 		//이미지들 교체 후 저장 -------------------------나중에 고려 프로시저 다씨 자기
-		sqlSessionTemplate.selectList("board_update_img",pr_bm_no);
+		//sqlSessionTemplate.selectList("board_update_img",pr_bm_no);
 		
 	}
 	//상품의 내용만 가져옴 - 사용자가 상품하나를 자세히 볼 때
 	public Map<String, Object> selectItemDetailContext(Map<String, Object> pmap) {
 		logger.info("Dao : selectItemDetailContext메소드 호출");
-		//프로시져 돌리기
-		sqlSessionTemplate.selectOne("proc_board_select",pmap);
+		Map<String, Object> map = new HashMap<>();
+		//select문 돌림
+		map = sqlSessionTemplate.selectOne("proc_board_select",pmap);
 		//결과 값만 전송
-		return pmap;
+		return map;
 	}
 
 	//상품 삭제 시

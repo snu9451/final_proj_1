@@ -23,9 +23,11 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory"/>
 	</bean>	
+	
  	<bean id="item_dao" class="item.mvc.ItemDao">
  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
+</beans>
 <!-- 
  	<bean id="admin_dao" class="item.mvc.AdminDao">
  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
@@ -37,4 +39,3 @@
  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
  -->
-</beans>

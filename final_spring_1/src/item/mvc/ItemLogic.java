@@ -1,6 +1,7 @@
 package item.mvc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,15 +70,16 @@ public class ItemLogic {
 	}
 
 	//상품의 내용만 가져옴 - 사용자가 상품하나를 자세히 볼 때
-	public Map<String, Object> selectItemDetailContext(Map<String, Object> pmap) {
+	public Map<String, Object> selectItemDetailContext(String pr_MEM_EMAIL,int pr_bm_no) {
 		logger.info("Logic : selectItemDetailContext메소드 호출");
+		Map<String,Object> pmap = new HashMap<>();
+		pmap.put("pr_MEM_EMAIL", pr_MEM_EMAIL);
+		pmap.put("pr_bm_no", pr_bm_no);
 		return itemDao.selectItemDetailContext(pmap);
 	}
 	//상품의 사진만 가져옴 - 사용자가 상품하나를 자세히 볼 때(//사용자가 상품 수정 버튼 클릭 시 상품의 정보를 다 가져와야하니까 있음 - 사진들 얘랑 같은 거 사용)
-	public List<String> selectItemDetailImgs(Map<String, Object> pmap) {
+	public List<String> selectItemDetailImgs(int pr_bm_no) {
 		logger.info("Logic : selectItemDetailImgs메소드 호출");
-		//상품의 번호를 가져온다.
-		int pr_bm_no = Integer.parseInt(pmap.get("pr_bm_no").toString());
 		return itemDao.editItemImg(pr_bm_no);
 	}
 	
@@ -123,8 +125,6 @@ public class ItemLogic {
 			String pname = "Img_"+i;
 			if(pmap.containsKey(pname)) {
 				itemImgs.add(pmap.get(pname).toString());
-			}else {
-				break;
 			}
 		}
 		//상품의 정보와 사진을 파라미터로 넣는다.

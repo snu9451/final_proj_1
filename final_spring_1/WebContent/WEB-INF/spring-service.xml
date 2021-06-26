@@ -5,6 +5,7 @@
 	<bean id="item_logic" class="item.mvc.ItemLogic">
 		<property name="itemDao" ref="item_dao"/>
 	</bean>
+</beans>
 <!--
 	<bean id="member_logic" class="member.mvc.MemberLogic">
 		<property name="memberDao" ref="member_dao"/>
@@ -16,4 +17,3 @@
 		<property name="pageDao" ref="page_dao"/>
 	</bean>	
 -->
-</beans>
