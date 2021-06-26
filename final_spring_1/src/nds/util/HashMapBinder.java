@@ -1,4 +1,4 @@
-package com.util;
+package nds.util;
 
 import java.io.File;
 import java.util.Enumeration;

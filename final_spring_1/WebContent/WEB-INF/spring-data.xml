@@ -10,7 +10,7 @@
 			<value>jdbc:oracle:thin:@127.0.0.1:1521:orcl11</value>
 		</property>
 		<property name="username">
-			<value>tomato80</value>
+			<value>FINALPROJECT</value>
 		</property>
 		<property name="password">
 			<value>tiger</value>
@@ -23,7 +23,18 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory"/>
 	</bean>	
- 	<bean id="test-dao" class="test.mvc.TestDao">
+ 	<bean id="item_dao" class="item.mvc.ItemDao">
  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
+<!-- 
+ 	<bean id="admin_dao" class="item.mvc.AdminDao">
+ 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+ 	<bean id="member_dao" class="item.mvc.MemberDao">
+ 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+ 	<bean id="page_dao" class="item.mvc.PageDao">
+ 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+ -->
 </beans>

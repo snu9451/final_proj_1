@@ -27,9 +27,22 @@ public class MemberDao {
 
 
 
-	public Map<String, Object> selectOneBySessionKey(String sessionKey) {
+	public Map<String, Object> selectOneBySession(String sessionValue) {
 		Map<String, Object> rmap = null;
-		rmap = sqlSessionTemplate.selectOne("selectOneBySessionKey", sessionKey);
-		return null;
+		rmap = sqlSessionTemplate.selectOne("selectOneBySession", sessionValue);
+		return rmap;
 	}
+	public int saveId(Map<String, Object> pmap) {
+		int result = 0;
+		// Update or Insert To Session (Table) ================================= [[ 프로시저1 ]]
+		result = sqlSessionTemplate.selectOne("uiToSession", pmap);
+		return result;
+	}
+	public int setAutoLogin(Map<String, Object> pmap) {
+		int result = 0;
+		// Update or Insert To Session (Table) ================================= [[ 프로시저1 ]]
+		result = sqlSessionTemplate.selectOne("uiToSession", pmap);
+		return result;
+	}
+
 }

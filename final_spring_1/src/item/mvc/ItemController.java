@@ -15,18 +15,21 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.google.gson.Gson;
-import com.util.HashMapBinder;
+
+import nds.util.AjaxDataPrinter;
+import nds.util.HashMapBinder;
 
 public class ItemController extends MultiActionController {
 	
 	// 스프링에 의해 객체주입을 받을 것이므로, 인스턴스화 하지 않고 null로 선언만 해둠.
-	//private ItemLogic itemLogic = null;
-	private ItemLogic itemLogic = new  ItemLogic();
+	private ItemLogic itemLogic = null;
+
 	// 로그 출력을 위함.
 	Logger logger = Logger.getLogger(ItemController.class);
 	
 	// 스프링에 의해 setter 객체 주입법으로 객체를 주입 받는다.
 	public void setItemLogic(ItemLogic itemLogic) {
+		logger.info("ItemLogic 주입");
 		this.itemLogic = itemLogic;
 	}
 	
@@ -41,13 +44,7 @@ public class ItemController extends MultiActionController {
 		//Json 형태로 가져오기
 		//Gson g = new Gson();
 		//String itemsJson = g.toJson(items);
-		//res.setContentType("application/json;charset=utf-8");
-		//try {
-		//		PrintWriter out = res.getWriter();
-		//		out.print(itemsJson);
-		//} catch (IOException e) {
-		//		e.printStackTrace();
-		//}
+		//AjaxDataPrinter.out(res,"application/json",itemsJson);
 		
 		Map<String,Object> pmap = new HashMap<>();
 		pmap.put("pr_choice","new_rank");
@@ -55,12 +52,7 @@ public class ItemController extends MultiActionController {
 		List<Map<String, Object>> items = itemLogic.selectItemList(pmap);
 		Gson g = new Gson();
 		String itemsJson = g.toJson(items);
-		res.setContentType("application/json;charset=utf-8");
-		try {
-			PrintWriter out = res.getWriter();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		AjaxDataPrinter.out(res,"application/json",itemsJson);
 		System.out.println(itemsJson);
 		
 	}
@@ -140,10 +132,10 @@ public class ItemController extends MultiActionController {
 	public ModelAndView editItem(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : editItem메소드 호출");
 		//front : key는 "pr_bm_no" && value는 상품의 번호를 받아옴.
-		//pmap.put("pr_bm_no", req.getAttribute("pr_bm_no"));
+		//int pr_bm_no = Integer.parseInt(req.getAttribute("pr_bm_no").toString());
 		//상품의 내용, 상품의 사진들을 가져온다
-		//Map<String,Object> item = itemLogic.editItem(pmap);
-		//List<String> itemImg = itemLogic.editItemImg(pmap);
+		//Map<String,Object> item = itemLogic.editItem(pr_bm_no);
+		//List<String> itemImg = itemLogic.editItemImg(pr_bm_no);
 		//ModelAndView mav = new ModelAndView();
 		//상품의 정보를 다 담는다.
 		//mav.addObject("item", item);
@@ -151,11 +143,11 @@ public class ItemController extends MultiActionController {
 		//mav.setViewName("itemTest");
 		//return mav;
 		
-		Map<String,Object> pmap = new HashMap<>();
-		pmap.put("pr_bm_no", req.getAttribute("pr_bm_no"));
+		//상품 번호를 가져온다.
+		int pr_bm_no = Integer.parseInt(req.getAttribute("pr_bm_no").toString());
 		//상품의 내용, 상품의 사진들을 가져온다
-		Map<String,Object> item = itemLogic.editItem(pmap);
-		List<String> itemImg = itemLogic.editItemImg(pmap);
+		Map<String,Object> item = itemLogic.editItem(pr_bm_no);
+		List<String> itemImg = itemLogic.editItemImg(pr_bm_no);
 		ModelAndView mav = new ModelAndView();
 		//상품의 정보를 다 담는다.
 		mav.addObject("item", item);
@@ -168,7 +160,6 @@ public class ItemController extends MultiActionController {
 	
 	
 	//사용자가 상품 수정 버튼의 수정 완료를 누른다면 상품이 업데이트 되야하니까
-	//사진 저장을 어디서 하고 가지고 올지도 처리는 로직? 컨트롤러? ____________________________________
 	public ModelAndView updateItem(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : updateItem메소드 호출");
 		//front : key는 "pr_BM_TITLE" / "pr_BM_CONTENT" / "pr_BM_PRICE" / "pr_bm_no" / "pr_CATEGORY_NAME"
@@ -279,8 +270,8 @@ public class ItemController extends MultiActionController {
 		//상품을 판매 완료 처리한다.
 		String msg = itemLogic.updateItemToConfirm(pmap);
 		//만약에 누군가와 거래 중이라면 판매 완료 처리가 불가능 msg ="false"
-		//그게 아니라면 mss = "true"
-
+		//그게 아니라면 msg = "true"
+		
 	}
 	
 	//상품 찜하기 클릭 시
@@ -345,12 +336,12 @@ public class ItemController extends MultiActionController {
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.bind(pmap);
 		
-		//댓글 또는 대댓글의 정보 가지고 오기, 특히 댓글의 경우 0이 아닌 pr_comment_group을 가져와야한다!+ comment_step
+		//댓글 또는 대댓글의 정보 가지고 오기, 특히 댓글의 경우 0이 아닌 pr_comment_group을 가져와야한다!+ comment_step , result
 		Map<String,Object> comments = itemLogic.insertComment(pmap);
 		try {
 			PrintWriter out = res.getWriter();
 			//여기에는 result가 들어가는데 "true"면 댓글이 잘 등록 되었고, "itemFalse"이면 상품이 삭제 되었다는 것으로 댓글이 못 달린다.
-			//									            "conmentFalse"면 댓글이 삭제 되었다는 것이다.(물론 이 경우는 대댓글 등록일 경우)
+			//									            "comentFalse"면 댓글이 삭제 되었다는 것이다.(물론 이 경우는 대댓글 등록일 경우)
 			out.print(comments);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -365,13 +356,13 @@ public class ItemController extends MultiActionController {
 		Map<String,Object> pmap = new HashMap<>();
 		//값을 넣어줌
 		pmap.put("comment_step", req.getAttribute("comment_step"));
-		pmap = itemLogic.deleteComment(pmap);
+		String result = itemLogic.deleteComment(pmap);
 		PrintWriter out;
 		try {
 			out = res.getWriter();
 			 //여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
 			 //- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
-			out.print(pmap);
+			out.print(result);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -385,13 +376,13 @@ public class ItemController extends MultiActionController {
 		Map<String,Object> pmap = new HashMap<>();
 		//값을 넣어줌
 		pmap.put("comment_step", req.getAttribute("comment_step"));
-		pmap = itemLogic.updateComment(pmap);
+		String result = itemLogic.updateComment(pmap);
 		PrintWriter out;
 		try {
 			out = res.getWriter();
 			 //여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
 			 //- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
-			out.print(pmap);
+			out.print(result);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

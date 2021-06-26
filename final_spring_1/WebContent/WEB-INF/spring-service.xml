@@ -2,7 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="test-logic" class="test.mvc.TestLogic">
-		<property name="testDao" ref="test-dao"/>
+	<bean id="item_logic" class="item.mvc.ItemLogic">
+		<property name="itemDao" ref="item_dao"/>
 	</bean>
+<!--
+	<bean id="member_logic" class="member.mvc.MemberLogic">
+		<property name="memberDao" ref="member_dao"/>
+	</bean>	
+	<bean id="admin_logic" class="admin.mvc.AdminLogic">
+		<property name="adminDao" ref="admin_dao"/>
+	</bean>	
+	<bean id="page_logic" class="page.mvc.PageLogic">
+		<property name="pageDao" ref="page_dao"/>
+	</bean>	
+-->
 </beans>

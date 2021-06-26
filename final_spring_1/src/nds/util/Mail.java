@@ -1,4 +1,4 @@
-package com.util;
+package nds.util;
 
 //////////////////////////////// 회원가입 링크를 전송하기 위한 클래스 ///////////////////////////////////
 import java.util.Properties;
@@ -29,9 +29,9 @@ public class Mail {
 	//받는 계정 주소
 	String receiveEmailAddress = null;
 	//메일 제목
-	final String subject = "[내동생] 회원가입 링크입니다.";
+	String subject = "[내동생] 회원가입 링크입니다.";
 	//메일 내용
-	final String content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n" + 
+	String content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n" + 
 			"<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\r\n" + 
 			"<head>\r\n" + 
 			"<!--[if gte mso 9]>\r\n" + 
@@ -306,6 +306,15 @@ public class Mail {
 	public int setReceiveEmail(String receiveEmailAddress) {
 		//받는 계정 주소
 		this.receiveEmailAddress = receiveEmailAddress;
+		setSMTPserver();
+		sendEmail();
+		return code;
+	}
+	public int setReceiveEmail(String receiveEmailAddress, String subject, String content) {
+		//받는 계정 주소
+		this.receiveEmailAddress = receiveEmailAddress;
+		this.subject = subject;
+		this.content = content;
 		setSMTPserver();
 		sendEmail();
 		return code;

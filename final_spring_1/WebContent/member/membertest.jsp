@@ -21,27 +21,29 @@
 	/* AJAX 기능 테스트용 코드 */
 	$(document).ready(function(){
 		console.log("완료");
-<%-- 		let rr = '<%=(String)request.getParameter("showModal")%>'; --%>
-// 			console.log(rr);
-		let rr1 = '<%=(String)request.getAttribute("showModal")%>';
+		let rr = <%=(String)request.getParameter("showModal")%>;
+		let rr1 = <%=(String)request.getAttribute("showModal")%>;
+			console.log(rr);
 			console.log(rr1);
-		// 회원가입 링크로 접속 시 모달창을 띄워줌 (js로 처리)
-		if(rr1 != null){
 			$('#ex').fadeIn(300);
-		}
 		$('#in').blur(function(){
 			console.log('안ㄴ녕ㅇ');
 			$.ajax({
+// 				url: '${pageContext.request.contextPath}/member/issueTempPw.nds?mem_email=snu9451',
 				url: '${pageContext.request.contextPath}/member/ajaxTest.nds',
 				type: 'get',
 				success: function(data){
 					console.log(data);
+					///////////////////////////////////////////////
 					// 위에서 적은 url 요청의 결과로 받아오는 data
 					// pase 작업이 필요하다. (그냥 꺼내 쓸 수 없음)
-					let data1 = JSON.parse(data);
-					console.log(data1.data);
-					$('.ajax').text(data1.data);
-					console.log("출력===>"+$('#ex > p').text());
+// 					let data1 = JSON.parse(data);
+// 					console.log(data1.data);
+// 					$('.ajax').text(data1.data);
+// 					console.log("출력===>"+$('#ex > p').text());
+					///////////////////////////////////////////////
+
+					alert(data);
 				}
 			})
 		})

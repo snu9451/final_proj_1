@@ -9,7 +9,7 @@
 	<!-- ==================================================== [[ 컨트롤러 영역 ]] ==================================================== -->
 	<bean id="item-controller" class="item.mvc.ItemController">
 		<property name="methodNameResolver" ref="item_resolver"/>
-		<!-- 이건 나중에 로직으로 넘어갈 때 <property name="itemLogic" ref="item_logic"/> -->
+		<property name="itemLogic" ref="item_logic"/>
 	</bean>
 	<!-- ========================================= [[ url과 컨트롤러 mapping ]] ========================================== -->
 	<!-- Url의 mapping이 이루어짐 -->

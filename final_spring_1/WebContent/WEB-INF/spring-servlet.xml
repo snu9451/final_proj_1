@@ -39,12 +39,12 @@
 <!-- 		</property> -->
 <!-- 		<property name="mappings"> -->
 <!-- 			<props> -->
-<!-- 				================== [[ TEST ]] ================== -->
+				<!-- ================== [[ TEST ]] ================== -->
 <!-- 				<prop key="/member/test.nds">test-controller</prop> -->
 <!-- 				<prop key="/member/ajaxTest.nds">test-controller</prop> -->
-<!-- 				================== [[ PAGE ]] ================== -->
+				<!-- ================== [[ PAGE ]] ================== -->
 <!-- 				<prop key="/page/page_index.nds">page-controller</prop> -->
-<!-- 				================== [[ MEMBER ]] ================== -->
+				<!-- ================== [[ MEMBER ]] ================== -->
 <!-- 				<prop key="/member/reqLoginView.nds">member-controller</prop> -->
 <!-- 				<prop key="/member/doLogin.nds">member-controller</prop> -->
 <!-- 			</props> -->
