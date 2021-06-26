@@ -27,5 +27,5 @@
  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
 	
-
+	
 </beans>

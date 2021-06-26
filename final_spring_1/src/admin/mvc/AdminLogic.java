@@ -1,5 +1,7 @@
 package admin.mvc;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,48 +21,60 @@ public class AdminLogic {
 		this.adminDao = adminDao;
 	}
 	
+ // 회원 탈퇴시키기
 	public int outMember(String memEmail) {
 		logger.info("outMember 메소드 호출");
 		
 		return 0;
 	}
 	
-	public List<Map<String, Object>> selectMemberBySearch(String gubun, String keyword) {
-		logger.info("selectMemberBySearch 메소드 호출");
-		
-		return 0;
-	}
-	
-	public int initReportNumber(String gubun, List<Map<String, Object>> pmap) {
+ // (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 시키기)
+	public List<Map<String, Object>> initReportNumber(Map<String, Object> pmap) {
 		logger.info("initReportNumber 메소드 호출");
 		
-		return 0;
+		List<Map<String, Object>> initNumber = new ArrayList<Map<String,Object>>();
+		initNumber = adminDao.initReportNumber(pmap);
+		
+		return null;
 	}
 	
-	public Map<String, Object> selectMemberReportDetail(String memEmail) {
-		logger.info("selectMemberReportDetail 메소드 호출");
+ // 회원 검색
+	public List<Map<String, Object>> selectMemberBySearch(Map<String, Object> pmap) {
+		logger.info("selectMemberBySearch 메소드 호출");
 		
-		Map<String, Object> memberReportDetail = null;
-		memberReportDetail = adminDao.selectMemberReportDetail(memEmail);
+		List<Map<String, Object>> selectMember = new ArrayList<Map<String,Object>>();
+		selectMember = adminDao.selectMemberBySearch(pmap);
 		
-		return memberReportDetail;
+		return selectMember;
 	}
 	
-	public List<Map<String, Object>> selectBoardBySearch(String gubun, String keyword) {
+ // 게시글 검색
+	public Map<String, Object> selectBoardBySearch(Map<String, Object> pmap) {
 		logger.info("selectBoardBySearch 메소드 호출");
 		
-		List<Map<String, Object>> boardReportDetail = null;
-		boardReportDetail = adminDao.selectBoardBySearch(gubun, keyword);
+		List<Map<String, Object>> selectBoard = new ArrayList<Map<String,Object>>();
+		selectBoard = adminDao.selectBoardBySearch(pmap);
 		
-		return boardReportDetail;
+		return null;
 	}
 	
-	public Map<String, Object> selectBoardReportDetail(int bmNo) {
+ // 신고된 회원 상세보기
+	public Map<String, Object> selectMemberReportDetail(Map<String, Object> pmap) {
+		logger.info("selectMemberReportDetail 메소드 호출");
+		
+		String mem_eamil_to = pmap.get("bm_no").toString();
+		pmap.put("mem_eamil_to", mem_eamil_to);
+		
+		return adminDao.selectMemberReportDetail(mem_eamil_to);
+	}
+	
+ // 신고된 게시글 상세보기
+	public Map<String, Object> selectBoardReportDetail(Map<String, Object> pmap) {
 		logger.info("selectBoardReportDetail 메소드 호출");
 		
-		Map<String, Object> boardReportDetail = null;
-		boardReportDetail = adminDao.selectBoardReportDetail(bmNo);
-		
-		return (Map<String, Object>) boardReportDetail;
+		int bm_no = Integer.parseInt(pmap.get("bm_no").toString());
+		pmap.put("bm_no", bm_no);
+	
+		return adminDao.selectBoardReportDetail(bm_no);
 	}
 }

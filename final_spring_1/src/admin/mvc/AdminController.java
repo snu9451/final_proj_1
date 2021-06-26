@@ -1,5 +1,6 @@
 package admin.mvc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,14 +18,12 @@ import item.mvc.ItemLogic;
 import member.mvc.MemberLogic;
 
 public class AdminController extends MultiActionController {
-	Logger logger = Logger.getLogger(AdminController.class);
+	Logger logger = Logger.getLogger(AdminController.class); // 로그 출력
 
-	// 스프링에 의해 객체주입을 받을 것이므로, 인스턴스화 하지 않고 null로 선언만 해둠.
-	private MemberLogic memberLogic = null;
-	private ItemLogic itemLogic = null;
+ // 스프링에 의해 객체주입을 받을 것이므로, 인스턴스화 하지 않고 null로 선언만 해둠
 	private AdminLogic adminLogic = null;
 
-	// setter 객체 주입법으로 객체 주입 받음
+ // setter 객체 주입법으로 객체 주입 받음
 	public void setAdminLogic(AdminLogic adminLogic) {
 		this.adminLogic = adminLogic;
 	}
@@ -41,76 +40,74 @@ public class AdminController extends MultiActionController {
 	}
 
  // (회원, 게시글)신고횟수 초기화 시키기
-	public ModelAndView initReportNumber(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void initReportNumber(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("initReportNumber 메소드 호출");
-
-		ModelAndView mav = new ModelAndView();
-		return mav;
+		
+		// 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
+		
+		int result = 0;
+		ininNumber = adminLogic.initReportNumber(pmap);
+		
+		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
 	}
 
  // 회원 검색
-	public ModelAndView selectMemberBySearch(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void selectMemberBySearch(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectMemberBySearch 메소드 호출");
 
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
+		hmb.bind(pmap); // 검색어 + 검색타입(닉네임이나 이메일)을 담음
 
-		List<Map<String, Object>> selectMember = null;
-		selectMember = memberLogic.selectMemberInfo(pmap); // ItemLogic에 있는 selectMemberInfo(회원 목록들) 가져옴
-
-		ModelAndView mav = new ModelAndView();
-		return mav;
+		List<Map<String, Object>> selectMember = new ArrayList<Map<String,Object>>();
+	 // gubun(관리자가 선택한 카테고리)은 Front에서 request 객체에 담아주어야 함
+		selectMember = adminLogic.selectMemberBySearch(pmap); 
+		req.setAttribute("selectMember", selectMember);
 	}
 
  // 게시글 검색
-	public ModelAndView selectBoardBySearch(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void selectBoardBySearch(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectBoardBySearch 메소드 호출");
 
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
-
-		List<Map<String, Object>> selectBoard = null;
-		selectBoard = itemLogic.selectItemList(pmap); // ItemLogic에 있는 selectItemList(게시판 목록들) 가져옴
-
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/adminTest");
-		mav.addObject("selectBoard", selectBoard);
-		return mav;
+		hmb.bind(pmap); // 게시글 번호, 작성자 담음
+		
+		List<Map<String, Object>> searchBoard = null;
 	}
 
- // 신고된 회원 신고 메시지 상세보기
+ // 신고된 회원 상세보기
 	public ModelAndView selectMemberReportDetail(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectMemberReportDetail 메소드 호출");
+		
+	 // 한글 처리
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
-
-		List<Map<String, Object>> memberReportDetail = null;
-		memberReportDetail = adminLogic.selectMemberReportDetail(pmap);
+		hmb.bind(pmap); // 신고된 회원 이메일 담음
+		
+		pmap = adminLogic.selectMemberReportDetail(pmap);
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/adminTest");
-		mav.addObject("memberReportDetail", memberReportDetail);
+		mav.addObject("memberReportDetail", pmap);
 
 		return mav;
 	}
 
- // 신고된 게시글 신고 메시지 상세보기
+ // 신고된 게시글 상세보기
 	public ModelAndView selectBoardReportDetail(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectBoardReportDetail 메소드 호출");
-
+		
+	 // 한글처리
 		HashMapBinder hmb = new HashMapBinder(req);
-		Map<String, Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.bind(pmap); // 신고된 게시글 번호 담음
+		
+		pmap = adminLogic.selectBoardReportDetail(pmap);
 
-		List<Map<String, Object>> boardReportDetail = null;
-		boardReportDetail = adminLogic.selectBoardReportDetail(pmap);
-
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView(); 
 		mav.setViewName("admin/adminTest");
-		mav.addObject("boardReportDetail", boardReportDetail);
+		mav.addObject("boardReportDetail", pmap);		
 
 		return mav;
 	}
