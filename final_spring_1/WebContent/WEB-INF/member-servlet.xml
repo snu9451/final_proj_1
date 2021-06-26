@@ -17,7 +17,7 @@
 <!-- 	</bean> -->
 	<!-- ========================================= [[ url과 컨트롤러 mapping ]] ========================================== -->
 	<!-- Url의 mapping이 이루어짐 -->
-	<bean id="member-url-mapping" 
+	<!-- <bean id="member-url-mapping" 
 	class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 <!-- 		<property name="interceptors"> -->
 <!-- 			<list> -->
@@ -37,9 +37,9 @@
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 			</props>
 		</property>
-	</bean>
+	</bean> -->
 	<!-- ========================================= [[ url과 메소드 mapping ]] ========================================== -->
-	<bean id="member-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+	<!-- <bean id="member-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
 		<property name="mappings">
 			<props>
 				<!-- ================== [[ 테스트용 url ]] ================== -->
@@ -52,5 +52,5 @@
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 			</props>
 		</property>
-	</bean>	
+	</bean>	 -->
 </beans>

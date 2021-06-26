@@ -5,15 +5,6 @@
 	<bean id="item_logic" class="item.mvc.ItemLogic">
 		<property name="itemDao" ref="item_dao"/>
 	</bean>
-<!--
-	<bean id="member_logic" class="member.mvc.MemberLogic">
-		<property name="memberDao" ref="member_dao"/>
-	</bean>	
-	<bean id="admin_logic" class="admin.mvc.AdminLogic">
-		<property name="adminDao" ref="admin_dao"/>
-	</bean>	
-	<bean id="page_logic" class="page.mvc.PageLogic">
-		<property name="pageDao" ref="page_dao"/>
-	</bean>	
--->
+	
+	
 </beans>

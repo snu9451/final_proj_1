@@ -1,4 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.AdminMapper">
+<!-- 회원 탈퇴시키기 -->
+
+<!-- (회원, 게시글)신고횟수 초기화 시키기 -->
+
+<!-- 회원 검색 -->
+
+<!-- 게시글 검색 -->
+ <select id="boardBySearch" parameterType="map" resultType="map">
+  <!-- select 컬럼
+  from board_master
+  where bm_title=#{bm_title}
+  <if test="boardSearch != 'null'">
+   and bm_title like '%' || #{keyword} || '%'
+  </if> -->
+ </select>
+ 
+<!-- 신고된 회원 상세보기 -->
+ <select id="memberReportDetail" parameterType="map" resultType="map">
+  	<!-- 신고번호ㅡ 신고한 사용자의 이메일, 신고당한 사용자의 이메일, 신고 내용, 신고 날짜, 신고 유형, 처리여부 -->
+  select report_no, mem_email_from, mem_email_to, report_msg, report_date, report_type, report_ishandle
+  from report_mem 
+  where mem_eamil_to=#{mem_eamil_to}
+ </select>
+ 
+<!-- 신고된 게시판 상세보기 -->
+ <select id="boardReportDetail" parameterType="map" resultType="map">
+ 	<!-- 신고번호, 신고한 회원 이메일, 신고내용, 신고날짜, 신고유형, 신고당한 게시글 번호, 처리여부 -->
+  select report_no, mem_email, report_msg, report_date, report_type, bm_no, report_ishandle
+  from report_board
+  where bm_no=#{bm_no}
+ </select>
 </mapper>
