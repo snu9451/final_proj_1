@@ -13,6 +13,7 @@ public class AjaxDataPrinter {
 	 **************************************************/
 	public static void out(HttpServletResponse pres, Object data){
 		pres.setCharacterEncoding("UTF-8");
+		pres.setContentType("text/text");
 		try {
 			PrintWriter writer = pres.getWriter();
 			writer.print(data);

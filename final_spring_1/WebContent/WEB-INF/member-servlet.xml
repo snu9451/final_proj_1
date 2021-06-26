@@ -33,6 +33,7 @@
 				<prop key="/member/ajaxHtml.nds">member-controller</prop>
 				<prop key="/member/issueTempPw.nds">member-controller</prop>
 				<prop key="/member/doLogin.nds">member-controller</prop>
+				<prop key="/member/leave.nds">member-controller</prop>
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 			</props>
 		</property>
@@ -47,6 +48,7 @@
 				<prop key="/member/ajaxHtml.nds">ajaxHtml</prop>
 				<prop key="/member/issueTempPw.nds">issueTempPw</prop>
 				<prop key="/member/doLogin.nds">doLogin</prop>
+				<prop key="/member/leave.nds">leave</prop>
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 			</props>
 		</property>

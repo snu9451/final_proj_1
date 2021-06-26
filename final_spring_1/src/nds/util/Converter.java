@@ -87,11 +87,11 @@ public class Converter {
 		}
 	}
 	
-	public static void main(String[] args) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		MemberVO vo = new MemberVO();
-		// setter 테스트
-		map.put("mem_email", "key@naver.com");
+//	public static void main(String[] args) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		MemberVO vo = new MemberVO();
+//		// setter 테스트
+//		map.put("mem_email", "key@naver.com");
 //		
 		// map의 값을 VO로 옮기기 테스트
 //		Converter.MAPtoVO(map, vo, "mem_email");
@@ -100,5 +100,5 @@ public class Converter {
 //		vo.setMem_age(44);
 //		Converter.VOtoMAP(vo, map, "mem_age");
 //		System.out.println(map.get("mem_age"));
-	}
+//	}
 }

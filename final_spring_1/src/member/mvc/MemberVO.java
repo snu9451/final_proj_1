@@ -1,7 +1,7 @@
 package member.mvc;
 
 public class MemberVO {
-	
+
 	private String mem_email = null;
 	private String mem_img = null;
 	private String mem_nickname = null;
@@ -11,12 +11,12 @@ public class MemberVO {
 	private String mem_create_date = null;
 	private String isSocial = null;
 	private String mem_active = null;
-	private String mem_star = null;
-	private String coin_remain = null;
+	private double mem_star = 0.0;
+	private int coin_remain = 0;
 	private String mem_phone = null;
 	private String mem_payPW = null;
 	private String mem_errand_mode = null;
-	private String mem_star_num = null;
+	private int mem_star_num = 0;
 
 	public String getMem_email() {
 		return mem_email;
@@ -90,19 +90,19 @@ public class MemberVO {
 		this.mem_active = mem_active;
 	}
 
-	public String getMem_star() {
+	public double getMem_star() {
 		return mem_star;
 	}
 
-	public void setMem_star(String mem_star) {
+	public void setMem_star(double mem_star) {
 		this.mem_star = mem_star;
 	}
 
-	public String getCoin_remain() {
+	public int getCoin_remain() {
 		return coin_remain;
 	}
 
-	public void setCoin_remain(String coin_remain) {
+	public void setCoin_remain(int coin_remain) {
 		this.coin_remain = coin_remain;
 	}
 
@@ -130,11 +130,11 @@ public class MemberVO {
 		this.mem_errand_mode = mem_errand_mode;
 	}
 
-	public String getMem_star_num() {
+	public int getMem_star_num() {
 		return mem_star_num;
 	}
 
-	public void setMem_star_num(String mem_star_num) {
+	public void setMem_star_num(int mem_star_num) {
 		this.mem_star_num = mem_star_num;
 	}
 }

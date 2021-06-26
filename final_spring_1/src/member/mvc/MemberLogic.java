@@ -1,6 +1,8 @@
 package member.mvc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -20,7 +22,12 @@ public class MemberLogic {
 	}
 
 
-	public String selectMemberInfo(Map<String, Object> pmap) {
+	public List<Map<String, Object>> selectMemberList() {
+		List<Map<String, Object>> memberList = new ArrayList<Map<String,Object>>();
+		memberList = memberDao.selectMemberList();
+		return memberList;
+	}
+	public Map<String, Object> selectMember(Map<String, Object> pmap) {
 		return null;
 	}
 
@@ -86,6 +93,34 @@ public class MemberLogic {
 		randomCode = sb.toString();
 		return randomCode;
 	}
+
+
+	public int updateMember(String gubun, Map<String, Object> map) {
+		int result = 0;
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		// 변경되는 항목이 [gubun]닉네임/비밀번호/사진(img)/active(활동중->탈퇴)/보유코인(deposit)인 경우
+		// 이메일로 제한조건을 걸어 update할 것이므로
+		pmap.put("mem_email", map.get("mem_email"));
+		pmap.put(gubun, map.get(gubun));
+		result = memberDao.updateMember(pmap);
+		return result;
+	}
+
+
+	public int updatePw(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.updatePw(pmap);
+		return result;
+	}
+
+
+	public int updateActive(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.updateActive(pmap);
+		return result;
+	}
+
+
 
 
 
