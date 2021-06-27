@@ -82,13 +82,20 @@ public class ItemDao {
 		//결과 값만 전송
 		return list;
 	}
-	//사용자가 상품 수정 버튼의 수정 완료를 누른다면 상품이 업데이트 되어야함.+++++++++++++++++++++++++++++++++++++++++++++++++++++
-	public void updateItem(Map<String, Object> pmap, List<String> itemImgs, int pr_bm_no) {
+	//사용자가 상품 수정 버튼의 수정 완료를 누른다면 상품이 업데이트 되어야함.
+	public void updateItem(Map<String, Object> pmap, List<Map<String, Object>> itemImgs, int pr_bm_no) {
 		logger.info("Dao : updateItem메소드 호출");
 		//프로시져 사용 - 상품 정보 저장 
 		sqlSessionTemplate.selectList("proc_board_update",pmap);
-		//이미지들 교체 후 저장 -------------------------나중에 고려 프로시저 다씨 자기
-		//sqlSessionTemplate.selectList("board_update_img",pr_bm_no);
+		//이미지들 삭제 후 저장
+		//삭제
+		sqlSessionTemplate.delete("itemImgdelete",pr_bm_no);	
+		//저장
+		for(Map<String, Object> item: itemImgs) {
+			item.put("bm_no",pr_bm_no);
+			//등록된 상품 번호를 이용해서 사진을 넣고 insert문 돌림
+			sqlSessionTemplate.insert("edit",item);			
+		}
 		
 	}
 	//상품의 내용만 가져옴 - 사용자가 상품하나를 자세히 볼 때
@@ -143,14 +150,18 @@ public class ItemDao {
 		return pmap.get("result").toString();		
 	}
 	//사용자가 상품을 등록 시에
-	public void insertItem(Map<String, Object> pmap, List<String> itemImgs) {
+	public void insertItem(Map<String, Object> pmap, List<Map<String, Object>> itemImgs) {
 		logger.info("Dao : insertItem메소드 호출");
 		//프로시져 - 상품 등록 정보
 		sqlSessionTemplate.selectOne("proc_board_insert",pmap);
 		//등록된 상품의 번호
 		int result = Integer.parseInt(pmap.get("result").toString());
-		//등록된 상품 번호를 이용해서 사진을 넣고 insert문 돌림**********************************
-		//sqlSessionTemplate.selectOne("editItemContext",itemImgs);
+		for(Map<String, Object> item: itemImgs) {
+			item.put("bm_no",result);
+			//등록된 상품 번호를 이용해서 사진을 넣고 insert문 돌림
+			sqlSessionTemplate.insert("edit",item);			
+		}
+		
 	}
 	
 	

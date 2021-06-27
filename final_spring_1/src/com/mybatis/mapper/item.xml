@@ -56,7 +56,11 @@
                      , #{pr_bm_no}, #{pr_CATEGORY_NAME})}
    </select>
    
-   <!-- 6-2 이미지 교체후 저장 -->
+   <!-- 6-2 이미지 삭제 -->
+   <delete id="itemImgdelete"  parameterType="int">
+   		delete from board_img
+   		where bm_no=#{pr_bm_no}
+   </delete>
 
    <!-- 7 상품의 내용만 가져옴 - 사용자가 상품하나를 자세히 볼 때 -->
    <select id="proc_board_select" resultType="map" parameterType="java.util.Map">
@@ -107,13 +111,19 @@
                      , #{result, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String})}
    </select>
    
-   <!-- 14 사용자가 상품을 등록 시에 -->
+   <!-- 14-1 사용자가 상품을 등록 시에 -->
    <select id="proc_board_insert" statementType="CALLABLE" parameterType="java.util.Map">
-      {CALL proc_board_insert(#{pr_choice}
-                     , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
+      {CALL proc_board_insert(#{pr_BM_TITLE}
+                     , #{pr_BM_CONTENT},#{pr_BM_PRICE},#{pr_SELLER_NICKNAME},#{pr_CATEGORY_NAME}
+                     , #{result , mode=OUT, jdbcType=INTEGER, javaType=int})}
    </select>
+
    
-   
+   <!-- 14-2 사용자가 상품을 등록 시에 -->
+	<insert id="edit" parameterType="java.util.Map">
+		insert into board_img(bi_no, bm_no, bi_file, bi_size) values
+		(seq_board_img.nextval, #{bm_no}, #{bi_file}, #{bi_size})
+	</insert>
 
 
 </mapper>

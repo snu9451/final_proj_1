@@ -2,6 +2,7 @@ package item.mvc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -178,12 +179,54 @@ public class ItemController extends MultiActionController {
 		//        value는  상품 제목         상품 내용            상품 가격         상품 번호        상품 카테고리
 		//        key는 "Img_1"  / "Img_2"  /  "Img_3"  /  "Img_4"  /  "Img_5"
 		//한글 처리
-		HashMapBinder hmb = new HashMapBinder(req);
-		Map<String,Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
-		//상품의 내용, 상품의 사진들을 저장한다.
-		itemLogic.updateItem(pmap);
+		//HashMapBinder hmb = new HashMapBinder(req);
+		//Map<String,Object> pmap = new HashMap<>();
+		//hmb.multiBind(pmap);
+		//ModelAndView mav = new ModelAndView();
+		////사이즈 초과시 에러를 전송시킴
+		//if(pmap.containsKey("error")) {
+		//	System.out.println(pmap.get("error"));
+		//	//페이지 전송
+		//	mav.setViewName("itemTest");
+		//	return mav;
+		//}
+		////상품의 내용, 상품의 사진들을 저장한다.
+		//itemLogic.updateItem(pmap);
+		////페이지 전송
+		//mav.setViewName("itemTest");
+		//return mav;
+		
 		ModelAndView mav = new ModelAndView();
+		Map<String,Object> pmap = new HashMap<>();
+		pmap.put("pr_BM_TITLE","내용111" );
+		pmap.put("pr_BM_CONTENT","내용111" );
+		pmap.put("pr_BM_PRICE",2000);
+		pmap.put("pr_SELLER_NICKNAME","바나나" );
+		pmap.put("pr_CATEGORY_NAME","기타" );
+		pmap.put("pr_bm_no",32);
+		List<Map<String,Object>> itemImgs = new ArrayList<Map<String,Object>>();
+		Map<String,Object> map1 = new HashMap<String, Object>();
+		map1.put("bi_file", "23.png");
+		map1.put("bi_size", 23);
+		itemImgs.add(map1);
+		map1 = new HashMap<String, Object>();
+		map1.put("bi_file", "24.png");
+		map1.put("bi_size", 555);
+		itemImgs.add(map1);
+		map1 = new HashMap<String, Object>();
+		map1.put("bi_file", "25.png");
+		map1.put("bi_size", 532);
+		itemImgs.add(map1);
+		pmap.put("itemImgs", itemImgs);
+		//사이즈 초과시 에러를 전송시킴
+		if(pmap.containsKey("error")) {
+			System.out.println(pmap.get("error"));
+			//페이지 전송
+			mav.setViewName("itemTest");
+			return mav;
+		}
+		//상품의 내용, 상품의 사진들을 저장한다.
+		itemLogic.insertItem(pmap);
 		//페이지 전송
 		mav.setViewName("itemTest");
 		return mav;
@@ -399,14 +442,44 @@ public class ItemController extends MultiActionController {
 		logger.info("controller : insertItem메소드 호출");
 		//front : key는 pr_BM_TITLE   /   pr_BM_CONTENT  /  pr_BM_PRICE  /   pr_SELLER_NICKNAME  /  pr_CATEGORY_NAME  
 		//      value는   제목                 내용              가격                닉네임                  카테고리         
-		//        key는 "Img_1"  / "Img_2"  /  "Img_3"  /  "Img_4"  /  "Img_5"
+		//        key는 "Img1" "img2" ....
+		//ModelAndView mav = new ModelAndView();
+		////한글 처리
+		//HashMapBinder hmb = new HashMapBinder(req);
+		//Map<String,Object> pmap = new HashMap<>();
+		//hmb.multiBind(pmap);
+		////사이즈 초과시 에러를 전송시킴
+		//if(pmap.containsKey("error")) {
+		//	System.out.println(pmap.get("error"));
+		//	//페이지 전송
+		//	mav.setViewName("itemTest");
+		//	return mav;
+		//}
+		////상품의 내용, 상품의 사진들을 저장한다.
+		//itemLogic.insertItem(pmap);
+		////페이지 전송
+		//mav.setViewName("itemTest");
+		//return mav;
+		
+		ModelAndView mav = new ModelAndView();
 		//한글 처리
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
+		hmb.multiBind(pmap);
+		pmap.put("pr_BM_TITLE","내용" );
+		pmap.put("pr_BM_CONTENT","내용" );
+		pmap.put("pr_BM_PRICE",3000);
+		pmap.put("pr_SELLER_NICKNAME","바나나" );
+		pmap.put("pr_CATEGORY_NAME","기타" );
+		//사이즈 초과시 에러를 전송시킴
+		if(pmap.containsKey("error")) {
+			System.out.println(pmap.get("error"));
+			//페이지 전송
+			mav.setViewName("itemTest");
+			return mav;
+		}
 		//상품의 내용, 상품의 사진들을 저장한다.
 		itemLogic.insertItem(pmap);
-		ModelAndView mav = new ModelAndView();
 		//페이지 전송
 		mav.setViewName("itemTest");
 		return mav;

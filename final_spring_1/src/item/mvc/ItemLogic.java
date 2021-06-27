@@ -55,16 +55,8 @@ public class ItemLogic {
 		logger.info("Logic : updateItem메소드 호출");
 		//상품 번호를 가져온다.
 		int pr_bm_no = Integer.parseInt(pmap.get("pr_bm_no").toString());
-		//사진을 1~5까지 넣고 없디먄 break로 중지시킨다.
-		List<String> itemImgs = new ArrayList<>();
-		for(int i=1;i<=5;i++) {
-			String pname = "Img_"+i;
-			if(pmap.containsKey(pname)) {
-				itemImgs.add(pmap.get(pname).toString());
-			}else {
-				break;
-			}
-		}
+		//등록된 상품들의 사진
+		List<Map<String,Object>> itemImgs = (List<Map<String, Object>>) pmap.get("itemImgs");
 		//상품의 정보(pmap) 와 사진(itemImgs)을 파라미터로 넣는다.
 		itemDao.updateItem(pmap,itemImgs,pr_bm_no);
 	}
@@ -119,14 +111,8 @@ public class ItemLogic {
 	//사용자가 상품을 등록 시에
 	public void insertItem(Map<String, Object> pmap) {
 		logger.info("Logic : insertItem메소드 호출");
-		//사진을 1~5까지 넣고 없디먄 break로 중지시킨다.
-		List<String> itemImgs = new ArrayList<>();
-		for(int i=1;i<=5;i++) {
-			String pname = "Img_"+i;
-			if(pmap.containsKey(pname)) {
-				itemImgs.add(pmap.get(pname).toString());
-			}
-		}
+		//등록된 상품들의 사진
+		List<Map<String,Object>> itemImgs = (List<Map<String, Object>>) pmap.get("itemImgs");
 		//상품의 정보와 사진을 파라미터로 넣는다.
 		itemDao.insertItem(pmap,itemImgs);
 	}
