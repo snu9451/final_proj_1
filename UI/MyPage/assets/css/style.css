@@ -537,8 +537,8 @@ input[type="checkbox"] {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 25vh;
-  background: url("../img/hero-bg3.jpg") top center;
+  height: 15vh;
+  /* background: url("../img/hero-bg3.") top center; */
   background-size: cover;
   position: relative;
   background-repeat: no-repeat;
@@ -674,9 +674,16 @@ input[type="checkbox"] {
   text-align: center;
 }
 .featured-services .btn-danger,
-.btn-success {
+.btn-success, .btn-warning {
   margin: 5px;
   color: #fff;
+  font-size: 1rem;
+  font-family: "Cafe24SsurroundAir";
+}
+.btn-warning {
+  margin: 5px;
+  color: #fff;
+  font-weight:bold;
   font-size: 1rem;
   font-family: "Cafe24SsurroundAir";
 }
@@ -686,7 +693,6 @@ input[type="checkbox"] {
   margin: auto;
 }
 .featured-services .nickname {
-  margin-top: 15px;
   display: flex;
   padding: 10px;
 }
@@ -696,6 +702,7 @@ input[type="checkbox"] {
   padding: 10px;
 }
 .featured-services .email {
+  margin-top: 15px;
   display: flex;
   padding: 10px;
 }
@@ -1072,8 +1079,8 @@ table.errand_tb {
   line-height: 1.5;
   border: 1px solid #ccc;
   margin: 20px 10px;
-  table-layout: fixed;
   text-align: center;
+  table-layout: fixed;
 }
 table.errand_tb thead {
   border-right: 1px solid #ccc;

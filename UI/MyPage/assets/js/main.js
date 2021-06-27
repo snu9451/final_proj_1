@@ -398,7 +398,7 @@
   
   
   ////////////신뢰도(별점)/////////////
-  ratings = { RatingScore: 4.1 }//////<-별점 inserthere
+  ratings = { RatingScore: $("#ratingScore").val()*1 }//////<-별점 inserthere
   totalRating = 5;
   table = document.querySelector('.RatingStar');
   function rateIt() {

@@ -61,10 +61,11 @@
 			</div>
 			<div class="myinfo_bottom">
 				<div class="myinfo_left">
-					<div class="nickname">
-						<h4 class="con_title">닉네임</h4>
-						<h4 class="con_nick">insert here</h4>
+					<div class="email">
+						<h4 class="con_title">이메일</h4>
+						<h4 class="con_email">insert here</h4>
 					</div>
+						<input type="hidden" name="rowPerPage" value="3.75" id="ratingScore">
 					<div class="trust">
 						<h4 class="con_title">신뢰도</h4>
 						<div class='RatingStar'>
@@ -76,9 +77,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="email">
-						<h4 class="con_title">이메일</h4>
-						<h4 class="con_email">insert here</h4>
+					<div class="nickname">
+						<h4 class="con_title">닉네임</h4>
+						<h4 class="con_nick">닉네임넥네임</h4>
 					</div>
 				</div>
 				<div class="myinfo_right">
@@ -96,6 +97,9 @@
 							<input type="password" />
 						</div>
 						<div class="pwchange_leave">
+							<a href="#" data-toggle="modal" data-target="#nickChange">
+								<button type="button" class="btn btn-warning">닉네임 변경</button>
+							</a>
 							<a href="#" data-toggle="modal" data-target="#pwChange">
 								<button type="button" class="btn btn-success">비밀번호 변경</button>
 							</a>
@@ -113,6 +117,47 @@
 	
 	<!-- ============================= Modal Part ========================= -->
 
+  	<!-- 닉네임 변경하기 -->
+	<div>
+	  <div class="modal fade" id="nickChange" tabindex="-1" role="dialog" aria-labelledby="logIn" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered" role="document">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <h3 class="modal-title" id="exampleModalLongTitle" style="font-size : 20px; font-weight:bold">
+	          <i class="fas fa-question-circle" style="color : orange"></i> 닉네임 중복 확인</h3>
+	          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	            <span aria-hidden="true">&times;</span>
+	          </button>
+	        </div>
+	        <div class="modal-body text-center d-flex justify-content-center">
+	          <div class="col-12 log__box d-flex flex-column justify-content-center">
+	            <div>
+		            <div class="col-10 d-flex flex-column">
+		          		<h4 style="font-size : 20px; font-weight:bold">새 닉네임을 입력해주세요.</h4>
+		            </div>
+		            <div class="col-12 d-flex justify-content-around">
+		            	<span class="col-1 d-flex flex-column"></span>
+	                	<div class="col-8 d-flex flex-column">
+	                  		<input class="form-control mb-2" type="text" style="padding:0px;">
+	                	</div>
+	                	<div class="col-3 d-flex flex-column">
+			                <button class="btn btn-dark btn-sm" style="margin-left : 0px;">중복확인</button>
+	                	</div>
+	              	</div>
+		            <div class="col-10 d-flex justify-content-around">
+			          <h4 style="font-size : 15px; color : red; font-weight:bold">중복된 닉네임 입니다.</h4>
+		            </div>
+	            </div>
+	          </div>
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+	          <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
   	<!-- 비밀번호 변경하기 -->
 	<div>
 	  <div class="modal fade" id="pwChange" tabindex="-1" role="dialog" aria-labelledby="logIn" aria-hidden="true">
