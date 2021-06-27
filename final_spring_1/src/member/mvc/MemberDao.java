@@ -99,7 +99,47 @@ public class MemberDao {
 		// 프로시저는 return이 없다. 따라서 pmap에서 직접 결과를 꺼내줘야 함.
 		sqlSessionTemplate.update("updateActive", pmap);
 		result = (Integer)pmap.get("proc_result");
-		return 0;
+		return result;
+	}
+
+
+
+
+
+
+
+	public int withdraw(Map<String, Object> pmap) {
+		int result = 0;
+		// 프로시저는 return이 없다. 따라서 pmap에서 직접 결과를 꺼내줘야 함.
+		sqlSessionTemplate.update("withdraw", pmap);
+		result = (Integer)pmap.get("proc_result");
+		return result;
+	}
+
+
+
+
+
+
+
+	public Map<String, Object> selectMember(Map<String, Object> pmap) {
+		Map<String, Object> rmap = null;
+		sqlSessionTemplate.selectOne("selectMember", pmap);
+		logger.info(pmap);
+		return rmap;
+	}
+
+
+
+
+
+
+
+	public Map<String, Object> selectEmail(Map<String, Object> pmap) {
+		return sqlSessionTemplate.selectOne("selectEmail",pmap);
+	}
+	public Map<String, Object> selectNickName(Map<String, Object> pmap) {
+		return sqlSessionTemplate.selectOne("selectNickName",pmap);
 	}
 
 }

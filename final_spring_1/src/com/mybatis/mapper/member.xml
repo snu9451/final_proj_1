@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.MemberMapper">
-	<select id="selectZipCode" resultType="map">
-		SELECT * 
-		  FROM ZIPCODE_T 
-		 WHERE UID_NO BETWEEN 3800 AND 3802
+
+<!-- ==================================== [[ ＳＥＬＥＣＴ ]] ==================================== -->
+	<select id="selectNickName" parameterType="map" resultType="map">
+		SELECT *
+		  FROM member
+		 WHERE mem_nickname = #{mem_nickname}
 	</select>
-	<select id="checkSIGU" parameterType="int" resultType="java.lang.String">
-		SELECT SIGU
-		  FROM ZIPCODE_T 
-		 WHERE UID_NO = #{value}
+	<select id="selectEmail" parameterType="map" resultType="map">
+		SELECT *
+		  FROM member
+		 WHERE mem_email = #{mem_email}
 	</select>
-	<!-- SELECT mem_email,  -->
-	<select id="selectOneBySessionKey" statementType="STATEMENT">
-<!-- 		{CALL}		 -->
-	</select>
+<!-- ==================================== [[ ＵＰＤＡＴＥ ]] ==================================== -->
+	<update id="updateActive" statementType="CALLABLE" >
+		
+	</update>
+<!-- ==================================== [[ ＩＮＳＥＲＴ ]] ==================================== -->
+
+<!-- ==================================== [[ ＤＥＬＥＴＥ ]] ==================================== -->
+
 </mapper>

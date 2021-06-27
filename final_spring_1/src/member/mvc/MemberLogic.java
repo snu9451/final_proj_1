@@ -28,7 +28,9 @@ public class MemberLogic {
 		return memberList;
 	}
 	public Map<String, Object> selectMember(Map<String, Object> pmap) {
-		return null;
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = memberDao.selectMember(pmap);
+		return rmap;
 	}
 
 
@@ -59,14 +61,20 @@ public class MemberLogic {
 	}
 
 
-	public String getRandomCode(int length) {
+	public String getRandomCode(String option, int length) {
 		String randomCode = null;
 		ArrayList<String> result = new ArrayList<String>();
 		String[] eng =  {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		String[] eng2 = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
 		Random r = new Random();
 		for(int j=0; j<length; j++) {
-			int which = r.nextInt(3);
+			// 숫자로만 구성된 인증코드를 생성하는 경우
+			int which = 0;
+			if("ON".equals(option)) {
+				which = 0;
+			} else if("NUL".equals(option)) {
+				which = r.nextInt(3);				
+			}
 			// 숫자
 			if(which == 0) {
 				// 0부터 9까지 중 랜덤한 숫자를 가져와줘.
@@ -121,7 +129,31 @@ public class MemberLogic {
 	}
 
 
+	public int withdraw(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.withdraw(pmap);
+		return result;
+	}
 
+
+	public Map<String, Object> selectEmail(Map<String, Object> pmap) {
+		Map<String, Object> rmap = null;
+		rmap = memberDao.selectEmail(pmap);
+		return rmap;
+	}
+	public Map<String, Object> selectNickName(Map<String, Object> pmap) {
+		Map<String, Object> rmap = null;
+		rmap = memberDao.selectNickName(pmap);
+		return rmap;
+	}
+
+
+	// 테스트용 메인
+//	public static void main(String[] args) {
+//		System.out.println(new MemberLogic().getRandomCode("ON", 6));
+//		System.out.println(new MemberLogic().getRandomCode("NUL", 15));
+//	}
+	
 
 
 

@@ -6,51 +6,71 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
-	<!-- ==================================================== [[ 컨트롤러 영역 ]] ==================================================== -->
+	<!-- ==================================================== [[ 컨트롤러 영역 ]] 
+		==================================================== -->
 	<bean id="member-controller" class="member.mvc.MemberController">
-		<property name="methodNameResolver" ref="member-resolver"/>
-<!-- 		<property name="memberLogic" ref="member-logic"/> -->
+		<property name="methodNameResolver" ref="member-resolver" />
+		<property name="memberLogic" ref="member-logic"/>
 	</bean>
 	<!-- 인터셉터에 logic 클래스를 주입 -->
-<!-- 	<bean id="login-check-interceptor" class="com.util.LoginCheckInterceptor"> -->
-<!-- 		<property name="memberLogic" ref="member-logic"/> -->
-<!-- 	</bean> -->
+	<!-- <bean id="login-check-interceptor" class="com.util.LoginCheckInterceptor"> -->
+	<!-- <property name="memberLogic" ref="member-logic"/> -->
+	<!-- </bean> -->
 	<!-- ========================================= [[ url과 컨트롤러 mapping ]] ========================================== -->
 	<!-- Url의 mapping이 이루어짐 -->
-	<!-- <bean id="member-url-mapping" 
-	class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-<!-- 		<property name="interceptors"> -->
-<!-- 			<list> -->
-<!-- 				<ref bean="login-check-interceptor"/> -->
-<!-- 			</list> -->
-<!-- 		</property> -->
+	<bean id="member-url-mapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<!-- <property name="interceptors"> -->
+		<!-- <list> -->
+		<!-- <ref bean="login-check-interceptor"/> -->
+		<!-- </list> -->
+		<!-- </property> -->
 		<property name="mappings">
 			<props>
-				<!-- ================== [[ 테스트용 url ]] ================== -->
-				<prop key="/member/membertest.nds">member-controller</prop>
-<!-- 				<prop key="/member/reqLoginView.nds">member-controller</prop> -->
 				<prop key="/member/reqLoginView.nds">member-controller</prop>
-				<prop key="/member/ajaxHtml.nds">member-controller</prop>
+				<prop key="/member/selectNickName.nds">member-controller</prop>
+				<prop key="/member/selectEmail.nds">member-controller</prop>
+				<prop key="/member/updateNickName.nds">member-controller</prop>
+				<prop key="/member/updateImg.nds">member-controller</prop>
+				<prop key="/member/updatePw.nds">member-controller</prop>
+				<prop key="/member/chargeCoin.nds">member-controller</prop>
+				<prop key="/member/withdraw.nds">member-controller</prop>
+				<prop key="/member/sendCode.nds">member-controller</prop>
 				<prop key="/member/issueTempPw.nds">member-controller</prop>
 				<prop key="/member/doLogin.nds">member-controller</prop>
 				<prop key="/member/leave.nds">member-controller</prop>
 				<!-- ================== [[ 테스트용 url ]] ================== -->
+				<prop key="/member/getAuth.nds">member-controller</prop>
+				<prop key="/member/membertest.nds">member-controller</prop>
+				<!-- <prop key="/member/reqLoginView.nds">member-controller</prop> -->
+				<prop key="/member/ajaxHtml.nds">member-controller</prop>
+				<!-- ================== [[ 테스트용 url ]] ================== -->
 			</props>
 		</property>
-	</bean> -->
+	</bean>
 	<!-- ========================================= [[ url과 메소드 mapping ]] ========================================== -->
-	<!-- <bean id="member-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+	<bean id="member-resolver"
+		class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
 		<property name="mappings">
 			<props>
-				<!-- ================== [[ 테스트용 url ]] ================== -->
-				<prop key="/member/membertest.nds">membertest</prop>
 				<prop key="/member/reqLoginView.nds">reqLoginView</prop>
-				<prop key="/member/ajaxHtml.nds">ajaxHtml</prop>
+				<prop key="/member/selectNickName.nds">selectNickName</prop>
+				<prop key="/member/selectEmail.nds">selectEmail</prop>
+				<prop key="/member/updateNickName.nds">updateNickName</prop>
+				<prop key="/member/updateImg.nds">updateImg</prop>
+				<prop key="/member/updatePw.nds">updatePw</prop>
+				<prop key="/member/chargeCoin.nds">chargeCoin</prop>
+				<prop key="/member/withdraw.nds">withdraw</prop>
+				<prop key="/member/sendCode.nds">sendCode</prop>
 				<prop key="/member/issueTempPw.nds">issueTempPw</prop>
 				<prop key="/member/doLogin.nds">doLogin</prop>
 				<prop key="/member/leave.nds">leave</prop>
 				<!-- ================== [[ 테스트용 url ]] ================== -->
+				<prop key="/member/getAuth.nds">getAuth</prop>
+				<prop key="/member/membertest.nds">membertest</prop>
+				<prop key="/member/ajaxHtml.nds">ajaxHtml</prop>
+				<!-- ================== [[ 테스트용 url ]] ================== -->
 			</props>
 		</property>
-	</bean>	 -->
+	</bean>
 </beans>

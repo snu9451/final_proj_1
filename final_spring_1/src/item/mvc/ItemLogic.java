@@ -101,7 +101,7 @@ public class ItemLogic {
   public int likeItem(Map<String, Object> pmap) {
     logger.info("Logic : likeItem메소드 호출");
     return itemDao.likeItem(pmap);
-  }<<<<<<<HEAD
+  }
 
   // 댓글 달기. 대댓글 달기
   public Map<String, Object> insertComment(Map<String, Object> pmap) {
@@ -137,7 +137,5 @@ public class ItemLogic {
 		//상품의 정보와 사진을 파라미터로 넣는다.
 		itemDao.insertItem(pmap,itemImgs);
 	}
-
-  =======>>>>>>>9d 05 ca7a0e6e882d24921231ba978f81ff3021a1
 
 }
