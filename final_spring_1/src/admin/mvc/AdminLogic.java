@@ -21,11 +21,13 @@ public class AdminLogic {
 		this.adminDao = adminDao;
 	}
 	
- // 회원 탈퇴시키기
-	public int outMember(String memEmail) {
+ // 회원 탈퇴하기(mem_active를 T에서 F로)
+	public int outMember(Map<String, Object> pmap) {
 		logger.info("outMember 메소드 호출");
 		
-		return 0;
+		int result = adminDao.outMember(pmap);
+		
+		return result;
 	}
 	
  // (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 바꾸기)
@@ -61,19 +63,19 @@ public class AdminLogic {
 	public Map<String, Object> selectMemberReportDetail(Map<String, Object> pmap) {
 		logger.info("selectMemberReportDetail 메소드 호출");
 		
-		String mem_eamil_to = pmap.get("bm_no").toString();
-		pmap.put("mem_eamil_to", mem_eamil_to);
+		String report_msg = pmap.get("report_msg").toString();
+		pmap.put("report_msg", report_msg);
 		
-		return adminDao.selectMemberReportDetail(mem_eamil_to);
+		return adminDao.selectMemberReportDetail(report_msg);
 	}
 	
  // 신고된 게시글 상세보기
 	public Map<String, Object> selectBoardReportDetail(Map<String, Object> pmap) {
 		logger.info("selectBoardReportDetail 메소드 호출");
 		
-		int bm_no = Integer.parseInt(pmap.get("bm_no").toString());
-		pmap.put("bm_no", bm_no);
+		String report_msg = pmap.get("report_msg").toString();
+		pmap.put("report_msg", report_msg);
 	
-		return adminDao.selectBoardReportDetail(bm_no);
+		return adminDao.selectBoardReportDetail(report_msg);
 	}
 }

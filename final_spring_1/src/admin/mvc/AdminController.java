@@ -28,17 +28,25 @@ public class AdminController extends MultiActionController {
 		this.adminLogic = adminLogic;
 	}
 
- // 회원 탈퇴시키기
+ // 회원 탈퇴하기(mem_active를 T에서 F로)
 	public void outMember(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("outMember 메소드 호출");
 
-		HashMapBinder hmb = new HashMapBinder(req);
-		Map<String, Object> pmap = new HashMap<>();
-		hmb.bind(pmap); // 회원 정보를 담음
-	
+		
+		HashMapBinder hmb = new HashMapBinder(req); Map<String, Object> pmap = new
+		HashMap<>(); hmb.bind(pmap); // 회원 정보를 담음
+		 		
 	 // 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
+		int result = adminLogic.outMember(pmap);
+		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
 		
-		
+	 // 테스트	
+		/*
+		 * Map<String, Object> pmap = new HashMap<String, Object>();
+		 * pmap.put("mem_email", "melon@good.com"); 
+		 * null 체크됨 int result = adminLogic.outMember(pmap); logger.info("처리결과 =====> "
+		 * + result);
+		 */
 	}
 
  // (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 바꾸기)
@@ -53,7 +61,6 @@ public class AdminController extends MultiActionController {
 		int result = adminLogic.initReportNumber(pmap);
 		
 		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
-		
 		
 	 // 테스트
 //		Map<String, Object> pmap = new HashMap<String, Object>();
@@ -103,7 +110,7 @@ public class AdminController extends MultiActionController {
 		pmap = adminLogic.selectMemberReportDetail(pmap);
 
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/adminTest");
+		mav.setViewName("admin/memberReportDetail");
 		mav.addObject("memberReportDetail", pmap);
 
 		return mav;
@@ -114,14 +121,21 @@ public class AdminController extends MultiActionController {
 		logger.info("selectBoardReportDetail 메소드 호출");
 		
 	 // 한글처리
-		HashMapBinder hmb = new HashMapBinder(req);
-		Map<String,Object> pmap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req); 
+		Map<String,Object> pmap = new HashMap<>(); 
 		hmb.bind(pmap); // 신고된 게시글 번호 담음
+		 		
+		Map<String, Object> pmap = new HashMap<String, Object>();
+	// 테스트	
+	/*	신고 내용을 클릭하면 신고내용에 해당하는 신고번호, 신고한 회원 이메일, 신고내용, 신고날짜, 신고유형, 신고당한 게시글 번호, 처리여부가 나옴
+	  	pmap.put("report_msg", "도배요~"); 
+		pmap = adminLogic.selectBoardReportDetail(pmap);
+		logger.info("처리결과 =====> " + pmap);	*/
 		
 		pmap = adminLogic.selectBoardReportDetail(pmap);
 
 		ModelAndView mav = new ModelAndView(); 
-		mav.setViewName("admin/adminTest");
+		mav.setViewName("admin/boardReportDetail");
 		mav.addObject("boardReportDetail", pmap);		
 
 		return mav;

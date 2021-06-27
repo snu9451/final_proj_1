@@ -15,6 +15,15 @@ public class AdminDao {
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
+	
+ // 회원 탈퇴하기(mem_active를 T에서 F로)
+	public int outMember(Map<String, Object> pmap) {
+		logger.info("outMember 메소드 호출");
+		
+		int result = sqlSessionTemplate.delete("outMem", pmap);
+		
+		return result;
+	}
 
  // (회원, 게시글)신고횟수 초기화 시키기
 	public int initReportNumber(Map<String, Object> pmap) {
@@ -47,19 +56,19 @@ public class AdminDao {
 	}
 	
  // 신고된 회원 상세보기
-	public Map<String, Object> selectMemberReportDetail(String mem_eamil_to) {
+	public Map<String, Object> selectMemberReportDetail(String report_msg) {
 		logger.info("selectMemberReportDetail 메소드 호출");
 		
-		Map<String, Object> pmap = sqlSessionTemplate.selectOne("memberReportDetail", mem_eamil_to);
+		Map<String, Object> pmap = sqlSessionTemplate.selectOne("memberReportDetail", report_msg);
 		 
 		return pmap;
 	}
 
  // 신고된 게시글 상세보기
-	public Map<String, Object> selectBoardReportDetail(int bm_no) {
+	public Map<String, Object> selectBoardReportDetail(String report_msg) {
 		logger.info("selectBoardReportDetail 메소드 호출");
 		
-		Map<String, Object> pmap = sqlSessionTemplate.selectOne("boardReportDetail", bm_no);
+		Map<String, Object> pmap = sqlSessionTemplate.selectOne("boardReportDetail", report_msg);
 		
 		return pmap;
 	}
