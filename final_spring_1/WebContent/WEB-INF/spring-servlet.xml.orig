@@ -39,12 +39,21 @@
 <!-- 		</property> -->
 <!-- 		<property name="mappings"> -->
 <!-- 			<props> -->
+<<<<<<< HEAD
+<!-- 				================== [[ TEST ]] ================== -->
+<!-- 				<prop key="/member/test.nds">test-controller</prop> -->
+<!-- 				<prop key="/member/ajaxTest.nds">test-controller</prop> -->
+<!-- 				================== [[ PAGE ]] ================== -->
+<!-- 				<prop key="/page/page_index.nds">page-controller</prop> -->
+<!-- 				================== [[ MEMBER ]] ================== -->
+=======
 				<!-- ================== [[ TEST ]] ================== -->
 <!-- 				<prop key="/member/test.nds">test-controller</prop> -->
 <!-- 				<prop key="/member/ajaxTest.nds">test-controller</prop> -->
 				<!-- ================== [[ PAGE ]] ================== -->
 <!-- 				<prop key="/page/page_index.nds">page-controller</prop> -->
 				<!-- ================== [[ MEMBER ]] ================== -->
+>>>>>>> 37603375d4e6c3a7c90885a2d82c1baf27731143
 <!-- 				<prop key="/member/reqLoginView.nds">member-controller</prop> -->
 <!-- 				<prop key="/member/doLogin.nds">member-controller</prop> -->
 <!-- 			</props> -->

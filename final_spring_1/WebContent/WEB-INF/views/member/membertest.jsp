@@ -21,24 +21,36 @@
 	/* AJAX 기능 테스트용 코드 */
 	$(document).ready(function(){
 		console.log("완료");
-		let rr = <%=(String)request.getParameter("showModal")%>;
-		let rr1 = <%=(String)request.getAttribute("showModal")%>;
-			console.log(rr);
+<%-- 		let rr = '<%=(String)request.getParameter("showModal")%>'; --%>
+// 			console.log(rr);
+		let rr1 = '<%=(String)request.getAttribute("showModal")%>';
 			console.log(rr1);
-			$('#ex').fadeIn(300);
-		$('#in').blur(function(){
+		// 회원가입 링크로 접속 시 모달창을 띄워줌 (js로 처리)
+		if(rr1 != null){
+			$('#ex').fadeIn(1000);
+		}
+// 		$('#in').blur(function(){
+		$('#bt').on('click',function(){
 			console.log('안ㄴ녕ㅇ');
 			$.ajax({
-				url: '${pageContext.request.contextPath}/member/ajaxTest.nds',
+// 				url: '${pageContext.request.contextPath}/member/issueTempPw.nds?mem_email=snu9451',				
+// 				url: "${pageContext.request.contextPath}/member/reqLoginView.nds",				
+				url: '/member/ajaxHtml.nds',
 				type: 'get',
+				dataType: "html",
 				success: function(data){
-					console.log(data);
 					// 위에서 적은 url 요청의 결과로 받아오는 data
 					// pase 작업이 필요하다. (그냥 꺼내 쓸 수 없음)
-					let data1 = JSON.parse(data);
-					console.log(data1.data);
-					$('.ajax').text(data1.data);
-					console.log("출력===>"+$('#ex > p').text());
+// 					let data1 = JSON.parse(data);
+// 					console.log(data1.data);
+// 					$('.ajax').text(data1.data);
+// 					console.log("출력===>"+$('#ex > p').text());
+					// ===================[[ ▼ contentType이 json인 data 받아서 처리하기 ]]
+// 					let imsi = JSON.parse(data);
+// 					console.log(imsi[0].name);
+					$('#myButton').html(data);
+					// ===================[[ ▲ contentType이 json인 data 받아서 처리하기 ]]
+// 					alert(data);
 				}
 			})
 		})
@@ -53,12 +65,13 @@
 }
 </style>
 </head>
-<body>
+<body style="background-color:orange;">
 	<h1 class="ajax">환경 구축 테스트 페이지입니다.</h1>
 	<input id="in" type="text" />
 	<div id="ex" class="modal" style="width: 300px; height: 100px;">
 		<p>회원가입창입니다.</p>
 		<a>Close</a>
 	</div>
+	<div id="myButton" style="width: 500px; height: fit-content;"><button id="bt">버튼 누르면 메일전송</button></div>
 </body>
 </html>

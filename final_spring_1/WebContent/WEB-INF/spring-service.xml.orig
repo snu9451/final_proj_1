@@ -5,8 +5,23 @@
 	<bean id="item_logic" class="item.mvc.ItemLogic">
 		<property name="itemDao" ref="item_dao"/>
 	</bean>
+<<<<<<< HEAD
 	
 	<bean id="admin-logic" class="admin.mvc.AdminLogic">
 		<property name="adminDao" ref="admin-dao"/>
 	</bean>
 </beans>
+=======
+</beans>
+<!--
+	<bean id="member_logic" class="member.mvc.MemberLogic">
+		<property name="memberDao" ref="member_dao"/>
+	</bean>	
+	<bean id="admin_logic" class="admin.mvc.AdminLogic">
+		<property name="adminDao" ref="admin_dao"/>
+	</bean>	
+	<bean id="page_logic" class="page.mvc.PageLogic">
+		<property name="pageDao" ref="page_dao"/>
+	</bean>	
+-->
+>>>>>>> 37603375d4e6c3a7c90885a2d82c1baf27731143

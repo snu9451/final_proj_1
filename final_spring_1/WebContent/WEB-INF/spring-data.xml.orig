@@ -10,7 +10,11 @@
 			<value>jdbc:oracle:thin:@192.168.0.171:1521:orcl11</value>
 		</property>
 		<property name="username">
+<<<<<<< HEAD
+			<value>finalproject</value>
+=======
 			<value>FINALPROJECT</value>
+>>>>>>> 37603375d4e6c3a7c90885a2d82c1baf27731143
 		</property>
 		<property name="password">
 			<value>tiger</value>

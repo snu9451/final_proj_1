@@ -7,10 +7,17 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- ==================================================== [[ 컨트롤러 영역 ]] ==================================================== -->
+<<<<<<< HEAD
 	<!-- <bean id="item-controller" class="insert_here">
 		<property name="methodNameResolver" ref="insert_here"/>
 		<property name="insert_here" ref="insert_here"/>
 	</bean> -->
+=======
+	<bean id="item-controller" class="item.mvc.ItemController">
+		<property name="methodNameResolver" ref="item_resolver"/>
+		<property name="itemLogic" ref="item_logic"/>
+	</bean>
+>>>>>>> 37603375d4e6c3a7c90885a2d82c1baf27731143
 	<!-- ========================================= [[ url과 컨트롤러 mapping ]] ========================================== -->
 	<!-- Url의 mapping이 이루어짐 -->
 <!-- 	<bean id="item-url-mapping" 
