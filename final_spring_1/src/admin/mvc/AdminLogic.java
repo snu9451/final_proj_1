@@ -29,13 +29,12 @@ public class AdminLogic {
 	}
 	
  // (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 바꾸기)
-	public List<Map<String, Object>> initReportNumber(Map<String, Object> pmap) {
+	public int initReportNumber(Map<String, Object> pmap) {
 		logger.info("initReportNumber 메소드 호출");
 		
-		List<Map<String, Object>> initNumber = new ArrayList<Map<String,Object>>();
-		initNumber = adminDao.initReportNumber(pmap);
+		int result = adminDao.initReportNumber(pmap);
 		
-		return null;
+		return result;
 	}
 	
  // 회원 검색

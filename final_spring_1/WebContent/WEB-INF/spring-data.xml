@@ -24,9 +24,9 @@
 		<constructor-arg index="0" ref="sqlSessionFactory"/>
 	</bean>	
 	
- 	<bean id="item_dao" class="item.mvc.ItemDao">
- 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
-	</bean>
+<!--  	<bean id="item_dao" class="item.mvc.ItemDao"> -->
+<!--  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/> -->
+<!-- 	</bean> -->
 	
 	<bean id="admin-dao" class="admin.mvc.AdminDao"> 
 	 <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>

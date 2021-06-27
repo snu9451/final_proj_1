@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.AdminMapper">
- <resultMap type="" id="">
- </resultMap>
  
 <!-- 회원 탈퇴시키기 -->
 
 <!-- (회원, 게시글)신고횟수 초기화 시키기 -->
-
+ <update id="initNumber" parameterType="map">
+  <if test="bm_no!=null">
+	update report_board
+	set report_ishandle = 'T'
+   	where bm_no = #{bm_no}
+  </if>
+  <if test="mem_email!=null">
+	update report_mem
+	set report_ishandle = 'T'
+   	where mem_email_to = #{mem_email}
+  </if>
+ </update>
+ 
 <!-- 회원 검색 -->
 
 <!-- 게시글 검색 -->

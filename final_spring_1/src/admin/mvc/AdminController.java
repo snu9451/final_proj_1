@@ -12,10 +12,10 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-import com.util.HashMapBinder;
 
 import item.mvc.ItemLogic;
 import member.mvc.MemberLogic;
+import nds.util.HashMapBinder;
 
 public class AdminController extends MultiActionController {
 	Logger logger = Logger.getLogger(AdminController.class); // 로그 출력
@@ -41,19 +41,26 @@ public class AdminController extends MultiActionController {
 		
 	}
 
- // (회원, 게시글)신고횟수 초기화 시키기
+ // (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 바꾸기)
 	public void initReportNumber(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("initReportNumber 메소드 호출");
 		
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<>();
-		hmb.bind(pmap); // 신고당한 이메일, 게시글 번호를 담음
+		hmb.bind(pmap); 
 		
 	// 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
-		List<Map<String, Object>> initNumber = new ArrayList<Map<String,Object>>();
-		initNumber = adminLogic.initReportNumber(pmap);
+		int result = adminLogic.initReportNumber(pmap);
 		
 		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
+		
+		
+	 // 테스트
+//		Map<String, Object> pmap = new HashMap<String, Object>();
+//		pmap.put("mem_email", "water@good.com");
+//		pmap.put("bm_no", null);	// null 대입해주지 않아도 mapper XML에서 if문에서 null 체크됨
+//		int result = adminLogic.initReportNumber(pmap);
+//		logger.info("처리결과 =====> "+result);
 	}
 
  // 회원 검색

@@ -17,13 +17,12 @@ public class AdminDao {
 	}
 
  // (회원, 게시글)신고횟수 초기화 시키기
-	public List<Map<String, Object>> initReportNumber(Map<String, Object> pmap) {
-		logger.info("selectMemberBySearch 메소드 호출");
+	public int initReportNumber(Map<String, Object> pmap) {
+		logger.info("initReportNumber 메소드 호출");
 		
-		List<Map<String, Object>> initNumber = new ArrayList<Map<String,Object>>();
-		initNumber = sqlSessionTemplate.selectList("initNumber", pmap);
+		int result = sqlSessionTemplate.update("initNumber", pmap);
 		
-		return initNumber;
+		return result;
 	}
 	
  // 회원 검색
