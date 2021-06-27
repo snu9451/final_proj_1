@@ -86,18 +86,12 @@
 					<span></span> <span></span> <span></span> <span></span>
 			</div>
 			<div class="trade_bottom">
-
 				<!-- 심부름 내역보기(내가 요청한 심부름 테이블) -->
 				<span class="total_rec coin2"> 전체 : (inserthere) </span>
 				<table class="errand_tb" id="products">
-				
-				
 					<form action="" id="setRows">
 						<input type="hidden" name="rowPerPage" value="8" id="rowPerPage">
 					</form>
-					
-					
-					
 					<thead>
 						<tr>
 							<th scope="cols" width="9%">선택</th>
