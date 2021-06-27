@@ -6,5 +6,7 @@
 		<property name="testDao" ref="test-dao"/>
 	</bean>
 	
-	
+	<bean id="admin-logic" class="admin.mvc.AdminLogic">
+		<property name="adminDao" ref="admin-dao"/>
+	</bean>
 </beans>

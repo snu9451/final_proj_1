@@ -28,7 +28,7 @@ public class AdminLogic {
 		return 0;
 	}
 	
- // (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 시키기)
+ // (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 바꾸기)
 	public List<Map<String, Object>> initReportNumber(Map<String, Object> pmap) {
 		logger.info("initReportNumber 메소드 호출");
 		
@@ -49,13 +49,13 @@ public class AdminLogic {
 	}
 	
  // 게시글 검색
-	public Map<String, Object> selectBoardBySearch(Map<String, Object> pmap) {
+	public List<Map<String, Object>> selectBoardBySearch(Map<String, Object> pmap) {
 		logger.info("selectBoardBySearch 메소드 호출");
 		
 		List<Map<String, Object>> selectBoard = new ArrayList<Map<String,Object>>();
 		selectBoard = adminDao.selectBoardBySearch(pmap);
 		
-		return null;
+		return selectBoard;
 	}
 	
  // 신고된 회원 상세보기

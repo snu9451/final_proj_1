@@ -21,7 +21,7 @@ public class AdminDao {
 		logger.info("selectMemberBySearch 메소드 호출");
 		
 		List<Map<String, Object>> initNumber = new ArrayList<Map<String,Object>>();
-		initNumber = sqlSessionTemplate.update("initNumber", pmap);
+		initNumber = sqlSessionTemplate.selectList("initNumber", pmap);
 		
 		return initNumber;
 	}

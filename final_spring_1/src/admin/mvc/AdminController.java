@@ -29,24 +29,29 @@ public class AdminController extends MultiActionController {
 	}
 
  // 회원 탈퇴시키기
-	public ModelAndView outMember(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void outMember(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("outMember 메소드 호출");
 
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/adminTest");
-//		mav.addObject("outMemeber", outMemeber);
-
-		return mav;
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String, Object> pmap = new HashMap<>();
+		hmb.bind(pmap); // 회원 정보를 담음
+	
+	 // 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
+		
+		
 	}
 
  // (회원, 게시글)신고횟수 초기화 시키기
 	public void initReportNumber(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("initReportNumber 메소드 호출");
 		
-		// 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String, Object> pmap = new HashMap<>();
+		hmb.bind(pmap); // 신고당한 이메일, 게시글 번호를 담음
 		
-		int result = 0;
-		ininNumber = adminLogic.initReportNumber(pmap);
+	// 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
+		List<Map<String, Object>> initNumber = new ArrayList<Map<String,Object>>();
+		initNumber = adminLogic.initReportNumber(pmap);
 		
 		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
 	}
@@ -60,7 +65,7 @@ public class AdminController extends MultiActionController {
 		hmb.bind(pmap); // 검색어 + 검색타입(닉네임이나 이메일)을 담음
 
 		List<Map<String, Object>> selectMember = new ArrayList<Map<String,Object>>();
-	 // gubun(관리자가 선택한 카테고리)은 Front에서 request 객체에 담아주어야 함
+	 // (관리자가 선택한 카테고리)은 Front에서 request 객체에 담아주어야 함
 		selectMember = adminLogic.selectMemberBySearch(pmap); 
 		req.setAttribute("selectMember", selectMember);
 	}
@@ -73,7 +78,10 @@ public class AdminController extends MultiActionController {
 		Map<String, Object> pmap = new HashMap<>();
 		hmb.bind(pmap); // 게시글 번호, 작성자 담음
 		
-		List<Map<String, Object>> searchBoard = null;
+		List<Map<String, Object>> selectBoard = new ArrayList<Map<String,Object>>();
+	 // (관리자가 선택한 카테고리)은 Front에서 request 객체에 담아주어야 함
+		selectBoard = adminLogic.selectBoardBySearch(pmap);
+		req.setAttribute("selectBoard", selectBoard);
 	}
 
  // 신고된 회원 상세보기
