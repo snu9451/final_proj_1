@@ -33,7 +33,9 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
+	<script type="text/javascript">
+		
+	</script>
 </head>
 
 <body>
