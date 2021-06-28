@@ -9,4 +9,8 @@
 	<bean id="admin-logic" class="admin.mvc.AdminLogic">
 		<property name="adminDao" ref="admin-dao"/>
 	</bean>
+	
+	<bean id="etc-logic" class="etc.mvc.EtcLogic">
+		<property name="etcDao" ref="etc-dao"/>
+	</bean>
 </beans>

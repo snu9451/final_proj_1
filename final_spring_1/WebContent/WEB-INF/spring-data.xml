@@ -31,6 +31,10 @@
 	<bean id="admin-dao" class="admin.mvc.AdminDao"> 
 	 <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
+	
+	<bean id="etc-dao" class="etc.mvc.EtcDao"> 
+	 <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
 </beans>
 <!-- 
  	<bean id="admin_dao" class="item.mvc.AdminDao">

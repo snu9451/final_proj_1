@@ -14,8 +14,6 @@ public class AdminLogic {
 	Logger logger = Logger.getLogger(AdminLogic.class);
 	
 	private AdminDao adminDao = null;
-	private MemberDao memberDao = null;
-	private ItemDao itemDao = null;
 	
 	public void setAdminDao(AdminDao adminDao) {
 		this.adminDao = adminDao;
