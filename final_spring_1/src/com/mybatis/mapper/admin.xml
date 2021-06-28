@@ -12,6 +12,8 @@
  
 <!-- 신고된 회원VO -->
  <resultMap type="map" id="report_memVO"> 
+ <!-- 프로시저 안에 select mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, 
+ 	  mem.mem_age, NVL(rm.mem_count,0) report_count 이므로 report_count로 사용 -->
   <result column="REPORT_COUNT" property="REPORT_COUNT"/> 
  </resultMap>
  
@@ -32,6 +34,7 @@
  
 <!-- 신고된 게시글VO -->
  <resultMap type="map" id="report_boardVO">
+ <!-- 프로시저 안에 bm.BM_NO,bm.BM_TITLE,bm.SELLER_NICKNAME,bm.BM_DATE,bm.BM_HIT,NVL(bs.bm_count,0)  report_count 이므로 report_count로 사용 -->
   <result column="REPORT_COUNT" property="REPORT_COUNT"/> 
  </resultMap>
  

@@ -32,11 +32,11 @@ public class AdminController extends MultiActionController {
 	public void outMember(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("outMember 메소드 호출");
 
-		
-		HashMapBinder hmb = new HashMapBinder(req); Map<String, Object> pmap = new
+	 // 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
+		HashMapBinder hmb = new HashMapBinder(req); 
+		Map<String, Object> pmap = new
 		HashMap<>(); hmb.bind(pmap); // 회원 정보를 담음
 		 		
-	 // 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
 		int result = adminLogic.outMember(pmap);
 		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
 		
@@ -145,6 +145,7 @@ public class AdminController extends MultiActionController {
 	public ModelAndView selectBoardReportDetail(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectBoardReportDetail 메소드 호출");
 
+		
 		HashMapBinder hmb = new HashMapBinder(req); 
 		Map<String,Object> pmap = new HashMap<>(); 
 		hmb.bind(pmap); // 신고된 게시글 번호 담음

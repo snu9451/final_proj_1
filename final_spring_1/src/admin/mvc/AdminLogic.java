@@ -43,8 +43,8 @@ public class AdminLogic {
 	public List<Map<String, Object>> selectMemberBySearch(Map<String, Object> pmap) {
 		logger.info("selectMemberBySearch 메소드 호출");
 		
-		String nick_email_type = pmap.get("nick_email_type").toString();
-		String pr_search = pmap.get("pr_search").toString();
+		String nick_email_type = pmap.get("nick_email_type").toString(); // 닉네임인지, 이메일인지, 전체인지
+		String pr_search = pmap.get("pr_search").toString(); // 검색한 단어 받음
 		
 		return adminDao.selectMemberBySearch(nick_email_type, pr_search);
 	}
