@@ -44,8 +44,8 @@ public class AdminController extends MultiActionController {
 		/*
 		 * Map<String, Object> pmap = new HashMap<String, Object>();
 		 * pmap.put("mem_email", "melon@good.com"); 
-		 * null 체크됨 int result = adminLogic.outMember(pmap); logger.info("처리결과 =====> "
-		 * + result);
+		 * null 체크됨 int result = adminLogic.outMember(pmap); 
+		 * logger.info("처리결과 =====> " + result);
 		 */
 	}
 
@@ -61,7 +61,6 @@ public class AdminController extends MultiActionController {
 		int result = adminLogic.initReportNumber(pmap);
 		
 		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
-		
 	 // 테스트
 //		Map<String, Object> pmap = new HashMap<String, Object>();
 //		pmap.put("mem_email", "water@good.com");
@@ -74,44 +73,70 @@ public class AdminController extends MultiActionController {
 	public void selectMemberBySearch(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectMemberBySearch 메소드 호출");
 
+    // (관리자가 선택한 카테고리) Front에서 request 객체에 담아주어야 함
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<>();
-		hmb.bind(pmap); // 검색어 + 검색타입(닉네임이나 이메일)을 담음
-
-		List<Map<String, Object>> selectMember = new ArrayList<Map<String,Object>>();
-	 // (관리자가 선택한 카테고리)은 Front에서 request 객체에 담아주어야 함
-		selectMember = adminLogic.selectMemberBySearch(pmap); 
-		req.setAttribute("selectMember", selectMember);
+		hmb.bind(pmap); // 검색어 + 검색타입(닉네임이나 이메일, 전체) 담음
+		
+		String nick_email_type = ""; // 이메일, 닉네임, 전체인지 => 카테고리
+		String pr_search = ""; // 검색단어
+		pmap.put("nick_email_type", nick_email_type);
+		pmap.put("pr_search", pr_search);
+		
+//		pmap.put("nick_email_type", "이메일");
+//		pmap.put("pr_search", "w");
+		
+		List<Map<String, Object>> searchMember = new ArrayList<Map<String,Object>>(); // 검색한 회원들을 가져옴
+		searchMember = adminLogic.selectMemberBySearch(pmap); 
+		req.setAttribute("selectMemberBySearch", searchMember);
+	//	logger.info("result" + searchMember);
 	}
 
  // 게시글 검색
 	public void selectBoardBySearch(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectBoardBySearch 메소드 호출");
-
+		
+	 // (관리자가 선택한 카테고리) Front에서 request 객체에 담아주어야 함
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<>();
-		hmb.bind(pmap); // 게시글 번호, 작성자 담음
+		hmb.bind(pmap); // 검색 타입(작성자, 제목, 전체) 담음
 		
-		List<Map<String, Object>> selectBoard = new ArrayList<Map<String,Object>>();
-	 // (관리자가 선택한 카테고리)은 Front에서 request 객체에 담아주어야 함
-		selectBoard = adminLogic.selectBoardBySearch(pmap);
-		req.setAttribute("selectBoard", selectBoard);
+		String nick_email_type = ""; // 작성자, 제목, 전체 => 카테고리
+		String pr_search = ""; // 검색단어
+		pmap.put("pr_search", nick_email_type);
+		pmap.put("nick_title_type", pr_search);
+		
+		// 테스트
+//		  pmap.put("pr_search", "드"); 
+//		  pmap.put("nick_title_type", "제목");
+		 
+		
+		List<Map<String,Object>> searchBoard = new ArrayList<Map<String,Object>>(); // 검색한 게시글들을 가져옴
+		searchBoard = adminLogic.selectBoardBySearch(pmap); 
+		req.setAttribute("searchBoard", searchBoard);
+//		logger.info("result" + searchBoard);
 	}
 
  // 신고된 회원 상세보기
 	public ModelAndView selectMemberReportDetail(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectMemberReportDetail 메소드 호출");
-		
-	 // 한글 처리
+
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<>();
-		hmb.bind(pmap); // 신고된 회원 이메일 담음
+		hmb.bind(pmap); 
+		
+	 /* 테스트
+  	    Map<String, Object> pmap = new HashMap<String, Object>();
+		 > 신고 내용을 클릭하면 신고내용에 해당하는 신고번호, 신고한 사용자의 이메일, 신고당한 사용자의 이메일, 신고 내용, 신고 날짜, 신고 유형, 처리여부가 나옴
+	  	pmap.put("report_msg", "욕을 해서 기분이 나쁘네요"); 
+		pmap = adminLogic.selectMemberReportDetail(pmap);
+		logger.info("처리결과 =====> " + pmap);	*/
 		
 		pmap = adminLogic.selectMemberReportDetail(pmap);
 
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/memberReportDetail");
-		mav.addObject("memberReportDetail", pmap);
+		mav.setViewName("admin/selectMemberReportDetail");
+		mav.addObject("selectMemberReportDetail", pmap);
 
 		return mav;
 	}
@@ -119,15 +144,14 @@ public class AdminController extends MultiActionController {
  // 신고된 게시글 상세보기
 	public ModelAndView selectBoardReportDetail(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectBoardReportDetail 메소드 호출");
-		
-	 // 한글처리
+
 		HashMapBinder hmb = new HashMapBinder(req); 
 		Map<String,Object> pmap = new HashMap<>(); 
 		hmb.bind(pmap); // 신고된 게시글 번호 담음
 		 		
-		Map<String, Object> pmap = new HashMap<String, Object>();
-	// 테스트	
-	/*	신고 내용을 클릭하면 신고내용에 해당하는 신고번호, 신고한 회원 이메일, 신고내용, 신고날짜, 신고유형, 신고당한 게시글 번호, 처리여부가 나옴
+	 /* 테스트
+  	    Map<String, Object> pmap = new HashMap<String, Object>();
+		 > 신고 내용을 클릭하면 신고내용에 해당하는 신고번호, 신고한 회원 이메일, 신고내용, 신고날짜, 신고유형, 신고당한 게시글 번호, 처리여부가 나옴
 	  	pmap.put("report_msg", "도배요~"); 
 		pmap = adminLogic.selectBoardReportDetail(pmap);
 		logger.info("처리결과 =====> " + pmap);	*/
@@ -135,8 +159,8 @@ public class AdminController extends MultiActionController {
 		pmap = adminLogic.selectBoardReportDetail(pmap);
 
 		ModelAndView mav = new ModelAndView(); 
-		mav.setViewName("admin/boardReportDetail");
-		mav.addObject("boardReportDetail", pmap);		
+		mav.setViewName("admin/selectBoardReportDetail");
+		mav.addObject("selectBoardReportDetail", pmap);		
 
 		return mav;
 	}
