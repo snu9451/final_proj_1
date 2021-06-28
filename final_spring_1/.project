@@ -21,6 +21,9 @@
 			</arguments>
 		</buildCommand>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 537fca043711ac64b0153cbeb84c496c7a94ee76
 		<buildCommand>
 			<name>org.springframework.ide.eclipse.core.springbuilder</name>
 			<arguments>
@@ -34,10 +37,13 @@
 	</buildSpec>
 	<natures>
 		<nature>org.springframework.ide.eclipse.core.springnature</nature>
+<<<<<<< HEAD
 =======
 	</buildSpec>
 	<natures>
 >>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
+=======
+>>>>>>> 537fca043711ac64b0153cbeb84c496c7a94ee76
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>

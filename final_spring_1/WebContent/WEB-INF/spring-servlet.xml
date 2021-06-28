@@ -7,6 +7,9 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 537fca043711ac64b0153cbeb84c496c7a94ee76
 	<!-- ==================================================== [[ 컨트롤러 영역 ]] ==================================================== -->
 <!-- 	<bean id="test-controller" class="test.mvc.TestController"> -->
 <!-- 		<property name="methodNameResolver" ref="test-resolver"/> -->
@@ -40,12 +43,12 @@
 <!-- 		</property> -->
 <!-- 		<property name="mappings"> -->
 <!-- 			<props> -->
-				<!-- ================== [[ TEST ]] ================== -->
+<!-- 				================== [[ TEST ]] ================== -->
 <!-- 				<prop key="/member/test.nds">test-controller</prop> -->
 <!-- 				<prop key="/member/ajaxTest.nds">test-controller</prop> -->
-				<!-- ================== [[ PAGE ]] ================== -->
+<!-- 				================== [[ PAGE ]] ================== -->
 <!-- 				<prop key="/page/page_index.nds">page-controller</prop> -->
-				<!-- ================== [[ MEMBER ]] ================== -->
+<!-- 				================== [[ MEMBER ]] ================== -->
 <!-- 				<prop key="/member/reqLoginView.nds">member-controller</prop> -->
 <!-- 				<prop key="/member/doLogin.nds">member-controller</prop> -->
 <!-- 			</props> -->
@@ -76,6 +79,7 @@
 <!-- 		</property> -->
 <!-- 	</bean>	 -->
 	<!-- ========================================= [[ 뷰(페이지) 접두/접미어 설정 ]] ========================================== -->
+<<<<<<< HEAD
 =======
 	<bean id="test-controller" class="test.mvc.TestController">
 		<property name="methodNameResolver" ref="test-resolver"/>
@@ -97,6 +101,8 @@
 		</property>
 	</bean>	
 >>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
+=======
+>>>>>>> 537fca043711ac64b0153cbeb84c496c7a94ee76
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
@@ -105,4 +111,8 @@
 </beans>
 =======
 </beans>
+<<<<<<< HEAD
 >>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
+=======
+>>>>>>> d2634c4d988054d280ba66094cffe5214d47b9d4
+>>>>>>> 537fca043711ac64b0153cbeb84c496c7a94ee76

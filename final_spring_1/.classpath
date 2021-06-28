@@ -26,10 +26,18 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web-4.3.30.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-4.3.30.RELEASE.jar"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/gson-2.8.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.mail-1.5.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cos.jar"/>
 =======
 >>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
+=======
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/gson-2.8.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.mail-1.5.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cos.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javaSDK-2.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-simple-1.1.1.jar"/>
+>>>>>>> 537fca043711ac64b0153cbeb84c496c7a94ee76
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

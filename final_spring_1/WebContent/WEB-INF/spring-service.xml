@@ -2,11 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="test-logic" class="test.mvc.TestLogic">
-		<property name="testDao" ref="test-dao"/>
+<!-- 	<bean id="item_logic" class="item.mvc.ItemLogic"> -->
+<!-- 		<property name="itemDao" ref="item_dao"/> -->
+<!-- 	</bean> -->
+	<bean id="member-logic" class="member.mvc.MemberLogic">
+		<property name="memberDao" ref="member-dao"/>
 	</bean>
+<<<<<<< HEAD
 <<<<<<< HEAD
 </beans>
 =======
 </beans>
 >>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
+=======
+	
+	
+</beans>
+>>>>>>> 537fca043711ac64b0153cbeb84c496c7a94ee76

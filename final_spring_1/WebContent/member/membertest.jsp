@@ -29,16 +29,21 @@
 		$('#in').blur(function(){
 			console.log('안ㄴ녕ㅇ');
 			$.ajax({
+// 				url: '${pageContext.request.contextPath}/member/issueTempPw.nds?mem_email=snu9451',
 				url: '${pageContext.request.contextPath}/member/ajaxTest.nds',
 				type: 'get',
 				success: function(data){
 					console.log(data);
+					///////////////////////////////////////////////
 					// 위에서 적은 url 요청의 결과로 받아오는 data
 					// pase 작업이 필요하다. (그냥 꺼내 쓸 수 없음)
-					let data1 = JSON.parse(data);
-					console.log(data1.data);
-					$('.ajax').text(data1.data);
-					console.log("출력===>"+$('#ex > p').text());
+// 					let data1 = JSON.parse(data);
+// 					console.log(data1.data);
+// 					$('.ajax').text(data1.data);
+// 					console.log("출력===>"+$('#ex > p').text());
+					///////////////////////////////////////////////
+
+					alert(data);
 				}
 			})
 		})

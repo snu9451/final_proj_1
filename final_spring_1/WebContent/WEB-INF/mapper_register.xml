@@ -7,10 +7,16 @@
 <!-- 		<typeAlias alias="bmVO" type="com.vo.BoardMVO" /> -->
 	</typeAliases>
 	<mappers>
+		<mapper resource="com/mybatis/mapper/item.xml" />
+	    <mapper resource="com/mybatis/mapper/admin.xml" />
 		<mapper resource="com/mybatis/mapper/member.xml" />
+<<<<<<< HEAD
 <<<<<<< HEAD
 		<mapper resource="com/mybatis/mapper/page.xml" />
 =======
 >>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
+=======
+		<mapper resource="com/mybatis/mapper/page.xml" />
+>>>>>>> 537fca043711ac64b0153cbeb84c496c7a94ee76
 	</mappers>
 </configuration>

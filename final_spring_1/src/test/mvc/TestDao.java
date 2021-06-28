@@ -22,12 +22,18 @@ public class TestDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 537fca043711ac64b0153cbeb84c496c7a94ee76
 
 	public String checkSIGU(int MY_ZIP) {
 		String sigu = sqlSessionTemplate.selectOne("checkSIGU", MY_ZIP);
 		return sigu;
 	}
 }
+<<<<<<< HEAD
 =======
 }
 >>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
+=======
+>>>>>>> 537fca043711ac64b0153cbeb84c496c7a94ee76

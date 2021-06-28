@@ -33,9 +33,12 @@
 		$('#bt').on('click',function(){
 			console.log('안ㄴ녕ㅇ');
 			$.ajax({
-				url: "${pageContext.request.contextPath}/member/reqLoginView.nds",				
-// 				url: '${pageContext.request.contextPath}/member/ajaxHtml.nds',
-// 				type: 'post',
+// 				url: '${pageContext.request.contextPath}/member/issueTempPw.nds?mem_email=snu9451',				
+// 				url: "${pageContext.request.contextPath}/member/reqLoginView.nds",				
+// 				url: '/member/ajaxHtml.nds',
+				url: '/member/leave.nds',
+				type: 'get',
+				dataType: "html",
 				success: function(data){
 					// 위에서 적은 url 요청의 결과로 받아오는 data
 					// pase 작업이 필요하다. (그냥 꺼내 쓸 수 없음)
@@ -44,16 +47,35 @@
 // 					$('.ajax').text(data1.data);
 // 					console.log("출력===>"+$('#ex > p').text());
 					// ===================[[ ▼ contentType이 json인 data 받아서 처리하기 ]]
-					let imsi = JSON.parse(data);
-					console.log(imsi[0].name);
-					$('#myButton').html(data.name);
+// 					let imsi = JSON.parse(data);
+// 					console.log(imsi[0].name);
+					alert(data);
+					$('#myButton').html(data);
 					// ===================[[ ▲ contentType이 json인 data 받아서 처리하기 ]]
+// 					alert(data);
 				}
 			})
 		})
 
 	})
 </script>
+	<script type="text/javascript">
+		function send(){
+			alert("전송버튼");
+			let arr = "";
+			$('#p_div p').each(function(index){
+				arr = arr + $('#p_div p').eq(index).text() + "*";
+			});
+			alert(arr);
+			$('#myform > input').val(arr);
+			alert($('#myform > input').val());
+			$('#myform').submit();
+			alert("Afs");	// submit으로 제출한 form은 서블릿에서(자바/Back) getAttribute가 아닌 getParameter로 받아와야 한다!!!
+// 			let arr1 = JSON.stringify(arr);
+// 			let mydt = JSON.parse(arr1);
+// 			document.write(mydt);
+		}
+	</script>
 <style>
 .modal {
 	color: black;
@@ -63,12 +85,22 @@
 </style>
 </head>
 <body style="background-color:orange;">
+	<div id="p_div">
+		<p>안녕하세요</p>
+		<p>반갑습니다</p>
+		<p>감사합니다</p>
+	</div>	
+
+	<form id="myform" action="/member/ajaxHtml.nds?mylist112=afafvs">
+		<input type="text" name="mylist112" value="임시">
+	</form>
+	<button id="sendButton" onclick="javascript:send()">전송</button>
 	<h1 class="ajax">환경 구축 테스트 페이지입니다.</h1>
 	<input id="in" type="text" />
 	<div id="ex" class="modal" style="width: 300px; height: 100px;">
 		<p>회원가입창입니다.</p>
 		<a>Close</a>
 	</div>
-	<div id="myButton" style="width: 500px; height: fit-content;"><button id="bt">버튼 누르세요</button></div>
+	<div id="myButton" style="width: 500px; height: fit-content;"><button id="bt">버튼 누르면 메일전송</button></div>
 </body>
 </html>
