@@ -390,7 +390,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form class="needs-validation" novalidate>
+          <form class="needs-validation" id="joinForm" novalidate>
             <div class="form-group">
               <label for="inputEmail">E-mail</label>
               <input type="email" readonly class="form-control" id="inputEmail" placeholder="email 자동으로 가져올예정">
@@ -404,7 +404,7 @@
                     minlength="11">
                   </div>
                   <div class="form-group col-md-4 mb-0 text-right">
-                    <button type="button" class="btn btn-primary">인증번호 받기</button>
+                    <button type="button" id="getCpCode" class="btn btn-primary">인증번호 받기</button>
                   </div>
                 </div>
                 <div class="valid-feedback">
@@ -761,6 +761,7 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main_page.js"></script>
+  <script src="assets/js/join.js"></script>
 
   <!-- Google Map Script -->
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
