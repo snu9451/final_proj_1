@@ -5,4 +5,8 @@
 	<bean id="test-logic" class="test.mvc.TestLogic">
 		<property name="testDao" ref="test-dao"/>
 	</bean>
+<<<<<<< HEAD
 </beans>
+=======
+</beans>
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99

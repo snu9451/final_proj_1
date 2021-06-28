@@ -1,7 +1,10 @@
 package test.mvc;
 
 import java.io.IOException;
+<<<<<<< HEAD
 import java.io.PrintWriter;
+=======
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+<<<<<<< HEAD
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.google.gson.JsonObject;
 
+=======
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
 public class TestController extends MultiActionController{
 	
 	// 스프링의 지원, 간섭, 자원관리를 받고자 게으른 인스턴스화함.
@@ -25,7 +33,11 @@ public class TestController extends MultiActionController{
 	// 로그 출력을 위함.
 	Logger logger = Logger.getLogger(TestController.class);
 	
+<<<<<<< HEAD
 	public ModelAndView test(HttpServletRequest req, HttpServletResponse res)
+=======
+	public void test(HttpServletRequest req, HttpServletResponse res)
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
 	throws IOException
 	{
 		logger.info("컨트롤러의 test 메소드 호출 성공!");
@@ -36,6 +48,7 @@ public class TestController extends MultiActionController{
 		// 테스트용 페이지 - WebContent/member에 만들어 둔 test.jsp로 이동
 //		logger.info(zipCodeList.get(0).get("UID_NO").toString());
 		// 쿠키에 값 넣기 - 사용자가 직접 삭제하지 않으면 남아있다.
+<<<<<<< HEAD
 		res.addCookie(new Cookie("SID", req.getRequestedSessionId()));
 		res.addCookie(new Cookie("MY_ZIP", zipCodeList.get(0).get("UID_NO").toString()));
 		// 클라이언트의 브라우저에 저장되어 있는 쿠키 값을 읽어옴. - 쿠기가 여러개 저장되어 있는 경우 쿠키들을 배열로 가져온다.
@@ -45,11 +58,18 @@ public class TestController extends MultiActionController{
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("member/test");
 		return mav;
+=======
+//		res.addCookie(new Cookie("MY_ZIP", zipCodeList.get(0).get("UID_NO").toString()));
+		// 클라이언트의 브라우저에 저장되어 있는 쿠키 값을 읽어옴. - 쿠기가 여러개 저장되어 있는 경우 쿠키들을 배열로 가져온다.
+		logger.info(req.getCookies()[0].getValue());
+		res.sendRedirect("./test.jsp");
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
 	}
 	
 	public void setTestLogic(TestLogic testLogic) {
 		this.testLogic = testLogic;
 	}
+<<<<<<< HEAD
 	
 	public void ajaxTest(HttpServletRequest req, HttpServletResponse res)
 	throws IOException
@@ -64,3 +84,6 @@ public class TestController extends MultiActionController{
 		out.print(obj.toString());
 	}
 }
+=======
+}
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99

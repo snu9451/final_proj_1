@@ -6,6 +6,7 @@
 		  FROM ZIPCODE_T 
 		 WHERE UID_NO BETWEEN 3800 AND 3802
 	</select>
+<<<<<<< HEAD
 	<select id="checkSIGU" parameterType="int" resultType="java.lang.String">
 		SELECT SIGU
 		  FROM ZIPCODE_T 
@@ -15,4 +16,6 @@
 	<select id="selectOneBySessionKey" statementType="STATEMENT">
 <!-- 		{CALL}		 -->
 	</select>
+=======
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
 </mapper>

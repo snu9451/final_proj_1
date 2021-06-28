@@ -8,6 +8,9 @@
 </head>
 <body>
 	<h1>서버 정상 작동!!!</h1>
+<<<<<<< HEAD
 	<a href="http://192.168.0.163:9696/member.nds" style="line-height: 33.6px; font-size: 24px;">여기</a>
+=======
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
 </body>
 </html>

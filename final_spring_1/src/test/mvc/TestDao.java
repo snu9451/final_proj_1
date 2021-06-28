@@ -21,9 +21,13 @@ public class TestDao {
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
+<<<<<<< HEAD
 
 	public String checkSIGU(int MY_ZIP) {
 		String sigu = sqlSessionTemplate.selectOne("checkSIGU", MY_ZIP);
 		return sigu;
 	}
 }
+=======
+}
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99

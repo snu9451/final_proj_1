@@ -6,6 +6,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+<<<<<<< HEAD
 	<!-- ==================================================== [[ 컨트롤러 영역 ]] ==================================================== -->
 <!-- 	<bean id="test-controller" class="test.mvc.TestController"> -->
 <!-- 		<property name="methodNameResolver" ref="test-resolver"/> -->
@@ -75,8 +76,33 @@
 <!-- 		</property> -->
 <!-- 	</bean>	 -->
 	<!-- ========================================= [[ 뷰(페이지) 접두/접미어 설정 ]] ========================================== -->
+=======
+	<bean id="test-controller" class="test.mvc.TestController">
+		<property name="methodNameResolver" ref="test-resolver"/>
+		<property name="testLogic" ref="test-logic"/>
+	</bean>	
+	<bean id="url-mapping" 
+	class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/member/test.nds">test-controller</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="test-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/member/test.nds">test</prop>
+			</props>
+		</property>
+	</bean>	
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+<<<<<<< HEAD
 </beans>
+=======
+</beans>
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99

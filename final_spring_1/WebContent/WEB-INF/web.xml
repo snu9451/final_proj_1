@@ -13,9 +13,12 @@
 		</param-value>
 	</context-param>
 	
+<<<<<<< HEAD
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
+=======
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -27,12 +30,16 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
+<<<<<<< HEAD
 			<param-value>
 				/WEB-INF/spring-servlet.xml,
 				/WEB-INF/member-servlet.xml,
 <!-- 				/WEB-INF/item-servlet.xml, -->
 <!-- 				/WEB-INF/admin-servlet.xml -->
 			</param-value>
+=======
+			<param-value>/WEB-INF/spring-servlet.xml</param-value>
+>>>>>>> 9d7c18c108b388d3add69e2ac790e62502905f99
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
