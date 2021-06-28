@@ -9,7 +9,7 @@ import member.mvc.MemberVO;
 
 public class Converter {
 	
-	public static void VOtoMAP(Object vo, Map<String, Object> map, String key) {
+	public static void VOtoMAP(MemberVO vo, Map<String, Object> map, String key) {
 		String first_str = key.substring(0, 1);	// target의 맨 첫글자를 가져옴
 		first_str = first_str.toUpperCase();	// target의 맨 첫글자를 대문자로 바꿈
 		String else_str = key.substring(1, key.length());
@@ -50,6 +50,7 @@ public class Converter {
 	}
 	
 	public static void MAPtoVO(Map map, Object vo, String key) {
+		key = key.toLowerCase();
 		String first_str = key.substring(0, 1);	// target의 맨 첫글자를 가져옴
 		first_str = first_str.toUpperCase();	// target의 맨 첫글자를 대문자로 바꿈
 		String else_str = key.substring(1, key.length());
@@ -60,15 +61,32 @@ public class Converter {
 		sb.append(else_str);	// sb: setTarget - setter 메소드의 이름 완성
 		String setterName = sb.toString();
 		// key에 해당하는 값을 map에서 가져옴		
+		
+		if(map.get(key) == null) {
+			key = key.toUpperCase();
+			System.out.println("변환한 key: "+key);
+		}
 		Object value = map.get(key);	// int, String ...
+		System.out.println(map);
+		System.out.println(map.keySet().toArray()[0]);
+		System.out.println(map.get("MEM_EMAIL"));
+		System.out.println(map.get("mem_email"));
 		// vo의 setter 메소드를 호출하여 값 넣어주기
 		try {
+			System.out.println(vo);
+			System.out.println(vo.getClass().getName());
 			Class<?> clazz = Class.forName(vo.getClass().getName());
+			System.out.println(clazz);
+			System.out.println(setterName);
+			System.out.println(map.get(key));
+			System.out.println(map.get(key.toUpperCase()));
 			/**************************************************************
 			 * @param1 메소드명
 			 * @param2 메소드가 필요로 하는 파라미터
 			 **************************************************************/
+			System.out.println("map.get(key): "+map.get(key));
 			Method mesod = clazz.getDeclaredMethod(setterName, map.get(key).getClass());
+			System.out.println("vo 주소번지: "+vo);
 			mesod.invoke(vo, value);	// 메소드를 호출
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

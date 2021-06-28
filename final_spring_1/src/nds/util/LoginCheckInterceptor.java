@@ -19,8 +19,16 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 	// 로그인 체크를 하지 않을 즉, 비회원도 볼 수 있는 페이지에 대한  URI 목록
 	String[] excludedURIs = {
 		"/WEB-INF/views/mainpage/mainpage.jsp",
+		"/member/join.nds",
 		"/member/reqLoginView.nds",
-		"/page/getMainPage.nds"
+		"/page/getMainPage.nds",
+		"/member/doLogin.nds",
+		"/member/selectNickName.nds",
+		"/member/selectEmail.nds",
+		"/member/sendCode.nds",
+		"/member/sendSMSCode.nds",
+		"/member/issueTempPw.nds",
+		"/member/issueTempPw.nds"
 	};
 	
 	@Override

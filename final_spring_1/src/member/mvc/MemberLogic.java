@@ -18,6 +18,7 @@ public class MemberLogic {
 	
 	
 	public void setMemberDao(MemberDao memberDao) {
+		logger.info("asdfasdfasdfdsfsfadsfs");
 		this.memberDao = memberDao;
 	}
 
@@ -30,9 +31,18 @@ public class MemberLogic {
 	public Map<String, Object> selectMember(Map<String, Object> pmap) {
 		Map<String, Object> rmap = new HashMap<String, Object>();
 		rmap = memberDao.selectMember(pmap);
+		logger.info(rmap);
+		return rmap;
+	}
+	public Map<String, Object> uiToSession(Map<String, Object> pmap) {
+		Map<String, Object> rmap = null;
+		rmap = memberDao.uiToSession(pmap);
+		logger.info(rmap);
 		return rmap;
 	}
 
+	
+	
 
 
 	public Map<String, Object> selectOneBySession(String sessionValue) {
@@ -43,21 +53,29 @@ public class MemberLogic {
 /* ===========================================================================
 	아 이 디   저 장   또 는   자 동 로 그 인   구 현 - NDS_SKEY 발급 또는 만료일 갱신
 =========================================================================== */ 
-	public int saveId(Map<String, Object> pmap) {
+//	public int saveId(Map<String, Object> pmap) {
+//		int result = 0;
+//		result = memberDao.saveId(pmap);
+//		return result;
+//	}
+//	public int setAutoLogin(Map<String, Object> pmap) {
+//		int result = 0;
+//		result = memberDao.setAutoLogin(pmap);
+//		return result;
+//	}
+
+	
+	public int selectIsMemberPw(Map<String, Object> pmap) {
 		int result = 0;
-		result = memberDao.saveId(pmap);
-		return result;
-	}
-	public int setAutoLogin(Map<String, Object> pmap) {
-		int result = 0;
-		result = memberDao.setAutoLogin(pmap);
+		logger.info(memberDao);
+		result = memberDao.selectIsMemberPw(pmap);
 		return result;
 	}
 
-
-	public int selectIsMember(String inputEmail) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int selectIsMember(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.selectIsMember(pmap);
+		return result;
 	}
 
 
@@ -103,13 +121,10 @@ public class MemberLogic {
 	}
 
 
-	public int updateMember(String gubun, Map<String, Object> map) {
+	public int updateMember(Map<String, Object> pmap) {
 		int result = 0;
-		Map<String, Object> pmap = new HashMap<String, Object>();
 		// 변경되는 항목이 [gubun]닉네임/비밀번호/사진(img)/active(활동중->탈퇴)/보유코인(deposit)인 경우
 		// 이메일로 제한조건을 걸어 update할 것이므로
-		pmap.put("mem_email", map.get("mem_email"));
-		pmap.put(gubun, map.get(gubun));
 		result = memberDao.updateMember(pmap);
 		return result;
 	}
@@ -146,6 +161,15 @@ public class MemberLogic {
 		rmap = memberDao.selectNickName(pmap);
 		return rmap;
 	}
+
+
+	public int insertMember(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.insertMember(pmap);
+		return result;
+	}
+
+
 
 
 	// 테스트용 메인

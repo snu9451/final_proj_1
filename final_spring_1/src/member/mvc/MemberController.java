@@ -25,6 +25,7 @@ import nds.util.Converter;
 import nds.util.CookiesMap;
 import nds.util.HashMapBinder;
 import nds.util.Mail;
+import nds.util.SMS;
 
 public class MemberController extends MultiActionController {
 	
@@ -37,11 +38,11 @@ public class MemberController extends MultiActionController {
 
 	
 	/*	=======================================================================================
-								Ｍ　ｅ　ｔ　ｈ　ｏ　ｄ　　　Ａ　ｒ　ｅ　ａ
+								Ｍ　Ｅ　Ｔ　Ｈ　Ｏ　Ｄ　　　Ａ　Ｒ　Ｅ　Ａ
 	======================================================================================== */
 	// ===================================== [[ SELECT ]] =====================================
 	// 닉네임 중복 검사
-	public void selectNickName(HttpServletRequest req, HttpServletResponse res)	{
+	public void selectNickName(HttpServletRequest req, HttpServletResponse res)	{	// ♣ 완료
 		logger.info("selectNickName 메소드 호출 성공!");
 		// 해당 닉네임을 갖는 회원을 조회한다.
 		// request객체로 받아온 정보를 map으로 옮겨 담는 작업
@@ -61,8 +62,8 @@ public class MemberController extends MultiActionController {
 			AjaxDataPrinter.out(res, "text/html", "<h4 style=\"font-size : 15px; color : red; font-weight:bold\">이미 사용중인 닉네임입니다.</h4>");
 		}
 	}
-	// 이메일 중복 검사
-	public void selectEmail(HttpServletRequest req, HttpServletResponse res) {
+	// 이메일 중복 검사 - 회원가입 링크 전송
+	public void selectEmail(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		logger.info("selectEmail 메소드 호출 성공!");
 		// 해당 이메일을 갖는 회원을 조회한다.
 		// request객체로 받아온 정보를 map으로 옮겨 담는 작업
@@ -74,19 +75,48 @@ public class MemberController extends MultiActionController {
 		logger.info("Email로 조회한 결과 ===> "+rmap);
 		// 중복이 아닌 경우: 같은 이메일을 갖는 회원이 없는 경우
 		if(rmap == null) {
-			AjaxDataPrinter.out(res, "text/html", "사용 가능한 이메일입니다.");
+			Mail mail = new Mail();
+			mail.setReceiveEmail((String)pmap.get("mem_email"));
+			HttpSession session = req.getSession();
+			session.setAttribute("join", memberLogic.getRandomCode("NUL", 10));
+			logger.info(session.getAttribute("join"));
+			AjaxDataPrinter.out(res, "text/html", "<h4 style=\"font-size : 15px; color : green; font-weight:bold\">입력하신 이메일로 회원가입 링크가 전송되었습니다.</h4>");
 		}
 		// 중복인 경우: 같은 이메일을 갖는 회원이 있는 경우
 		else {
-			AjaxDataPrinter.out(res, "text/html", "이미 가입되어 있는 이메일입니다.");
+			AjaxDataPrinter.out(res, "text/html", "<h4 style=\"font-size : 15px; color : red; font-weight:bold\">이미 가입되어 있는 닉네임입니다.</h4>");
 		}
 	}
 	// ===================================== [[ INSERT ]] =====================================
-	
+	// 회원가입 모달에서 확인 버튼 클릭 시
+	// 테스트: http://localhost:9696/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
+	public ModelAndView insertMember(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
+		// request 객체에 담긴 정보를 map으로 옮겨 담기
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bindPost(pmap);	// mem_email, mem_phone, mem_pw, mem_nickname, mem_age, mem_gender
+		int result = memberLogic.insertMember(pmap);
+		// 정상 처리 시
+		if(result == 1) {
+			// 로그인 처리 후
+			doLogin(req, res);
+			// 메인 페이지로 이동
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("mainPage");
+			return mav;
+		}
+		// 처리 실패 시
+		else {
+			AjaxDataPrinter.out(res, "text/html", "NDS::ERROR!");
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("errorPage");
+			return mav;
+		}
+	}
 	
 	// ===================================== [[ UPDATE ]] =====================================
 	// 닉네임 변경 시
-	public void updateNickName(HttpServletRequest req, HttpServletResponse res) {
+	public void updateNickName(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		logger.info("updateNickName 메소드 호출 성공!");
 		// request객체로 받아온 정보를 map으로 옮겨 담는 작업
 		Map<String, Object> pmap = new HashMap<String, Object>();
@@ -94,13 +124,11 @@ public class MemberController extends MultiActionController {
 		hmb.bindPost(pmap);
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
-		String mem_email = ((MemberVO)session.getAttribute("login")).getMem_email();
-		logger.info(mem_email);
+		MemberVO mvo = (MemberVO)session.getAttribute("login");
+		logger.info(mvo);
+		String mem_email = mvo.getMem_email();
 		pmap.put("mem_email", mem_email);
-		String afterNickName = (String)pmap.get("mem_nickname");
-		// 변경된 항목이 '닉네임'임을 알리는 구분자
-		String gubun = "mem_nickname";
-		int result = memberLogic.updateMember(gubun, pmap);
+		int result = memberLogic.updateMember(pmap);
 		logger.info("NickName 업데이트 결과 ===> "+result);
 		// 닉네임 변경 실패 시
 		if(result == 0) {
@@ -109,15 +137,14 @@ public class MemberController extends MultiActionController {
 		// 닉네임 변경 성공 시
 		else if(result == 1) {
 			// 세션에 저장해 둔 닉네임 변경해주기
-			MemberVO mvo = (MemberVO)session.getAttribute("login");
+			String afterNickName = (String)pmap.get("change_nickname");
 			mvo.setMem_nickname(afterNickName);
 			session.setAttribute("login", mvo);
-			
-			AjaxDataPrinter.out(res, "text/html", "닉네임이 "+afterNickName+"으로 변경되었습니다.");
+			AjaxDataPrinter.out(res, "text/html", "닉네임이 <b>"+afterNickName+"</b>(으)로 변경되었습니다.");
 		}
 	}
 	// 프로필 사진 변경 시
-	public void updateImg(HttpServletRequest req, HttpServletResponse res) {
+	public void updateImg(HttpServletRequest req, HttpServletResponse res) {////////////////////////////////////////////
 		logger.info("updateImg 메소드 호출 성공!");
 		// request객체로 받아온 정보를 map으로 옮겨 담는 작업
 		Map<String, Object> pmap = new HashMap<String, Object>();
@@ -125,11 +152,11 @@ public class MemberController extends MultiActionController {
 		hmb.bindPost(pmap);
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
-		String mem_email = ((MemberVO)session.getAttribute("login")).getMem_email();
+		MemberVO mvo = (MemberVO)session.getAttribute("login");
+		logger.info(mvo);
+		String mem_email = mvo.getMem_email();
 		pmap.put("mem_email", mem_email);
-		// 변경된 항목이 '프로필 사진(img)'임을 알리는 구분자
-		String gubun = "mem_img";
-		int result = memberLogic.updateMember(gubun, pmap);
+		int result = memberLogic.updateMember(pmap);
 		logger.info("프로필 사진 업데이트 결과 ===> "+result);
 		// 프로필 사진 변경 실패 시
 		if(result == 0) {
@@ -137,17 +164,23 @@ public class MemberController extends MultiActionController {
 		}
 		// 프로필 사진 변경 성공 시
 		else {
+			// insert_here - 물리적인 위치에 저장된 파일을 삭제한다.
 			AjaxDataPrinter.out(res, "text/html", "변경되었습니다.");
 		}
 	}
-	public void updatePw(HttpServletRequest req, HttpServletResponse res) {
+	public void updatePw(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		logger.info("updatePw 메소드 호출 성공!");
 		// 입력된 현재 비밀번호가 사용자의 이메일로 조회한 비밀번호와 일치하는지 확인하고 일치하는 경우에만 업데이트 처리 해주어야 함. ================================= [[ 프로시저2 ]]
 		Map<String, Object> pmap = new HashMap<String, Object>();
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bindPost(pmap);	// 사용자의 이메일, 입력한 현재 비밀번호, 입력한 새 비밀번호가 담겨 있게 됨.
-		// 프로시저 실행 결과를 받아줄 proc_result 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
-		pmap.put("proc_result", 0);
+		hmb.bindPost(pmap);
+		HttpSession session = req.getSession();
+		MemberVO mvo = (MemberVO)session.getAttribute("login");
+		logger.info(mvo);
+		String mem_email = mvo.getMem_email();
+		pmap.put("mem_email", mem_email);
+		// 프로시저 실행 결과를 받아줄 RESULT 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
+		pmap.put("RESULT", 0);
 		int result = memberLogic.updatePw(pmap);
 		logger.info("비밀번호 업데이트 결과 ===> "+result);
 		// 비밀번호 변경 실패 시
@@ -160,7 +193,7 @@ public class MemberController extends MultiActionController {
 		}
 	}
 	// 회원 탈퇴 시
-	public void leave(HttpServletRequest req, HttpServletResponse res) {
+	public void leave(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		logger.info("leave 메소드 호출 성공!");
 		Map<String, Object> pmap = new HashMap<String, Object>();
 		// 프로시저에서 반환되는 결과가 -1인 경우: 요청 혹은 진행 중인 심부름이 있는 경우
@@ -170,7 +203,8 @@ public class MemberController extends MultiActionController {
 		hmb.bindPost(pmap); //
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
-		String mem_email = ((MemberVO)session.getAttribute("login")).getMem_email();
+		MemberVO mvo = (MemberVO)session.getAttribute("login");
+		String mem_email = mvo.getMem_email();
 		pmap.put("mem_email", mem_email);
 		// 프로시저 실행 결과를 받아줄 proc_result 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
 		pmap.put("proc_result", 0);
@@ -187,6 +221,7 @@ public class MemberController extends MultiActionController {
 		// 회원 탈퇴 처리 성공 시
 		else if(result == 1){
 			AjaxDataPrinter.out(res, "text/html", "탈퇴처리가 <b>완료</b>되었습니다. [확인] 버튼 클릭 시 메인페이지로 이동합니다.");
+			session.invalidate();
 		}
 		
 	}
@@ -270,21 +305,20 @@ public class MemberController extends MultiActionController {
 	
 	
 	// ======================================= [[ 그 외 ]] =======================================
-	public void issueTempPw(HttpServletRequest req, HttpServletResponse res) {
+	public void issueTempPw(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		logger.info("issueTempPw 메소드 호출 성공!");
 		Map<String, Object> pmap = new HashMap<String, Object>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bindPost(pmap);	// 입력받은 회원의 이메일 정보가 담겨있다.
-		String inputEmail = (String)pmap.get("mem_email");
 		// 입력 받은 이메일이 존재하는 이메일이면 1, 존재하지 않으면 0 - SELECT COUNT ...
-//		int result = memberLogic.selectIsMember(inputEmail);
-		int result = 1; // 테스트
+		int result = memberLogic.selectIsMemberPw(pmap);
+		logger.info("임시비번 발금을 위한 회원 조회 결과 ==> "+result);
+//		int result = 1; // 테스트
 		// 존재한다면 입력 받은 이메일로 임시비번 전송
 		if(result == 1) {
-			memberLogic = new MemberLogic();
 			String tempPw = memberLogic.getRandomCode("NUL", 10);
 			Mail mail = new Mail();
-			mail.setReceiveEmail(inputEmail+"@naver.com","[내동생] 임시 비밀번호 발급","임시비밀번호는 <b>"+tempPw+"</b>입니다.");	// 테스트
+			mail.setReceiveEmail(pmap.get("MEM_EMAIL")+"@naver.com","[내동생] 임시 비밀번호 발급","임시비밀번호는 <b>"+tempPw+"</b>입니다.");	// 테스트
 //			mail.setReceiveEmail(inputEmail);
 			mail.sendEmail();
 			// 비밀번호 저장해야 함
@@ -299,10 +333,8 @@ public class MemberController extends MultiActionController {
 			// (존재하지 않는 이메일이라) 실패하였음을 Front에 알림(AJAX)
 			AjaxDataPrinter.out(res, "text/html", "존재하지 않는 이메일입니다.");
 		}
-		
-		
 	}
-	public void reqLoginView(HttpServletRequest req, HttpServletResponse res) {
+	public void reqLoginView(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 //	public ModelAndView reqLoginView(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("reqLoginView 메소드 호출 성공!");
 //		ModelAndView mav = new ModelAndView();
@@ -318,14 +350,17 @@ public class MemberController extends MultiActionController {
 			// 또 유효하다면 로그인창에 아이디를 띄워주기 위해, DB에서 세션키로 해당하는 정보를 가져온다.
 			Map<String, Object> rmap = new HashMap<>();
 			rmap = memberLogic.selectOneBySession(sessionValue);
+			logger.info(rmap);
 			// NDS_SKEY가 있더라도 기간이 만료되었으면 rmap = null이 된다.
 			if(rmap != null) {
 				// 권한 허용 범위가 S(SaveID)인 경우
-				if("S".equals((String)rmap.get("sid_expired"))) {
+				if("S".equals((String)rmap.get("AUTH_RANGE"))) {
 					// 아이디를 로그인창에 띄워줄 수 있도록 request 객체에 담아준다.
-					String mem_email = (String)rmap.get("mem_email");
-					req.setAttribute("mem_email", mem_email);
+					String mem_email = (String)rmap.get("MEM_EMAIL");
+					req.setAttribute("MEM_EMAIL", mem_email);
+					logger.info("저장되어 있는 아이디="+mem_email);
 				}
+				logger.info("아이디 저장을 선택하지 않았거나 자동로그인임");
 			} else {
 				logger.info("유효하지 않은 sessionValue입니다.");
 			}
@@ -339,10 +374,13 @@ public class MemberController extends MultiActionController {
 //		mav.setViewName("mainpage/mainpage");
 //		return mav;
 	}
+	
+	// 테스트용 url
+	// 잘못된 아이디 http://localhost:9696/member/doLogin.nds?mem_email=grsdfpe@good.com&mem_pw=123&isAutoLoginChecked=true
+	// [아이디 저장] http://localhost:9696/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isSavedIdChecked=true
+	// [자동 로그인] http://localhost:9696/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isAutoLoginChecked=true
 	// 로그인 버튼이 클릭되었을 때 실행되는 메소드
-	public void doLogin(HttpServletRequest req, HttpServletResponse res) {
-		memberLogic = new MemberLogic();/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	public void doLogin(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		// 사용자가 자동로그인 체크박스와 아이디저장 체크박스에 체크 했는지 여부를 담을 변수 선언
 		String isAutoLoginChecked = null;
 		String isSavedIdChecked = null;
@@ -356,15 +394,17 @@ public class MemberController extends MultiActionController {
 		// pmap의 원본을 파라미터로 넘기고 있기 때문에 리턴으로 받아서 담지 않아도 map에 옮겨진다.
 		hmb.bindPost(pmap);	// pmap에 담긴 정보: input_email, input_pw
 		// 입력된 사용자의 정보를 가지고 DB에서 조회한다.
-		// rmap ===> mem_eamil: "존재하지 앟는 아이디입니다." | "잘못된 비밀번호입니다." | member 정보가 담긴 map
 		Map<String, Object> rmap = new HashMap<String, Object>();
+//		int imsi = memberLogic.selectIsMember(pmap);
+//		logger.info("imsi ===> "+imsi);
 		rmap = memberLogic.selectMember(pmap);
-		// 로그인 실패 시 "존재하지 앟는 아이디입니다." 또는 "잘못된 비밀번호입니다." 메세지 띄워주어야 함.
-		if("존재하지 않는 아이디입니다.".equals(rmap.get("mem_email")) || "잘못된 비밀번호입니다.".equals(rmap.get("mem_email"))) {
+		logger.info(rmap);
+		// 조회 결과가 없으면 rmap은  null임
+		if(rmap == null) {
 			// resultMsg를 전송 (AJAX)
-			AjaxDataPrinter.out(res, rmap.get("mem_email"));
+			AjaxDataPrinter.out(res, "text/html", "아이디 혹은 비밀번호가 잘못되었습니다.");
 		}
-		// 로그인 성공 시(해당 email과 pw로 조회한 결과가 row 하나인 경우) - resultMsg: 사용자 닉네임
+		// 로그인 성공 시(해당 email과 pw로 조회한 결과가 row 하나인 경우)
 		else {
 			// ================================================= [[ 아이디저장 ]] =================================================
 			// 아이디 저장에 체크했다면 - isSavedIdChecked(프론트에서 담아줘야 함) == true
@@ -372,33 +412,44 @@ public class MemberController extends MultiActionController {
 			if("true".equals(isSavedIdChecked)) {
 				Cookie cookie = cookies.getCookie(sessionKey);
 				String sessionValue = cookies.getValue(sessionKey);
+				logger.info(sessionValue);
 				// 쿠키에 NDS_SKEY가 있는 경우라면
 				if(sessionValue!=null) {
+					logger.info("쿠키에 NDS_SKEY가 있는 경우");
 					// [DB]에서 이메일과 sessionValue에 해당하는 로우의 유효기간을 갱신하고, 권한을 S로 설정한다. (update)
 					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-					int result = memberLogic.saveId(pmap);
-					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 있는 경우::아이디 저장 처리 결과 ===> "+result);
-					if(result == 1) { // 처리 결과가 성공이라면
+					pmap.put("mem_sessionid",sessionValue);
+					pmap.put("a_or_s","S");
+					logger.info(pmap);
+					memberLogic.uiToSession(pmap);
+//					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 있는 경우::아이디 저장 처리 결과 ===> "+result);
+//					if(result == 1) { // 처리 결과가 성공이라면
 						// 쿠키의 유효기간을 갱신한다.
 						cookie.setMaxAge(60*60*24*30);
 						logger.info("NDS_SKEY값::"+sessionValue);
-					}
+//					}
+					AjaxDataPrinter.out(res, "text/html", "[아이디저장] 로그인 성공!");
 				}
 
 				// 쿠키에 NDS_SKEY가 없는 경우라면
 				else {
+					logger.info("쿠키에 NDS_SKEY가 없는 경우");
 					// NDS_SKEY를 발급하고, [DB]에 insert한 후, 쿠키에 저장해주어야 한다.
 					sessionValue = memberLogic.getRandomCode("NUL", 20);	// 대소문자숫자로 구성된 20자리의 랜덤코드 생성
 					// 이메일과 sessionValue에 해당하는 로우를 insert한다. 권한은 S로 설정한다. (insert)
 					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-					int result = memberLogic.saveId(pmap);
-					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 없는 경우::아이디 저장 처리 결과 ===> "+result);
-					if(result == 1) {
+					pmap.put("mem_sessionid",sessionValue);
+					pmap.put("a_or_s","S");
+					logger.info(pmap);
+					memberLogic.uiToSession(pmap);
+//					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 없는 경우::아이디 저장 처리 결과 ===> "+result);
+//					if(result == 1) {
 						Cookie cookie_ = new Cookie(sessionKey, sessionValue);
-						cookie.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
+						cookie_.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
 						res.addCookie(cookie_);
 						logger.info("NDS_SKEY값::"+sessionValue);
-					}
+//					}
+					AjaxDataPrinter.out(res, "text/html", "[아이디저장] 로그인 성공!");
 				}
 			}
 			// ================================================= [[ 자동로그인 ]] =================================================
@@ -409,46 +460,66 @@ public class MemberController extends MultiActionController {
 				String sessionValue = cookies.getValue(sessionKey);
 				// 쿠키에 NDS_SKEY가 있는 경우라면
 				if(sessionValue!=null) {
+					logger.info("쿠키에 NDS_SKEY가 있는 경우");
 					// [DB]에서 이메일과 sessionValue에 해당하는 로우의 유효기간을 갱신하고, 권한을 S로 설정한다. (update)
 					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-					int result = memberLogic.setAutoLogin(pmap);
-					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 있는 경우::자동 로그인 처리 결과 ===> "+result);
-					if(result == 1) { // 처리 결과가 성공이라면
-						// 쿠키의 유효기간을 갱신한다.
+					pmap.put("mem_sessionid",sessionValue);
+					pmap.put("a_or_s","A");
+					logger.info(pmap);
+					memberLogic.uiToSession(pmap);
+//					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 있는 경우::자동 로그인 처리 결과 ===> "+result);
+//					if(result == 1) { // 처리 결과가 성공이라면
+//						 쿠키의 유효기간을 갱신한다.
 						cookie.setMaxAge(60*60*24*30);
 						logger.info("NDS_SKEY값::"+sessionValue);
-					}
+//					}
+					AjaxDataPrinter.out(res, "text/html", "[자동로그인] 로그인 성공!");
 				}
 				
 				// 쿠키에 NDS_SKEY가 없는 경우라면
 				else {
+					logger.info("쿠키에 NDS_SKEY가 없는 경우");
 					// NDS_SKEY를 발급하고, [DB]에 insert한 후, 쿠키에 저장해주어야 한다.
 					sessionValue = memberLogic.getRandomCode("NUL", 20);	// 20자리의 랜덤코드 생성
 					// 이메일과 sessionValue에 해당하는 로우를 insert한다. 권한은 S로 설정한다. (insert)
 					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-					int result = memberLogic.setAutoLogin(pmap);
-					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 없는 경우::자동 로그인 처리 결과 ===> "+result);
-					if(result == 1) {
+					logger.info(pmap);
+					pmap.put("mem_sessionid",sessionValue);
+					pmap.put("a_or_s","A");
+					memberLogic.uiToSession(pmap);
+//					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 없는 경우::자동 로그인 처리 결과 ===> "+result);
+//					if(result == 1) {
 						Cookie cookie_ = new Cookie(sessionKey, sessionValue);
-						cookie.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
+						cookie_.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
 						res.addCookie(cookie_);
 						logger.info("NDS_SKEY값::"+sessionValue);
-					}
+//					}
+					AjaxDataPrinter.out(res, "text/html", "[자동로그인] 로그인 성공!");
 				}
 			}
 			// 로그인 성공시 공통적으로 처리해 줄 사항; 세션에 사용자정보(MemberVO) 담아주기.
 			// 참고로, Front에서는 session에 login이 있는지를 체크함으로써 로그인 성공여부를 판단할 수 있음.
 			// map(rmap)으로 가져온 정보를 VO로 옮겨담기 - 공통코드
 			MemberVO mvo = new MemberVO();
+			logger.info("mvo 주소번지: "+mvo);
+			logger.info(rmap);
 			Converter.MAPtoVO(rmap, mvo, "mem_email");
 			Converter.MAPtoVO(rmap, mvo, "mem_nickname");
+			logger.info(mvo.getMem_email());
 			HttpSession session = req.getSession();
 			session.setAttribute("login", mvo);
 		}
 
 	}
+	// 로그아웃
+	public void doLogout(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session = req.getSession();
+		session.invalidate();
+		logger.info("로그아웃 처리 완료");
+		// 메인 페이지로 이동시키기
+	}
 	// 이메일로 인증번호 발송
-	public void sendCode(HttpServletRequest req, HttpServletResponse res) {
+	public void sendCode(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		// 숫자로만 구성된 랜덤코드 생성
 		String numberCode = memberLogic.getRandomCode("ON", 6);
 		// 인증번호 발송을 요청한 사용자의 이메일을 세션에서 꺼내오기
@@ -463,6 +534,42 @@ public class MemberController extends MultiActionController {
 		// 처리결과를 화면에 내보내기
 		AjaxDataPrinter.out(res, "text/html", "가입하신 이메일(<b>"+mem_email+"</b>)로 인증코드가 전송되었습니다.");
 	}
+	// 핸드폰 번호로 인증번호 발송
+	public void sendSMSCode(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
+		// request 객체를 통해 입력 받은 핸드폰 번호 가져오기.
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bindPost(pmap);
+		String receiver = (String)pmap.get("mem_phone");
+		// 랜덤한 인증코드 생성
+		String randomCode = memberLogic.getRandomCode("ON", 6);
+		// 메세지로 보낼 내용 설정
+		String content= "【내동생】 인증번호 [ "+randomCode+" ]를 정확히 입력해주세요.";
+		SMS sms = new SMS();
+		sms.send(receiver, content);
+		// 인증코드는 사용자가 회원가입을 확정하는 시점에 Front에서 비교할 수 있도록 request 객체에 담아준다.
+		req.setAttribute("phCode", randomCode);
+		AjaxDataPrinter.out(res, "text/html", "인증번호가 발송되었습니다.");
+	}
+	// 회원가입 링크 클릭 시
+	public ModelAndView join(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = req.getSession();
+		// selectEmail.nds 로 발급받은 회원가입 링크로 유효시간 내에 접속 시 세션에 join이라는 속성이 존재한다.
+		String join = (String)session.getAttribute("join");
+		if(join == null) {
+			// 유효하지 않은 접근임을 안내하는 페이지로 이동.
+			mav.setViewName("/WEB-INF/views/member/invalid.jsp");	////////////////////////////////prefix suffix 설정하면 이 부분 변경해주어야 함.
+		}
+		else {
+			// 메인페이지로 이동함과 동시에 회원가입 모달을 띄워줄 수 있도록 joinForm이라는 신호를 보냄.
+			mav.addObject("joinForm","on");
+			// 정상적인 접근. 메인 페이지로 이동.
+			mav.setViewName("mainpage/main_page");
+		}
+		return mav;
+	}
+	
 	
 	
 	
@@ -506,12 +613,24 @@ public class MemberController extends MultiActionController {
 		mvo.setMem_email("apple@good.com");
 		mvo.setMem_nickname("사과");
 		session.setAttribute("login", mvo);
+		res.addCookie(new Cookie("NDS_SKEY", "010010010"));
 		logger.info("관리자로 로그인하였음");
+	}
+	public void showEmail(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session = req.getSession();
+		MemberVO mvo = (MemberVO)session.getAttribute("login");
+		logger.info(mvo);
+		if(mvo.getMem_email()!=null) {
+			AjaxDataPrinter.out(res, mvo.getMem_email());
+		} else {
+			AjaxDataPrinter.out(res, "로그인 중이 아님");
+		}
 	}
 	// =======================================================================================================================
 	// 스프링에 의해 setter 객체 주입법으로 객체를 주입 받는다.
 	public void setMemberLogic(MemberLogic memberLogic) {
 		this.memberLogic = memberLogic;
 	}
+
 	
 }

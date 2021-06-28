@@ -46,6 +46,11 @@
     );
   });
 
+  //회원가입 모달창 이벤트들
+  $(document).ready(function () {
+    
+  });
+
   //지도 말풍선 클릭시 이벤트
   $(window).on("load", function () {
     console.log(3, "window.onload");
@@ -103,6 +108,9 @@
       $("#report_content_user").submit();
     });
   });
+
+  //drop down toggle
+  $('.dropdown-toggle').dropdown('toggle');
 
   /*==========================================[[ Not Mine ]]==================================================*/
 

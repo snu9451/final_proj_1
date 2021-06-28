@@ -1,6 +1,7 @@
 package member.mvc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,19 +35,18 @@ public class MemberDao {
 		rmap = sqlSessionTemplate.selectOne("selectOneBySession", sessionValue);
 		return rmap;
 	}
-	public int saveId(Map<String, Object> pmap) {
-		int result = 0;
-		// Update or Insert To Session (Table) ================================= [[ 프로시저1 ]]
-		result = sqlSessionTemplate.selectOne("uiToSession", pmap);
-		return result;
-	}
-	public int setAutoLogin(Map<String, Object> pmap) {
-		int result = 0;
-		// Update or Insert To Session (Table) ================================= [[ 프로시저1 ]]
-		result = sqlSessionTemplate.selectOne("uiToSession", pmap);
-		return result;
-	}
-
+//	public int saveId(Map<String, Object> pmap) {
+//		int result = 0;
+//		// Update or Insert To Session (Table) ================================= [[ 프로시저1 ]]
+//		result = sqlSessionTemplate.selectOne("uiToSession", pmap);
+//		return result;
+//	}
+//	public int setAutoLogin(Map<String, Object> pmap) {
+//		int result = 0;
+//		// Update or Insert To Session (Table) ================================= [[ 프로시저1 ]]
+//		result = sqlSessionTemplate.selectOne("uiToSession", pmap);
+//		return result;
+//	}
 
 
 
@@ -82,8 +82,10 @@ public class MemberDao {
 		// updatePw라는 프로시저를 실행함.
 		// 프로시저는 return이 없다. 따라서 pmap에서 직접 결과를 꺼내줘야 함.
 		// 프로시저 호출 시에는 seleceOne 쓰든 selectList 쓰든 심지어는 update, delete 쓰든 상관 없는 것 같다.. -ㅁ-;
-		sqlSessionTemplate.update("updatePw", pmap);
-		result = (Integer)pmap.get("proc_result");
+		sqlSessionTemplate.selectOne("updatePw", pmap);
+		logger.info(pmap);
+		result = Integer.parseInt(String.valueOf(pmap.get("result")));
+		logger.info(result);
 		return result;
 	}
 
@@ -98,7 +100,7 @@ public class MemberDao {
 		// updatePw라는 프로시저를 실행함.
 		// 프로시저는 return이 없다. 따라서 pmap에서 직접 결과를 꺼내줘야 함.
 		sqlSessionTemplate.update("updateActive", pmap);
-		result = (Integer)pmap.get("proc_result");
+		result = Integer.parseInt(String.valueOf(pmap.get("result")));
 		return result;
 	}
 
@@ -112,7 +114,7 @@ public class MemberDao {
 		int result = 0;
 		// 프로시저는 return이 없다. 따라서 pmap에서 직접 결과를 꺼내줘야 함.
 		sqlSessionTemplate.update("withdraw", pmap);
-		result = (Integer)pmap.get("proc_result");
+		result = Integer.parseInt(String.valueOf(pmap.get("result")));
 		return result;
 	}
 
@@ -123,10 +125,14 @@ public class MemberDao {
 
 
 	public Map<String, Object> selectMember(Map<String, Object> pmap) {
-		Map<String, Object> rmap = null;
-		sqlSessionTemplate.selectOne("selectMember", pmap);
-		logger.info(pmap);
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = sqlSessionTemplate.selectOne("selectMember", pmap);
+		logger.info("DAO rmap ===> "+rmap);
 		return rmap;
+	}
+	public Map<String, Object> uiToSession(Map<String, Object> pmap) {
+		sqlSessionTemplate.selectOne("uiToSession", pmap);
+		return pmap;
 	}
 
 
@@ -140,6 +146,35 @@ public class MemberDao {
 	}
 	public Map<String, Object> selectNickName(Map<String, Object> pmap) {
 		return sqlSessionTemplate.selectOne("selectNickName",pmap);
+	}
+
+
+
+
+
+
+
+	public int selectIsMemberPw(Map<String, Object> pmap) {
+		int result = 0;
+		result = sqlSessionTemplate.selectOne("selectIsMemberPw", pmap);
+		return result;
+	}
+	public int selectIsMember(Map<String, Object> pmap) {
+		int result = 0;
+		result = sqlSessionTemplate.selectOne("selectIsMember", pmap);
+		return result;
+	}
+
+
+
+
+
+
+
+	public int insertMember(Map<String, Object> pmap) {
+		int result = 0;
+		result = sqlSessionTemplate.insert("insertMember", pmap);
+		return result;
 	}
 
 }

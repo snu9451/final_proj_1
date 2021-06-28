@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>내동생 - Main Page</title>
-<meta content="" name="description">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>내동생 - Main Page</title>
+  <meta content="" name="description">
   <meta content="" name="keywords">
   <!-- Font Awesome-->
   <script src="https://kit.fontawesome.com/a2c0486048.js" crossorigin="anonymous"></script>
@@ -35,13 +37,24 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/main_page.css" rel="stylesheet">
-
 </head>
 
 <body>
-
   <!-- ============================= Header Section ========================= -->
-  <header id="header" class="fixed-top">
+  <header id="header" class="fixed-top d-flex align-items-end">
+    <!-- drop down -->
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="category_drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Dropdown button
+      </button>
+      <div class="dropdown-menu" aria-labelledby="category_drop">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    </div>
+    
+    <!-- End drop down  -->
     <div class="container d-flex align-items-center">
       <img class="myBro__logo mr-2" src="assets/img/mybro_favicon1.png" alt="mybro_favicon">
       <h1 class="logo mr-auto main__title">
@@ -51,7 +64,7 @@
         <ul>
           <!-- 비회원 로그인시 나타나는 nav bar -->
           <div>
-            <li><a href="#" data-toggle="modal" data-target="#logIn2">로그인</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#logIn">로그인</a></li>
             <li><a href="#" data-toggle="modal" data-target="#signInForm">회원가입</a></li>
             <li><a href="#" data-toggle="modal" data-target="#report_user">모달test</a></li>
             <button type="button" class="btn btn-outline-light btnTest">BtnTest</button>
@@ -300,22 +313,33 @@
         </div>
         <div class="modal-body text-center d-flex justify-content-center">
           <div class="col-12 log__box d-flex flex-column justify-content-center">
-            <div>
-              <form class="col-12 d-flex justify-content-around">
-                <div class="col-9 d-flex flex-column">
-                  <input class="form-control mb-2" type="text" placeholder="id를 입력해주세요.">
-                  <input class="form-control mb-2" type="password" placeholder="password를 입력해주세요.">
+            <form class="" action="">
+              <div class="form-row col-12 ">
+                  <div class="col-9 d-flex flex-column">
+                    <input class="form-control mb-2 w-100" type="text" placeholder="id를 입력해주세요.">
+                    <input class="form-control mb-2 w-100" type="password" placeholder="password를 입력해주세요.">
+                  </div>
+                  <div class="col-3">
+                    <button class="btn btn-primary ml-1 text-center h-100 w-100" type="submit" data-dismiss="modal">로그인</button>
+                  </div>
+              </div>
+              <div class="form-row justify-content-center col-12">
+                <div class="custom-control custom-checkbox col-4">
+                  <input type="checkbox" class="custom-control-input" id="saveId">
+                  <label class="custom-control-label" for="saveId">ID 저장</label>
                 </div>
-                <button class="btn btn-primary ml-1" type="submit" data-dismiss="modal">로그인</button>
+                <div class="custom-control custom-checkbox col-4">
+                  <input type="checkbox" class="custom-control-input" id="autoLogin">
+                  <label class="custom-control-label" for="autoLogin">자동로그인</label>
+                </div>
+              </div>
               </form>
-            </div>
             <a href="" class="col-12 mb-2">비밀번호를 잊으셨나요??</a>
             <button class="btn btn-info p-2">네이버로그인</button>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
         </div>
       </div>
     </div>
@@ -739,6 +763,8 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main_page.js"></script>
+  <script src="assets/js/detail_page.js"></script>
+  <script src="assets/js/join.js"></script>
 
   <!-- Google Map Script -->
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->

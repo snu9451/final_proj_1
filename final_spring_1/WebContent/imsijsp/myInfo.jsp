@@ -143,7 +143,7 @@
 	                	</form>
 	                	</div>
 	                	<div class="col-3 d-flex flex-column">
-			                <button id="check_nickname" class="btn btn-dark btn-sm" style="margin-left : 0px;">중복확인</button>
+			                <button id=" check_nickname" class="btn btn-dark btn-sm" style="margin-left : 0px;">중복확인</button>
 	                	</div>
 	              	</div>
 		            <div id="result_check_nickname" class="col-10 d-flex justify-content-around"></div>
