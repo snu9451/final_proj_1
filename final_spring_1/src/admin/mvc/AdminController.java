@@ -118,7 +118,7 @@ public class AdminController extends MultiActionController {
 	}
 
  // 신고된 회원 상세보기
-	public ModelAndView selectMemberReportDetail(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public ModelAndView selectMemberReportDetail(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("selectMemberReportDetail 메소드 호출");
 
 		HashMapBinder hmb = new HashMapBinder(req);
@@ -142,7 +142,7 @@ public class AdminController extends MultiActionController {
 	}
 
  // 신고된 게시글 상세보기
-	public ModelAndView selectBoardReportDetail(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public ModelAndView selectBoardReportDetail(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("selectBoardReportDetail 메소드 호출");
 
 		
