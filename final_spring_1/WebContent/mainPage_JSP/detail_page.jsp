@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,32 +126,36 @@
 					</div>
 					<!-- End 상품 img div -->
 					<!-- 상품 설명 div -->
-					<div class="col-8 col-lg-8" id="pd__content">
-						<div class="d-flex justify-content-between align-items-end">
-							<div class="d-flex align-items-end">
-								<span class="" id="pd__title">nike 데이브레이크</span>
-								<div class="ml-3">
-									<span>조회수</span><span>50</span><span>회</span>
+					<div
+						class="col-8 col-lg-8 d-flex flex-column justify-content-between"
+						id="pd__content">
+						<div class="d-flex flex-column">
+							<div class="d-flex justify-content-between align-items-end">
+								<div class="d-flex align-items-end">
+									<span class="" id="pd__title">nike 데이브레이크</span>
+									<div class="ml-3">
+										<span>조회수</span><span>50</span><span>회</span>
+									</div>
+								</div>
+								<div>
+									<ul class="d-flex align-items-end mb-0">
+										<li>
+											<button>수정</button>
+										</li>
+										<li>
+											<button>삭제</button>
+										</li>
+										<li>
+											<button>
+												게시물 신고 <i class="fas fa-exclamation warn"
+													style="color: red; font-size: 20px; font-weight: bold;"></i>
+											</button>
+										</li>
+									</ul>
 								</div>
 							</div>
-							<div>
-								<ul class="d-flex align-items-end mb-0">
-									<li>
-										<button>수정</button>
-									</li>
-									<li>
-										<button>삭제</button>
-									</li>
-									<li>
-										<button>
-											게시물 신고 <i class="fas fa-exclamation warn"
-												style="color: red; font-size: 20px; font-weight: bold"></i>
-										</button>
-									</li>
-								</ul>
-							</div>
+							<div class="pd__divider"></div>
 						</div>
-						<div class="pd__divider"></div>
 						<div class="mt-3" id="pd__middle">
 							<p>나이키 데이브레이크 5번밖에 안신었어요 더 예쁜거 사게되서 팝니당 사이즈 260</p>
 						</div>
@@ -289,3 +295,5 @@
 	<script src="assets/js/detail_page.js"></script>
 </body>
 </html>
+
+
