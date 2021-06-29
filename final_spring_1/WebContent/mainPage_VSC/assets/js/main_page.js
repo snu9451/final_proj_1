@@ -46,14 +46,8 @@
     );
   });
 
-  //회원가입 모달창 이벤트들
-  $(document).ready(function () {
-    
-  });
-
   //지도 말풍선 클릭시 이벤트
   $(window).on("load", function () {
-    console.log(3, "window.onload");
     if ($(".errand_regist").length) {
       $(document).on("click", ".errand_regist", function () {
         console.log("errand!!!!!!!");
@@ -78,12 +72,10 @@
 
   //파일 이름 가져오기 & 파일용량 제한
   $(document).ready(function () {
-    console.log($(".report_file_user"));
     $(".report_file_user").on("change", function () {
       const file = $(this)[0].files[0];
       const fileName = $(this)[0].files[0].name;
       if (file) {
-        console.log(file);
         const fileSize = file.size;
         if (fileSize > 1024 * 1024 * 10) {
           alert("10MB 이하 파일만 등록할 수 있습니다.");

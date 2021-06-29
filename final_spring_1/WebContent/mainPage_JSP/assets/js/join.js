@@ -8,7 +8,10 @@
     let chckVal = $("#checkPassWord").val();
 
     //회원가입 클릭시 input 값들 초기화.
-    $("input").val("");
+    //$("input").val("");
+    $("#signUpForm")[0].reset();
+    $("#pwChck")[0].val("");
+    //$("#pwChck__box").empty();
 
     //인증번호 클릭시 이벤트.
     $("#btn_getCode").click(function () {
@@ -87,16 +90,18 @@
           pwChck_box.empty();
           pwChck_box.html(`<small id="pwChck"
 					class="form-text"
-					style="color:green;">
-					"비밀번호가 일치합니다 : )"
+					style="color:green; font-weight:bold ;
+					font-size: 15px; ">
+					비밀번호가 일치합니다 : )
 					</small>
 					`);
         } else {
           pwChck_box.empty();
           pwChck_box.html(`<small id="pwChck"
 					class="form-text"
-					style="color:red;">
-					"비밀번호가 다릅니다 : ("
+					style="color:red; font-weight:bold;
+					font-size: 15px; ">
+					비밀번호가 다릅니다 : (
 					</small>
 					`);
         }
@@ -117,9 +122,7 @@
           data: "mem_nickname=" + inputNickName,
           url: "/member/selectNickName.nds",
           success: function (data) {
-            console.log(data);
             $("#nickChck__box").html(data);
-            //$("#inputNickName").attr("disabled", true);
           },
           error: function (e) {
             console.log("error: " + e.responseText);
@@ -138,10 +141,18 @@
   // 회원가입 submit 이벤트
   $(document).ready(function () {
     $("#btn_signUp").click(function () {
-      console.log("sign up");
-      console.log($("#inputAge").val());
+      // console.log(`${$("#inputEmail").val()}, ${$("#inputCellPhone").val()},
+      //               ${$("#checkPassWord").val()}, ${$("#inputNickName").val()},
+      //               ${$("#inputAge").val()},
+      //               ${$('input[name="mem_gender"]:checked').val()}`);
       console.log($('input[name="mem_gender"]:checked').val());
       //$("#signUpForm").submit();
     });
+  });
+
+  $("#signUpModal").on("hidden.bs.modal", function () {
+    console.log("modal hidden");
+    $("#signUpForm")[0].reset();
+    $("#pwChck").val("");
   });
 })(jQuery);
