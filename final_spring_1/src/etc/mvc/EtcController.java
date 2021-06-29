@@ -29,20 +29,28 @@ public class EtcController extends MultiActionController {
 	public void selectCategory(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("selectCategory 메소드 호출");
 		
-		HashMapBinder hmb = new HashMapBinder(req);
-		Map<String,Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
-		
 		List<String> plist = new ArrayList<>();
-		plist = etcLogic.selectCategory(pmap);
+		plist = etcLogic.selectCategory();
 		
-	//	logger.info(plist); > 테스트
+	//	logger.info(plist);// > 테스트
 	}
 	
- // 검색어 자동완성(검색횟수(누적검색수 기준)가 10번이상인 것 중에서 상위 10개면)
+ // 검색어 자동완성(검색횟수(누적검색수 기준)가 10번이상인 것 중에서 상위 10개만)
 	public void selectAutocompleteList(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("selectAutocompleteList 메소드 호출");
 		
+		HashMapBinder hmb = new HashMapBinder();
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		hmb.bind(pmap); // 입력한 검색단어를 담음
+		
+// 테스트		
+//		Map<String, Object> pmap = new HashMap<String, Object>();
+//	  	pmap.put("keyword", "필"); 
+		
+		List<Map<String, Object>> keyword = new ArrayList<Map<String,Object>>();
+	  	keyword = etcLogic.selectAutocompleteList(pmap);
+	  	
+//		logger.info("처리결과 =====> " + keyword); // [{KEYWORD=필름}, {KEYWORD=필기구}]
 	}
 	
  // 검색 순위
