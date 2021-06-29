@@ -87,6 +87,31 @@ public class MemberController extends MultiActionController {
 			AjaxDataPrinter.out(res, "text/html", "<h4 style=\"font-size : 15px; color : red; font-weight:bold\">이미 가입되어 있는 닉네임입니다.</h4>");
 		}
 	}
+	// 마이페이지를 위한 회원 정보 조회
+	public void selectMember(HttpServletRequest req, HttpServletResponse res) {
+//		ModelAndView mav = new ModelAndView();
+		// 세션에 담긴 회운정보(이메일) 가져오기
+		HttpSession session = req.getSession();
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		MemberVO mvo = (MemberVO)session.getAttribute("login");
+		String mem_email = mvo.getMem_email();
+		pmap.put("mem_email", mem_email);
+		Map<String, Object> rmap = memberLogic.selectMemberAdmin(pmap);
+		req.setAttribute("memberMap", rmap);
+		RequestDispatcher rd = req.getRequestDispatcher("/myPage/myInfo.jsp");
+		try {
+			rd.forward(req, res);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		mav.addObject("memberMap", rmap);
+//		mav.setViewName("/myinfo/myInfo.jsp");
+//		return mav;
+	}
 	// ===================================== [[ INSERT ]] =====================================
 	// 회원가입 모달에서 확인 버튼 클릭 시
 	// 테스트: http://localhost:9696/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
@@ -130,18 +155,20 @@ public class MemberController extends MultiActionController {
 		pmap.put("mem_email", mem_email);
 		int result = memberLogic.updateMember(pmap);
 		logger.info("NickName 업데이트 결과 ===> "+result);
+		AjaxDataPrinter.out(res, "text/html", result);
 		// 닉네임 변경 실패 시
-		if(result == 0) {
-			AjaxDataPrinter.out(res, "text/html", "[ERROR] 닉네임 변경에 <b>실패</b>하였습니다.");
-		}
+//		if(result == 0) {
+//			AjaxDataPrinter.out(res, "text/html", "[ERROR] 닉네임 변경에 <b>실패</b>하였습니다.");
+//		}
 		// 닉네임 변경 성공 시
-		else if(result == 1) {
+//		else if(result == 1) {
 			// 세션에 저장해 둔 닉네임 변경해주기
-			String afterNickName = (String)pmap.get("change_nickname");
-			mvo.setMem_nickname(afterNickName);
-			session.setAttribute("login", mvo);
-			AjaxDataPrinter.out(res, "text/html", "닉네임이 <b>"+afterNickName+"</b>(으)로 변경되었습니다.");
-		}
+//			String afterNickName = (String)pmap.get("mem_nickname");
+//			logger.info(afterNickName);
+//			mvo.setMem_nickname(afterNickName);
+//			session.setAttribute("login", mvo);
+//			AjaxDataPrinter.out(res, "text/html", "닉네임이 <b>"+afterNickName+"</b>(으)로 변경되었습니다.");
+//		}
 	}
 	// 프로필 사진 변경 시
 	public void updateImg(HttpServletRequest req, HttpServletResponse res) {////////////////////////////////////////////
@@ -207,7 +234,7 @@ public class MemberController extends MultiActionController {
 		String mem_email = mvo.getMem_email();
 		pmap.put("mem_email", mem_email);
 		// 프로시저 실행 결과를 받아줄 proc_result 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
-		pmap.put("proc_result", 0);
+		pmap.put("result", 0);
 		int result = memberLogic.updateActive(pmap);
 		logger.info("회원상태(mem_active) 업데이트 결과(탈퇴 처리 결과) ===> "+result);
 		// 입력 받은 현재 비밀번호가 [DB]에서 조회한 사용자의 비밀번호와 달라 회원 탈퇴 처리에 실패 시
@@ -318,20 +345,30 @@ public class MemberController extends MultiActionController {
 		if(result == 1) {
 			String tempPw = memberLogic.getRandomCode("NUL", 10);
 			Mail mail = new Mail();
-			mail.setReceiveEmail(pmap.get("MEM_EMAIL")+"@naver.com","[내동생] 임시 비밀번호 발급","임시비밀번호는 <b>"+tempPw+"</b>입니다.");	// 테스트
+			logger.info((String)pmap.get("mem_email"));
+			mail.setReceiveEmail((String)pmap.get("mem_email"),"[내동생] 임시 비밀번호 발급","임시비밀번호는 <b>"+tempPw+"</b>입니다.");	// 테스트
 //			mail.setReceiveEmail(inputEmail);
-			mail.sendEmail();
+//			mail.sendEmail();
+			// 테이블에서 비밀번호 업데이트
+			Map<String, Object> rmap = memberLogic.selectEmail(pmap);
+			logger.info("이메일로 회원조회 결과 ===>" + rmap);
+			String mem_pw = (String)rmap.get("MEM_PW");
+			logger.info("이메일로 회원조회 결과 얻은 비밀번호 ===> "+mem_pw);
+			pmap.put("mem_pw", mem_pw);
+			pmap.put("change_pw", tempPw);
+			int result_ = memberLogic.updatePw(pmap);
+			logger.info("비밀번호 업데이트 결과 ===> "+result_);
 			// 비밀번호 저장해야 함
 			HttpSession session = req.getSession();
 			session.setAttribute("tempPw", tempPw);
 			// 성공하였음을 Front에 알림(AJAX)
-			AjaxDataPrinter.out(res, "text/html", "입력하신 이메일로 임시 비밀번호가 발급되었습니다.");
+			AjaxDataPrinter.out(res, "text/html", "success");
 		}
 		// 존재하지 않는 이메일이라면
 		else if(result == 0) {
 			logger.info("존재하지 않는 이메일이 입력되었음");
 			// (존재하지 않는 이메일이라) 실패하였음을 Front에 알림(AJAX)
-			AjaxDataPrinter.out(res, "text/html", "존재하지 않는 이메일입니다.");
+			AjaxDataPrinter.out(res, "text/html", "fail");
 		}
 	}
 	public void reqLoginView(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
@@ -382,8 +419,8 @@ public class MemberController extends MultiActionController {
 	// 로그인 버튼이 클릭되었을 때 실행되는 메소드
 	public void doLogin(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		// 사용자가 자동로그인 체크박스와 아이디저장 체크박스에 체크 했는지 여부를 담을 변수 선언
-		String isAutoLoginChecked = null;
-		String isSavedIdChecked = null;
+		String isAutoLoginChecked = "false";
+		String isSavedIdChecked = "false";
 
 		String sessionKey = "NDS_SKEY";
 		CookiesMap cookies = new CookiesMap(req);
@@ -402,7 +439,7 @@ public class MemberController extends MultiActionController {
 		// 조회 결과가 없으면 rmap은  null임
 		if(rmap == null) {
 			// resultMsg를 전송 (AJAX)
-			AjaxDataPrinter.out(res, "text/html", "아이디 혹은 비밀번호가 잘못되었습니다.");
+			AjaxDataPrinter.out(res, "text/html", "fail");
 		}
 		// 로그인 성공 시(해당 email과 pw로 조회한 결과가 row 하나인 경우)
 		else {
@@ -426,9 +463,10 @@ public class MemberController extends MultiActionController {
 //					if(result == 1) { // 처리 결과가 성공이라면
 						// 쿠키의 유효기간을 갱신한다.
 						cookie.setMaxAge(60*60*24*30);
+						cookie.setPath("/");
+						res.addCookie(cookie);
 						logger.info("NDS_SKEY값::"+sessionValue);
 //					}
-					AjaxDataPrinter.out(res, "text/html", "[아이디저장] 로그인 성공!");
 				}
 
 				// 쿠키에 NDS_SKEY가 없는 경우라면
@@ -446,10 +484,11 @@ public class MemberController extends MultiActionController {
 //					if(result == 1) {
 						Cookie cookie_ = new Cookie(sessionKey, sessionValue);
 						cookie_.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
+						cookie_.setPath("/");
 						res.addCookie(cookie_);
 						logger.info("NDS_SKEY값::"+sessionValue);
 //					}
-					AjaxDataPrinter.out(res, "text/html", "[아이디저장] 로그인 성공!");
+					
 				}
 			}
 			// ================================================= [[ 자동로그인 ]] =================================================
@@ -471,9 +510,10 @@ public class MemberController extends MultiActionController {
 //					if(result == 1) { // 처리 결과가 성공이라면
 //						 쿠키의 유효기간을 갱신한다.
 						cookie.setMaxAge(60*60*24*30);
+						cookie.setPath("/");
+						res.addCookie(cookie);
 						logger.info("NDS_SKEY값::"+sessionValue);
 //					}
-					AjaxDataPrinter.out(res, "text/html", "[자동로그인] 로그인 성공!");
 				}
 				
 				// 쿠키에 NDS_SKEY가 없는 경우라면
@@ -491,10 +531,11 @@ public class MemberController extends MultiActionController {
 //					if(result == 1) {
 						Cookie cookie_ = new Cookie(sessionKey, sessionValue);
 						cookie_.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
+						cookie_.setPath("/");
 						res.addCookie(cookie_);
 						logger.info("NDS_SKEY값::"+sessionValue);
 //					}
-					AjaxDataPrinter.out(res, "text/html", "[자동로그인] 로그인 성공!");
+					AjaxDataPrinter.out(res, "text/html", (String)rmap.get("MEM_NICKNAME"));
 				}
 			}
 			// 로그인 성공시 공통적으로 처리해 줄 사항; 세션에 사용자정보(MemberVO) 담아주기.
@@ -508,6 +549,7 @@ public class MemberController extends MultiActionController {
 			logger.info(mvo.getMem_email());
 			HttpSession session = req.getSession();
 			session.setAttribute("login", mvo);
+			AjaxDataPrinter.out(res, "text/html", (String)rmap.get("MEM_NICKNAME"));
 		}
 
 	}
@@ -515,6 +557,10 @@ public class MemberController extends MultiActionController {
 	public void doLogout(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 		session.invalidate();
+		Cookie cookie = new Cookie("NDS_SKEY", null);
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		res.addCookie(cookie);
 		logger.info("로그아웃 처리 완료");
 		// 메인 페이지로 이동시키기
 	}
@@ -613,7 +659,10 @@ public class MemberController extends MultiActionController {
 		mvo.setMem_email("apple@good.com");
 		mvo.setMem_nickname("사과");
 		session.setAttribute("login", mvo);
-		res.addCookie(new Cookie("NDS_SKEY", "010010010"));
+		Cookie cookie = new Cookie("NDS_SKEY", "010010010");
+		cookie.setPath("/");
+		cookie.setMaxAge(0);
+		res.addCookie(cookie);
 		logger.info("관리자로 로그인하였음");
 	}
 	public void showEmail(HttpServletRequest req, HttpServletResponse res) {

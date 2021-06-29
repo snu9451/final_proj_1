@@ -20,16 +20,17 @@
 	<!-- Url의 mapping이 이루어짐 -->
 	<bean id="member-url-mapping"
 		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="interceptors">
-			<list>
-				<ref bean="login-check-interceptor"/>
-			</list>
-		</property>
+<!-- 		<property name="interceptors"> -->
+<!-- 			<list> -->
+<!-- 				<ref bean="login-check-interceptor"/> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
 		<property name="mappings">
 			<props>
 				<prop key="/member/reqLoginView.nds">member-controller</prop>
 				<prop key="/member/selectNickName.nds">member-controller</prop>
 				<prop key="/member/selectEmail.nds">member-controller</prop>
+				<prop key="/myPage/selectMember.nds">member-controller</prop>
 				<prop key="/member/updateNickName.nds">member-controller</prop>
 				<prop key="/member/updateImg.nds">member-controller</prop>
 				<prop key="/member/updatePw.nds">member-controller</prop>
@@ -61,6 +62,7 @@
 				<prop key="/member/reqLoginView.nds">reqLoginView</prop>
 				<prop key="/member/selectNickName.nds">selectNickName</prop>
 				<prop key="/member/selectEmail.nds">selectEmail</prop>
+				<prop key="/myPage/selectMember.nds">selectMember</prop>
 				<prop key="/member/updateNickName.nds">updateNickName</prop>
 				<prop key="/member/updateImg.nds">updateImg</prop>
 				<prop key="/member/updatePw.nds">updatePw</prop>
