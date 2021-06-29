@@ -16,8 +16,9 @@
   where rownum < 11 ]]>
  </select>
  
-<!-- 검색 순위 -->
+<!-- 검색 순위(검색횟수가 10이상인 검색어만 상위10개 조회) -->
  <select id="selectWord" parameterType="map" resultType="map">
+ <!-- <![CDATA[]]> : >, <가 태그로 읽으므로 쿼리로 사용하려면 필요 -->
   select keyword 
   from (select keyword from search_words
 <![CDATA[ where word_day > 10

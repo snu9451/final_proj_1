@@ -35,4 +35,12 @@ public class EtcDao {
 		
 		return keyword;
 	}
+
+ // 검색 순위(검색횟수가 10이상인 검색어만 상위10개 조회)
+	public List<String> selectWordList() {
+		List<String> plist = new ArrayList<String>();
+		plist = sqlSessionTemplate.selectList("selectWord");
+		
+		return plist;
+	}
 }

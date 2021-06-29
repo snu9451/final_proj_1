@@ -144,7 +144,6 @@ public class AdminController extends MultiActionController {
 	public ModelAndView selectBoardReportDetail(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("selectBoardReportDetail 메소드 호출");
 
-		
 		HashMapBinder hmb = new HashMapBinder(req); 
 		Map<String,Object> pmap = new HashMap<>(); 
 		hmb.bind(pmap); // 신고된 게시글 번호 담음
