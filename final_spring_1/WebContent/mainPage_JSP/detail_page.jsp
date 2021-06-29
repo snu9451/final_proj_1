@@ -38,62 +38,13 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet" />
 <link href="assets/css/main_page.css" rel="stylesheet" />
+  <%@ include file="./source_h.jsp" %>
 </head>
 
 <body>
 	<!-- ============================= Header Section ========================= -->
-	<header id="header" class="fixed-top">
-		<div class="container d-flex align-items-center">
-			<img class="myBro__logo mr-2" src="assets/img/mybro_favicon1.png"
-				alt="mybro_favicon" />
-			<h1 class="logo mr-auto main__title">
-				<a href="main_page.html">내 동생<span>.</span></a>
-			</h1>
-			<nav class="nav-menu d-none d-lg-block">
-				<ul>
-					<!-- 비회원 로그인시 나타나는 nav bar -->
-					<div>
-						<li><a href="#" data-toggle="modal" data-target="#logIn">로그인</a>
-						</li>
-						<li><a href="#" data-toggle="modal" data-target="#signInForm">회원가입</a>
-						</li>
-						<li><a href="#" data-toggle="modal"
-							data-target="#report_user">모달test</a></li>
-						<button type="button" class="btn btn-outline-light btnTest">
-							BtnTest</button>
-					</div>
-
-					<!-- 회원 로그인시 나타나는 nav bar -->
-					<!-- <div>
-            <li>
-              <span>심부름하기</span>
-              <input type="checkbox" id="switch1" name="switch1" class="input__on-off">
-              <label for="switch1" class="label__on-off">
-                <span class="marble"></span>
-                <span class="on">on</span>
-                <span class="off">off</span>
-              </label>
-            </li>
-            <li>
-              <a class="nav-link" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <i class="icofont-envelope-open"></i>
-                <span class="badge badge-danger badge-counter">0</span>
-              </a>
-            </li>
-            <li><a href="">profile</a></li>
-            <li><a href="">상품판매</a></li>
-            <li><a href="">코인충전</a></li>
-            <li><a href="">마이페이지</a></li>
-            <li><a href="">로그아웃</a></li>
-          </div> -->
-				</ul>
-			</nav>
-			<!-- .nav-menu -->
-		</div>
-	</header>
-	<!-- ============================= End Header Section ========================= -->
-
+  <jsp:include page="./header.jsp" flush="false"></jsp:include>
+  <!-- ============================= Header Section ========================= -->
 	<!-- ============================= Detail Section ========================= -->
 	<main class="pd__main" id="main">
 		<section id="product" class="product__description col-12 col-lg-12">
@@ -126,36 +77,32 @@
 					</div>
 					<!-- End 상품 img div -->
 					<!-- 상품 설명 div -->
-					<div
-						class="col-8 col-lg-8 d-flex flex-column justify-content-between"
-						id="pd__content">
-						<div class="d-flex flex-column">
-							<div class="d-flex justify-content-between align-items-end">
-								<div class="d-flex align-items-end">
-									<span class="" id="pd__title">nike 데이브레이크</span>
-									<div class="ml-3">
-										<span>조회수</span><span>50</span><span>회</span>
-									</div>
-								</div>
-								<div>
-									<ul class="d-flex align-items-end mb-0">
-										<li>
-											<button>수정</button>
-										</li>
-										<li>
-											<button>삭제</button>
-										</li>
-										<li>
-											<button>
-												게시물 신고 <i class="fas fa-exclamation warn"
-													style="color: red; font-size: 20px; font-weight: bold;"></i>
-											</button>
-										</li>
-									</ul>
+					<div class="col-8 col-lg-8" id="pd__content">
+						<div class="d-flex justify-content-between align-items-end">
+							<div class="d-flex align-items-end">
+								<span class="" id="pd__title">nike 데이브레이크</span>
+								<div class="ml-3">
+									<span>조회수</span><span>50</span><span>회</span>
 								</div>
 							</div>
-							<div class="pd__divider"></div>
+							<div>
+								<ul class="d-flex align-items-end mb-0">
+									<li>
+										<button>수정</button>
+									</li>
+									<li>
+										<button>삭제</button>
+									</li>
+									<li>
+										<button>
+											게시물 신고 <i class="fas fa-exclamation warn"
+												style="color: red; font-size: 20px; font-weight: bold"></i>
+										</button>
+									</li>
+								</ul>
+							</div>
 						</div>
+						<div class="pd__divider"></div>
 						<div class="mt-3" id="pd__middle">
 							<p>나이키 데이브레이크 5번밖에 안신었어요 더 예쁜거 사게되서 팝니당 사이즈 260</p>
 						</div>
@@ -292,8 +239,6 @@
 	<script src="assets/vendor/aos/aos.js"></script>
 
 	<!-- Template Main JS File -->
-	<script src="assets/js/detail_page.js"></script>
+	<%@ include file="./source_f.jsp" %>
 </body>
 </html>
-
-

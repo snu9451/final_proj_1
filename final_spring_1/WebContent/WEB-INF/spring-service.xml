@@ -8,6 +8,9 @@
 	<bean id="member-logic" class="member.mvc.MemberLogic">
 		<property name="memberDao" ref="member-dao"/>
 	</bean>
+	<bean id="etc-logic" class="etc.mvc.EtcLogic">
+		<property name="etcDao" ref="etc-dao"/>
+	</bean>
 	
 	
 </beans>

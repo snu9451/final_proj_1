@@ -29,6 +29,9 @@
  	<bean id="member-dao" class="member.mvc.MemberDao">
  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
+ 	<bean id="etc-dao" class="etc.mvc.EtcDao">
+ 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
 	
 	
 </beans>

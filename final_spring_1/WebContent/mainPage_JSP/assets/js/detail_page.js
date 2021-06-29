@@ -40,7 +40,7 @@
         });
     }
   });
-
+$('.dropdown-toggle').dropdown('toggle');
   // Toggle .header-scrolled class to #header when page is scrolled
   // $(window).scroll(function () {
   //   if ($(this).scrollTop() > 100) {
@@ -84,7 +84,8 @@
   $(".owl-carousel").owlCarousel({
     items: 1,
     loop: true,
-    margin: 10,
+    mergeFit: true,
+    margin: 30,
     nav: true,
     navText: [
       [`<i class="fas fa-chevron-left"></i>`],

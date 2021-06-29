@@ -1065,9 +1065,6 @@ section {
   padding: 5px;
 }
 
-.owl-stage-outer {
-}
-
 .owl-stage {
   display: flex;
   align-items: center;
@@ -1080,11 +1077,6 @@ section {
   justify-content: space-around;
   font-size: 30px;
 }
-
-/* #pd__img__box img {
-  width: 100%;
-  object-fit: contain;
-} */
 
 .items img {
   max-width: 360px;
