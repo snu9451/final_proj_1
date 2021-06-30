@@ -17,19 +17,19 @@
 	class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<props>
-				<prop key="/item/selectItemList.nds">item-controller</prop> <!--  1 -->
-				<prop key="/item/selectByCategory.nds">item-controller</prop><!-- 1 -->
-				<prop key="/item/selectBySearch.nds">item-controller</prop><!-- 1  -->
-				<prop key="/item/updateItem.nds">item-controller</prop><!--  -->
-				<prop key="/item/selectItemDetail.nds">item-controller</prop><!--1  -->
-				<prop key="/item/editItem.nds">item-controller</prop><!-- 1 -->
-				<prop key="/item/deleteItem.nds">item-controller</prop><!-- 1  -->
-				<prop key="/item/updateItemConfirm.nds">item-controller</prop><!-- 1 -->
-				<prop key="/item/likeItem.nds">item-controller</prop><!-- 1 -->
-				<prop key="/item/insertComment.nds">item-controller</prop><!-- 1  -->
-				<prop key="/item/deleteComment.nds">item-controller</prop><!-- 1 -->
-				<prop key="/item/updateComment.nds">item-controller</prop><!--  1 -->
-				<prop key="/item/insertItem.nds">item-controller</prop><!--  -->
+				<prop key="/item/selectItemList.nds">item-controller</prop> <!--  12 -->
+				<prop key="/item/selectByCategory.nds">item-controller</prop>           <!-- 1 UI생기면 할게 -->
+				<prop key="/item/selectBySearch.nds">item-controller</prop><!-- 12  -->
+				<prop key="/item/updateItem.nds">item-controller</prop>                 <!-- 1 -->
+				<prop key="/item/selectItemDetail.nds">item-controller</prop><!--12  -->
+				<prop key="/item/editItem.nds">item-controller</prop>                    <!-- 1 -->
+				<prop key="/item/deleteItem.nds">item-controller</prop><!-- 12  -->
+				<prop key="/item/updateItemConfirm.nds">item-controller</prop><!-- 12 -->
+				<prop key="/item/likeItem.nds">item-controller</prop><!-- 12 -->
+				<prop key="/item/insertComment.nds">item-controller</prop>            <!-- 1  -->
+				<prop key="/item/deleteComment.nds">item-controller</prop>           <!-- 1 -->
+				<prop key="/item/updateComment.nds">item-controller</prop>            <!--  1 -->
+				<prop key="/item/insertItem.nds">item-controller</prop>             <!-- 1  -->
 			</props>
 		</property>
 	</bean>

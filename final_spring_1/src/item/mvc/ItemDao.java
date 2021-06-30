@@ -21,47 +21,28 @@ public class ItemDao {
 	}
 
 	//최근상품,인기상품 클릭 시 해당하는 정렬순서로 상품목록을 조회한다.
-	public List<Map<String, Object>> selectItemList(String pr_choice) {
+	public List<Map<String, Object>> selectItemList(Map<String, Object> pmap) {
 		logger.info("Dao :selectItemList메소드 호출");
-		Map<String, Object> map = new HashMap<>();
-		List<Map<String, Object>> p_temp = new ArrayList<>();
-		//최근 상품 버튼인지, 인기 상품 버튼인지 값 담기
-		map.put("pr_choice",pr_choice);
-		//결과 값 ref커서를 반환 받을통
-		map.put("p_temp",p_temp);
 		//프로시져 돌리기
-		sqlSessionTemplate.selectList("proc_board_main",map);
+		sqlSessionTemplate.selectList("proc_board_main",pmap);
 		//결과 값만 전송
-		return (List<Map<String, Object>>)map.get("p_temp");
+		return (List<Map<String, Object>>)pmap.get("p_temp");
 	}
 	//사용자가 카테고리메뉴에서 카테고리 선택 시
-	public List<Map<String, Object>> selectByCategory(String pr_categori) {
+	public List<Map<String, Object>> selectByCategory(Map<String, Object> pmap) {
 		logger.info("Dao : selectByCategory메소드 호출");
-		Map<String, Object> map = new HashMap<>();
-		List<Map<String, Object>> p_temp = new ArrayList<>();
-		//검색할 카테고리 담기
-		map.put("pr_categori",pr_categori);
-		//결과 값 ref커서를 반환 받을통
-		map.put("p_temp",p_temp);
 		//프로시져 돌리기
-		sqlSessionTemplate.selectList("proc_board_main_categori",map);
+		sqlSessionTemplate.selectList("proc_board_main_categori",pmap);
 		//결과 값만 전송
-		return (List<Map<String, Object>>)map.get("p_temp");
+		return (List<Map<String, Object>>)pmap.get("p_temp");
 	}
 	//검색어를 입력하여 찾기
-	public List<Map<String, Object>> selectBySearch(String pr_search_order,String pr_search) {
+	public List<Map<String, Object>> selectBySearch(Map<String, Object> pmap) {
 		logger.info("Dao : selectBySearch메소드 호출");
-		Map<String, Object> map = new HashMap<>();
-		List<Map<String, Object>> p_temp = new ArrayList<>();
-		//검색 타입이랑 검색어 받아오기
-		map.put("pr_search_order",pr_search_order);
-		map.put("pr_search",pr_search);
-		//결과 값 ref커서를 반환 받을통
-		map.put("p_temp",p_temp);
 		//프로시져 돌리기
-		sqlSessionTemplate.selectList("proc_board_search",map);
+		sqlSessionTemplate.selectList("proc_board_search",pmap);
 		//결과 값만 전송
-		return (List<Map<String, Object>>)map.get("p_temp");
+		return (List<Map<String, Object>>)pmap.get("p_temp");
 	}
 	//사용자가 상품 수정 버튼 클릭 시 상품의 정보를 다 가져와야하니까 있음 - 정보만
 	public Map<String, Object> editItem(int pr_bm_no) {
@@ -99,13 +80,12 @@ public class ItemDao {
 		
 	}
 	//상품의 내용만 가져옴 - 사용자가 상품하나를 자세히 볼 때
-	public Map<String, Object> selectItemDetailContext(Map<String, Object> pmap) {
+	public List<Map<String, Object>> selectItemDetailContext(Map<String, Object> pmap) {
 		logger.info("Dao : selectItemDetailContext메소드 호출");
-		Map<String, Object> map = new HashMap<>();
-		//select문 돌림
-		map = sqlSessionTemplate.selectOne("proc_board_select",pmap);
+		//프로시져 돌리기
+		sqlSessionTemplate.selectList("proc_board_select",pmap);
 		//결과 값만 전송
-		return map;
+		return (List<Map<String, Object>>)pmap.get("p_temp");
 	}
 
 	//상품 삭제 시

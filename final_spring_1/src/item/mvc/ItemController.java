@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,23 +40,19 @@ public class ItemController extends MultiActionController {
 	public void selectItemList(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : selectItemList메소드 호출");
 		//front : key는 "pr_choice" && value는 인기상품 일시 "like_rank"로, 최근상품 일시 "new_rank"
-		//Map<String,Object> pmap = new HashMap<>();
-		//pmap.put("pr_choice",req.getParameter("pr_choice"));
-		//아이템 전부를 가져오는 로직
-		//List<Map<String, Object>> items = itemLogic.selectItemList(pmap);
-		//Json 형태로 가져오기
-		//Gson g = new Gson();
-		//String itemsJson = g.toJson(items);
-		//가지고 나가는 key&value => "BM_PRICE": 80000,"BM_NO": 13,"BM_LIKE": 0,"BM_DATE": "2020-06-27 17:46:41","BM_STATUS": "N","BI_FILE": "16.png",BM_TITLE": "책팔요"
-		//AjaxDataPrinter.out(res,"application/json",itemsJson);
-		
+		//             "pr_mem_email" 좋아요 한건지 안한건지 받기 위해서 
 		Map<String,Object> pmap = new HashMap<>();
-		pmap.put("pr_choice","like_rank");
+		pmap.put("pr_MEM_EMAIL", "apple@good.com"); //여기는 원래 세션
+		pmap.put("pr_choice",req.getParameter("pr_choice"));
 		//아이템 전부를 가져오는 로직
 		List<Map<String, Object>> items = itemLogic.selectItemList(pmap);
+		//Json 형태로 가져오기
 		Gson g = new Gson();
 		String itemsJson = g.toJson(items);
+		//가지고 나가는 key&value => "BM_PRICE": 80000,"BM_NO": 13,"BM_LIKE": 0,"BM_DATE": "2020-06-27 17:46:41","BM_STATUS": "N","BI_FILE": "16.png",BM_TITLE": "책팔요"
+		//                    => "BM_CONTENT": 내용,"CATEGORY_NAME": 기타, "I_LIKE" 1은 좋아요한거, 0은 안한거
 		AjaxDataPrinter.out(res,"application/json",itemsJson);
+		
 		
 	}
 	
@@ -97,43 +95,25 @@ public class ItemController extends MultiActionController {
 	}
 	
 	//검색어를 입력하여 찾기
-	public ModelAndView selectBySearch(HttpServletRequest req, HttpServletResponse res) {
+	public void selectBySearch(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : selectBySearch메소드 호출");
 		//front : key는 "pr_search" && value는 입력한 검색어
 		//front : key는 "pr_search_order" && value는 "제목" or "내용" or "작성자"
 		//한글 처리
-		//HashMapBinder hmb = new HashMapBinder(req);
-		//Map<String,Object> pmap = new HashMap<>();
-		//검색어를 가져오게 된다. + 검색 타입을(제목, 내용, 작성자) 가져온다.
-		//hmb.bind(pmap);
-		//검색어 아이템들을 가져온다.
-		//List<Map<String,Object>> items = itemLogic.selectBySearch(pmap);
-		//Json 형태로 가져오기
-		//Gson g = new Gson();
-		//String itemsJson = g.toJson(items);
-		//ModelAndView mav = new ModelAndView();
-		//가지고 나오는 key&value => {BM_PRICE=120000, BM_NO=12, BM_LIKE=0, BM_DATE=2020-06-27 16:46:41, BM_STATUS=N, BI_FILE=15.png, BM_TITLE=목걸이팔아요}
-		//mav.addObject("items", items);
-		//mav.setViewName("itemTest");
-		//return mav;
-		
-		//한글 처리
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		//검색어를 가져오게 된다. + 검색 타입을(제목, 내용, 작성자) 가져온다.
+		pmap.put("pr_MEM_EMAIL", "apple@good.com"); //여기는 원래 세션
 		hmb.bind(pmap);
-		pmap.put("pr_search","아fg요");
-		pmap.put("pr_search_order","내용");
+		pmap.put("pr_search_order","제목");
 		//검색어 아이템들을 가져온다.
 		List<Map<String,Object>> items = itemLogic.selectBySearch(pmap);
 		//Json 형태로 가져오기
 		Gson g = new Gson();
 		String itemsJson = g.toJson(items);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("items", items);
-		mav.setViewName("itemTest");
-		System.out.println(items);
-		return mav;
+		//가지고 나가는 key&value => "BM_PRICE": 80000,"BM_NO": 13,"BM_LIKE": 0,"BM_DATE": "2020-06-27 17:46:41","BM_STATUS": "N","BI_FILE": "16.png",BM_TITLE": "책팔요"
+		//                    => "BM_CONTENT": 내용,"CATEGORY_NAME": 기타, "I_LIKE" 1은 좋아요한거, 0은 안한거
+		AjaxDataPrinter.out(res,"application/json",itemsJson);
 	}
 
 	//사용자가 상품 수정 버튼 클릭 시 상품의 정보를 다 가져와야하니까 있음
@@ -233,126 +213,81 @@ public class ItemController extends MultiActionController {
 	}
 	
 	//사용자가 하나의 제품을 클릭 시 가져 오게 되는 상품
-	public ModelAndView selectItemDetail(HttpServletRequest req, HttpServletResponse res) {
+	public void selectItemDetail(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		logger.info("controller : selectItemDetail메소드 호출");
 		//front : key는  "pr_bm_no" / value 값은 상품 번호
-		//Map<String,Object> pmap = new HashMap<>();
-		////세션으로 이메일을 가져옴.
-		//HttpSession session= req.getSession(); 
-		////값들을 넣어줌
-		//String pr_MEM_EMAIL = session.getAttribute(이멜 가지고 나와);
-		//int pr_bm_no = Integer.parseInt(getParameter("pr_bm_no").toString());
-		////상품의 내용을 가져온다.
-		//Map<String,Object> itemContext = itemLogic.selectItemDetailContext(pr_MEM_EMAIL,pr_bm_no);
-		////상품의 사진들을 가져온다
-		//List<String> itemImgs = itemLogic.selectItemDetailImgs(pmap);
-		//ModelAndView mav = new ModelAndView();
-		////상품의 정보를 다 담는다.
-		//결과값 {BM_PRICE=120000, BM_NO=3, BM_CONTENT=선물 받았는데 있어서 팔아요, SELLER_NICKNAME=딸기, BM_LIKE=2, BM_HIT=200, BM_DATE=2020-06-19 15:46:41, BM_STATUS=N, I_LIKE=true, BM_TITLE=샤넬 향수 새거 팔아요}
-		//mav.addObject("itemContext", itemContext);
-		//결과값[4.png]
-		//mav.addObject("itemImgs", itemImgs);
-		////페이지 전송
-		//mav.setViewName("itemTest");
-		//return mav;
-		
 		Map<String,Object> pmap = new HashMap<>();
 		//세션으로 이메일을 가져옴.
-		HttpSession session= req.getSession(); 
-		//값들을 넣어줌
+		//HttpSession session= req.getSession(); 
+		//String pr_MEM_EMAIL = session.getAttribute(이멜 가지고 나와);
 		String pr_MEM_EMAIL = "apple@good.com";
-		int pr_bm_no = 3;
+		//값들을 넣어줌
+		int pr_bm_no = Integer.parseInt(req.getParameter("pr_bm_no").toString());
 		//상품의 내용을 가져온다.
-		Map<String,Object> itemContext = itemLogic.selectItemDetailContext(pr_MEM_EMAIL,pr_bm_no);
+		Map<String,Object> itemContext = itemLogic.selectItemDetailContext(pr_MEM_EMAIL,pr_bm_no,"사과");
 		//상품의 사진들을 가져온다
 		List<String> itemImgs = itemLogic.selectItemDetailImgs(pr_bm_no);
 		ModelAndView mav = new ModelAndView();
 		//상품의 정보를 다 담는다.
-		mav.addObject("itemContext", itemContext);
-		mav.addObject("itemImgs", itemImgs);
-		System.out.println(itemContext);
-		System.out.println(itemImgs);
+		//결과값 {BM_PRICE=120000, BM_NO=3, BM_CONTENT=선물 받았는데 있어서 팔아요, SELLER_NICKNAME=딸기, BM_LIKE=2, BM_HIT=200, BM_DATE=2020-06-19 15:46:41, BM_STATUS=N, I_LIKE=1, BM_TITLE=샤넬 향수 새거 팔아요}
+		//seller_me = 1 이면 판매자와 내가 동일 인물임 0이면 아니고
+		req.setAttribute("itemContext", itemContext);
+		//결과값[4.png]
+		req.setAttribute("itemImgs", itemImgs);
 		//페이지 전송
-		mav.setViewName("itemTest");
-		return mav;
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/item/detail_page.jsp");
+		dispatcher.forward(req,res);
+
+
 	}
 
 	
 	//상품 삭제
-	public ModelAndView deleteItem(HttpServletRequest req, HttpServletResponse res) {
+	public void deleteItem(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		logger.info("controller : deleteItem메소드 호출");
 		//front : key는 "br_sel_buy" && value는 구매자일 경우 "buy" , 판매자일 경우 "sel"
 		//        key는 "pr_bm_no"   && value값은 상품 번호
-		//Map<String,Object> pmap = new HashMap<>();
-		////값들을 넣어줌
-		//pmap.put("br_sel_buy", req.getParameter("br_sel_buy")); 
-		//pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));	
-		////상품을 삭제한다.
-		//itemLogic.deleteItem(pmap);
-		//ModelAndView mav = new ModelAndView();
-		////페이지 전송
-		//mav.setViewName("itemTest");		
-		//return mav;
-		
 		Map<String,Object> pmap = new HashMap<>();
 		//값들을 넣어줌
-		pmap.put("br_sel_buy", "buy"); 
-		pmap.put("pr_bm_no", 9);	
+		pmap.put("br_sel_buy", req.getParameter("br_sel_buy")); 
+		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));	
 		//상품을 삭제한다.
 		itemLogic.deleteItem(pmap);
-		ModelAndView mav = new ModelAndView();
 		//페이지 전송
-		mav.setViewName("itemTest");		
-		return mav;
+		res.sendRedirect("/item/main_page.jsp");
 	}
 	
 	//상품 판매 완료 클릭 시
-	public void updateItemConfirm(HttpServletRequest req, HttpServletResponse res) {
+	public void updateItemConfirm(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		logger.info("controller : updateItemToConfirm 메소드 호출");
-		////front : key는 "pr_bm_no"   && value값은 상품 번호
-		//Map<String,Object> pmap = new HashMap<>();
-		//pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));
-		////상품을 판매 완료 처리한다.
-		//String msg = itemLogic.updateItemToConfirm(pmap);
-		////만약에 누군가와 거래 중이라면 판매 완료 처리가 불가능 msg ="false"
-		////그게 아니라면 msg = "true"
-		//AjaxDataPrinter.out(res, msg);
-		
 		//front : key는 "pr_bm_no"   && value값은 상품 번호
 		Map<String,Object> pmap = new HashMap<>();
-		pmap.put("pr_bm_no", 9);
+		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));
 		//상품을 판매 완료 처리한다.
 		String msg = itemLogic.updateItemToConfirm(pmap);
 		//만약에 누군가와 거래 중이라면 판매 완료 처리가 불가능 msg ="false"
 		//그게 아니라면 msg = "true"
-		AjaxDataPrinter.out(res, msg);
+		res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+pmap.get("pr_bm_no").toString());
+
 	}
 	
 	//상품 찜하기 클릭 시
 	public void likeItem(HttpServletRequest req, HttpServletResponse res){
 		logger.info("controller : likeItem메소드 호출");
-		////front : key는 "pr_bm_no"   && value값은 상품 번호
-		//Map<String,Object> pmap = new HashMap<>();
-		////세션으로 이메일을 가져옴.
-		//HttpSession session= req.getSession(); 
-		////값들을 넣어줌
-		//pmap.put("pr_MEM_EMAIL", 세션으로 이메일)); 
-		//pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));
-		//// like = 1이면 찜하기 된거고, -1이면 찜하기 취소 된 거임
-		//int like = i temLogic.likeItem(pmap);
-		//AjaxDataPrinter.out(res, like);
-		
 		//front : key는 "pr_bm_no"   && value값은 상품 번호
 		Map<String,Object> pmap = new HashMap<>();
 		//세션으로 이메일을 가져옴.
 		HttpSession session= req.getSession(); 
 		//값들을 넣어줌
-		pmap.put("pr_MEM_EMAIL", "apple@good.com"); 
-		pmap.put("pr_bm_no", 3);
-		// like = 1이면 찜하기 된거고, -1이면 찜하기 취소 된 거임
-		int like = itemLogic.likeItem(pmap);
-		AjaxDataPrinter.out(res, like);
-		
+		pmap.put("pr_MEM_EMAIL","apple@good.com"); //세션에서 원래는 아이디 가져와기
+		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));
+		// like = 1이면 찜하기 된거고, -1이면 찜하기 취소 된 거임, 0이면 로그인 안한 사람.
+		//if(session.getAttribute("pr_MEM_EMAIL")==null) {
+		//	AjaxDataPrinter.out(res, 0);
+		//}else {
+			int like = itemLogic.likeItem(pmap);
+			AjaxDataPrinter.out(res, like);
+		//}
 	}
 
 	//댓글 등록 - 댓글인지 대댓글인지 구분
