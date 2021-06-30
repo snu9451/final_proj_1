@@ -4,11 +4,13 @@
   /*==============[[ 회원가입 모달창 이벤트 ]]===============*/
   $("#signUpModal").on("shown.bs.modal", function () {
     console.log("signup modal");
-    let inputVal = $("#inputPassWord").val();
-    let chckVal = $("#checkPassWord").val();
 
     //회원가입 클릭시 input 값들 초기화.
-    $("input").val("");
+    //$("input").val("");
+    $("#signUpForm")[0].reset();
+
+    //인증번호 값을 담을 변수 선언
+    let safetyCode;
 
     //인증번호 클릭시 이벤트.
     $("#btn_getCode").click(function () {
@@ -18,7 +20,7 @@
 
       //핸드폰 번호가 입력되지 않은 경우
       if (inputCellPhone.length < 0 || inputCellPhone.length == 0) {
-        alert("핸드폰 번호를 입력해주세요!");
+        swal("핸드폰 번호를 입력해주세요!", "", "info");
         return;
       }
 
@@ -26,27 +28,61 @@
       else {
         let dt = "mem_phone=" + inputCellPhone;
         console.log(inputCellPhone);
-        // $.ajax({
-        //   type: "post",
-        //   data: dt,
-        //   url: "http://192.168.0.206:7000/member/sendSMSCode.nds",
-        //   success: function (data) {
-        //     console.log(data);
-        //     swal("인증번호가 발송되었습니다!!", data, "success");
-        //     let safetyCodeChck = $("#safetyCodeChck").text();
-        //     console.log(safetyCodeChck);
-        //     if (data) {
-        //       const inputSafetyCode = $("#inputSafetyCode").val();
-        //       $("#btn__codeChck").click(function () {
-        //         if (inputSafetyCode === data) {
-        //           safetyCodeChck = '인증번호가 일치합니다.'
-        //         } else {
-        //           safetyCodeChck = '인증번호가 일치하지 않습니다.'
-        //         }
-        //       });
-        //     }
-        //   }
-        // });
+        $.ajax({
+          type: "post",
+          data: dt,
+          url: "http://192.168.0.206:7000/member/sendSMSCode.nds",
+          success: function (data) {
+            console.log(data);
+            safetyCode = data;
+            // let safetyCodeChck = $("#safetyCodeChck").text();
+            // console.log(safetyCodeChck);
+            // if (data) {
+            //   const inputSafetyCode = $("#inputSafetyCode").val();
+            //   $("#btn__codeChck").click(function () {
+            //     if (inputSafetyCode === data) {
+            //       safetyCodeChck = "인증번호가 일치합니다.";
+            //     } else {
+            //       safetyCodeChck = "인증번호가 일치하지 않습니다.";
+            //     }
+            //   });
+            // }
+          },
+        });
+      }
+    });
+
+    //확인 버튼 클릭시
+    $("#btn__codeChck").on("click", function () {
+      const safetyCodeChck__box = $("#safetyCodeChck__box");
+
+      let inputSafetyCode = $("#inputSafetyCode").val();
+      console.log(inputSafetyCode);
+      console.log(safetyCode);
+      console.log(inputSafetyCode.length);
+
+      if (inputSafetyCode.length > 0) {
+        if (inputSafetyCode === safetyCode) {
+          safetyCodeChck__box.empty();
+          safetyCodeChck__box.html(`<small id="safetyCodeChck"
+					class="form-text"
+					style="color:green; font-weight:bold ;
+					font-size: 15px; ">
+					인증번호가 일치합니다 : )
+					</small>
+					`);
+        } else {
+          safetyCodeChck__box.empty();
+          safetyCodeChck__box.html(`<small id="safetyCodeChck"
+					class="form-text"
+					style="color:red; font-weight:bold ;
+					font-size: 15px; ">
+					인증번호가 틀립니다!!!
+					</small>
+					`);
+        }
+      } else {
+        swal("인증번호를 입력해주세요!!", "", "warning");
       }
     });
 
@@ -87,16 +123,18 @@
           pwChck_box.empty();
           pwChck_box.html(`<small id="pwChck"
 					class="form-text"
-					style="color:green;">
-					"비밀번호가 일치합니다 : )"
+					style="color:green; font-weight:bold ;
+					font-size: 15px; ">
+					비밀번호가 일치합니다 : )
 					</small>
 					`);
         } else {
           pwChck_box.empty();
           pwChck_box.html(`<small id="pwChck"
 					class="form-text"
-					style="color:red;">
-					"비밀번호가 다릅니다 : ("
+					style="color:red; font-weight:bold;
+					font-size: 15px; ">
+					비밀번호가 다릅니다 : (
 					</small>
 					`);
         }
@@ -117,9 +155,7 @@
           data: "mem_nickname=" + inputNickName,
           url: "/member/selectNickName.nds",
           success: function (data) {
-            console.log(data);
             $("#nickChck__box").html(data);
-            //$("#inputNickName").attr("disabled", true);
           },
           error: function (e) {
             console.log("error: " + e.responseText);
@@ -137,11 +173,27 @@
 
   // 회원가입 submit 이벤트
   $(document).ready(function () {
-    $("#btn_signUp").click(function () {
-      console.log("sign up");
-      console.log($("#inputAge").val());
-      console.log($('input[name="mem_gender"]:checked').val());
-      //$("#signUpForm").submit();
+    $("#btn_signUp").click(function (event) {
+      console.log(`${$("#inputEmail").val()}, ${$("#inputCellPhone").val()},
+      ${$("#checkPassWord").val()}, ${$("#inputNickName").val()},
+      ${$("#inputAge").val()},
+      ${$('input[name="mem_gender"]:checked').val()}`);
+
+      // $("#signUpForm").submit();
+    });
+  });
+
+  //회원가입 모달창이 사라졌을 때 이벤트
+  $("#signUpModal").on("hidden.bs.modal", function () {
+    console.log("modal hidden");
+    //input 값 리셋
+    $("#signUpForm")[0].reset();
+
+    //비밀번호 닉네임 등 확인여부 문장들 리셋
+    $(".doEmpty").each(function () {
+      console.log($(this));
+      console.log($(this).empty());
+      $(this).empty();
     });
   });
 })(jQuery);

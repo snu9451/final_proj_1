@@ -102,7 +102,10 @@
   });
 
   //drop down toggle
-  $('.dropdown-toggle').dropdown('toggle');
+  $(document).ready(function () {
+    console.log("category btn");
+    $(".dropdown-toggle").dropdown("toggle");
+  });
 
   /*==========================================[[ Not Mine ]]==================================================*/
 
