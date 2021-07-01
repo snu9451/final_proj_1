@@ -15,7 +15,6 @@
 body {
   font-family: "Open Sans", sans-serif;
   color: #444444;
-  overflow-y:scroll;
 }
 
 a {
@@ -648,13 +647,13 @@ input[type="checkbox"] {
 .featured-services .con_nick {
   color: #222222;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 20px;
   margin: auto;
 }
 .featured-services .con_email {
   color: #222222;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 18px;
   margin: auto;
 }
 
@@ -670,7 +669,7 @@ input[type="checkbox"] {
 .featured-services .pw {
   display: flex;
   font-size: 12px;
-  padding: 15px;
+  padding: 10px;
   text-align: center;
 }
 .featured-services .btn-danger,
@@ -687,7 +686,11 @@ input[type="checkbox"] {
   font-size: 1rem;
   font-family: "Cafe24SsurroundAir";
 }
-
+.featured-services .noScore {
+  font-family: "Cafe24SsurroundAir";
+  font-weight:bold;
+  font-size: 20px;
+}
 .featured-services .RatingStar {
   font-size: 30px;
   margin: auto;
@@ -1073,6 +1076,9 @@ table.like_tb .divider_con {
 }
 
 /****테이블****/
+.featured-services .errand_bottom{
+  margin-top : 60px;
+}
 table.errand_tb {
   width: 750px;
   border-collapse: collapse;
@@ -1113,7 +1119,7 @@ table.errand_tb td {
 .delete {
   text-align: right;
   margin-right: 15px;
-  margin-top: -40px;
+  margin-top : -35px;
 }
 #nav a {
   display: inline-block;

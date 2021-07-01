@@ -2,7 +2,9 @@ package member.mvc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -87,7 +89,7 @@ public class MemberController extends MultiActionController {
 			AjaxDataPrinter.out(res, "text/html", "<h4 style=\"font-size : 15px; color : red; font-weight:bold\">이미 가입되어 있는 닉네임입니다.</h4>");
 		}
 	}
-	// 마이페이지를 위한 회원 정보 조회
+	// 마이페이지 내정보를 위한 회원 정보 조회
 	public void selectMember(HttpServletRequest req, HttpServletResponse res) {
 //		ModelAndView mav = new ModelAndView();
 		// 세션에 담긴 회운정보(이메일) 가져오기
@@ -112,6 +114,13 @@ public class MemberController extends MultiActionController {
 //		mav.setViewName("/myinfo/myInfo.jsp");
 //		return mav;
 	}
+	
+	// 마이페이지 내 지갑을 위한 정보조회
+	public void selectTrans(HttpServletRequest req, HttpServletResponse res) {
+		
+		
+	}
+	
 	// ===================================== [[ INSERT ]] =====================================
 	// 회원가입 모달에서 확인 버튼 클릭 시
 	// 테스트: http://localhost:9696/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
@@ -234,7 +243,7 @@ public class MemberController extends MultiActionController {
 		String mem_email = mvo.getMem_email();
 		pmap.put("mem_email", mem_email);
 		// 프로시저 실행 결과를 받아줄 proc_result 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
-		pmap.put("result", 0);
+		pmap.put("proc_result", 0);
 		int result = memberLogic.updateActive(pmap);
 		logger.info("회원상태(mem_active) 업데이트 결과(탈퇴 처리 결과) ===> "+result);
 		// 입력 받은 현재 비밀번호가 [DB]에서 조회한 사용자의 비밀번호와 달라 회원 탈퇴 처리에 실패 시
@@ -379,6 +388,7 @@ public class MemberController extends MultiActionController {
 		// 로그인 화면으로 보내기 전, 세션키가 있는 사용자라면 저장된 유효한 아이디가 있는지 체크한다.
 		// NDS_SKEY라는 키를 갖는 쿠키가 있니?
 		String sessionKey = "NDS_SKEY";
+		String mem_email = null;
 		CookiesMap cookies = new CookiesMap(req);	// nds.util 패키지에 만들어 둔 공통코드입니다.
 		if(cookies.hasName(sessionKey)) {	// NDS_SKEY: 내동생에서 사용자 브라우저 쿠키에 저장하는 세션키(세션아이디)
 			// 해당 세션키를 변수에 담고
@@ -391,17 +401,28 @@ public class MemberController extends MultiActionController {
 			// NDS_SKEY가 있더라도 기간이 만료되었으면 rmap = null이 된다.
 			if(rmap != null) {
 				// 권한 허용 범위가 S(SaveID)인 경우
-				if("S".equals((String)rmap.get("AUTH_RANGE"))) {
+				String auth_range = (String)rmap.get("AUTH_RANGE");
+				if("S".equals(auth_range) || "A".equals(auth_range)) {
 					// 아이디를 로그인창에 띄워줄 수 있도록 request 객체에 담아준다.
-					String mem_email = (String)rmap.get("MEM_EMAIL");
-					req.setAttribute("MEM_EMAIL", mem_email);
+					mem_email = (String)rmap.get("MEM_EMAIL");
+//					req.setAttribute("MEM_EMAIL", mem_email);
 					logger.info("저장되어 있는 아이디="+mem_email);
+					logger.info("권한 허용 범위[A:AutoLogin|S:SavedId]="+auth_range);
+					// Front에 알리기
+					List<String> li = new ArrayList<>();
+					li.add(mem_email);
+					li.add(auth_range);
+					Gson g = new Gson();
+					String jsondata = g.toJson(li);
+					AjaxDataPrinter.out(res, "application/json", jsondata);
+				} else {
+					logger.info("아이디 저장을 선택하지 않았거나 자동로그인임");
 				}
-				logger.info("아이디 저장을 선택하지 않았거나 자동로그인임");
 			} else {
 				logger.info("유효하지 않은 sessionValue입니다.");
 			}
 		}
+		
 		// 테스트 코드
 //		Gson g = new Gson();
 //		String jo = g.toJson("[{\"name\":\"은영\"}]");
@@ -419,150 +440,238 @@ public class MemberController extends MultiActionController {
 	// 로그인 버튼이 클릭되었을 때 실행되는 메소드
 	public void doLogin(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		// 사용자가 자동로그인 체크박스와 아이디저장 체크박스에 체크 했는지 여부를 담을 변수 선언
-		String isAutoLoginChecked = "false";
-		String isSavedIdChecked = "false";
-
+//		String isAutoLoginChecked = "false";	////////////////////////
+//		String isSavedIdChecked = "false";	////////////////////////////
+		// mem_email과 mem_pw는 Front에서 입력 받는다.
 		String sessionKey = "NDS_SKEY";
+		// 쿠키에 저장된 세션아이디가 있다면 가져온다.
 		CookiesMap cookies = new CookiesMap(req);
-		
-		// req에 담긴 정보(input_email, input_pw)를 map으로 옮겨 담는 작업
+		Cookie cookie = cookies.getCookie(sessionKey);
+		String mem_sessionid = "";
+		if(cookie != null) {
+			mem_sessionid = cookie.getValue();
+		}
 		Map<String, Object> pmap = new HashMap<String, Object>();
+		pmap.put("mem_sessionid", mem_sessionid);
+		// DB에 가기 전, 임시 세션값을 미리 발급해둔다.
+		String imsi_sessionid = memberLogic.getRandomCode("NUL", 20);
+		pmap.put("imsi_sessionid", imsi_sessionid);
+		// req에 담긴 정보(input_email, input_pw)를 map으로 옮겨 담는 작업
 		HashMapBinder hmb = new HashMapBinder(req);
 		// pmap의 원본을 파라미터로 넘기고 있기 때문에 리턴으로 받아서 담지 않아도 map에 옮겨진다.
-		hmb.bindPost(pmap);	// pmap에 담긴 정보: input_email, input_pw
-		// 입력된 사용자의 정보를 가지고 DB에서 조회한다.
-		Map<String, Object> rmap = new HashMap<String, Object>();
-//		int imsi = memberLogic.selectIsMember(pmap);
-//		logger.info("imsi ===> "+imsi);
-		rmap = memberLogic.selectMember(pmap);
-		logger.info(rmap);
-		// 조회 결과가 없으면 rmap은  null임
-		if(rmap == null) {
-			// resultMsg를 전송 (AJAX)
-			AjaxDataPrinter.out(res, "text/html", "fail");
+		hmb.bindPost(pmap);	// pmap에 담긴 정보: mem_email, mem_pw
+		// 권한 허용 범위를 옮겨 담는다.
+		String auth_range = "N"; // default 값으로 선택하지 않았음을 뜻하는 "N"을 담아준다.
+		// 아이디 저장이라면
+		if("true".equals(pmap.get("isSavedIdChecked"))) {
+			auth_range = "S";
 		}
-		// 로그인 성공 시(해당 email과 pw로 조회한 결과가 row 하나인 경우)
-		else {
-			// ================================================= [[ 아이디저장 ]] =================================================
-			// 아이디 저장에 체크했다면 - isSavedIdChecked(프론트에서 담아줘야 함) == true
-			isSavedIdChecked = (String)pmap.get("isSavedIdChecked");
-			if("true".equals(isSavedIdChecked)) {
-				Cookie cookie = cookies.getCookie(sessionKey);
-				String sessionValue = cookies.getValue(sessionKey);
-				logger.info(sessionValue);
-				// 쿠키에 NDS_SKEY가 있는 경우라면
-				if(sessionValue!=null) {
-					logger.info("쿠키에 NDS_SKEY가 있는 경우");
-					// [DB]에서 이메일과 sessionValue에 해당하는 로우의 유효기간을 갱신하고, 권한을 S로 설정한다. (update)
-					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-					pmap.put("mem_sessionid",sessionValue);
-					pmap.put("a_or_s","S");
-					logger.info(pmap);
-					memberLogic.uiToSession(pmap);
-//					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 있는 경우::아이디 저장 처리 결과 ===> "+result);
-//					if(result == 1) { // 처리 결과가 성공이라면
-						// 쿠키의 유효기간을 갱신한다.
-						cookie.setMaxAge(60*60*24*30);
-						cookie.setPath("/");
-						res.addCookie(cookie);
-						logger.info("NDS_SKEY값::"+sessionValue);
-//					}
-				}
-
-				// 쿠키에 NDS_SKEY가 없는 경우라면
-				else {
-					logger.info("쿠키에 NDS_SKEY가 없는 경우");
-					// NDS_SKEY를 발급하고, [DB]에 insert한 후, 쿠키에 저장해주어야 한다.
-					sessionValue = memberLogic.getRandomCode("NUL", 20);	// 대소문자숫자로 구성된 20자리의 랜덤코드 생성
-					// 이메일과 sessionValue에 해당하는 로우를 insert한다. 권한은 S로 설정한다. (insert)
-					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-					pmap.put("mem_sessionid",sessionValue);
-					pmap.put("a_or_s","S");
-					logger.info(pmap);
-					memberLogic.uiToSession(pmap);
-//					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 없는 경우::아이디 저장 처리 결과 ===> "+result);
-//					if(result == 1) {
-						Cookie cookie_ = new Cookie(sessionKey, sessionValue);
-						cookie_.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
-						cookie_.setPath("/");
-						res.addCookie(cookie_);
-						logger.info("NDS_SKEY값::"+sessionValue);
-//					}
-					
-				}
-			}
-			// ================================================= [[ 자동로그인 ]] =================================================
-			// 자동로그인에 체크했다면 - isAutoLoginChecked(프론트에서 담아줘야 함) == true
-			isAutoLoginChecked = (String)pmap.get("isAutoLoginChecked");
-			if("true".equals(isAutoLoginChecked)) {
-				Cookie cookie = cookies.getCookie(sessionKey);
-				String sessionValue = cookies.getValue(sessionKey);
-				// 쿠키에 NDS_SKEY가 있는 경우라면
-				if(sessionValue!=null) {
-					logger.info("쿠키에 NDS_SKEY가 있는 경우");
-					// [DB]에서 이메일과 sessionValue에 해당하는 로우의 유효기간을 갱신하고, 권한을 S로 설정한다. (update)
-					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-					pmap.put("mem_sessionid",sessionValue);
-					pmap.put("a_or_s","A");
-					logger.info(pmap);
-					memberLogic.uiToSession(pmap);
-//					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 있는 경우::자동 로그인 처리 결과 ===> "+result);
-//					if(result == 1) { // 처리 결과가 성공이라면
-//						 쿠키의 유효기간을 갱신한다.
-						cookie.setMaxAge(60*60*24*30);
-						cookie.setPath("/");
-						res.addCookie(cookie);
-						logger.info("NDS_SKEY값::"+sessionValue);
-//					}
-				}
-				
-				// 쿠키에 NDS_SKEY가 없는 경우라면
-				else {
-					logger.info("쿠키에 NDS_SKEY가 없는 경우");
-					// NDS_SKEY를 발급하고, [DB]에 insert한 후, 쿠키에 저장해주어야 한다.
-					sessionValue = memberLogic.getRandomCode("NUL", 20);	// 20자리의 랜덤코드 생성
-					// 이메일과 sessionValue에 해당하는 로우를 insert한다. 권한은 S로 설정한다. (insert)
-					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-					logger.info(pmap);
-					pmap.put("mem_sessionid",sessionValue);
-					pmap.put("a_or_s","A");
-					memberLogic.uiToSession(pmap);
-//					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 없는 경우::자동 로그인 처리 결과 ===> "+result);
-//					if(result == 1) {
-						Cookie cookie_ = new Cookie(sessionKey, sessionValue);
-						cookie_.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
-						cookie_.setPath("/");
-						res.addCookie(cookie_);
-						logger.info("NDS_SKEY값::"+sessionValue);
-//					}
-					AjaxDataPrinter.out(res, "text/html", (String)rmap.get("MEM_NICKNAME"));
-				}
-			}
-			// 로그인 성공시 공통적으로 처리해 줄 사항; 세션에 사용자정보(MemberVO) 담아주기.
-			// 참고로, Front에서는 session에 login이 있는지를 체크함으로써 로그인 성공여부를 판단할 수 있음.
-			// map(rmap)으로 가져온 정보를 VO로 옮겨담기 - 공통코드
-			MemberVO mvo = new MemberVO();
-			logger.info("mvo 주소번지: "+mvo);
-			logger.info(rmap);
-			Converter.MAPtoVO(rmap, mvo, "mem_email");
-			Converter.MAPtoVO(rmap, mvo, "mem_nickname");
-			logger.info(mvo.getMem_email());
+		// 자동 로그인이라면
+		if("true".equals(pmap.get("isAutoLoginChecked"))) {
+			auth_range = "A";
+		}
+		// 담아준다.
+		pmap.put("auth_range", auth_range);
+		// 프로시저의 결과를 담을 변수를 넣어준다.
+		pmap.put("result", 0);
+		// 프로시저를 통해 로그인을 처리한다.
+		int result = memberLogic.uiToSession(pmap);
+		// 로그인 성공 여부를 담을 변수
+		boolean isSuccess = false;
+		logger.info("로그인::프로시저 처리 결과 ===> "+result);
+		Cookie newCookie = null;
+		switch (result) {
+		// 로그인 실패인 경우
+		case 0:
+			AjaxDataPrinter.out(res, "text/html", 0);
+			break;
+		// 로그인 성공인 경우, 아이디 저장/자동 로그인 선택하지 않았으므로 쿠키 삭제 필요
+		case -1:
+			// 쿠키 삭제하기
+			newCookie = new Cookie(sessionKey, null);
+			newCookie.setPath("/");
+			newCookie.setMaxAge(0);
+			res.addCookie(newCookie);
+			// 성공여부 => true로 설정
+			isSuccess = true;
+			break;
+		// 로그인 성공인 경우, 쿠키 갱신만 하면 되는 경우
+		case 1:
+			// 쿠키 갱신하기
+			newCookie = new Cookie(sessionKey, mem_sessionid);
+			newCookie.setPath("/");
+			newCookie.setMaxAge(60*60*24*30);
+			res.addCookie(newCookie);
+			// 성공여부 => true로 설정
+			isSuccess = true;
+			break;
+		// 로그인 성공인 경우, 쿠키 재발급 해줘야 하는 경우
+		case 2:
+			// 쿠기 재발급하기
+			newCookie = new Cookie(sessionKey, imsi_sessionid);
+			newCookie.setPath("/");
+			newCookie.setMaxAge(60*60*24*30);
+			res.addCookie(newCookie);
+			// 성공여부 => true로 설정
+			isSuccess = true;
+			break;
+		}////////////////end of switch-case
+		// 로그인 성공인 경우, 세션에 사용자 정보를 담는다.
+		if(isSuccess) {
+			// 이메일을 이용해서 사용자 정보를 가져오기
+			Map<String, Object> login = new HashMap<String, Object>();
+			login = memberLogic.selectMemberAdmin(pmap);	// selectMemberAdmin을 통하면 회원의 이메일만으로 정보를 모두 조회할 수 있다.
+			// 가져온 사용자 정보를 세션에 담기
 			HttpSession session = req.getSession();
-			session.setAttribute("login", mvo);
-			AjaxDataPrinter.out(res, "text/html", (String)rmap.get("MEM_NICKNAME"));
+			session.setAttribute("login", login);
+			// Front에 알리기
+			List<String> li = new ArrayList<>();
+			li.add("1");
+			li.add((String)login.get("MEM_NICKNAME"));
+			Gson g = new Gson();
+			String jsondata = g.toJson(li);
+			AjaxDataPrinter.out(res, "application/json", jsondata);
 		}
-
+		
+//		// 입력된 사용자의 정보를 가지고 DB에서 조회한다.
+//		Map<String, Object> rmap = new HashMap<String, Object>();
+////		int imsi = memberLogic.selectIsMember(pmap);
+////		logger.info("imsi ===> "+imsi);
+//		rmap = memberLogic.selectMember(pmap);
+//		logger.info(rmap);
+//		// 조회 결과가 없으면 rmap은  null임
+//		if(rmap == null) {
+//			// resultMsg를 전송 (AJAX)
+//			AjaxDataPrinter.out(res, "text/html", "fail");
+//		}
+//		// 로그인 성공 시(해당 email과 pw로 조회한 결과가 row 하나인 경우)
+//		else {
+//			// ================================================= [[ 아이디저장 ]] =================================================
+//			// 아이디 저장에 체크했다면 - isSavedIdChecked(프론트에서 담아줘야 함) == true
+//			isSavedIdChecked = (String)pmap.get("isSavedIdChecked");
+//			if("true".equals(isSavedIdChecked)) {
+//				Cookie cookie = cookies.getCookie(sessionKey);
+//				String sessionValue = cookies.getValue(sessionKey);
+//				logger.info(sessionValue);
+//				// 쿠키에 NDS_SKEY가 있는 경우라면
+//				if(sessionValue!=null) {
+//					logger.info("쿠키에 NDS_SKEY가 있는 경우");
+//					// [DB]에서 이메일과 sessionValue에 해당하는 로우의 유효기간을 갱신하고, 권한을 S로 설정한다. (update)
+//					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
+//					pmap.put("mem_sessionid",sessionValue);
+//					pmap.put("a_or_s","S");
+//					logger.info(pmap);
+//					memberLogic.uiToSession(pmap);
+////					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 있는 경우::아이디 저장 처리 결과 ===> "+result);
+////					if(result == 1) { // 처리 결과가 성공이라면
+//						// 쿠키의 유효기간을 갱신한다.
+//						cookie.setMaxAge(60*60*24*30);
+//						cookie.setPath("/");
+//						res.addCookie(cookie);
+//						logger.info("NDS_SKEY값::"+sessionValue);
+////					}
+//				}
+//
+//				// 쿠키에 NDS_SKEY가 없는 경우라면
+//				else {
+//					logger.info("쿠키에 NDS_SKEY가 없는 경우");
+//					// NDS_SKEY를 발급하고, [DB]에 insert한 후, 쿠키에 저장해주어야 한다.
+//					sessionValue = memberLogic.getRandomCode("NUL", 20);	// 대소문자숫자로 구성된 20자리의 랜덤코드 생성
+//					// 이메일과 sessionValue에 해당하는 로우를 insert한다. 권한은 S로 설정한다. (insert)
+//					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
+//					pmap.put("mem_sessionid",sessionValue);
+//					pmap.put("a_or_s","S");
+//					logger.info(pmap);
+//					memberLogic.uiToSession(pmap);
+////					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 없는 경우::아이디 저장 처리 결과 ===> "+result);
+////					if(result == 1) {
+//						Cookie cookie_ = new Cookie(sessionKey, sessionValue);
+//						cookie_.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
+//						cookie_.setPath("/");
+//						res.addCookie(cookie_);
+//						logger.info("NDS_SKEY값::"+sessionValue);
+////					}
+//					
+//				}
+//			}
+//			// ================================================= [[ 자동로그인 ]] =================================================
+//			// 자동로그인에 체크했다면 - isAutoLoginChecked(프론트에서 담아줘야 함) == true
+//			isAutoLoginChecked = (String)pmap.get("isAutoLoginChecked");
+//			if("true".equals(isAutoLoginChecked)) {
+//				Cookie cookie = cookies.getCookie(sessionKey);
+//				String sessionValue = cookies.getValue(sessionKey);
+//				// 쿠키에 NDS_SKEY가 있는 경우라면
+//				if(sessionValue!=null) {
+//					logger.info("쿠키에 NDS_SKEY가 있는 경우");
+//					// [DB]에서 이메일과 sessionValue에 해당하는 로우의 유효기간을 갱신하고, 권한을 S로 설정한다. (update)
+//					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
+//					pmap.put("mem_sessionid",sessionValue);
+//					pmap.put("a_or_s","A");
+//					logger.info(pmap);
+//					memberLogic.uiToSession(pmap);
+////					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 있는 경우::자동 로그인 처리 결과 ===> "+result);
+////					if(result == 1) { // 처리 결과가 성공이라면
+////						 쿠키의 유효기간을 갱신한다.
+//						cookie.setMaxAge(60*60*24*30);
+//						cookie.setPath("/");
+//						res.addCookie(cookie);
+//						logger.info("NDS_SKEY값::"+sessionValue);
+////					}
+//				}
+//				
+//				// 쿠키에 NDS_SKEY가 없는 경우라면
+//				else {
+//					logger.info("쿠키에 NDS_SKEY가 없는 경우");
+//					// NDS_SKEY를 발급하고, [DB]에 insert한 후, 쿠키에 저장해주어야 한다.
+//					sessionValue = memberLogic.getRandomCode("NUL", 20);	// 20자리의 랜덤코드 생성
+//					// 이메일과 sessionValue에 해당하는 로우를 insert한다. 권한은 S로 설정한다. (insert)
+//					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
+//					logger.info(pmap);
+//					pmap.put("mem_sessionid",sessionValue);
+//					pmap.put("a_or_s","A");
+//					memberLogic.uiToSession(pmap);
+////					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 없는 경우::자동 로그인 처리 결과 ===> "+result);
+////					if(result == 1) {
+//						Cookie cookie_ = new Cookie(sessionKey, sessionValue);
+//						cookie_.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
+//						cookie_.setPath("/");
+//						res.addCookie(cookie_);
+//						logger.info("NDS_SKEY값::"+sessionValue);
+////					}
+//					AjaxDataPrinter.out(res, "text/html", (String)rmap.get("MEM_NICKNAME"));
+//				}
+//			}
+//			// 로그인 성공시 공통적으로 처리해 줄 사항; 세션에 사용자정보(MemberVO) 담아주기.
+//			// 참고로, Front에서는 session에 login이 있는지를 체크함으로써 로그인 성공여부를 판단할 수 있음.
+//			// map(rmap)으로 가져온 정보를 VO로 옮겨담기 - 공통코드
+//			MemberVO mvo = new MemberVO();
+//			logger.info("mvo 주소번지: "+mvo);
+//			logger.info(rmap);
+//			Converter.MAPtoVO(rmap, mvo, "mem_email");
+//			Converter.MAPtoVO(rmap, mvo, "mem_nickname");
+//			logger.info(mvo.getMem_email());
+//			HttpSession session = req.getSession();
+//			session.setAttribute("login", mvo);
+//			AjaxDataPrinter.out(res, "text/html", (String)rmap.get("MEM_NICKNAME"));
+//		}
+//
 	}
 	// 로그아웃
 	public void doLogout(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 		session.invalidate();
-		Cookie cookie = new Cookie("NDS_SKEY", null);
-		cookie.setMaxAge(0);
-		cookie.setPath("/");
-		res.addCookie(cookie);
+//		Cookie cookie = new Cookie("NDS_SKEY", null);
+//		cookie.setMaxAge(0);
+//		cookie.setPath("/");
+//		res.addCookie(cookie);
 		logger.info("로그아웃 처리 완료");
 		// 메인 페이지로 이동시키기
+		try {
+			res.sendRedirect("http://192.168.0.163:9696/mainPage_JSP/main_page.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	// 이메일로 인증번호 발송
 	public void sendCode(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
@@ -667,10 +776,10 @@ public class MemberController extends MultiActionController {
 	}
 	public void showEmail(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
-		MemberVO mvo = (MemberVO)session.getAttribute("login");
-		logger.info(mvo);
-		if(mvo.getMem_email()!=null) {
-			AjaxDataPrinter.out(res, mvo.getMem_email());
+//		MemberVO mvo = (MemberVO)session.getAttribute("login");
+		logger.info(session.getAttribute("login"));
+		if(((Map)session.getAttribute("login")).get("MEM_EMAIL")!=null) {
+			AjaxDataPrinter.out(res, ((Map)session.getAttribute("login")).get("MEM_EMAIL"));
 		} else {
 			AjaxDataPrinter.out(res, "로그인 중이 아님");
 		}

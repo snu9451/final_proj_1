@@ -41,29 +41,38 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/myInfo.css" rel="stylesheet">
 <script>
+
 	function reqAction() {
 		console.log("요청심부름");
 		$.ajax({
 			url : "myErrand_req_rec.jsp",
 			success : function(data) {//@data-json,xml,html,text
-				$(".trade_bottom").html(data);
+				$(".errand_bottom").html(data);
 				console.log("요청심부름");
 			},
 			error : function(e) {//@param-XMLHttpRequest
-
 			}
 		});
+		$.ajax({
+			url : "myErrand_req_rec_FB.jsp",
+			success : function(data) {//@data-json,xml,html,text
+				$(".errand_FB").html(data);
+			},
+			error : function(e) {//@param-XMLHttpRequest
+			}
+		});
+		
 	}
 	function resAction() {
 		console.log("수행심부름");
 		$.ajax({
 			url : "myErrand_res_rec.jsp",
 			success : function(data) {//@data-json,xml,html,text
-				$(".trade_bottom").html(data);
+				$(".errand_bottom").html(data);
+				$(".errand_FB").html("");
 				console.log("수행심부름");
 			},
 			error : function(e) {//@param-XMLHttpRequest
-
 			}
 		});
 	}
@@ -73,6 +82,7 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<jsp:include page="left_bar.jsp"></jsp:include>
+	
 
 	<div class="col-12 col-lg-9 d-flex align-items-stretch mb-5 mb-lg-0">
 		<div class="icon-box1" data-aos="fade-in" data-aos-delay="50">
@@ -85,79 +95,8 @@
 					<span><h4 class="all_rec">내가 수행한 심부름</h4></span></a> 
 					<span></span> <span></span> <span></span> <span></span>
 			</div>
-			<div class="trade_bottom">
-				<!-- 심부름 내역보기(내가 요청한 심부름 테이블) -->
-				<span class="total_rec coin2"> 전체 : (inserthere) </span>
-				<table class="errand_tb" id="products">
-					<form action="" id="setRows">
-						<input type="hidden" name="rowPerPage" value="8" id="rowPerPage">
-					</form>
-					<thead>
-						<tr>
-							<th scope="cols" width="9%">선택</th>
-							<th scope="cols" width="12%">구분</th>
-							<th scope="cols" width="22%">날짜</th>
-							<th scope="cols" width="30%">제목</th>
-							<th scope="cols" width="15%">가격</th>
-							<th scope="cols" width="12%">닉네임</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td></td>
-							<td><span class="badge rounded-pill bg-warning text-dark">진행
-									중</span></td>
-							<td>2021-06-19 12:49</td>
-							<td>내가요청한심부름내가요청한심부름내가요청한심부름내가요청한심부름</td>
-							<td>70000원</td>
-							<td>기설123</td>
-						</tr>
-						<tr>
-							<td>
-								<a href="#" data-toggle="modal" data-target="#delete">
-									<button type="button" class="btn btn-outline-danger btn-smq">X</button>
-								</a>
-							</td>
-							
-							<td><span class="badge rounded-pill bg-danger text-white">요청
-									중</span></td>
-							<td>글번호 inserthere</td>
-							<td>글번호 inserthere</td>
-							<td>글번호 inserthere</td>
-							<td>글번호 inserthere</td>
-						</tr>
-						<tr>
-							<td><div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input"
-										id="customCheck1"> <label class="custom-control-label"
-										for="customCheck1"></label>
-								</div></td>
-							<td><span class="badge bg-secondary text-white">완료</span></td>
-							<td>글번호 inserthere</td>
-							<td>customCheck1 for문 돌려야함 customCheck1 for문 돌려야함
-								customCheck1 for문 돌려야함 customCheck1 for문 돌려야함 customCheck1 for문
-								돌려야함</td>
-							<td>글번호 inserthere</td>
-							<td>글번호 inserthere</td>
-						</tr>
-						<tr>
-							<td><div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input"
-										id="customCheck1"> <label class="custom-control-label"
-										for="customCheck1"></label>
-								</div></td>
-							<td><span class="badge bg-secondary text-white">완료</span></td>
-							<td>글번호 inserthere</td>
-							<td>customCheck1 for문 돌려야함 customCheck1 for문 돌려야함
-								customCheck1 for문 돌려야함 customCheck1 for문 돌려야함 customCheck1 for문
-								돌려야함</td>
-							<td>글번호 inserthere</td>
-							<td>글번호 inserthere</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<!-- 심부름 내역보기(내가 수행한 심부름 테이블) -->
+			<div class="errand_FB"></div>
+			<div class="errand_bottom">
 				<div class="delete">
 					<a href="#" data-toggle="modal" data-target="#selDelete">
 						<button type="button" class="btn btn-danger">삭제</button>
@@ -242,7 +181,6 @@
 	<!-- Vendor JS Files -->
 	<!--
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
   -->
 	<script src="assets/vendor/jquery/jquery.min.js"></script>
 	<script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
@@ -256,6 +194,11 @@
 
 	<!-- Template Main JS File -->
 	<script src="assets/js/myInfo.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function () {
+		reqAction();
+	});
+	</script>
 </body>
 
 </html>

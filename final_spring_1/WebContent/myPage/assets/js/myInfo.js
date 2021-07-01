@@ -73,7 +73,7 @@
   // Activate smooth scroll on page load with hash links in the url
   $(document).ready(function () {
  	var subPage = new Array;
-	subPage[0] = "myInfo";
+	subPage[0] = "selectMember";
 	subPage[1] = "myWallet";
 	subPage[2] = "myLike";
 	subPage[3] = "myTrade";
@@ -295,6 +295,7 @@
       var reader = new FileReader();
       reader.onload = function (e) {
         $('#image_section').attr('src', e.target.result);
+        console.log(e.target.result);
       }
       reader.readAsDataURL(input.files[0]);
     }

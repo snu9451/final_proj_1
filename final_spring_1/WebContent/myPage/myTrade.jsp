@@ -40,7 +40,20 @@
 
 <!-- Template Main CSS File -->
 <link href="assets/css/myInfo.css" rel="stylesheet">
+<script src="assets/vendor/jquery/jquery.min.js"></script>
 <script>
+	$(document).ready(function () {
+		/////////////////구매내역 판매내역 active///////////////
+		$(".buy").click(function () {
+		  $(".sell").removeClass('active');
+		  $(this).addClass('active');
+		});
+		$(".sell").click(function () {
+		  $(".buy").removeClass('active');
+		  $(this).addClass('active');
+		});
+	});
+
 	function sellAction() {
 		console.log("판매내역");
 		$.ajax({
@@ -83,77 +96,7 @@
 				<a class="total_trade sell" href="javascript:sellAction()"> <span><h4 class="all_rec">판매내역</h4></span></a> 
 				<span></span> <span></span> <span></span><span></span>
 			</div>
-			<div class="trade_bottom">
-				<span class="total_rec coin2"> 전체 : (inserthere) </span>
-				<table class="like_tb" id="products">
-					<form action="" id="setRows">
-						<input type="hidden" name="rowPerPage" value="4" id="rowPerPage">
-					</form>
-					<thead>
-						<tr>
-							<th scope="cols" width="15%"></th>
-							<th scope="cols" width="25%"></th>
-							<th scope="cols" width="35%"></th>
-							<th scope="cols" width="25%"></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="divider">글번호 inserthere</td>
-							<td class="divider_img"><a href="http://naver.com"
-								style="color: black"><img id="item_image"
-									src="./assets/img/item/inserthere"></a></td>
-							<td class="divider_con"><a href="http://naver.com"
-								style="color: black">inserthere</a></td>
-							<td class="divider">등록일 inserthere<br>inserthere원<br>
-								<a href="#" data-toggle="modal" data-target="#delete">
-									<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td class="divider">글번호 inserthere</td>
-							<td class="divider_img"><a href="http://naver.com"
-								style="color: black"><img id="item_image"
-									src="./assets/img/item/inserthere"></a></td>
-							<td class="divider_con"><a href="http://naver.com"
-								style="color: black">inserthere</a></td>
-							<td class="divider">등록일 inserthere<br>inserthere원<br>
-								<a href="#" data-toggle="modal" data-target="#delete">
-									<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td class="divider">글번호 inserthere</td>
-							<td class="divider_img"><a href="http://naver.com"
-								style="color: black"><img id="item_image"
-									src="./assets/img/item/inserthere"></a></td>
-							<td class="divider_con"><a href="http://naver.com"
-								style="color: black">inserthere</a></td>
-							<td class="divider">등록일 inserthere<br>inserthere원<br>
-								<a href="#" data-toggle="modal" data-target="#delete">
-									<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td class="divider">글번호 inserthere</td>
-							<td class="divider_img"><a href="http://naver.com"
-								style="color: black"><img id="item_image"
-									src="./assets/img/item/inserthere"></a></td>
-							<td class="divider_con"><a href="http://naver.com"
-								style="color: black">inserthere</a></td>
-							<td class="divider">등록일 inserthere<br>inserthere원<br>
-								<a href="#" data-toggle="modal" data-target="#delete">
-									<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-								</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				
-			</div>
+			<div class="trade_bottom"></div>
 		</div>
 	</div>
 	<!-- ============================= Modal Part ========================= -->
@@ -307,6 +250,11 @@
 		});
 
 		$setRows.submit();
+	</script>
+	<script type="text/javascript">
+	$(document).ready(function () {
+		buyAction();
+	});
 	</script>
 </body>
 

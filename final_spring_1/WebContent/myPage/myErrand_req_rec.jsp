@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<span class="total_rec coin2"> 전체 : (inserthere) </span>
+	
+				
+			<span class="total_rec coin2"> 전체 : (inserthere) </span>
 				<table class="errand_tb" id="products">
-				
-				
 					<form action="" id="setRows">
 						<input type="hidden" name="rowPerPage" value="8" id="rowPerPage">
 					</form>
-					
-					
-					
 					<thead>
 						<tr>
 							<th scope="cols" width="9%">선택</th>
@@ -31,12 +28,86 @@
 							<td>기설123</td>
 						</tr>
 						<tr>
-							<td><button type="button"
-									class="btn btn-outline-danger btn-smq">X</button></td>
-							<td><span class="badge rounded-pill bg-danger text-white">요청
-									중</span></td>
+							<td><div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input"
+										id="customCheck1"> <label class="custom-control-label"
+										for="customCheck1"></label>
+								</div></td>
+							<td><span class="badge bg-secondary text-white">완료</span></td>
+							<td>글번호 inserthere</td>
+							<td>customCheck1 for문 돌려야함 customCheck1 for문 돌려야함
+								customCheck1 for문 돌려야함 customCheck1 for문 돌려야함 customCheck1 for문
+								돌려야함</td>
 							<td>글번호 inserthere</td>
 							<td>글번호 inserthere</td>
+						</tr>
+						<tr>
+							<td><div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input"
+										id="customCheck1"> <label class="custom-control-label"
+										for="customCheck1"></label>
+								</div></td>
+							<td><span class="badge bg-secondary text-white">완료</span></td>
+							<td>글번호 inserthere</td>
+							<td>customCheck1 for문 돌려야함 customCheck1 for문 돌려야함
+								customCheck1 for문 돌려야함 customCheck1 for문 돌려야함 customCheck1 for문
+								돌려야함</td>
+							<td>글번호 inserthere</td>
+							<td>글번호 inserthere</td>
+						</tr>
+						<tr>
+							<td><div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input"
+										id="customCheck1"> <label class="custom-control-label"
+										for="customCheck1"></label>
+								</div></td>
+							<td><span class="badge bg-secondary text-white">완료</span></td>
+							<td>글번호 inserthere</td>
+							<td>customCheck1 for문 돌려야함 customCheck1 for문 돌려야함
+								customCheck1 for문 돌려야함 customCheck1 for문 돌려야함 customCheck1 for문
+								돌려야함</td>
+							<td>글번호 inserthere</td>
+							<td>글번호 inserthere</td>
+						</tr>
+						<tr>
+							<td><div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input"
+										id="customCheck1"> <label class="custom-control-label"
+										for="customCheck1"></label>
+								</div></td>
+							<td><span class="badge bg-secondary text-white">완료</span></td>
+							<td>글번호 inserthere</td>
+							<td>customCheck1 for문 돌려야함 customCheck1 for문 돌려야함
+								customCheck1 for문 돌려야함 customCheck1 for문 돌려야함 customCheck1 for문
+								돌려야함</td>
+							<td>글번호 inserthere</td>
+							<td>글번호 inserthere</td>
+						</tr>
+						<tr>
+							<td><div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input"
+										id="customCheck1"> <label class="custom-control-label"
+										for="customCheck1"></label>
+								</div></td>
+							<td><span class="badge bg-secondary text-white">완료</span></td>
+							<td>글번호 inserthere</td>
+							<td>customCheck1 for문 돌려야함 customCheck1 for문 돌려야함
+								customCheck1 for문 돌려야함 customCheck1 for문 돌려야함 customCheck1 for문
+								돌려야함</td>
+							<td>글번호 inserthere</td>
+							<td>글번호 inserthere</td>
+						</tr>
+						<tr>
+							<td><div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input"
+										id="customCheck1"> <label class="custom-control-label"
+										for="customCheck1"></label>
+								</div></td>
+							<td><span class="badge bg-secondary text-white">완료</span></td>
+							<td>글번호 inserthere</td>
+							<td>customCheck1 for문 돌려야함 customCheck1 for문 돌려야함
+								customCheck1 for문 돌려야함 customCheck1 for문 돌려야함 customCheck1 for문
+								돌려야함</td>
 							<td>글번호 inserthere</td>
 							<td>글번호 inserthere</td>
 						</tr>

@@ -38,7 +38,7 @@
 </head>
 
 <body>
-  <jsp:include page="/myinfo/header.jsp"></jsp:include>
+  <jsp:include page="/myPage/header.jsp"></jsp:include>
 
   <!-- ======= Hero Section ======= -->
 

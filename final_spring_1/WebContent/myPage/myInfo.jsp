@@ -49,13 +49,21 @@
 <script src="assets/vendor/jquery/jquery.min.js"></script>
 <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
 <script>
+$(document).ready(function () {
+	if($("#ratingScore").val()==0){
+		$(".outer-star").hide();
+		$(".noScore").show();
+	}else{
+		$(".noScore").hide();
+	}
+});
 
 function ajaxPW(){
 //	let ch_pw = $(".new_pw").val();
 //	let pw = $("#mem_pw").val();
 	let mydata =  $('#f_myinfo').serialize();
 	$.ajax({
-		url : "/nds/member/updatePw.nds",
+		url : "/member/updatePw.nds",
 // 		url : "/nds/member/updatePw.nds?mem_email=banana@good.com&mem_pw="+pw+"&change_pw="+ch_pw,
 		type : "post",
 		data: mydata,
@@ -89,15 +97,30 @@ function pwChange(){
 		double mem_star = Double.parseDouble(String.valueOf(memberMap.get("MEM_STAR")));
 		String mem_email = String.valueOf(memberMap.get("MEM_EMAIL"));
 		String mem_nickname = String.valueOf(memberMap.get("MEM_NICKNAME"));
+		/* String mem_img = String.valueOf(memberMap.get("MEM_IMG")); */
 	%>
 function nickSelect(){
 	let mynick = $('#f_checknickname').serialize();
 	$.ajax({
-		url: "/nds/member/selectNickName.nds",
+		url: "/member/selectNickName.nds",
 		type : "post",
 		data: mynick,
 		success : function(data) {//@data-json,xml,html,text
-			$('#nick_result').html(data);
+		      /* flag = $("#mem_pw").val().length > 0 ? true : false;
+		      $("#btn_nicksubmit").attr("disabled", flag); */
+		    if($("#newNick").val().length < 2 || $("#newNick").val().length > 15){
+				$('#nick_result').html("<h4 style=\"font-size : 15px; color : red; font-weight:bold\">닉네임은 2~15글자이어야 합니다.</h4>");
+				$("#btn_nicksubmit").attr("disabled", true);
+		    }else{
+				if(data.indexOf("가능한") > -1){
+		    	console.log($("#newNick").val().length);
+					$('#nick_result').html(data);
+			    	$("#btn_nicksubmit").attr("disabled", false);
+				}else{
+					$('#nick_result').html(data);
+					$("#btn_nicksubmit").attr("disabled", true);
+				}
+		    }
 		},
 		error : function(e) {//@param-XMLHttpRequest
 		}
@@ -106,15 +129,15 @@ function nickSelect(){
 function nickChange(){
 	let mynick = $('#f_checknickname').serialize();
 	$.ajax({
-		url: "/nds/member/updateNickName.nds",
+		url: "/member/updateNickName.nds",
 		type : "post",
 		data: mynick,
 		success : function(data) {//@data-json,xml,html,text
 			if(data == 1){
 				// 성공한 경우
-				alert("성공");
+				$("#nickChangeSuccs").modal('show');
 			} else {
-				alert("실패");
+				$("#nickChangeFail").modal('show');
 			}
 		},
 		error : function(e) {//@param-XMLHttpRequest
@@ -124,7 +147,7 @@ function nickChange(){
 function leave(){
 	let myleave =  $('#f_leave').serialize();
 	$.ajax({
-		url : "/nds/member/leave.nds",
+		url : "/member/leave.nds",
 		type : "post",
 		data: myleave,
 		success : function(data) {
@@ -137,6 +160,9 @@ function leave(){
 		}
 	});
 };
+function addAction(){
+	$('#f_profile_picture').submit();
+}
 </script>
 	<jsp:include page="header.jsp"></jsp:include>
 	<jsp:include page="left_bar.jsp"></jsp:include>
@@ -144,22 +170,30 @@ function leave(){
 		<div class="icon-box1" data-aos="fade-in" data-aos-delay="50">
 			<div class="myinfo_top">
 				<div class="profile">
-					<form id="f_profile_picture" name="f_profile_picture" runat="server">
-						<input type="image" id="image_section" src="./assets/img/profile/default.png">
-						<!-- <img id="image_section" src="./assets/img/profile/default.png"
-							alt="your image" /> -->
+					<form id="f_profile_picture" method="post" enctype="multipart/form-data" action="updateImg.nds">
+						<!-- <input type="image" name="change_img" id="image_section" src="./assets/img/profile/1.png"> -->
+						<input type='file' name="change_img" id="imgInput" accept="image/*" style="display: none;"/>
+		                <label class="img_add">
+		                	<img class="img_upload" id="image_section" src="./assets/img/profile/1.png"/>
+		                	<!-- src="./assets/img/profile/1.png" -->
+		                </label>
+						<label type="button" for="imgInput" class="btn btn-danger">사진변경</label>
+						<button onclick="addAction()" type="button" class="btn btn-danger">저장</button>
 					</form>
 				</div>
-				<input type='file' id="imgInput" accept="image/*"
-					label="프로필 사진 변경하기" />
+               
 			</div>
+			<form id="f_myinfo">
 			<div class="myinfo_bottom">
 				<div class="myinfo_left">
 					<div class="trust">
-					<input type="hidden" name="rowPerPage" value="<%=mem_star %>" id="ratingScore">
+					<input type="hidden" class="ratingScore" value="<%=mem_star%>" id="ratingScore">
 						<h4 class="con_title">신뢰도</h4>
 						<div class='RatingStar'>
 							<div class='RatingScore'>
+								<div class="noScore">
+									별점 없음
+								</div>
 								<div class='outer-star'>
 									<div class='inner-star'>
 									</div>
@@ -169,17 +203,16 @@ function leave(){
 					</div>
 					<div class="email">
 						<h4 class="con_title">이메일</h4>
-						<h4 class="con_email"><%=mem_email %></h4>
+ 						<h4 class="con_email" name="mem_email"><%=mem_email%></h4>
+						<!-- <h4 class="con_email">whrltjf12345@naver.com</h4> -->
 					</div>
 					<div class="nickname">
 						<h4 class="con_title">닉네임</h4>
-						<h4 class="con_nick"><%=mem_nickname %></h4>
+						<h4 class="con_nick"><%=mem_nickname%></h4>
 					</div>
 				</div>
 				<div class="myinfo_right">
 					<div class="pw_con">
-					<form id="f_myinfo">
-						<input type="hidden" name="mem_email" value="pine@good.com">
 						<div class="pw">
 							<h4 class="con_title2">현재 비밀번호</h4>
 							<input type="password" id="mem_pw" name="mem_pw" value=""/>
@@ -203,10 +236,10 @@ function leave(){
 								<button type="button" class="btn btn-danger">탈퇴하기</button>
 							</a>
 						</div>
-					</form>
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 	<!-- ============================= Modal Part ========================= -->
@@ -232,7 +265,7 @@ function leave(){
 		            	<span class="col-1 d-flex flex-column"></span>
 	                	<div class="col-8 d-flex flex-column">
 	                		<form id="f_checknickname">
-		                  		<input name="mem_nickname" class="form-control mb-2" type="text" style="padding:0px;">
+		                  		<input id="newNick" name="mem_nickname" class="form-control mb-2" type="text" style="padding:0px;">
 		                  		<div id="nick_result" style="padding-top:10px"></div>
 	                		</form>
 	                	</div>
@@ -244,7 +277,7 @@ function leave(){
 	          </div>
 	        </div>
 	        <div class="modal-footer">
-	          <button onclick="nickChange()" type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+	          <button id="btn_nicksubmit" disabled="true" onclick="nickChange()" type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 	          <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 	        </div>
 	      </div>
@@ -301,7 +334,7 @@ function leave(){
 	          </div>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+	          <button onClick="window.location.reload()" type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 	        </div>
 	      </div>
 	    </div>
@@ -356,7 +389,7 @@ function leave(){
 	          </div>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+	          <button onClick="window.location.reload()" type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 	        </div>
 	      </div>
 	    </div>
@@ -377,7 +410,7 @@ function leave(){
 	        <div class="modal-body text-center d-flex justify-content-center">
 	          <div class="col-12 log__box d-flex flex-column justify-content-center">
 	            <div>
-	              <h4 class="col-12 d-flex justify-content-around" style="font-size : 20px; font-weight:bold;">새 비밀번호를 확인해주세요.
+	              <h4 class="col-12 d-flex justify-content-around" style="font-size : 20px; font-weight:bold;">비밀번호를 확인해주세요.
 	              </h4>
 	            </div>
 	          </div>

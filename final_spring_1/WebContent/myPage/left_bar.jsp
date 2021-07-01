@@ -61,7 +61,7 @@
 							</li>
 							<ul>
 								<div class="mypage_list">
-									<a href="myInfo.jsp">
+									<a href="selectMember.nds">
 										<div class="each" id="each1">
 											<div class="icon">
 												<i class="fas fa-info-circle"></i>
