@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.ItemMapper">
- <resultMap type="map" id="itemVO">
-  <!-- 1 , 2, 3, 7 에서 사용 -->
-    <result column="BM_NO" property="BM_NO"/> 
-    <result column="BI_FILE" property="BI_FILE"/> 
-    <result column="BM_TITLE" property="BM_TITLE"/> 
-    <result column="BM_DATE" property="BM_DATE"/> 
-    <result column="BM_PRICE" property="BM_PRICE"/> 
-    <result column="BM_STATUS" property="BM_STATUS"/> 
-    <result column="BM_LIKE" property="BM_LIKE"/> 
-    <result column="SELLER_NICKNAME" property="SELLER_NICKNAME"/>  
-    <result column="BM_HIT" property="BM_HIT"/> 
-    <result column="BM_CONTENT" property="BM_CONTENT"/>
- </resultMap>
+ <resultMap type="map" id="itemVO" />
 
    <!-- 1  최근상품,인기상품 가져오기 -->
    <select id="proc_board_main" statementType="CALLABLE" parameterType="java.util.Map">
       {CALL proc_board_main(#{pr_choice}
+      				 , #{pr_MEM_EMAIL}
                      , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
    </select>
    
    <!-- 2 사용자가 카테고리메뉴에서 카테고리 선택 시 -->
    <select id="proc_board_main_categori" statementType="CALLABLE" parameterType="java.util.Map">
       {CALL proc_board_main_categori(#{pr_categori}
+       				 , #{pr_MEM_EMAIL}
                      , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
    </select>
    
@@ -31,6 +21,7 @@
    <select id="proc_board_search" statementType="CALLABLE" parameterType="java.util.Map">
       {CALL proc_board_search(#{pr_search_order}
       				 , #{pr_search}
+      				 , #{pr_MEM_EMAIL}
                      , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
    </select>
    
@@ -51,20 +42,22 @@
    
    <!-- 6-1 상품 정보 저장 -->
    <select id="proc_board_update" statementType="CALLABLE" parameterType="java.util.Map">
-      {CALL "proc_board_update(#{pr_BM_TITLE}
+      {CALL proc_board_update(#{pr_BM_TITLE}
                      , #{pr_BM_CONTENT}, #{pr_BM_PRICE}
                      , #{pr_bm_no}, #{pr_CATEGORY_NAME})}
    </select>
    
-   <!-- 6-2 이미지 교체후 저장 -->
+   <!-- 6-2 이미지 삭제 -->
+   <delete id="itemImgdelete"  parameterType="int">
+   		delete from board_img
+   		where bm_no=#{pr_bm_no}
+   </delete>
 
    <!-- 7 상품의 내용만 가져옴 - 사용자가 상품하나를 자세히 볼 때 -->
-   <select id="proc_board_select" resultType="map" parameterType="java.util.Map">
-      select bm.bm_no,BM_TITLE,BM_HIT,BM_DATE,BM_LIKE,BM_CONTENT,BM_PRICE,BM_STATUS,SELLER_NICKNAME,bm_status,
-       (select case when EXISTS(select  1 from MY_LIKE  where MEM_EMAIL=#{pr_MEM_EMAIL} and BM_NO=#{pr_bm_no}) then 'true'
-                  else 'false' end from dual) i_like
-	  from BOARD_MASTER bm
-      where bm.bm_no=#{pr_bm_no}
+   <select id="proc_board_select"  statementType="CALLABLE" parameterType="java.util.Map">
+      {CALL proc_board_select(#{pr_MEM_EMAIL}
+      				 , #{pr_bm_no}
+                     , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
    </select>
    
    <!-- 8 상품 삭제 시 -->
@@ -107,13 +100,19 @@
                      , #{result, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String})}
    </select>
    
-   <!-- 14 사용자가 상품을 등록 시에 -->
+   <!-- 14-1 사용자가 상품을 등록 시에 -->
    <select id="proc_board_insert" statementType="CALLABLE" parameterType="java.util.Map">
-      {CALL proc_board_insert(#{pr_choice}
-                     , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
+      {CALL proc_board_insert(#{pr_BM_TITLE}
+                     , #{pr_BM_CONTENT},#{pr_BM_PRICE},#{pr_SELLER_NICKNAME},#{pr_CATEGORY_NAME}
+                     , #{result , mode=OUT, jdbcType=INTEGER, javaType=int})}
    </select>
+
    
-   
+   <!-- 14-2 사용자가 상품을 등록 시에 -->
+	<insert id="edit" parameterType="java.util.Map">
+		insert into board_img(bi_no, bm_no, bi_file, bi_size) values
+		(seq_board_img.nextval, #{bm_no}, #{bi_file}, #{bi_size})
+	</insert>
 
 
 </mapper>

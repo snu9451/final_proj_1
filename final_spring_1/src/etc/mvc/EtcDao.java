@@ -31,8 +31,10 @@ public class EtcDao {
 		logger.info("selectAutocompleteList 메소드 호출");
 
 		List<Map<String, Object>> keyword = new ArrayList<Map<String,Object>>();
+		logger.info("pmap ===> "+pmap);
 		keyword = sqlSessionTemplate.selectList("selectAutocomple", pmap);
-		
+		logger.info("pmap ===> "+pmap);
+		logger.info("keyword ===> "+keyword);
 		return keyword;
 	}
 

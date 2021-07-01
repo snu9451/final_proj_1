@@ -31,8 +31,10 @@ public class EtcLogic {
 		logger.info("selectAutocompleteList 메소드 호출");
 		
 		List<Map<String, Object>> keyword = new ArrayList<Map<String,Object>>();
+		logger.info("pmap ===> "+pmap);
+		logger.info("keyword ===> "+keyword);
 		keyword = etcDao.selectAutocompleteList(pmap);
-		
+		logger.info(keyword);
 		return keyword;
 	}
 

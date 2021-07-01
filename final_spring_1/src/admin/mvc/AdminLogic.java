@@ -51,10 +51,10 @@ public class AdminLogic {
 	public List<Map<String, Object>> selectBoardBySearch(Map<String, Object> pmap) {
 		logger.info("selectBoardBySearch 메소드 호출");
 		
-		String nick_title_type = pmap.get("nick_title_type").toString(); // 작성자인지, 제목인지, 전체인지
-		String pr_search = pmap.get("pr_search").toString(); // 검색한 단어 받음
+//		String nick_title_type = pmap.get("nick_title_type").toString(); // 작성자인지, 제목인지, 전체인지
+//		String pr_search = pmap.get("pr_search").toString(); // 검색한 단어 받음
 		
-		return adminDao.selectBoardBySearch(nick_title_type, pr_search);
+		return adminDao.selectBoardBySearch(pmap);
 	}
 	
  // 신고된 회원 상세보기

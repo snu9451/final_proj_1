@@ -50,17 +50,21 @@ public class AdminDao {
 	
 
  // 게시글 검색
-	public List<Map<String, Object>> selectBoardBySearch(String nick_title_type, String pr_search) {
+	public List<Map<String, Object>> selectBoardBySearch(Map<String, Object> pmap) {
 		logger.info("selectBoardBySearch 메소드 호출");
 		
-		Map<String, Object> rmap = new HashMap<String, Object>();
-		List<Map<String, Object>> p_temp = new ArrayList<Map<String,Object>>();
-		rmap.put("nick_title_type", nick_title_type);
-		rmap.put("pr_search", pr_search);
-		rmap.put("p_temp", p_temp); // ref커서 담음
-		sqlSessionTemplate.selectList("proc_board_all_select", rmap); // 프로시저
-
-		return (List<Map<String, Object>>)rmap.get("p_temp"); // 결과 값만 보냄
+//		Map<String, Object> rmap = new HashMap<String, Object>();
+//		List<Map<String, Object>> p_temp = new ArrayList<Map<String,Object>>();
+//		Map<String, Object> p_temp = new HashMap<>();
+//		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		
+//		rmap.put("nick_title_type", nick_title_type);
+//		rmap.put("pr_search", pr_search);
+//		rmap.put("p_temp", p_temp); // ref커서 담음
+		sqlSessionTemplate.selectList("proc_board_all_select", pmap); // 프로시저
+//		logger.info("rmap =====> " + rmap);
+		logger.info("pmap ====> "+pmap);
+		return (List<Map<String, Object>>)pmap.get("p_temp"); // 결과 값만 보냄
 	}
 	
  // 신고된 회원 상세보기

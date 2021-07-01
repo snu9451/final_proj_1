@@ -23,21 +23,19 @@ public class ItemLogic {
 	public List<Map<String, Object>> selectItemList(Map<String, Object> pmap){
 		logger.info("Logic : selectItemList메소드 호출");
 		//인기상품 일시 "like_rank"로, 최근상품 일시 "new_rank" 인지만 반환 - String으로 변환
-		return itemDao.selectItemList(pmap.get("pr_choice").toString());
+		return itemDao.selectItemList(pmap);
 	}
 	
 	//사용자가 카테고리메뉴에서 카테고리 선택 시
 	public List<Map<String, Object>> selectByCategory(Map<String, Object> pmap) {
 		logger.info("Logic : selectByCategory메소드 호출");
 		//카테고리메뉴는 String으로 변환
-		return itemDao.selectByCategory(pmap.get("pr_categori").toString());
+		return itemDao.selectByCategory(pmap);
 	}
 	//검색어를 입력하여 찾기
 	public List<Map<String, Object>> selectBySearch(Map<String, Object> pmap) {
 		logger.info("Logic : selectBySearch메소드 호출");
-		String pr_search_order = pmap.get("pr_search_order").toString(); //검색 주제를 받아오기
-		String pr_search = pmap.get("pr_search").toString(); //검색어 값 받아오기 
-		return itemDao.selectBySearch(pr_search_order,pr_search);
+		return itemDao.selectBySearch(pmap);
 	}
 	//사용자가 상품 수정 버튼 클릭 시 상품의 정보를 다 가져와야하니까 있음 - 내용
 	public Map<String,Object> editItem(int pr_bm_no) {
@@ -55,27 +53,24 @@ public class ItemLogic {
 		logger.info("Logic : updateItem메소드 호출");
 		//상품 번호를 가져온다.
 		int pr_bm_no = Integer.parseInt(pmap.get("pr_bm_no").toString());
-		//사진을 1~5까지 넣고 없디먄 break로 중지시킨다.
-		List<String> itemImgs = new ArrayList<>();
-		for(int i=1;i<=5;i++) {
-			String pname = "Img_"+i;
-			if(pmap.containsKey(pname)) {
-				itemImgs.add(pmap.get(pname).toString());
-			}else {
-				break;
-			}
-		}
+		//등록된 상품들의 사진
+		List<Map<String,Object>> itemImgs = (List<Map<String, Object>>) pmap.get("itemImgs");
 		//상품의 정보(pmap) 와 사진(itemImgs)을 파라미터로 넣는다.
 		itemDao.updateItem(pmap,itemImgs,pr_bm_no);
 	}
 
 	//상품의 내용만 가져옴 - 사용자가 상품하나를 자세히 볼 때
-	public Map<String, Object> selectItemDetailContext(String pr_MEM_EMAIL,int pr_bm_no) {
+	public Map<String, Object> selectItemDetailContext(String pr_MEM_EMAIL,int pr_bm_no,String nickName) {
 		logger.info("Logic : selectItemDetailContext메소드 호출");
 		Map<String,Object> pmap = new HashMap<>();
-		pmap.put("pr_MEM_EMAIL", pr_MEM_EMAIL);
+		pmap.put("pr_MEM_EMAIL", pr_MEM_EMAIL);//세션에서 가져오기
 		pmap.put("pr_bm_no", pr_bm_no);
-		return itemDao.selectItemDetailContext(pmap);
+		Map<String, Object> map = itemDao.selectItemDetailContext(pmap).get(0);
+		//판매자와 내가 동일 인물이라면 1, 아니라면 0
+		if((map.get("SELLER_NICKNAME").toString()).equals(nickName)) {
+			map.put("seller_me",1); 
+		}else map.put("seller_me",0);
+		return map;
 	}
 	//상품의 사진만 가져옴 - 사용자가 상품하나를 자세히 볼 때(//사용자가 상품 수정 버튼 클릭 시 상품의 정보를 다 가져와야하니까 있음 - 사진들 얘랑 같은 거 사용)
 	public List<String> selectItemDetailImgs(int pr_bm_no) {
@@ -100,8 +95,6 @@ public class ItemLogic {
 		logger.info("Logic : likeItem메소드 호출");
 		return itemDao.likeItem(pmap);
 	}
-<<<<<<< HEAD
-=======
 	
 	//댓글 달기. 대댓글 달기
 	public Map<String, Object> insertComment(Map<String, Object> pmap) {
@@ -121,19 +114,12 @@ public class ItemLogic {
 	//사용자가 상품을 등록 시에
 	public void insertItem(Map<String, Object> pmap) {
 		logger.info("Logic : insertItem메소드 호출");
-		//사진을 1~5까지 넣고 없디먄 break로 중지시킨다.
-		List<String> itemImgs = new ArrayList<>();
-		for(int i=1;i<=5;i++) {
-			String pname = "Img_"+i;
-			if(pmap.containsKey(pname)) {
-				itemImgs.add(pmap.get(pname).toString());
-			}
-		}
+		//등록된 상품들의 사진
+		List<Map<String,Object>> itemImgs = (List<Map<String, Object>>) pmap.get("itemImgs");
 		//상품의 정보와 사진을 파라미터로 넣는다.
 		itemDao.insertItem(pmap,itemImgs);
 	}
 
 
->>>>>>> 37603375d4e6c3a7c90885a2d82c1baf27731143
 
 }
