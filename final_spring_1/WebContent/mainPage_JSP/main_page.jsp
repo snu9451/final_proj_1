@@ -476,7 +476,7 @@
             <div class="form-group">
               <label for="inputAge">연령대</label>
               <select class="form-control custom-select" id="inputAge" name="mem_age" required>
-                <option selected>고객님의 연령대를 선택해주세요.</option>
+                <option value="0">고객님의 연령대를 선택해주세요.</option>
                 <option value="10">10대</option>
                 <option value="20">20대</option>
                 <option value="30">30대</option>
@@ -484,13 +484,9 @@
                 <option value="50">50대</option>
                 <option value="60">60대이상</option>
               </select>
-              <div class="valid-feedback">
-                Good
+              <div id="ageChck__box" class="doEmpty">
+                <small id="ageChck" class="form-text"></small>
               </div>
-              <div class="invalid-feedback">
-                연령대를 선택해주세요.
-              </div>
-            </div>
             <div class="custom-control custom-radio custom-control-inline">
               <input type="radio" id="mem_female" name="mem_gender" class="custom-control-input" value="F" required>
               <label class="custom-control-label" for="mem_female">여성</label>

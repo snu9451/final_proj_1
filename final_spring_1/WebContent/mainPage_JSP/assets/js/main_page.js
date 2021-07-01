@@ -105,7 +105,9 @@
 
   //drop down toggle
   $(document).ready(function () {
-    $(".dropdown-toggle").dropdown("toggle");
+	$("#category_drop").on('click', function(){
+    	$(".dropdown-toggle").dropdown("toggle");
+	})
   });
 
   /*==========================================[[ Not Mine ]]==================================================*/

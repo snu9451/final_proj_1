@@ -12,7 +12,7 @@
     //인증번호 값을 담을 변수 선언
     let safetyCode;
 
-    //인증번호 클릭시 이벤트.
+    //[[인증번호받기]] 클릭시 이벤트.
     $("#btn_getCode").click(function () {
       //핸드폰번호 입력값
       let inputCellPhone = $("#inputCellPhone").val();
@@ -35,24 +35,12 @@
           success: function (data) {
             console.log(data);
             safetyCode = data;
-            // let safetyCodeChck = $("#safetyCodeChck").text();
-            // console.log(safetyCodeChck);
-            // if (data) {
-            //   const inputSafetyCode = $("#inputSafetyCode").val();
-            //   $("#btn__codeChck").click(function () {
-            //     if (inputSafetyCode === data) {
-            //       safetyCodeChck = "인증번호가 일치합니다.";
-            //     } else {
-            //       safetyCodeChck = "인증번호가 일치하지 않습니다.";
-            //     }
-            //   });
-            // }
           },
         });
       }
     });
 
-    //확인 버튼 클릭시
+    //인증번호 [[확인]] 버튼 클릭시
     $("#btn__codeChck").on("click", function () {
       const safetyCodeChck__box = $("#safetyCodeChck__box");
 
@@ -148,7 +136,15 @@
       //닉네임 입력값
       let inputNickName = $("#inputNickName").val();
 
-      if (inputNickName.length > 1) {
+      if (inputNickName.length <= 1) {
+        console.log(inputNickName.length);
+        swal(
+          "닉네임은 2글자 이상 입력해주세요.",
+          "plz type more than 2 words",
+          "warning"
+        );
+      } else {
+        console.log(inputNickName.length);
         console.log("2글자");
         $.ajax({
           type: "post",
@@ -161,27 +157,79 @@
             console.log("error: " + e.responseText);
           },
         });
-      } else {
-        swal(
-          "닉네임은 2글자 이상 입력해주세요.",
-          "plz type more than 2 words",
-          "warning"
-        );
       }
+    });
+
+    //연령대 선택여부 결과 표시할 div박스
+    const ageChck__box = $("#ageChck__box");
+
+    //연령대 선택 이벤트
+    $("#inputAge").on("focusout", function () {
+      let select_chck = $("#inputAge").val();
+      console.log(select_chck);
+      //연령대 선택 여부
+      if (select_chck <= 0) {
+        ageChck__box.empty();
+        ageChck__box.html(`<small id="pwChck"
+        class="form-text"
+        style="color:red; font-weight:bold ;
+        font-size: 15px; "
+        value="1">
+        연령대를 선택해주세요.
+        </small>
+        `);
+      } else {
+        ageChck__box.empty();
+        ageChck__box.html(`<small id="pwChck"
+        class="form-text"
+        style="color:green; font-weight:bold ;
+        font-size: 15px;"
+        value="1">
+        선택되었습니다.
+        </small>
+        `);
+      }
+    });
+
+    $("#btn_signUp").on("click", function () {
+      // console.log(`${$("#inputEmail").val(
+      //   "webtree12@gmail.com"
+      // )}, ${$("#inputCellPhone").val()},
+      // ${$("#checkPassWord").val()}, ${$("#inputNickName").val()},
+      // ${$("#inputAge").val()},
+      // ${$('input[name="mem_gender"]:checked').val()}`);
+
+      let data;
+      $("#signUpForm small").each(function (index, obj) {
+        console.log($(obj).val().length);
+
+        // //성별 체크 여부
+        // let radio_chck = $("input:radio[name='mem_gender']").is(":checked");
+
+        // // 다른 input 태그들 입력 여부
+        // let chck_validation = $(obj).val().length;
+
+        // //유효성 체크
+        // if (chck_validation === 0 || !radio_chck) {
+        //   console.log(select_chck);
+        //   swal("정보들을 모두 입력해주세요.", "", "warning");
+        // } else {
+        //   //정보 모두 입력시
+        //   data = $("#signUpForm").serialize();
+        //   console.log(data);
+        //   $("#signUpForm").submit(function () {
+        //     if (select_chck === 0) {
+        //       swal("연령대를 선택해주세요.", "", "warning");
+        //       return false;
+        //     }
+        //   });
+        // }
+      });
     });
   }); /*====================[[ 회원가입 이벤트 끝 ]]*/
 
   // 회원가입 submit 이벤트
-  $(document).ready(function () {
-    $("#btn_signUp").click(function (event) {
-      console.log(`${$("#inputEmail").val()}, ${$("#inputCellPhone").val()},
-      ${$("#checkPassWord").val()}, ${$("#inputNickName").val()},
-      ${$("#inputAge").val()},
-      ${$('input[name="mem_gender"]:checked').val()}`);
-
-      // $("#signUpForm").submit();
-    });
-  });
+  $(document).ready(function () {});
 
   //회원가입 모달창이 사라졌을 때 이벤트
   $("#signUpModal").on("hidden.bs.modal", function () {
