@@ -44,6 +44,13 @@
 	
 	
 <!-- ==================================== [[ ＵＰＤＡＴＥ ]] ==================================== -->
+<!-- 프로필 이미지 바꾸기 -->
+ <update id="upImg" parameterType="map">
+  update member
+  set mem_img = #{mem_img}
+  where mem_email = #{mem_email}
+ </update>	
+	
 	<select id="updatePw" statementType="CALLABLE" parameterType="map">
 		{call PROC_MEM_PW(#{mem_email, mode=IN, jdbcType=VARCHAR},#{mem_pw, mode=IN, jdbcType=VARCHAR},#{change_pw, mode=IN, jdbcType=VARCHAR},#{result, mode=OUT, jdbcType=NUMERIC})}
 	</select>

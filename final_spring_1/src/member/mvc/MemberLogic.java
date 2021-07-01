@@ -13,21 +13,17 @@ public class MemberLogic {
 	private MemberDao memberDao = null;
 	Logger logger = Logger.getLogger(MemberLogic.class);
 	
-	
-	
-	
-	
 	public void setMemberDao(MemberDao memberDao) {
 		logger.info("asdfasdfasdfdsfsfadsfs");
 		this.memberDao = memberDao;
 	}
-
 
 	public List<Map<String, Object>> selectMemberList() {
 		List<Map<String, Object>> memberList = new ArrayList<Map<String,Object>>();
 		memberList = memberDao.selectMemberList();
 		return memberList;
 	}
+	
 	public Map<String, Object> selectMember(Map<String, Object> pmap) {
 		Map<String, Object> rmap = new HashMap<String, Object>();
 		rmap = memberDao.selectMember(pmap);
@@ -177,17 +173,24 @@ public class MemberLogic {
 		return rmap;
 	}
 
-
-
+ // 프로필 사진 바꾸기 
+	public int updateImg(Map<String, Object> pmap) {
+		int result = 0;
+		
+		// 파일 명이 1.png가 아니면
+		if(pmap.get("mem_img").toString() != "1.png") {
+			memberDao.updateImg(pmap);
+			result = 1;
+			} else { // 파일명이 1.png이면
+				result = 0;
+			}
+		
+		return result;
+	}
 
 	// 테스트용 메인
 //	public static void main(String[] args) {
 //		System.out.println(new MemberLogic().getRandomCode("ON", 6));
 //		System.out.println(new MemberLogic().getRandomCode("NUL", 15));
 //	}
-	
-
-
-
-	
 }

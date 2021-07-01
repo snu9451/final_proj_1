@@ -14,21 +14,9 @@ public class MemberDao {
 	private SqlSessionTemplate sqlSessionTemplate = null;
 	Logger logger = Logger.getLogger(MemberLogic.class);
 	
-	
-	
-	
-	
-	
-	
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
-
-
-
-
-
-
 
 	public Map<String, Object> selectOneBySession(String sessionValue) {
 		logger.info("selectOneBySession 메소드 호출 완료");
@@ -49,34 +37,26 @@ public class MemberDao {
 //		return result;
 //	}
 
-
-
-
-
-
 	public List<Map<String, Object>> selectMemberList() {
 		List<Map<String, Object>> memberList = new ArrayList<Map<String,Object>>();
 		memberList = sqlSessionTemplate.selectList("selectMemberList");
 		return memberList;
 	}
 
-
-
-
-
-
-
 	public int updateMember(Map<String, Object> pmap) {
 		int result = 0;
 		result = sqlSessionTemplate.update("updateMember", pmap);
 		return result;
 	}
-
-
-
-
-
-
+	
+ // 프로필 사진 바꾸기
+	public int updateImg(Map<String, Object> pmap) {
+		logger.info("updateImg 메소드 호출");
+			
+		int result = sqlSessionTemplate.update("upImg", pmap);
+			
+		return result;
+	}
 
 	public int updatePw(Map<String, Object> pmap) {
 		int result = 0;
