@@ -27,6 +27,10 @@
 <!--  	<bean id="item_dao" class="item.mvc.ItemDao"> -->
 <!--  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/> -->
 <!-- 	</bean> -->
+
+	<bean id="member-dao" class="member.mvc.MemberDao"> 
+	 <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
 	
 	<bean id="admin-dao" class="admin.mvc.AdminDao"> 
 	 <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>

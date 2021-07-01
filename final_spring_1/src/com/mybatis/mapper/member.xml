@@ -11,6 +11,14 @@
 		  FROM ZIPCODE_T 
 		 WHERE UID_NO = #{value}
 	</select>
+	
+<!-- 프로필 이미지 바꾸기 -->
+ <update id="upImg" parameterType="map">
+  update member
+  set mem_img = #{mem_img}
+  where mem_email = #{mem_email}
+ </update>	
+	
 	<!-- SELECT mem_email,  -->
 	<select id="selectOneBySessionKey" statementType="STATEMENT">
 <!-- 		{CALL}		 -->

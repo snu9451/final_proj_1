@@ -45,4 +45,18 @@ public class MemberDao {
 		return result;
 	}
 
+
+
+
+
+
+ // 프로필 사진 바꾸기
+	public int updateImg(Map<String, Object> pmap) {
+		logger.info("updateImg 메소드 호출");
+		
+		int result = sqlSessionTemplate.update("upImg", pmap);
+		
+		return result;
+	}
+
 }

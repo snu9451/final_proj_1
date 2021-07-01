@@ -6,6 +6,8 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
+import nds.util.AjaxDataPrinter;
+
 public class MemberLogic {
 
 	private MemberDao memberDao = null;
@@ -87,8 +89,18 @@ public class MemberLogic {
 		return randomCode;
 	}
 
-
-
-
-	
+ // 프로필 사진 바꾸기 
+	public int updateImg(Map<String, Object> pmap) {
+		int result = 0;
+		
+	 // 파일 명이 1.png가 아니면
+		if(pmap.get("mem_img").toString() != "1.png") {
+			memberDao.updateImg(pmap);
+			result = 1;
+		} else { // 파일명이 1.png이면
+			result = 0;
+		}
+		
+		return result;
+	}
 }

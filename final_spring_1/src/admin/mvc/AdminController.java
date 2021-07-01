@@ -34,8 +34,8 @@ public class AdminController extends MultiActionController {
 
 	 // 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
 		HashMapBinder hmb = new HashMapBinder(req); 
-		Map<String, Object> pmap = new
-		HashMap<>(); hmb.bind(pmap); // 탈퇴시킬 회원의 정보를 담음
+		Map<String, Object> pmap = new HashMap<>(); 
+		hmb.bind(pmap); // 탈퇴시킬 회원의 정보를 담음
 		 		
 		int result = adminLogic.outMember(pmap); // update는 1건이(n건) 업데이트 되었습니다여서 int로
 		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");

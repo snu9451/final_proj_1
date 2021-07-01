@@ -25,7 +25,7 @@ public class HashMapBinder {
 	public HashMapBinder() {}
 	public HashMapBinder(HttpServletRequest request) {
 		this.request = request;
-		realFolder = "D:\\portfolio_kosmo\\lab_spring4\\spring4_1_1\\WebContent\\pds";
+		realFolder = "D:\\Git\\final_proj_1\\final_spring_1\\WebContent\\pds";
 	}
 	public void multiBind(Map<String,Object> target) {
 		target.clear();
@@ -34,7 +34,7 @@ public class HashMapBinder {
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());
 		}
-		Enumeration en = multi.getParameterNames();//배열 구조체 묶음
+		Enumeration en = multi.getParameterNames(); // 배열 구조체 묶음
 		//<input type="text" name="mem_id"
 		while(en.hasMoreElements()) {
 			String key = (String)en.nextElement();
