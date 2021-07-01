@@ -40,19 +40,13 @@ public class AdminLogic {
  // 회원 검색
 	public List<Map<String, Object>> selectMemberBySearch(Map<String, Object> pmap) {
 		logger.info("selectMemberBySearch 메소드 호출");
-		
-		String nick_email_type = pmap.get("nick_email_type").toString(); // 닉네임인지, 이메일인지, 전체인지
-		String pr_search = pmap.get("pr_search").toString(); // 검색한 단어 받음
-		
-		return adminDao.selectMemberBySearch(nick_email_type, pr_search);
+
+		return adminDao.selectMemberBySearch(pmap);
 	}
 	
  // 게시글 검색
 	public List<Map<String, Object>> selectBoardBySearch(Map<String, Object> pmap) {
 		logger.info("selectBoardBySearch 메소드 호출");
-		
-//		String nick_title_type = pmap.get("nick_title_type").toString(); // 작성자인지, 제목인지, 전체인지
-//		String pr_search = pmap.get("pr_search").toString(); // 검색한 단어 받음
 		
 		return adminDao.selectBoardBySearch(pmap);
 	}

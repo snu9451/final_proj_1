@@ -36,7 +36,7 @@ public class EtcController extends MultiActionController {
 		plist = etcLogic.selectCategory();
 		
 //		logger.info(plist); [가구, 기타, 도서, 디지털기기, 반려동물용품, 스포츠, 식물, 유아동, 의류, 화장품]
-		// Front에 내보내기
+	 // Front에 내보내기
 		Gson g = new Gson();
 		String data = g.toJson(plist);
 		AjaxDataPrinter.out(res, "application/json", plist);
@@ -56,7 +56,8 @@ public class EtcController extends MultiActionController {
 		List<Map<String, Object>> keyword = new ArrayList<Map<String,Object>>();
 	  	keyword = etcLogic.selectAutocompleteList(pmap);
 	  	logger.info(keyword);
-		// Front에 내보내기
+	  	
+	 // Front에 내보내기
 		Gson g = new Gson();
 		String data = g.toJson(keyword);
 		AjaxDataPrinter.out(res, "application/json", data);
@@ -69,6 +70,11 @@ public class EtcController extends MultiActionController {
 		
 		List<String> plist = new ArrayList<String>();
 		plist = etcLogic.selectWordList();
+		
+	 // Front에 내보내기
+		Gson g = new Gson();
+		String data = g.toJson(plist);
+		AjaxDataPrinter.out(res, "application/json", plist);
 //		logger.info(plist); [{KEYWORD=에어컨}, {KEYWORD=세탁기}, {KEYWORD=핸드폰}, {KEYWORD=필름}, {KEYWORD=태블릿}, {KEYWORD=양말}, {KEYWORD=필기구}, {KEYWORD=TV}, {KEYWORD=선풍기}]
 	}
 }

@@ -35,17 +35,13 @@ public class AdminDao {
 	}
 	
  // 회원 검색
-	public List<Map<String, Object>> selectMemberBySearch(String nick_email_type, String pr_search) {
+	public List<Map<String, Object>> selectMemberBySearch(Map<String, Object> pmap) {
 		logger.info("selectMemberBySearch 메소드 호출");
 		
-		Map<String, Object> rmap = new HashMap<String, Object>();
-		List<Map<String, Object>> p_temp = new ArrayList<Map<String,Object>>();
-		rmap.put("nick_email_type", nick_email_type); // 이메일, 닉네임, 전체인지 받아옴
-		rmap.put("pr_search", pr_search); // 검색 단어 받아옴
-		rmap.put("p_temp", p_temp); // ref 커서 담음
-		sqlSessionTemplate.selectList("proc_member_all_select", rmap);
+		sqlSessionTemplate.selectList("proc_member_all_select", pmap); // 프로시저
+		logger.info("pmap ====> " + pmap);
 		
-		return (List<Map<String, Object>>) rmap.get("p_temp");
+		return (List<Map<String, Object>>)pmap.get("p_temp"); // 결과 값만 보냄
 	}	
 	
 
@@ -53,17 +49,9 @@ public class AdminDao {
 	public List<Map<String, Object>> selectBoardBySearch(Map<String, Object> pmap) {
 		logger.info("selectBoardBySearch 메소드 호출");
 		
-//		Map<String, Object> rmap = new HashMap<String, Object>();
-//		List<Map<String, Object>> p_temp = new ArrayList<Map<String,Object>>();
-//		Map<String, Object> p_temp = new HashMap<>();
-//		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
-		
-//		rmap.put("nick_title_type", nick_title_type);
-//		rmap.put("pr_search", pr_search);
-//		rmap.put("p_temp", p_temp); // ref커서 담음
 		sqlSessionTemplate.selectList("proc_board_all_select", pmap); // 프로시저
-//		logger.info("rmap =====> " + rmap);
-		logger.info("pmap ====> "+pmap);
+		logger.info("pmap ====> " + pmap);
+		
 		return (List<Map<String, Object>>)pmap.get("p_temp"); // 결과 값만 보냄
 	}
 	

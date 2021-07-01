@@ -68,7 +68,7 @@
  
 <!-- 회원 검색 --> 
  <select id="proc_member_all_select" statementType="CALLABLE" parameterType="java.util.Map">
-  {CALL proc_member_all_select(#{nick_email_type}, #{pr_search},
+  {CALL proc_member_all_select(#{nick_email_type, mode=IN, jdbcType=VARCHAR}, #{pr_search, mode=IN, jdbcType=VARCHAR},
   							   #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=report_mem_memberVO})
   }
  </select>
