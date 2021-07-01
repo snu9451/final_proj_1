@@ -31,9 +31,19 @@ public class EtcLogic {
 		logger.info("selectAutocompleteList 메소드 호출");
 		
 		List<Map<String, Object>> keyword = new ArrayList<Map<String,Object>>();
+		logger.info("pmap ===> "+pmap);
+		logger.info("keyword ===> "+keyword);
 		keyword = etcDao.selectAutocompleteList(pmap);
-		
+		logger.info(keyword);
 		return keyword;
+	}
+
+ // 검색 순위(검색횟수가 10이상인 검색어만 상위10개 조회)
+	public List<String> selectWordList() {
+		List<String> plist = new ArrayList<String>();
+		plist = etcDao.selectWordList();
+		
+		return plist;
 	}
 
 }

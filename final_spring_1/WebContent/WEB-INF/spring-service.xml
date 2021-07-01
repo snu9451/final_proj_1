@@ -11,6 +11,10 @@
 	<bean id="etc-logic" class="etc.mvc.EtcLogic">
 		<property name="etcDao" ref="etc-dao"/>
 	</bean>
-	
-	
+		<bean id="item_logic" class="item.mvc.ItemLogic">
+		<property name="itemDao" ref="item_dao"/>
+	</bean>
+		<bean id="admin-logic" class="admin.mvc.AdminLogic">
+		<property name="adminDao" ref="admin-dao"/>
+	</bean>
 </beans>

@@ -34,11 +34,11 @@ public class MemberLogic {
 		logger.info(rmap);
 		return rmap;
 	}
-	public Map<String, Object> uiToSession(Map<String, Object> pmap) {
-		Map<String, Object> rmap = null;
-		rmap = memberDao.uiToSession(pmap);
-		logger.info(rmap);
-		return rmap;
+	public int uiToSession(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.uiToSession(pmap);
+		logger.info("로그인 처리 결과::uiToSession ===> "+result);
+		return result;
 	}
 
 	
@@ -167,6 +167,14 @@ public class MemberLogic {
 		int result = 0;
 		result = memberDao.insertMember(pmap);
 		return result;
+	}
+
+
+	public Map<String, Object> selectMemberAdmin(Map<String, Object> pmap) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = memberDao.selectMemberAdmin(pmap);
+		logger.info(rmap);
+		return rmap;
 	}
 
 

@@ -12,6 +12,9 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.google.gson.Gson;
+
+import nds.util.AjaxDataPrinter;
 import nds.util.HashMapBinder;
 
 public class EtcController extends MultiActionController {
@@ -31,17 +34,20 @@ public class EtcController extends MultiActionController {
 		
 		List<String> plist = new ArrayList<>();
 		plist = etcLogic.selectCategory();
-		logger.info(plist);
-//		logger.info(plist);// > 테스트
+		
+//		logger.info(plist); [가구, 기타, 도서, 디지털기기, 반려동물용품, 스포츠, 식물, 유아동, 의류, 화장품]
+		// Front에 내보내기
+		Gson g = new Gson();
+		String data = g.toJson(plist);
+		AjaxDataPrinter.out(res, "application/json", plist);
 	}
 	
  // 검색어 자동완성(검색횟수(누적검색수 기준)가 10번이상인 것 중에서 상위 10개만)
 	public void selectAutocompleteList(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("selectAutocompleteList 메소드 호출");
-		
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<String, Object>();
-		hmb.bind(pmap); // 입력한 검색단어를 담음
+		hmb.bindPost(pmap); // 입력한 검색단어를 담음
 		
 // 테스트		
 //		Map<String, Object> pmap = new HashMap<String, Object>();
@@ -49,13 +55,20 @@ public class EtcController extends MultiActionController {
 		
 		List<Map<String, Object>> keyword = new ArrayList<Map<String,Object>>();
 	  	keyword = etcLogic.selectAutocompleteList(pmap);
-	  	
-		logger.info("처리결과 =====> " + keyword); // [{KEYWORD=필름}, {KEYWORD=필기구}]
+	  	logger.info(keyword);
+		// Front에 내보내기
+		Gson g = new Gson();
+		String data = g.toJson(keyword);
+		AjaxDataPrinter.out(res, "application/json", data);
+//		logger.info("처리결과 =====> " + keyword); // [{KEYWORD=필름}, {KEYWORD=필기구}]
 	}
 	
- // 검색 순위
+ // 검색 순위(검색횟수가 10이상인 검색어만 상위10개 조회)
 	public void selectWordList(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("selectWordList 메소드 호출");
 		
+		List<String> plist = new ArrayList<String>();
+		plist = etcLogic.selectWordList();
+//		logger.info(plist); [{KEYWORD=에어컨}, {KEYWORD=세탁기}, {KEYWORD=핸드폰}, {KEYWORD=필름}, {KEYWORD=태블릿}, {KEYWORD=양말}, {KEYWORD=필기구}, {KEYWORD=TV}, {KEYWORD=선풍기}]
 	}
 }
