@@ -60,6 +60,13 @@
                      , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
    </select>
    
+   <!-- 7-1 댓글들 가져오기 -->
+   <select id="proc_board_select_comments"  statementType="CALLABLE" parameterType="java.util.Map">
+      {CALL proc_board_select_comments(#{pr_bm_no}
+                     , #{pr_nickName}
+                     , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
+   </select>
+   
    <!-- 8 상품 삭제 시 -->
    <select id="proc_board_master_delete" statementType="CALLABLE" parameterType="java.util.Map">
       {CALL proc_board_master_delete(#{br_sel_buy}, #{pr_bm_no})}
@@ -81,12 +88,12 @@
    <!-- 11 댓글 달기. 대댓글 달기  -->
    <select id="proc_comment_insert" statementType="CALLABLE" parameterType="java.util.Map">
       {CALL proc_comment_insert(#{pr_comment_msg}
-      				 , #{pr_comment_group, mode=INOUT, jdbcType=INTEGER, javaType=int}
+      				 , #{pr_comment_group}
                      , #{pr_comment_pos}, #{pr_mem_nickname} , #{pr_bm_no}
-                     , #{p_comment_step, mode=OUT, jdbcType=INTEGER, javaType=int} 
-                     , #{result, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String})}
+                     , #{result, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+                     , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
    </select>
-   
+
    <!-- 12 댓글 or 대댓글 삭제  -->
    <select id="proc_comment_delete" statementType="CALLABLE" parameterType="java.util.Map">
       {CALL proc_comment_delete(#{pr_comment_step}

@@ -3,19 +3,21 @@
 <%@ page import="java.util.*" %>  
 <%
 	Map<String,Object> itemContext =(Map<String,Object>)request.getAttribute("itemContext");
-	int    BM_PRICE        = Integer.parseInt(itemContext.get("BM_PRICE").toString());   //가격
-	int    BM_NO           = Integer.parseInt(itemContext.get("BM_NO").toString());      //번호
-	String BM_TITLE        = itemContext.get("BM_TITLE").toString();       //제목
-	String BM_CONTENT      = itemContext.get("BM_CONTENT").toString();     //내용
-	String SELLER_NICKNAME = itemContext.get("SELLER_NICKNAME").toString();//닉네임
-	int    BM_LIKE         = Integer.parseInt(itemContext.get("BM_LIKE").toString());   //찜수
-	int    BM_HIT          = Integer.parseInt(itemContext.get("BM_HIT").toString());    //조회수
-	String BM_DATE         = itemContext.get("BM_DATE").toString();        //날짜
-	String BM_STATUS       = itemContext.get("BM_STATUS").toString();      //팔린건지 상품의 상태
-	int I_LIKE             = Integer.parseInt(itemContext.get("I_LIKE").toString());         //좋아요한상태인지 아닌지
-	int seller_me 		   = Integer.parseInt(itemContext.get("seller_me").toString());         //1 이면 판매자와 내가 동일 인물임 0이면 아니고 
-	//결과값[4.png]
+	int    BM_PRICE        = itemContext.get("BM_PRICE")!=null ? Integer.parseInt(itemContext.get("BM_PRICE").toString()):0;   //가격
+	int    BM_NO           = itemContext.get("BM_NO")!=null ? Integer.parseInt(itemContext.get("BM_NO").toString()):0;    //번호
+	String BM_TITLE        = itemContext.get("BM_TITLE")!=null ? itemContext.get("BM_TITLE").toString():"";       //제목
+	String BM_CONTENT      = itemContext.get("BM_CONTENT")!=null ? itemContext.get("BM_CONTENT").toString():"";     //내용
+	String SELLER_NICKNAME = itemContext.get("SELLER_NICKNAME")!=null ? itemContext.get("SELLER_NICKNAME").toString():"";//닉네임
+	int    BM_LIKE         = itemContext.get("BM_LIKE")!= null ? Integer.parseInt(itemContext.get("BM_LIKE").toString()):0;   //찜수
+	int    BM_HIT          = itemContext.get("BM_HIT")!= null ? Integer.parseInt(itemContext.get("BM_HIT").toString()):0;    //조회수
+	String BM_DATE         = itemContext.get("BM_DATE")!= null ? itemContext.get("BM_DATE").toString():"";        //날짜
+	String BM_STATUS       = itemContext.get("BM_STATUS")!= null ? itemContext.get("BM_STATUS").toString():"";     //팔린건지 상품의 상태
+	int I_LIKE             = itemContext.get("I_LIKE")!= null ? Integer.parseInt(itemContext.get("I_LIKE").toString()):0;         //좋아요한상태인지 아닌지
+	int seller_me 		   = itemContext.get("seller_me")!= null ? Integer.parseInt(itemContext.get("seller_me").toString()):0;         //1 이면 판매자와 내가 동일 인물임 0이면 아니고 
+	//결과값[4.png] 사진
 	List<String> imgs = (List<String>) request.getAttribute("itemImgs");
+	//결과값 댓글 itemComments
+	List<Map<String,Object>> itemComments = (List<Map<String,Object>>)request.getAttribute("itemComments");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -173,6 +175,7 @@
 										<% } %>
 										<li>
 											<form action="/item/editItem.nds" method="post"  id="main__shape">
+												<input type="hidden" name="pr_bm_no" value=<%= BM_NO %> />
 												<button>수정</button>
 											</form>
 										</li>
@@ -219,13 +222,15 @@
 										<a class="" id="pd__seller"><%= SELLER_NICKNAME %></a>
 									</div>
 									<div class="ml-3">
+									<% if(seller_me==0){%>
 										<a id="pd__seller__chat"> 대화하기 <i class="far fa-comments"></i>
 										</a>
+									<% } %>
 									</div>
 								</div>
 								<div class="d-flex align-items-baseline">
 									<h2>찜하기</h2>
-									<button type="button" id="<%= BM_NO %>" style="color: red" class='likeBtn'>
+									<button type="button" id="<%= BM_NO %>" onclick='likeItem(this)' style="color: red" class='likeBtn'>
 									<%
 										if(I_LIKE==0){
 									%>
@@ -257,6 +262,51 @@
 						</div>
 					</div>
 					<div class="w-100" id="pd__comment__list">
+							<% for(int i=0;i<itemComments.size();i++){ %>
+						<div class="w-100 mt-3 comments comment_num<%= itemComments.get(i).get("COMMENT_STEP") %>" id="comment__box">
+							<div class="d-flex justify-content-between align-items-end" id="">
+								<div>
+									<span id="comment__user__origin"><%= itemComments.get(i).get("MEM_NICKNAME") %></span> <span
+										id="comment__date"><%= itemComments.get(i).get("COMMENT_DATE") %></span>
+								</div>
+								<div>
+									<ul class="d-flex align-items-end mb-0">
+									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_POS").toString())==0){ %>
+										<li>
+											<button class="pd__comment__btn" id="">답글</button>
+										</li>
+									<% } %>
+									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_ME").toString())==1){ %>
+										<li>
+											<button class="pd__comment__btn" id="">수정</button>
+										</li>
+										<li>
+											<button class="pd__comment__btn" id="<%= itemComments.get(i).get("COMMENT_STEP") %>" onclick='deleteComment(this)' >삭제</button>
+										</li>
+									<% } else {%>
+										<li>
+											<button class="pd__comment__btn" id="">
+												유저신고 <i class="fas fa-exclamation warn"
+													style="color: red; font-size: 20px; font-weight: bold;"></i>
+											</button>
+										</li>
+									<% } %>
+									</ul>
+								</div>
+							</div>
+							<div id="comment_txt">
+							<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_POS").toString())==1){ %>
+								<p class="w-100" row="2" readonly>
+									<i class="fas fa-angle-double-right"></i> <%= itemComments.get(i).get("COMMENT_MSG") %>
+								</p>
+							<% } else {%>
+								<p class="w-100" row="2" readonly>
+									<%= itemComments.get(i).get("COMMENT_MSG") %>
+								</p>
+							<% } %>
+							</div>
+						</div>
+								<% } %>
 						<div class="w-100 mt-3" id="comment__box">
 							<div class="d-flex justify-content-between align-items-end" id="">
 								<div>
@@ -284,7 +334,10 @@
 								</div>
 							</div>
 							<div id="comment_txt">
-								<p class="w-100" row="2" readonly>"여기 댓글 내용 들어간당"</p>
+								<p class="w-100" row="2" readonly>
+								
+								"여기 댓글 내용 들어간당"
+								</p>
 							</div>
 						</div>
 					</div>
@@ -296,7 +349,7 @@
 								</div>
 								<textarea class="form-control" aria-label="댓글 작성란"></textarea>
 								<div class="input-group-prepend">
-									<button type="button" class="btn btn-primary">댓글등록</button>
+									<button type="button" class="btn btn-primary" id="0-<%= BM_NO %>" onclick='insertComment(this)'>댓글등록</button>
 								</div>
 							</div>
 						</form>
