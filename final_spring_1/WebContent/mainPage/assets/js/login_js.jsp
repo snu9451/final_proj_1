@@ -25,7 +25,7 @@ response.setDateHeader("Expires",0);
 		/* 서블릿을 타서 아이디 저장 회원인지를 조회해야 한다. */
 		let mem_sessionid = '<%=mem_sessionid%>';
 		$.ajax({
-			url: 'http://192.168.0.163:9696/member/reqLoginView.nds?mem_sessionid='+mem_sessionid,
+			url: 'http://localhost:8080/member/reqLoginView.nds?mem_sessionid='+mem_sessionid,
 			type: 'get',
 			dataType: 'json',
 			success: function(data){
@@ -83,7 +83,7 @@ $(document).ready(function(){
 // 		alert(mem_email+', '+mem_pw+', '+isSavedIdChecked+', '+isAutoLoginChecked);
 		let dt = "mem_email="+mem_email+"&mem_pw="+mem_pw+"&isSavedIdChecked="+isSavedIdChecked+"&isAutoLoginChecked="+isAutoLoginChecked;
 		$.ajax({
-			url: 'http://192.168.0.163:9696/member/doLogin.nds',
+			url: 'http://localhost:8080/member/doLogin.nds',
 			data: dt,
 			type: 'post',
 			dataType: 'json',
@@ -149,7 +149,7 @@ $(document).ready(function(){
 				/* 입력한 이메일의 존재여부를 확인하고 임시비번 발급 */
 				let dt = "mem_email="+value.trim();
 				$.ajax({
-					url: 'http://192.168.0.163:9696/member/issueTempPw.nds',
+					url: 'http://localhost:8080/member/issueTempPw.nds',
 					data: dt,
 					type: 'post',
 					dataType: 'html',

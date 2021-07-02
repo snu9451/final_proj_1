@@ -110,11 +110,7 @@
   });
 
   //drop down toggle
-<<<<<<< HEAD:final_spring_1/WebContent/mainPage/assets/js/main_page.js
   $('.dropdown-toggle').dropdown('toggle');
-=======
-  $(".dropdown-toggle").dropdown("toggle");
->>>>>>> 8646c917fee4118164eafd97473440ac6ca57a5c:final_spring_1/WebContent/mainPage_JSP/assets/js/main_page.js
 
   /*==========================================[[ Not Mine ]]==================================================*/
 

@@ -43,31 +43,12 @@
 	</select>
 	
 	
-<!-- ==================================== 심부름 내역보기 Select문 ==================================== -->
-	<select id="selectErrandReq" parameterType="map" resultType="map">
-		SELECT errand_status, errand_request_date, errand_content, errand_total_price, mem_nickname_req 
-		  FROM Errand
-	     WHERE mem_nickname_nds = #{mem_nickname_nds}
-	</select>
-	<select id="selectErrandRes" parameterType="map" resultType="map">
-		SELECT errand_status, errand_request_date, errand_content, errand_total_price, mem_nickname_nds  
-		  FROM Errand
-		 WHERE mem_nickname_req = #{mem_nickname_req}
-	</select>
-<!-- ==================================== 심부름 내역보기 Select문 ==================================== -->
-
-
-
-	
-	
 <!-- ==================================== [[ ＵＰＤＡＴＥ ]] ==================================== -->
 	<select id="updatePw" statementType="CALLABLE" parameterType="map">
 		{call PROC_MEM_PW(#{mem_email, mode=IN, jdbcType=VARCHAR},#{mem_pw, mode=IN, jdbcType=VARCHAR},#{change_pw, mode=IN, jdbcType=VARCHAR},#{result, mode=OUT, jdbcType=NUMERIC})}
 	</select>
 	<select id="updateActive" statementType="CALLABLE" parameterType="map">
-		{call PROC_MEM_ACTIVE(#{mem_email, mode=IN, jdbcType=VARCHAR},
-							  #{mem_pw, mode=IN, jdbcType=VARCHAR},
-							  #{result, mode=OUT, jdbcType=NUMERIC})}
+		{call PROC_MEM_ACTIVE(#{mem_email, mode=IN, jdbcType=VARCHAR},#{mem_pw, mode=IN, jdbcType=VARCHAR},#{result, mode=OUT, jdbcType=NUMERIC})}
 	</select>
 	<update id="updateMember" parameterType="map">
 		UPDATE member

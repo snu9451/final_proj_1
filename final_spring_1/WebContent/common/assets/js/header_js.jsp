@@ -4,7 +4,7 @@
 $(document).ready(function(){
 	
 	$('#h_myPage').on('click', function(){
-		location.href = "http://192.168.0.163:9696/myPage/my_info.nds";
+		location.href = "http://localhost:8080/myPage/my_info.nds";
 	});
 	
 	//버튼 클릭시 모달창 show

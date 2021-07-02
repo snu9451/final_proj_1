@@ -125,12 +125,6 @@ public class MemberDao {
 
 
 
-	public Map<String, Object> selectMemberAdmin(Map<String, Object> pmap) {
-		Map<String, Object> rmap = new HashMap<String, Object>();
-		rmap = sqlSessionTemplate.selectOne("selectMemberAdmin", pmap);
-		logger.info("DAO rmap ===> "+rmap);
-		return rmap;
-	}
 	public Map<String, Object> selectMember(Map<String, Object> pmap) {
 		Map<String, Object> rmap = new HashMap<String, Object>();
 		rmap = sqlSessionTemplate.selectOne("selectMember", pmap);

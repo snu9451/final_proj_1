@@ -77,10 +77,6 @@ public class MemberLogic {
 		result = memberDao.selectIsMember(pmap);
 		return result;
 	}
-	public Map<String, Object> selectMemberAdmin(Map<String, Object> pmap) {
-		Map<String, Object> rmap = memberDao.selectMemberAdmin(pmap);
-		return rmap;
-	}
 
 
 	public String getRandomCode(String option, int length) {

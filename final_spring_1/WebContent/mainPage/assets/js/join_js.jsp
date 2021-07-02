@@ -9,7 +9,7 @@
 			$.ajax({
 				type: "post",
 				data: dt,
-				url: "http://192.168.0.163:9696/member/sendSMSCode.nds",
+				url: "http://localhost:8080/member/sendSMSCode.nds",
 				success: function(data) {
 					alert(data);
 				}
