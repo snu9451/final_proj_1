@@ -28,22 +28,6 @@
         $("#search__rank").addClass("search__invisible");
       }
     });
-
-    //회원가입 - 입력창 유효값 확인 이벤트
-    const form = document.querySelector(".needs-validation");
-    form.addEventListener(
-      "submit",
-      function (event) {
-        if (form.checkValidity() == false) {
-          event.preventDefault();
-          event.stopPropagation();
-          form.classList.add("was-validated");
-        }
-
-        // 서버 연동 처리
-      },
-      false
-    );
   });
 
   //지도 말풍선 클릭시 이벤트
@@ -76,6 +60,7 @@
       const file = $(this)[0].files[0];
       const fileName = $(this)[0].files[0].name;
       if (file) {
+        console.log(file);
         const fileSize = file.size;
         if (fileSize > 1024 * 1024 * 10) {
           alert("10MB 이하 파일만 등록할 수 있습니다.");
@@ -88,9 +73,9 @@
   });
 
   //버튼 클릭시 모달창 show
-  $(".btnTest").click(function () {
+  $("#btnModal").click(function () {
     console.log("modal test");
-    $("#report_board").modal("show");
+    $("#errand_check_modal").modal("show");
   });
 
   //모달창 버튼 클릭시 이벤트
@@ -101,10 +86,27 @@
     });
   });
 
+  //회원가입 - 입력창 유효값 확인 이벤트
+  const form = document.querySelector(".needs-validation");
+  form.addEventListener(
+    "submit",
+    function (event) {
+      if (form.checkValidity() == false) {
+        event.preventDefault();
+        event.stopPropagation();
+        form.classList.add("was-validated");
+      }
+
+      // 서버 연동 처리
+    },
+    false
+  );
+
   //drop down toggle
   $(document).ready(function () {
-    console.log("category btn");
-    $(".dropdown-toggle").dropdown("toggle");
+    $("#category_drop").on("click", function () {
+      $(".dropdown-toggle").dropdown("toggle");
+    });
   });
 
   /*==========================================[[ Not Mine ]]==================================================*/

@@ -1,7 +1,7 @@
 !(function ($) {
   ("use strict");
 
-  /*==============[[ 회원가입 모달창 이벤트 ]]===============*/
+  /*==============[[ 회원가입 모달창 나타났을때 이벤트 ]]===============*/
   $("#signUpModal").on("shown.bs.modal", function () {
     console.log("signup modal");
 
@@ -12,7 +12,7 @@
     //인증번호 값을 담을 변수 선언
     let safetyCode;
 
-    //인증번호 클릭시 이벤트.
+    //[[인증번호받기]] 클릭시 이벤트.
     $("#btn_getCode").click(function () {
       //핸드폰번호 입력값
       let inputCellPhone = $("#inputCellPhone").val();
@@ -35,24 +35,12 @@
           success: function (data) {
             console.log(data);
             safetyCode = data;
-            // let safetyCodeChck = $("#safetyCodeChck").text();
-            // console.log(safetyCodeChck);
-            // if (data) {
-            //   const inputSafetyCode = $("#inputSafetyCode").val();
-            //   $("#btn__codeChck").click(function () {
-            //     if (inputSafetyCode === data) {
-            //       safetyCodeChck = "인증번호가 일치합니다.";
-            //     } else {
-            //       safetyCodeChck = "인증번호가 일치하지 않습니다.";
-            //     }
-            //   });
-            // }
           },
         });
       }
     });
 
-    //확인 버튼 클릭시
+    //인증번호 [[확인]] 버튼 클릭시
     $("#btn__codeChck").on("click", function () {
       const safetyCodeChck__box = $("#safetyCodeChck__box");
 
@@ -67,7 +55,8 @@
           safetyCodeChck__box.html(`<small id="safetyCodeChck"
 					class="form-text"
 					style="color:green; font-weight:bold ;
-					font-size: 15px; ">
+					font-size: 15px; "
+          value="1">
 					인증번호가 일치합니다 : )
 					</small>
 					`);
@@ -76,7 +65,8 @@
           safetyCodeChck__box.html(`<small id="safetyCodeChck"
 					class="form-text"
 					style="color:red; font-weight:bold ;
-					font-size: 15px; ">
+					font-size: 15px; "
+          value="0">
 					인증번호가 틀립니다!!!
 					</small>
 					`);
@@ -124,7 +114,8 @@
           pwChck_box.html(`<small id="pwChck"
 					class="form-text"
 					style="color:green; font-weight:bold ;
-					font-size: 15px; ">
+					font-size: 15px;"
+          value="1">
 					비밀번호가 일치합니다 : )
 					</small>
 					`);
@@ -133,7 +124,8 @@
           pwChck_box.html(`<small id="pwChck"
 					class="form-text"
 					style="color:red; font-weight:bold;
-					font-size: 15px; ">
+					font-size: 15px; "
+          value="0">
 					비밀번호가 다릅니다 : (
 					</small>
 					`);
@@ -148,7 +140,15 @@
       //닉네임 입력값
       let inputNickName = $("#inputNickName").val();
 
-      if (inputNickName.length > 1) {
+      if (inputNickName.length <= 1) {
+        console.log(inputNickName.length);
+        swal(
+          "닉네임은 2글자 이상 입력해주세요.",
+          "plz type more than 2 words",
+          "warning"
+        );
+      } else {
+        console.log(inputNickName.length);
         console.log("2글자");
         $.ajax({
           type: "post",
@@ -161,27 +161,88 @@
             console.log("error: " + e.responseText);
           },
         });
-      } else {
-        swal(
-          "닉네임은 2글자 이상 입력해주세요.",
-          "plz type more than 2 words",
-          "warning"
-        );
       }
     });
-  }); /*====================[[ 회원가입 이벤트 끝 ]]*/
 
-  // 회원가입 submit 이벤트
-  $(document).ready(function () {
-    $("#btn_signUp").click(function (event) {
-      console.log(`${$("#inputEmail").val()}, ${$("#inputCellPhone").val()},
-      ${$("#checkPassWord").val()}, ${$("#inputNickName").val()},
-      ${$("#inputAge").val()},
-      ${$('input[name="mem_gender"]:checked').val()}`);
+    //연령대 선택여부 결과 표시할 div박스
+    const ageChck__box = $("#ageChck__box");
 
-      // $("#signUpForm").submit();
+    //연령대 선택 이벤트
+    $("#inputAge").on("focusout change", function () {
+      let select_chck = $("#inputAge").val();
+      console.log(select_chck);
+
+      //연령대 선택 여부
+      if (select_chck <= 0) {
+        ageChck__box.empty();
+        ageChck__box.html(`<small id="ageChck"
+        class="form-text"
+        style="color:red; font-weight:bold ;
+        font-size: 15px; "
+        value="0">
+        연령대를 선택해주세요.
+        </small>
+        `);
+      } else {
+        ageChck__box.empty();
+        ageChck__box.html(`<small id="ageChck"
+        class="form-text"
+        style="color:green; font-weight:bold ;
+        font-size: 15px;"
+        value="1">
+        선택되었습니다.
+        </small>
+        `);
+      }
+    });
+
+    $("#signUpForm").on("change", function () {
+      console.log("form chaged");
+      $("#signUpForm small").each(function (index, obj) {
+        let smallchck = $(obj)[0].attributes[3].value;
+        console.log(smallchck);
+        if (smallchck !== 1) {
+          $("#btn_signUp").attr("diabled", false);
+        }
+      });
+    });
+
+    $("#btn_signUp").on("click", function () {
+      // console.log(`${$("#inputEmail").val(
+      //   "webtree12@gmail.com"
+      // )}, ${$("#inputCellPhone").val()},
+      // ${$("#checkPassWord").val()}, ${$("#inputNickName").val()},
+      // ${$("#inputAge").val()},
+      // ${$('input[name="mem_gender"]:checked').val()}`);
+
+      let data;
+
+      // 다른 input 태그들 입력 여부
+      let chck_validation = $(obj).val().length;
+      console.log(chck_validation);
+
+      //연령대 체크 여부
+      let select_chck = $("#inputAge[name='mem_age']").val();
+      console.log(select_chck);
+
+      //성별 체크 여부
+      let radio_chck = $("input:radio[name='mem_gender']").is(":checked");
+      console.log(radio_chck);
+
+      //유효성 체크
+      if (!radio_chck && select_chck) {
+        console.log(select_chck);
+
+        //정보 모두 입력시
+        data = $("#signUpForm").serialize();
+        console.log(data);
+        //$("#signUpForm").submit();
+      } else {
+        swal("정보들을 모두 입력해주세요.", "", "warning");
+      }
     });
   });
+  /*==============[[ END modal shown event ]]===============*/
 
   //회원가입 모달창이 사라졌을 때 이벤트
   $("#signUpModal").on("hidden.bs.modal", function () {
@@ -189,10 +250,8 @@
     //input 값 리셋
     $("#signUpForm")[0].reset();
 
-    //비밀번호 닉네임 등 확인여부 문장들 리셋
+    //인증번호, 비밀번호, 닉네임 등 확인여부 문장들 리셋
     $(".doEmpty").each(function () {
-      console.log($(this));
-      console.log($(this).empty());
       $(this).empty();
     });
   });

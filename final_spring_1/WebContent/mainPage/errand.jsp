@@ -69,7 +69,7 @@
     </div>
   </div>
   <!-- 심부름 확인 모달 시작 -->
-    <div class="modal modal-center fade" id="errand_check_modal" tabindex="-1" role="dialog" aria-labelledby="errand_check_modal"
+  <div class="modal modal-center fade" id="errand_check_modal" tabindex="-1" role="dialog" aria-labelledby="errand_check_modal"
     aria-hidden="true">
     <div class="modal-dialog modal-center" role="document">
       <div class="modal-content" style="width: 700px;">
@@ -81,19 +81,60 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-            <div class="row">
-              <div class="col-lg-3">
-                <img src="" alt="">
+        <div class="modal-body pb-0">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-lg-3 w-100 h-100 d-flex flex-column align-items-center" id="profileBox">
+                <div class="profileImg" id="profileImg">
+                  <img class="w-100" src="./assets/img/muji.png" alt="profileImg">
+                </div>
                 <div>
-                  <span>
+                  <h5 class="mt-3" id="profileName">
                     무지라이언
-                  </span>
+                  </h5>
                 </div>
               </div>
-              <div class="col-lg-9">
-                <div>
-                  <h1>"심부름 등록된 아이템"</h1>
+              <div class="col-lg-9 d-flex flex-column" id="errandInfoBox">
+                <div class="w-100 text-center" id="errandInfo_item">
+                  <h1>"심부름 아이템"</h1>
+                </div>
+                <div class="w-100 row">
+                  <div class="d-flex align-items-end">
+                    <span class="text-center">
+                      <i class="fas fa-map-marker-alt" style="color: rgb(0, 89, 255); font-size: 20px;"></i>
+                      요청자님의 위치:
+                    </span>
+                    <span class="ml-4" id="errandInfo_addr">서울시 금천구 가산동 </span>
+                  </div>
+                </div>
+                <div class="mt-2 d-flex flex-column align-items-center">
+                  <div class="d-inline-flex">
+                    <h4 id="errandInfo_user" style="font-weight: bold;">무지라이언<h4><span class="ml-1">님의 요구사항입니다.</span>
+                  </div>
+                  <textarea class="" id="errandInfo_mainContent" readonly>
+                    "심부름 상세사항 들어갈 공간"
+                    스벅 아메리카노 1잔 아이스 적게여~
+                    빨리오시면 심부름값 x 2 배로 드릴게여~
+                  </textarea>
+                </div>
+                <div class="mt-3">
+                  <div class="d-flex justify-content-between">
+                    <h4 class="text-center mb-0" style="font-weight: bold;">제안된 금액:</h4>
+                    <div class="d-flex align-items-baseline">
+                      <h4 class="" id="errandInfo_itemPr">5,500</h4><span class="">원</span>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between" >
+                    <h4 class="text-center mb-0" style="font-weight: bold;">심부름금액:</h4>
+                    <div class="d-flex align-items-baseline">
+                      <h4 class="" id="errandInfo_cost">1,000</h4><span class="">원</span>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <h3 class="text-center mb-0" style="font-weight: bold; color: rgb(255, 59, 59);">총금액:</h3>
+                    <div class="d-flex align-items-baseline">
+                      <h3 class="" id="errandInfo_total">6,000</h3><span class="">원</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

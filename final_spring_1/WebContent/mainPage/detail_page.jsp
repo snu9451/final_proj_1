@@ -50,7 +50,7 @@ pageEncoding="UTF-8"%>
 
 <body>
 	<!-- ============================= Header Section ========================= -->
-  <jsp:include page="./header.jsp" flush="false"></jsp:include>
+  <jsp:include page="../common/header.jsp" flush="false"></jsp:include>
   <!-- ============================= Header Section ========================= -->
 	<!-- ============================= Detail Section ========================= -->
 	<main class="pd__main" id="main">
