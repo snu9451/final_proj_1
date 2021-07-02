@@ -61,7 +61,6 @@ public class AdminController extends MultiActionController {
 		// 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
 		int result = adminLogic.initReportNumber(pmap); // update는 1건이(n건) 업데이트 되었습니다여서 int로
 
-		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
 		// 테스트
 //		Map<String, Object> pmap = new HashMap<String, Object>();
 //		pmap.put("mem_email", "water@good.com");
@@ -70,40 +69,43 @@ public class AdminController extends MultiActionController {
 //		logger.info("처리결과 =====> "+result);
 	}
 
-	// 회원 검색
+	// 회원(닉네임, 이메일, 전체로)검색
 	public void selectMemberBySearch(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectMemberBySearch 메소드 호출");
 
-		// (관리자가 선택한 카테고리) Front에서 request 객체에 담아주어야 함
+	// (관리자가 선택한 카테고리) Front에서 request 객체에 담아주어야 함
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<>();
-		hmb.bind(pmap); // 검색어 + 검색타입(닉네임이나 이메일, 전체) 담음
+		hmb.bindPost(pmap); // 검색어 + 검색타입(닉네임이나 이메일, 전체) 담음
 
-		String nick_email_type = ""; // 이메일, 닉네임, 전체인지 => 카테고리
 		String pr_search = ""; // 검색단어
-		pmap.put("nick_email_type", nick_email_type);
+		String nick_email_type = ""; // 이메일, 닉네임, 전체인지 => 카테고리
+		pr_search = (String) pmap.get("pr_search");
+		nick_email_type = (String) pmap.get("nick_email_type");
 		pmap.put("pr_search", pr_search);
-
-//		pmap.put("nick_email_type", "이메일");
-//		pmap.put("pr_search", "w");
+		pmap.put("nick_email_type", nick_email_type);
+		logger.info("pmap ===> " + pmap);
 
 		List<Map<String, Object>> searchMember = new ArrayList<Map<String, Object>>(); // 검색한 회원들을 가져옴
 		searchMember = adminLogic.selectMemberBySearch(pmap);
-		req.setAttribute("selectMemberBySearch", searchMember);
-		// logger.info("result" + searchMember);
+// 		logger.info("result" + searchMember);
+		
+	 // Front에 내보내기
+		Gson g = new Gson();
+		String data = g.toJson(searchMember);
+		AjaxDataPrinter.out(res, "application/json", data);
 	}
 
-	// http://192.168.0.163:9696/admin/selectBoardBySearch.nds?nick_title_type=%EC%A0%9C%EB%AA%A9&pr_search=%EB%93%9C
-	/////////////////////////////////////////★//////////////////////////////////////////////
-	// 게시글 검색
-	// 게시글 제목 또는 작성자로 검색
+ // http://192.168.0.163:9696/admin/selectBoardBySearch.nds?nick_title_type=%EC%A0%9C%EB%AA%A9&pr_search=%EB%93%9C
+ /////////////////////////////////////////★//////////////////////////////////////////////
+ // 게시글 (게시글 제목 또는 작성자)로 검색
 	public void selectBoardBySearch(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("selectBoardBySearch 메소드 호출");
 
-		// (관리자가 선택한 카테고리) Front에서 request 객체에 담아주어야 함
+	 // (관리자가 선택한 카테고리) Front에서 request 객체에 담아주어야 함
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<>();
-		hmb.bindPost(pmap); // 검색 타입(작성자, 제목, 전체) 담음
+		hmb.bindPost(pmap); // 검색어 + 검색 타입(작성자, 제목, 전체) 담음
 
 		String pr_search = ""; // 검색단어
 		String nick_title_type = ""; // 작성자, 제목, all => 카테고리
@@ -111,11 +113,12 @@ public class AdminController extends MultiActionController {
 		nick_title_type = (String)pmap.get("nick_title_type");
 		pmap.put("pr_search", pr_search);
 		pmap.put("nick_title_type", nick_title_type);
-		logger.info("pmap ===> "+pmap);
+		logger.info("pmap ===> " + pmap);
 
 		List<Map<String, Object>> searchBoard = new ArrayList<Map<String, Object>>(); // 검색한 게시글들을 가져옴
 		searchBoard = adminLogic.selectBoardBySearch(pmap);
-		// Front에 내보내기
+		
+	// Front에 내보내기
 		Gson g = new Gson();
 		String data = g.toJson(searchBoard);
 		AjaxDataPrinter.out(res, "application/json", data);
