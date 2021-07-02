@@ -39,7 +39,7 @@
 <link href="assets/vendor/aos/aos.css" rel="stylesheet">
 
 <!-- Template Main CSS File -->
-<link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/myInfo.css" rel="stylesheet">
 
 </head>
 
@@ -145,7 +145,7 @@
 	                	</div>
 	              	</div>
 		            <div class="col-10 d-flex justify-content-around">
-			          <h4 style="font-size : 15px; color : red; font-weight:bold">중복된 닉네임 입니다.</h4>
+			          <h4 style="font-size : 15px; color : red; font-weight:bold"> </h4>
 		            </div>
 	            </div>
 	          </div>
@@ -254,7 +254,7 @@
 	<script src="assets/vendor/aos/aos.js"></script>
 
 	<!-- Template Main JS File -->
-	<script defer src="assets/js/main.js"></script>
+	<script src="assets/js/myInfo.js"></script>
 </body>
 
 </html>

@@ -400,7 +400,11 @@ public class MemberController extends MultiActionController {
 			logger.info(rmap);
 			// NDS_SKEY가 있더라도 기간이 만료되었으면 rmap = null이 된다.
 			if(rmap != null) {
+<<<<<<< HEAD
 				// 권한 허용 범위가 S(SaveID) 또는 A(AutoLogin)인 경우
+=======
+				// 권한 허용 범위가 S(SaveID)인 경우
+>>>>>>> 8646c917fee4118164eafd97473440ac6ca57a5c
 				String auth_range = (String)rmap.get("AUTH_RANGE");
 				if("S".equals(auth_range) || "A".equals(auth_range)) {
 					// 아이디를 로그인창에 띄워줄 수 있도록 request 객체에 담아준다.
@@ -531,6 +535,7 @@ public class MemberController extends MultiActionController {
 			Gson g = new Gson();
 			String jsondata = g.toJson(li);
 			AjaxDataPrinter.out(res, "application/json", jsondata);
+<<<<<<< HEAD
 			
 			///////////////////////////////////////////쿠키 삭제하기 - 자동로그인 선택한 사람이 로그아웃 버튼 누른 경우
 			String logout = "logout";
@@ -541,6 +546,8 @@ public class MemberController extends MultiActionController {
 				res.addCookie(cookie);
 			}
 			////////////////////////////////////////////////////////////////////////////////
+=======
+>>>>>>> 8646c917fee4118164eafd97473440ac6ca57a5c
 		}
 		
 //		// 입력된 사용자의 정보를 가지고 DB에서 조회한다.
@@ -676,6 +683,7 @@ public class MemberController extends MultiActionController {
 //		res.addCookie(cookie);
 		logger.info("로그아웃 처리 완료");
 		// 메인 페이지로 이동시키기
+<<<<<<< HEAD
 //		RequestDispatcher rd = req.getRequestDispatcher(req.getContextPath()+"/mainPage/main_page.jsp");
 		
 //		try {
@@ -697,6 +705,10 @@ public class MemberController extends MultiActionController {
 		try {
 			res.sendRedirect("/mainPage/main_page.nds");
 //			res.sendRedirect("/mainPage/main_page.jsp");
+=======
+		try {
+			res.sendRedirect("http://192.168.0.163:9696/mainPage_JSP/main_page.jsp");
+>>>>>>> 8646c917fee4118164eafd97473440ac6ca57a5c
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

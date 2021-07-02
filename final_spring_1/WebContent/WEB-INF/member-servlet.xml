@@ -23,19 +23,28 @@
 	<!-- Url의 mapping이 이루어짐 -->
 	<bean id="member-url-mapping"
 		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+<<<<<<< HEAD
 		<property name="interceptors">
 			<list>
 				<ref bean="auth-check-interceptor"/>
 				<ref bean="login-check-interceptor"/>
 			</list>
 		</property>
+=======
+<!-- 		<property name="interceptors"> -->
+<!-- 			<list> -->
+<!-- 				<ref bean="login-check-interceptor"/> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+>>>>>>> 8646c917fee4118164eafd97473440ac6ca57a5c
 		<property name="mappings">
 			<props>
 				<prop key="/member/reqLoginView.nds">member-controller</prop>
 				<prop key="/member/selectNickName.nds">member-controller</prop>
 				<prop key="/member/selectEmail.nds">member-controller</prop>
+				<prop key="/myPage/selectMember.nds">member-controller</prop>
 				<prop key="/member/updateNickName.nds">member-controller</prop>
-				<prop key="/member/updateImg.nds">member-controller</prop>
+				<prop key="/myPage/updateImg.nds">member-controller</prop>
 				<prop key="/member/updatePw.nds">member-controller</prop>
 				<prop key="/member/chargeCoin.nds">member-controller</prop>
 				<prop key="/member/withdraw.nds">member-controller</prop>
@@ -73,8 +82,9 @@
 				<prop key="/member/reqLoginView.nds">reqLoginView</prop>
 				<prop key="/member/selectNickName.nds">selectNickName</prop>
 				<prop key="/member/selectEmail.nds">selectEmail</prop>
+				<prop key="/myPage/selectMember.nds">selectMember</prop>
 				<prop key="/member/updateNickName.nds">updateNickName</prop>
-				<prop key="/member/updateImg.nds">updateImg</prop>
+				<prop key="/myPage/updateImg.nds">updateImg</prop>
 				<prop key="/member/updatePw.nds">updatePw</prop>
 				<prop key="/member/chargeCoin.nds">chargeCoin</prop>
 				<prop key="/member/withdraw.nds">withdraw</prop>

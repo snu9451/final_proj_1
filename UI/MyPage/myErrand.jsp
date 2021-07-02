@@ -39,7 +39,7 @@
 <link href="assets/vendor/aos/aos.css" rel="stylesheet">
 
 <!-- Template Main CSS File -->
-<link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/myInfo.css" rel="stylesheet">
 <script>
 	function reqAction() {
 		console.log("요청심부름");
@@ -255,7 +255,7 @@
 	<script src="assets/vendor/aos/aos.js"></script>
 
 	<!-- Template Main JS File -->
-	<script src="assets/js/main.js"></script>
+	<script src="assets/js/myInfo.js"></script>
 </body>
 
 </html>
