@@ -22,14 +22,14 @@
 				<prop key="/item/selectBySearch.nds">item-controller</prop><!-- 12  -->
 				<prop key="/item/updateItem.nds">item-controller</prop>                 <!-- 1 -->
 				<prop key="/item/selectItemDetail.nds">item-controller</prop><!--12  -->
-				<prop key="/item/editItem.nds">item-controller</prop>                    <!-- 1 -->
+				<prop key="/item/editItem.nds">item-controller</prop>         <!-- 12 -->
 				<prop key="/item/deleteItem.nds">item-controller</prop><!-- 12  -->
 				<prop key="/item/updateItemConfirm.nds">item-controller</prop><!-- 12 -->
 				<prop key="/item/likeItem.nds">item-controller</prop><!-- 12 -->
-				<prop key="/item/insertComment.nds">item-controller</prop>            <!-- 1  -->
-				<prop key="/item/deleteComment.nds">item-controller</prop>           <!-- 1 -->
+				<prop key="/item/insertComment.nds">item-controller</prop>   <!-- 12  -->
+				<prop key="/item/deleteComment.nds">item-controller</prop>  <!-- 12 -->
 				<prop key="/item/updateComment.nds">item-controller</prop>            <!--  1 -->
-				<prop key="/item/insertItem.nds">item-controller</prop>             <!-- 1  -->
+				<prop key="/item/insertItem.nds">item-controller</prop>              <!-- 1  -->
 			</props>
 		</property>
 	</bean>

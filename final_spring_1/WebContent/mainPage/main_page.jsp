@@ -15,6 +15,10 @@
   <!-- ＧＯＯＧＬＥ　ＭＡＰ -->
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+  
+  
+  
+  
 </head>
 
 <body>
@@ -22,6 +26,10 @@
   <!-- ========================================= ▼ ＨＥＡＤＥＲ　ＳＥＣＴＩＯＮ ▼ ========================================= -->
   <%@ include file="../common/header.jsp" %>
   <!-- ========================================= ▲ ＨＥＡＤＥＲ　ＳＥＣＴＩＯＮ ▲ ========================================= -->
+
+<!-- 토스트 메세지창 -->
+<%@ include file="../common/toast.jsp" %>
+
 
 
 

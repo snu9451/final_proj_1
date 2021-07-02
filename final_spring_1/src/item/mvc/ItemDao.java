@@ -88,6 +88,15 @@ public class ItemDao {
 		return (List<Map<String, Object>>)pmap.get("p_temp");
 	}
 
+	//상품에 대한 댓글들 가져옴
+	public Map<String, Object> selectItemDetailComment(Map<String, Object> pmap) {
+		logger.info("Dao : selectItemDetailComment메소드 호출");
+		//프로시져 돌리기
+		sqlSessionTemplate.selectList("proc_board_select_comments",pmap);
+		return pmap;
+	}
+	
+	
 	//상품 삭제 시
 	public void deleteItem(Map<String, Object>  pmap) {
 		logger.info("Dao : deleteItem메소드 호출");
@@ -143,8 +152,6 @@ public class ItemDao {
 		}
 		
 	}
-	
-	
-	
+
 	
 }

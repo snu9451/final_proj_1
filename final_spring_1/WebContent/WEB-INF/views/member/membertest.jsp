@@ -33,10 +33,10 @@
 		$('#bt').on('click',function(){
 			console.log('안ㄴ녕ㅇ');
 			$.ajax({
-// 				url: '${pageContext.request.contextPath}/member/issueTempPw.nds?mem_email=snu9451',				
-// 				url: "${pageContext.request.contextPath}/member/reqLoginView.nds",				
-// 				url: '/member/ajaxHtml.nds',
-				url: '/member/leave.nds',
+// 				url: '${pageContext.request.contextPath}http://192.168.0.163:9696/member/issueTempPw.nds?mem_email=snu9451',				
+// 				url: "${pageContext.request.contextPath}http://192.168.0.163:9696/member/reqLoginView.nds",				
+// 				url: 'http://192.168.0.163:9696/member/ajaxHtml.nds',
+				url: 'http://192.168.0.163:9696/member/leave.nds',
 				type: 'get',
 				dataType: "html",
 				success: function(data){
@@ -91,7 +91,7 @@
 		<p>감사합니다</p>
 	</div>	
 
-	<form id="myform" action="/member/ajaxHtml.nds?mylist112=afafvs">
+	<form id="myform" action="http://192.168.0.163:9696/member/ajaxHtml.nds?mylist112=afafvs">
 		<input type="text" name="mylist112" value="임시">
 	</form>
 	<button id="sendButton" onclick="javascript:send()">전송</button>

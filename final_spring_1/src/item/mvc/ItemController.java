@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -42,7 +43,10 @@ public class ItemController extends MultiActionController {
 		//front : key는 "pr_choice" && value는 인기상품 일시 "like_rank"로, 최근상품 일시 "new_rank"
 		//             "pr_mem_email" 좋아요 한건지 안한건지 받기 위해서 
 		Map<String,Object> pmap = new HashMap<>();
-		pmap.put("pr_MEM_EMAIL", "apple@good.com"); //여기는 원래 세션
+		HttpSession session = req.getSession();
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		String mem_email = (String)login.get("MEM_EMAIL");
+		pmap.put("pr_MEM_EMAIL", mem_email);
 		pmap.put("pr_choice",req.getParameter("pr_choice"));
 		//아이템 전부를 가져오는 로직
 		List<Map<String, Object>> items = itemLogic.selectItemList(pmap);
@@ -57,7 +61,7 @@ public class ItemController extends MultiActionController {
 	}
 	
 	//사용자가 카테고리메뉴에서 카테고리 선택 시
-	public ModelAndView selectByCategory(HttpServletRequest req, HttpServletResponse res) {
+	public void selectByCategory(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : selectByCategory메소드 호출");
 		//front : key는 "pr_categori" && value는 카테고리이름을 가져오겠지!
 		//한글 처리
@@ -87,11 +91,12 @@ public class ItemController extends MultiActionController {
 		//Json 형태로 가져오기
 		Gson g = new Gson();
 		String itemsJson = g.toJson(items);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("items", items);
-		mav.setViewName("itemTest");
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("items", items);
+//		mav.setViewName("/itemTest");
+		AjaxDataPrinter.out(res, "application/json", itemsJson);
 		System.out.println(items);
-		return mav;
+//		return mav;
 	}
 	
 	//검색어를 입력하여 찾기
@@ -117,37 +122,22 @@ public class ItemController extends MultiActionController {
 	}
 
 	//사용자가 상품 수정 버튼 클릭 시 상품의 정보를 다 가져와야하니까 있음
-	public ModelAndView editItem(HttpServletRequest req, HttpServletResponse res) {
+	public void editItem(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		logger.info("controller : editItem메소드 호출");
 		//front : key는 "pr_bm_no" && value는 상품의 번호를 받아옴.
-		//int pr_bm_no = Integer.parseInt(req.getParameter("pr_bm_no").toString());
-		//상품의 내용, 상품의 사진들을 가져온다
-		//Map<String,Object> item = itemLogic.editItem(pr_bm_no);
-		//List<String> itemImg = itemLogic.editItemImg(pr_bm_no);
-		//ModelAndView mav = new ModelAndView();
-		//상품의 정보를 다 담는다.
-		//가지고 나오는 key&value => {BM_PRICE=5000, BM_NO=4, BM_CONTENT=자취 방 빼서 옷 내놔요, CATEGORY_NAME=의류, BM_TITLE=카라티 팝니다}
-		//mav.addObject("item", item);
-		//가지고 나오는 list => [5.png, 6.png]
-		//mav.addObject("itemImg", itemImg);
-		//페이지 전송
-		//mav.setViewName("itemTest");
-		//return mav;
-		
-		//상품 번호를 가져온다.
-		int pr_bm_no = 4;
+		int pr_bm_no = Integer.parseInt(req.getParameter("pr_bm_no").toString());
 		//상품의 내용, 상품의 사진들을 가져온다
 		Map<String,Object> item = itemLogic.editItem(pr_bm_no);
 		List<String> itemImg = itemLogic.editItemImg(pr_bm_no);
-		ModelAndView mav = new ModelAndView();
 		//상품의 정보를 다 담는다.
-		mav.addObject("item", item);
-		mav.addObject("itemImg", itemImg);
+		//가지고 나오는 key&value => {BM_PRICE=5000, BM_NO=4, BM_CONTENT=자취 방 빼서 옷 내놔요, CATEGORY_NAME=의류, BM_TITLE=카라티 팝니다}
+		req.setAttribute("item",item);
+		//가지고 나오는 list => [5.png, 6.png]
+		req.setAttribute("itemImg", itemImg);
 		System.out.println(item);
-		System.out.println(itemImg);
 		//페이지 전송
-		mav.setViewName("itemTest");
-		return mav;
+		RequestDispatcher dispatcher= req.getRequestDispatcher("/itemUpload/itemUpload.jsp");
+		dispatcher.forward(req,res);
 	}
 	
 	
@@ -227,6 +217,8 @@ public class ItemController extends MultiActionController {
 		Map<String,Object> itemContext = itemLogic.selectItemDetailContext(pr_MEM_EMAIL,pr_bm_no,"사과");
 		//상품의 사진들을 가져온다
 		List<String> itemImgs = itemLogic.selectItemDetailImgs(pr_bm_no);
+		//상품의 댓글들을 가져온다
+		List<Map<String, Object>> itemComments = itemLogic.selectItemDetailComment(pr_bm_no,"사과");
 		ModelAndView mav = new ModelAndView();
 		//상품의 정보를 다 담는다.
 		//결과값 {BM_PRICE=120000, BM_NO=3, BM_CONTENT=선물 받았는데 있어서 팔아요, SELLER_NICKNAME=딸기, BM_LIKE=2, BM_HIT=200, BM_DATE=2020-06-19 15:46:41, BM_STATUS=N, I_LIKE=1, BM_TITLE=샤넬 향수 새거 팔아요}
@@ -234,6 +226,11 @@ public class ItemController extends MultiActionController {
 		req.setAttribute("itemContext", itemContext);
 		//결과값[4.png]
 		req.setAttribute("itemImgs", itemImgs);
+		//댓글들 달기
+		//p_temp=[{COMMENT_STEP=1, MEM_NICKNAME=포도, COMMENT_DATE=2020-06-17 16:46:41, COMMENT_MSG=네고 가능한가요?, COMMENT_ME=0, COMMENT_POS=0, COMMENT_GROUP=1}]
+		//COMMENT_POS=0이면 댓글, 1이면 대댓글
+		//p_temp=[{COMMENT_STEP=1,, COMMENT_POS=0, COMMENT_GROUP=1}]
+		req.setAttribute("itemComments", itemComments);
 		//페이지 전송
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/item/detail_page.jsp");
 		dispatcher.forward(req,res);
@@ -293,55 +290,35 @@ public class ItemController extends MultiActionController {
 	//댓글 등록 - 댓글인지 대댓글인지 구분
 	public void insertComment(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : insertComment메소드 호출");
-		////front : key는 "pr_comment_msg"  / "pr_comment_group"                              / "pr_commnet_pos"     / "pr_mem_nickname" / "pr_bm_no"
-		////      value는  메세지 내용        / 댓글이면 0이고, 대댓글이면 댓글의 pr_comment_group로 가져온다.    댓글이면 0, 대댓글이면 1    닉네임               게시판 번호
-		////한글 처리
-		//HashMapBinder hmb = new HashMapBinder(req);
-		//Map<String,Object> pmap = new HashMap<>();
-		//hmb.bind(pmap);
-		//
-		////댓글 또는 대댓글의 정보 가지고 오기, 특히 댓글의 경우 0이 아닌 pr_comment_group을 가져와야한다!+ p_comment_step , result
-		//Map<String,Object> comments = itemLogic.insertComment(pmap);
-		////여기에는 result가 들어가는데 "true"면 댓글이 잘 등록 되었고, "itemFalse"이면 상품이 삭제 되었다는 것으로 댓글이 못 달린다.
-		////									            "comentFalse"면 댓글이 삭제 되었다는 것이다.(물론 이 경우는 대댓글 등록일 경우)
-		//AjaxDataPrinter.out(res,"application/json",comments);
-		
-		
+		//front : key는 "pr_comment_msg"  / "pr_comment_group"                              / "pr_comment_pos"     / "pr_mem_nickname" / "pr_bm_no"
+		//      value는  메세지 내용        / 댓글이면 0이고, 대댓글이면 댓글의 pr_comment_group로 가져온다.    댓글이면 0, 대댓글이면 1    닉네임               게시판 번호
 		//한글 처리
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
+		pmap.put("pr_mem_nickname", "사과"); //운래는 세션처리
 		hmb.bind(pmap);
-		pmap.put("pr_comment_msg", "네 뭔데?웃노");
-		pmap.put("pr_comment_group" , 15);
-		pmap.put("pr_comment_pos", 1);
-		pmap.put("pr_mem_nickname", "토마토");
-		pmap.put("pr_bm_no", 1);
-		//댓글 또는 대댓글의 정보 가지고 오기, 특히 댓글의 경우 0이 아닌 pr_comment_group을 가져와야한다!+ p_comment_step , result
+		////댓글 또는 대댓글의 정보 가지고 오기, 특히 댓글의 경우 0이 아닌 pr_comment_group을 가져와야한다!+ p_comment_step , result
 		Map<String,Object> comments = itemLogic.insertComment(pmap);
-		AjaxDataPrinter.out(res,"application/json",comments);
-		
+		////여기에는 result가 들어가는데 "true"면 댓글이 잘 등록 되었고, "itemFalse"이면 상품이 삭제 되었다는 것으로 댓글이 못 달린다. "noId" 로그인 안했을 시
+		////									            "comentFalse"면 댓글이 삭제 되었다는 것이다.(물론 이 경우는 대댓글 등록일 경우)
+		//Json 형태로 가져오기
+		Gson g = new Gson();
+		String itemsJson = g.toJson(comments);
+		AjaxDataPrinter.out(res,"application/json",itemsJson);
+
 	}
 	
 	//댓글 삭제 - 댓글인지 대댓글인지 구분
 	public void deleteComment(HttpServletRequest req, HttpServletResponse res){
 		logger.info("controller : deleteComment메소드 호출");
-		////front : key는 "p_comment_step" && value는 숫자를 가져오면 된다. (comment_step는 댓글의 시퀀스 번호임)
-		//Map<String,Object> pmap = new HashMap<>();
-		////값을 넣어줌
-		//pmap.put("comment_step", req.getParameter("p_comment_step"));
-		//String result = itemLogic.deleteComment(pmap);
-		////여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
-		////- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
-		//AjaxDataPrinter.out(res,result);
-		
+		//front : key는 "p_comment_step" && value는 숫자를 가져오면 된다. (comment_step는 댓글의 시퀀스 번호임)
 		Map<String,Object> pmap = new HashMap<>();
-		////값을 넣어줌
-		pmap.put("pr_comment_step", 24);
+		//값을 넣어줌
+		pmap.put("pr_comment_step", req.getParameter("p_comment_step"));
 		String result = itemLogic.deleteComment(pmap);
-		////여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
-		////- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
+		//여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
+		//- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
 		AjaxDataPrinter.out(res,result);
-
 	}
 	
 	
