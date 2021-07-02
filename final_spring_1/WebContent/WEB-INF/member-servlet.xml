@@ -13,6 +13,9 @@
 		<property name="memberLogic" ref="member-logic"/>
 	</bean>
 	<!-- 인터셉터에 logic 클래스를 주입 -->
+	<bean id="auth-check-interceptor" class="nds.util.AuthInterceptor">
+		<property name="memberLogic" ref="member-logic"/>
+	</bean>
 	<bean id="login-check-interceptor" class="nds.util.LoginCheckInterceptor">
 		<property name="memberLogic" ref="member-logic"/>
 	</bean>
@@ -22,6 +25,7 @@
 		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="interceptors">
 			<list>
+				<ref bean="auth-check-interceptor"/>
 				<ref bean="login-check-interceptor"/>
 			</list>
 		</property>
@@ -43,6 +47,14 @@
 				<prop key="/member/leave.nds">member-controller</prop>
 				<prop key="/member/join.nds">member-controller</prop>
 				<prop key="/member/insertMember.nds">member-controller</prop>
+				<!-- ================== [[ 페이지 요청 url ]] ================== -->
+				<prop key="/myPage/my_info.nds">member-controller</prop>
+				<prop key="/myPage/my_wallet.nds">member-controller</prop>
+				<prop key="/myPage/my_like.nds">member-controller</prop>
+				<prop key="/myPage/my_trade.nds">member-controller</prop>
+				<prop key="/myPage/my_errand.nds">member-controller</prop>
+				<prop key="/mainPage/main_page.nds">member-controller</prop>
+				<!-- ================== [[ 페이지 요청 url ]] ================== -->
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 				<prop key="/member/getAuth.nds">member-controller</prop>
 				<prop key="/member/showEmail.nds">member-controller</prop>
@@ -74,6 +86,14 @@
 				<prop key="/member/leave.nds">leave</prop>
 				<prop key="/member/join.nds">join</prop>
 				<prop key="/member/insertMember.nds">insertMember</prop>
+				<!-- ================== [[ 페이지 이동 url ]] ================== -->
+				<prop key="/myPage/my_info.nds">getMyInfo</prop>
+				<prop key="/myPage/my_wallet.nds">getMyWallet</prop>
+				<prop key="/myPage/my_like.nds">getMyLike</prop>
+				<prop key="/myPage/my_trade.nds">getMyTrade</prop>
+				<prop key="/myPage/my_errand.nds">getMyErrand</prop>
+				<prop key="/mainPage/main_page.nds">getMainPage</prop>
+				<!-- ================== [[ 페이지 이동 url ]] ================== -->
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 				<prop key="/member/getAuth.nds">getAuth</prop>
 				<prop key="/member/showEmail.nds">showEmail</prop>

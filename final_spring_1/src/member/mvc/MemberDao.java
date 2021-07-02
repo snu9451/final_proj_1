@@ -31,6 +31,7 @@ public class MemberDao {
 
 
 	public Map<String, Object> selectOneBySession(String sessionValue) {
+		logger.info("selectOneBySession 메소드 호출 완료");
 		Map<String, Object> rmap = null;
 		rmap = sqlSessionTemplate.selectOne("selectOneBySession", sessionValue);
 		return rmap;
@@ -130,9 +131,12 @@ public class MemberDao {
 		logger.info("DAO rmap ===> "+rmap);
 		return rmap;
 	}
-	public Map<String, Object> uiToSession(Map<String, Object> pmap) {
+	public int uiToSession(Map<String, Object> pmap) {
+		int result = 0;
 		sqlSessionTemplate.selectOne("uiToSession", pmap);
-		return pmap;
+		result = Integer.parseInt(String.valueOf(pmap.get("result")));
+		logger.info("result ====> "+result);
+		return result;
 	}
 
 
@@ -175,6 +179,19 @@ public class MemberDao {
 		int result = 0;
 		result = sqlSessionTemplate.insert("insertMember", pmap);
 		return result;
+	}
+
+
+
+
+
+
+
+	public Map<String, Object> selectMemberAdmin(Map<String, Object> pmap) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = sqlSessionTemplate.selectOne("selectMemberAdmin", pmap);
+		logger.info("DAO rmap ===> "+rmap);
+		return rmap;
 	}
 
 }

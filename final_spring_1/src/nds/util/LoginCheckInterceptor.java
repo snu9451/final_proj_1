@@ -1,5 +1,6 @@
 package nds.util;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,7 +29,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		"/member/sendCode.nds",
 		"/member/sendSMSCode.nds",
 		"/member/issueTempPw.nds",
-		"/member/issueTempPw.nds"
+		"/member/issueTempPw.nds",
+		"/mainPage/main_page.nds"
 	};
 	
 	@Override
@@ -39,7 +41,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		logger.info("요청된 URI =====> "+req.getRequestURI());
 		for(int i=0; i<excludedURIs.length; i++) {
 			if(excludedURIs[i].equals(req.getRequestURI())) {
-				logger.info("비회원도 이용 가능한 페이지 요청입니다.");
+				logger.info("비회원도 이용 가능한 페이지 || 예외url 요청입니다.");
 				return true;
 			}
 		}
@@ -52,7 +54,9 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		} else {
 			// (1)비회원도 이용가능한 예외 URI(excludedURIs)도 아니면서 (2)로그인 하지도 않은 사용자의 요청이라면,
 			// 로그인 페이지를 요청하는 서블릿 태우기.
-			res.sendRedirect("/member/reqLoginView.nds");
+			session.setAttribute("reqLoginView", "true");
+			res.sendRedirect("http://192.168.0.163:9696/mainPage/main_page.nds");
+//			.sendRedirect("http://192.168.0.163:9696/mainPage_JSP/main_page.jsp");
 			return false;
 		}
 	}

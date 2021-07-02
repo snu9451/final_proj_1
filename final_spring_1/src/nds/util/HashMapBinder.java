@@ -1,12 +1,16 @@
 package nds.util;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.xml.DomUtils;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -25,10 +29,10 @@ public class HashMapBinder {
 	public HashMapBinder() {}
 	public HashMapBinder(HttpServletRequest request) {
 		this.request = request;
-		realFolder = "E:\\git_final_proj_1\\filelocation";
+		//realFolder = "D:\\portfolio_kosmo\\lab_spring4\\spring4_1_1\\WebContent\\pds";
+		realFolder = "C:\\final_proj_1\\final_spring_1\\WebContent\\imgg";
 	}
 	public void multiBind(Map<String,Object> target) {
-		target.clear();
 		try {
 			multi = new MultipartRequest(request, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
 		} catch (Exception e) {
@@ -42,28 +46,31 @@ public class HashMapBinder {
 			target.put(key, multi.getParameter(key));
 			logger.info("value:"+target);
 		}
+		List<Map<String,Object>> imgs = new ArrayList();
 		//첨부파일에 대한 정보를 받아오기
-		Enumeration<String> files = multi.getFileNames();
-		if(files !=null) {
-			File file = null;//파일명을 객체로 만들 어 줄 뿐 안에 내용까지 생성되는 것은 아님.
-			while(files.hasMoreElements()) {
-				String fname = files.nextElement();
-				String filename = multi.getFilesystemName(fname);
-				target.put("bs_file", filename);
-				if(filename !=null && filename.length()>1) {
-					file = new File(realFolder+"\\"+filename);
+		Enumeration files = multi.getFileNames(); //파일명정보를 배열로 만들다(files에 name들이 담겨있다)
+		while(files.hasMoreElements()){
+		    String name = (String)files.nextElement(); //각각의 파일 name을 String name에 담는다.
+		    String filename = multi.getFilesystemName(name); //각각의 파일 name을 통해서 파일의 정보를 얻는다.
+		    if(filename!=null) {
+		    	Map<String,Object> map = new HashMap<>();
+				double size = 0;
+				File file = new File(realFolder+"\\"+filename);
+				//첨부파일의 크기를 담을 변수
+				size = file.length();
+				map.put("bi_file",filename);
+				map.put("bi_size",size);
+				imgs.add(map);
+				System.out.println(size+"    "+filename);
+				if(size>500000) {
+					target.put("error","size초과");
+					break;
 				}
-			}///////////end of while
-			//첨부파일의 크기를 담을 변수
-			double size = 0;
-			if(file !=null) {
-				size = file.length();
-				size = file.length();
-				target.put("bs_size", size);
-			}
-			
+		    }
 		}
+		target.put("itemImgs",imgs);
 	}////////end of bind
+			
 	public void bindPost(Map<String,Object> target) {
 		Enumeration en = request.getParameterNames();//배열 구조체 묶음
 		//<input type="text" name="mem_id"
@@ -79,8 +86,8 @@ public class HashMapBinder {
 		//<input type="text" name="mem_id"
 		while(en.hasMoreElements()) {
 			String key = (String)en.nextElement();
-			logger.info("value:"+request.getParameter(key));
-			target.put(key, request.getParameter(key));
+			logger.info("value:"+HangulConversion.toUTF(request.getParameter(key)));
+			target.put(key, HangulConversion.toUTF(request.getParameter(key)));
 		}
 	}////////end of bind
 }

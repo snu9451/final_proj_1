@@ -22,13 +22,22 @@
 	</bean>
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory"/>
-	</bean>	
-<!--  	<bean id="item_dao" class="item.mvc.ItemDao"> -->
-<!--  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/> -->
-<!-- 	</bean> -->
+	</bean>
+	<!-- ========================== [[ DAO 등록 ]] ========================== -->
  	<bean id="member-dao" class="member.mvc.MemberDao">
  		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
-	
+ 	<bean id="etc-dao" class="etc.mvc.EtcDao">
+ 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+	<bean id="item_dao" class="item.mvc.ItemDao">
+ 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+	<bean id="admin-dao" class="admin.mvc.AdminDao"> 
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+	<bean id="errand-dao" class="errand.mvc.ErrandDao"> 
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
 	
 </beans>

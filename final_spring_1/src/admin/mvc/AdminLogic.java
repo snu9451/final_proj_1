@@ -14,67 +14,66 @@ public class AdminLogic {
 	Logger logger = Logger.getLogger(AdminLogic.class);
 	
 	private AdminDao adminDao = null;
-	private MemberDao memberDao = null;
-	private ItemDao itemDao = null;
 	
 	public void setAdminDao(AdminDao adminDao) {
 		this.adminDao = adminDao;
 	}
 	
- // 회원 탈퇴시키기
-	public int outMember(String memEmail) {
+ // 회원 탈퇴하기(mem_active를 T에서 F로)
+	public int outMember(Map<String, Object> pmap) {
 		logger.info("outMember 메소드 호출");
 		
-		return 0;
+		int result = adminDao.outMember(pmap);
+		
+		return result;
 	}
 	
- // (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 시키기)
-	public List<Map<String, Object>> initReportNumber(Map<String, Object> pmap) {
+ // (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 바꾸기)
+	public int initReportNumber(Map<String, Object> pmap) {
 		logger.info("initReportNumber 메소드 호출");
 		
-		List<Map<String, Object>> initNumber = new ArrayList<Map<String,Object>>();
-		initNumber = adminDao.initReportNumber(pmap);
+		int result = adminDao.initReportNumber(pmap);
 		
-		return null;
+		return result;
 	}
 	
  // 회원 검색
 	public List<Map<String, Object>> selectMemberBySearch(Map<String, Object> pmap) {
 		logger.info("selectMemberBySearch 메소드 호출");
 		
-		List<Map<String, Object>> selectMember = new ArrayList<Map<String,Object>>();
-		selectMember = adminDao.selectMemberBySearch(pmap);
+		String nick_email_type = pmap.get("nick_email_type").toString(); // 닉네임인지, 이메일인지, 전체인지
+		String pr_search = pmap.get("pr_search").toString(); // 검색한 단어 받음
 		
-		return selectMember;
+		return adminDao.selectMemberBySearch(nick_email_type, pr_search);
 	}
 	
  // 게시글 검색
-	public Map<String, Object> selectBoardBySearch(Map<String, Object> pmap) {
+	public List<Map<String, Object>> selectBoardBySearch(Map<String, Object> pmap) {
 		logger.info("selectBoardBySearch 메소드 호출");
 		
-		List<Map<String, Object>> selectBoard = new ArrayList<Map<String,Object>>();
-		selectBoard = adminDao.selectBoardBySearch(pmap);
+//		String nick_title_type = pmap.get("nick_title_type").toString(); // 작성자인지, 제목인지, 전체인지
+//		String pr_search = pmap.get("pr_search").toString(); // 검색한 단어 받음
 		
-		return null;
+		return adminDao.selectBoardBySearch(pmap);
 	}
 	
  // 신고된 회원 상세보기
 	public Map<String, Object> selectMemberReportDetail(Map<String, Object> pmap) {
 		logger.info("selectMemberReportDetail 메소드 호출");
 		
-		String mem_eamil_to = pmap.get("bm_no").toString();
-		pmap.put("mem_eamil_to", mem_eamil_to);
+		String report_msg = pmap.get("report_msg").toString();
+		pmap.put("report_msg", report_msg);
 		
-		return adminDao.selectMemberReportDetail(mem_eamil_to);
+		return adminDao.selectMemberReportDetail(report_msg);
 	}
 	
  // 신고된 게시글 상세보기
 	public Map<String, Object> selectBoardReportDetail(Map<String, Object> pmap) {
 		logger.info("selectBoardReportDetail 메소드 호출");
 		
-		int bm_no = Integer.parseInt(pmap.get("bm_no").toString());
-		pmap.put("bm_no", bm_no);
+		String report_msg = pmap.get("report_msg").toString();
+		pmap.put("report_msg", report_msg);
 	
-		return adminDao.selectBoardReportDetail(bm_no);
+		return adminDao.selectBoardReportDetail(report_msg);
 	}
 }
