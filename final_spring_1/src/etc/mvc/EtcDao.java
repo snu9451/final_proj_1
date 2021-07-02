@@ -31,18 +31,27 @@ public class EtcDao {
 		logger.info("selectAutocompleteList 메소드 호출");
 
 		List<Map<String, Object>> keyword = new ArrayList<Map<String,Object>>();
-		logger.info("pmap ===> "+pmap);
+		logger.info("pmap ===> " + pmap);
 		keyword = sqlSessionTemplate.selectList("selectAutocomple", pmap);
-		logger.info("pmap ===> "+pmap);
-		logger.info("keyword ===> "+keyword);
+		logger.info("pmap ===> " + pmap);
+		logger.info("keyword ===> " + keyword);
 		return keyword;
 	}
 
  // 검색 순위(검색횟수가 10이상인 검색어만 상위10개 조회)
 	public List<String> selectWordList() {
+		logger.info("selectWordList 메소드 호출");
+		
 		List<String> plist = new ArrayList<String>();
 		plist = sqlSessionTemplate.selectList("selectWord");
 		
 		return plist;
+	}
+
+	// 검색어(일일 검색수, 전체 검색수) 증가
+	public Map<String, Object> insertWord(Map<String, Object> pmap) {
+		logger.info("insertWord 메소드 호출");
+
+		return sqlSessionTemplate.selectOne("wordInsert", pmap);
 	}
 }

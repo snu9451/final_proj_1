@@ -17,7 +17,7 @@ public class EtcLogic {
 		this.etcDao = etcDao;
 	}
 
- // 카테고리 불러오기
+   // 카테고리 불러오기
 	public List<String> selectCategory() {
 		logger.info("selectCategory 메소드 호출");
 		
@@ -26,7 +26,7 @@ public class EtcLogic {
 		return plist;
 	}
 	
- // 검색어 자동완성(검색횟수(누적검색수 기준)가 10번이상인 것 중에서 상위 10개만)
+   // 검색어 자동완성(검색횟수(누적검색수 기준)가 10번이상인 것 중에서 상위 10개만)
 	public List<Map<String, Object>> selectAutocompleteList(Map<String, Object> pmap) {
 		logger.info("selectAutocompleteList 메소드 호출");
 		
@@ -38,7 +38,7 @@ public class EtcLogic {
 		return keyword;
 	}
 
- // 검색 순위(검색횟수가 10이상인 검색어만 상위10개 조회)
+    // 검색 순위(검색횟수가 10이상인 검색어만 상위10개 조회)
 	public List<String> selectWordList() {
 		List<String> plist = new ArrayList<String>();
 		plist = etcDao.selectWordList();
@@ -46,4 +46,10 @@ public class EtcLogic {
 		return plist;
 	}
 
+	// 검색어(일일 검색수, 전체 검색수) 증가
+	public Map<String, Object> insertWord(Map<String, Object> pmap) {
+		logger.info("insertWord 메소드 호출");
+		
+		return etcDao.insertWord(pmap);
+	}
 }

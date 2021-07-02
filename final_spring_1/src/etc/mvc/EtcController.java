@@ -77,4 +77,20 @@ public class EtcController extends MultiActionController {
 		AjaxDataPrinter.out(res, "application/json", plist);
 //		logger.info(plist); [{KEYWORD=에어컨}, {KEYWORD=세탁기}, {KEYWORD=핸드폰}, {KEYWORD=필름}, {KEYWORD=태블릿}, {KEYWORD=양말}, {KEYWORD=필기구}, {KEYWORD=TV}, {KEYWORD=선풍기}]
 	}
+	
+	// 검색어(일일 검색수, 전체 검색수) 증가
+	public void insertWord(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("insertWord 메소드 호출");
+		
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String, Object> pmap = new HashMap();
+		hmb.bind(pmap); // 검색어를 담음
+		
+		String pr_search = "";
+		pr_search = (String) pmap.get("pr_search");
+		pmap.put("pr_search", pr_search);
+		logger.info("pmap ===> " + pmap);
+		
+		etcLogic.insertWord(pmap);
+	}
 }

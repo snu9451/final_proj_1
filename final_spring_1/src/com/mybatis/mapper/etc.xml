@@ -25,4 +25,10 @@
           order by word_day desc)
   where rownum < 11 ]]>
  </select>
+ 
+ <!-- 검색어(일일 검색수, 전테 검색수) 증가 -->
+  <select id="wordInsert"  statementType="CALLABLE" parameterType="java.util.Map">
+   {CALL proc_insert_word(#{pr_search})
+   }
+  </select>
 </mapper>

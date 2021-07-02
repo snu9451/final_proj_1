@@ -19,6 +19,7 @@
 				<prop key="/etc/selectCategory.nds">etc-controller</prop>
 				<prop key="/etc/selectAutocompleteList.nds">etc-controller</prop>
 				<prop key="/etc/selectWordList.nds">etc-controller</prop>
+				<prop key="/etc/insertWord.nds">etc-controller</prop>
 			</props>
 		</property>
 	</bean>
@@ -29,6 +30,7 @@
 				<prop key="/etc/selectCategory.nds">selectCategory</prop>
 				<prop key="/etc/selectAutocompleteList.nds">selectAutocompleteList</prop>
 				<prop key="/etc/selectWordList.nds">selectWordList</prop>
+				<prop key="/etc/insertWord.nds">insertWord</prop>
 			</props>
 		</property>
 	</bean>	
