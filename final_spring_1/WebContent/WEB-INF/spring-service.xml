@@ -17,4 +17,7 @@
 		<bean id="admin-logic" class="admin.mvc.AdminLogic">
 		<property name="adminDao" ref="admin-dao"/>
 	</bean>
+	<bean id="errand-logic" class="errand.mvc.ErrandLogic">
+		<property name="errandDao" ref="errand-dao"/>
+	</bean>
 </beans>

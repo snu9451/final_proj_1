@@ -24,7 +24,7 @@ public class PageController extends MultiActionController {
 	private MemberLogic memberLogic = null;
 	private ErrandLogic errandLogic = null;
 	private ItemLogic itemLogic = null;
-	private AdminLogic adminLogic = null;
+	private ErrandLogic adminLogic = null;
 	Logger logger = Logger.getLogger(PageController.class);
 
 	//===============================[[]]===============================

@@ -31,6 +31,7 @@
 				/WEB-INF/member-servlet.xml,
 				/WEB-INF/etc-servlet.xml,
 				/WEB-INF/item-servlet.xml,
+				/WEB-INF/errand-servlet.xml,
 				/WEB-INF/admin-servlet.xml
 			</param-value>
 		</init-param>

@@ -36,5 +36,8 @@
 	<bean id="admin-dao" class="admin.mvc.AdminDao"> 
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
+	<bean id="errand-dao" class="errand.mvc.ErrandDao"> 
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
 	
 </beans>

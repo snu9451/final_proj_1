@@ -63,25 +63,25 @@ h6 {
   font-family: "Cafe24SsurroundAir";
 }
 
-/**************************** 한글 폰트 ***************************/
+/* /**************************** 한글 폰트 ***************************/ */
 
-/* 헤더 타이틀 */
-@font-face {
-  font-family: "WandohopeB";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/WandohopeB.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
+/* /* 헤더 타이틀 */ */
+/* @font-face { */
+/*   font-family: "WandohopeB"; */
+/*   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/WandohopeB.woff") */
+/*     format("woff"); */
+/*   font-weight: normal; */
+/*   font-style: normal; */
+/* } */
 
-/* navbar 메뉴 */
-@font-face {
-  font-family: "Cafe24SsurroundAir";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
+/* /* navbar 메뉴 */ */
+/* @font-face { */
+/*   font-family: "Cafe24SsurroundAir"; */
+/*   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff") */
+/*     format("woff"); */
+/*   font-weight: normal; */
+/*   font-style: normal; */
+/* } */
 
 /*--------------------------------------------------------------
 # Preloader
@@ -720,12 +720,13 @@ section {
 .product__title h3 {
   margin: 15px 0 0 0;
   font-size: 50px;
-  font-weight: 700;
+  font-weight: 300;
   text-align: center;
 }
 
-.product__title h3 span {
-  color: white;
+.product__title h3 .nds__title {
+  color: var(--main-color);
+  font-weight: bold;
 }
 
 .product__prefer {
@@ -846,7 +847,7 @@ section {
 
 @keyframes search__invisible {
   0% {
-    opacity: 1;
+    opacity: 0.9;
   }
   50% {
     opacity: 0.7;
@@ -856,6 +857,7 @@ section {
   }
   100% {
     opacity: 0;
+    visibility: hidden;
   }
 }
 
@@ -1065,6 +1067,9 @@ section {
   padding: 5px;
 }
 
+.owl-stage-outer {
+}
+
 .owl-stage {
   display: flex;
   align-items: center;
@@ -1077,6 +1082,11 @@ section {
   justify-content: space-around;
   font-size: 30px;
 }
+
+/* #pd__img__box img {
+  width: 100%;
+  object-fit: contain;
+} */
 
 .items img {
   max-width: 360px;

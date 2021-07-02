@@ -12,5 +12,6 @@
 		<mapper resource="com/mybatis/mapper/member.xml" />
 		<mapper resource="com/mybatis/mapper/page.xml" />
 		<mapper resource="com/mybatis/mapper/etc.xml" />
+		<mapper resource="com/mybatis/mapper/errand.xml" />
 	</mappers>
 </configuration>

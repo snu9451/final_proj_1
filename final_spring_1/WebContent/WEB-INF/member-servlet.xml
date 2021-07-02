@@ -34,8 +34,6 @@
 				<prop key="/member/reqLoginView.nds">member-controller</prop>
 				<prop key="/member/selectNickName.nds">member-controller</prop>
 				<prop key="/member/selectEmail.nds">member-controller</prop>
-				<prop key="/page/myInfo.nds">member-controller</prop>
-				<prop key="/page/myWallet.nds">member-controller</prop>
 				<prop key="/member/updateNickName.nds">member-controller</prop>
 				<prop key="/member/updateImg.nds">member-controller</prop>
 				<prop key="/member/updatePw.nds">member-controller</prop>
@@ -50,7 +48,11 @@
 				<prop key="/member/join.nds">member-controller</prop>
 				<prop key="/member/insertMember.nds">member-controller</prop>
 				<!-- ================== [[ 페이지 요청 url ]] ================== -->
-				<prop key="/myPage/myInfo.nds">member-controller</prop>
+				<prop key="/myPage/my_info.nds">member-controller</prop>
+				<prop key="/myPage/my_wallet.nds">member-controller</prop>
+				<prop key="/myPage/my_like.nds">member-controller</prop>
+				<prop key="/myPage/my_trade.nds">member-controller</prop>
+				<prop key="/myPage/my_errand.nds">member-controller</prop>
 				<prop key="/mainPage/main_page.nds">member-controller</prop>
 				<!-- ================== [[ 페이지 요청 url ]] ================== -->
 				<!-- ================== [[ 테스트용 url ]] ================== -->
@@ -71,8 +73,6 @@
 				<prop key="/member/reqLoginView.nds">reqLoginView</prop>
 				<prop key="/member/selectNickName.nds">selectNickName</prop>
 				<prop key="/member/selectEmail.nds">selectEmail</prop>
-				<prop key="/page/myInfo.nds">selectMember</prop>
-				<prop key="/page/myWallet.nds">selectTrans</prop>
 				<prop key="/member/updateNickName.nds">updateNickName</prop>
 				<prop key="/member/updateImg.nds">updateImg</prop>
 				<prop key="/member/updatePw.nds">updatePw</prop>
@@ -87,7 +87,11 @@
 				<prop key="/member/join.nds">join</prop>
 				<prop key="/member/insertMember.nds">insertMember</prop>
 				<!-- ================== [[ 페이지 이동 url ]] ================== -->
-				<prop key="/myPage/myInfo.nds">getMyInfo</prop>
+				<prop key="/myPage/my_info.nds">getMyInfo</prop>
+				<prop key="/myPage/my_wallet.nds">getMyWallet</prop>
+				<prop key="/myPage/my_like.nds">getMyLike</prop>
+				<prop key="/myPage/my_trade.nds">getMyTrade</prop>
+				<prop key="/myPage/my_errand.nds">getMyErrand</prop>
 				<prop key="/mainPage/main_page.nds">getMainPage</prop>
 				<!-- ================== [[ 페이지 이동 url ]] ================== -->
 				<!-- ================== [[ 테스트용 url ]] ================== -->
