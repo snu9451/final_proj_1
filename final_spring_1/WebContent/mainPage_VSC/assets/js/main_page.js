@@ -1,3 +1,9 @@
+
+/* /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
+
+		/* 여기도 어딘가에 있었던 마커를 클릭하면 발생하는 이벤트였나? 필요없어서 삭제함. */
+						/* 확인했으면 주석을 지우셔도 됩니다. */
+/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */
 /**
  * Template Name: BizLand - v1.2.1
  * Template URL: https://bootstrapmade.com/bizland-bootstrap-business-template/
@@ -49,19 +55,6 @@
   //회원가입 모달창 이벤트들
   $(document).ready(function () {
     
-  });
-
-  //지도 말풍선 클릭시 이벤트
-  $(window).on("load", function () {
-    console.log(3, "window.onload");
-    if ($(".errand_regist").length) {
-      $(document).on("click", ".errand_regist", function () {
-        console.log("errand!!!!!!!");
-        const modal = document.querySelector("#errand_modal");
-        console.log(modal);
-        $(modal).modal("show");
-      });
-    }
   });
 
   //버튼 누르면 top으로 이동

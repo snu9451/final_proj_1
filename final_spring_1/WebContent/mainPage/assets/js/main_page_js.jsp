@@ -1,3 +1,10 @@
+
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+
+		<!-- 여기도 어딘가에 있었던 마커를 클릭하면 발생하는 이벤트였나? 필요없어서 삭제함. -->
+						<!-- 확인했으면 주석을 지우셔도 됩니다. -->
+<!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
@@ -47,18 +54,6 @@ $(document).ready(function () {
   
 });
 
-//지도 말풍선 클릭시 이벤트
-$(window).on("load", function () {
-  console.log(3, "window.onload");
-  if ($(".errand_regist").length) {
-    $(document).on("click", ".errand_regist", function () {
-      console.log("errand!!!!!!!");
-      const modal = document.querySelector("#errand_modal");
-      console.log(modal);
-      $(modal).modal("show");
-    });
-  }
-});
 //회원가입 - 입력창 유효값 확인 이벤트
 const form = document.querySelector(".needs-validation");
 form.addEventListener(

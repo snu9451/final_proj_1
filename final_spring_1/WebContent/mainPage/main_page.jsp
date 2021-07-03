@@ -251,7 +251,10 @@
 
   <!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ ▼ ＭＯＤＡＬ　ＰＡＲＴ ▼ /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
   <!-- 로그인 모달 있던 자리 -->
-  <!-- 회원가입(이메일) 모달 있던 자리 --><%@ include file="../mainPage/joinForm.jsp" %>
+  
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+<!-- 아래꺼 경로 join.jsp가 아니라 joinForm.jsp로 되어있길래 바꿈, 상철이형이랑 서로 확인한 내용 -->
+  <!-- 회원가입(이메일) 모달 있던 자리 --><%@ include file="../mainPage/join.jsp" %>
   <!-- 회원가입 양식 모달 있던 자리 --><%@ include file="../mainPage/joinForm.jsp" %>
   <!-- 코인충전 모달 있던 자리 --><%@ include file="../mainPage/coinCharge.jsp" %>
   <!-- 심부름 모달 있던 자리 --><%@ include file="../mainPage/errand.jsp" %>
@@ -261,7 +264,14 @@
   
 
   <!-- =============================================== ▼ ＳＣＲＩＰＴ  ▼ ================================================= -->
-　　<%@ include file="../mainPage/source_f.jsp" %>
+　　<%@ include file="../mainPage/source_f.jsp" %>  
+<!--   Google Map Script -->
+<!--   Async script executes immediately and must be after any DOM elements used in callback. -->
+				<!-- 지도, 심부름 테스트를 위해 구글맵 api 주석처리를 풀어둠 -->
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4pd9w90oFRuCZOILRd07MBwVAthwIbIA&callback=initMap&region=kr" async></script>
+   <script defer src="./google_map/src/main.js"></script>
+						<!-- 확인했으면 주석을 지우셔도 됩니다. -->
+<!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
 </body>
 </html>

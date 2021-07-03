@@ -12,5 +12,34 @@
           WHERE mem_email_nds = #{mem_email_nds}
         </if>
    </select>
+	<select id="getErrand" parameterType="map" resultType="map">
+		SELECT mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_paypw, mem_errand_mode, mem_star_num
+		  FROM member
+		 WHERE mem_email = #{mem_email}
+		   AND mem_pw = #{mem_pw}
+	</select>
 <!-- ==================================== 심부름 내역보기 Select문 ==================================== -->
+
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+				<!-- 심부름 insert하는 프로시저용 쿼리문 작성(미완성) -->
+<select id="insertErrand" statementType="CALLABLE" parameterType="map">
+		{call PROC_ERRAND_NDS_OK(
+			#{pr_errandKey, mode=IN, jdbcType=VARCHAR},
+		    #{pr_errand_item, mode=IN, jdbcType=VARCHAR}, 
+		    #{pr_errand_request_date, mode=IN, jdbcType=VARCHAR},
+		    #{pr_errand_start_date, mode=IN, jdbcType=VARCHAR},
+		    #{pr_errand_item_price_req, mode=IN, jdbcType=VARCHAR},
+		    #{pr_errand_price, mode=IN, jdbcType=VARCHAR},
+		    #{pr_errand_totle_price, mode=IN, jdbcType=VARCHAR},
+		    #{pr_errand_deny, mode=IN, jdbcType=VARCHAR},
+		    #{pr_mem_nickname_req, mode=IN, jdbcType=VARCHAR},
+		    #{pr_mem_nickname_nds, mode=IN, jdbcType=VARCHAR},
+		    #{pr_errand_lat, mode=IN, jdbcType=VARCHAR},
+		    #{pr_errand_lon, mode=IN, jdbcType=VARCHAR},
+		    #{pr_roomKey, mode=IN, jdbcType=VARCHAR}
+		)}
+</select>
+						<!-- 확인했으면 주석을 지우셔도 됩니다. -->
+<!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
+
 </mapper>

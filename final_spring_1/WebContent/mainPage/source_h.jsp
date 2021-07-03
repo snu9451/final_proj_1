@@ -20,3 +20,8 @@
   <link href="../mainPage/assets/css/style.css" rel="stylesheet">
   <link href="../mainPage/assets/css/main_page.css" rel="stylesheet">
   <link href="../common/assets/css/header.css" rel="stylesheet">
+
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+	<!-- 아무것도 건드린게 없는거 같은데 수정했다고 뜨네.. 원본파일이랑 비교해봐도 다른게 없는듯? -->
+						<!-- 확인했으면 주석을 지우셔도 됩니다. -->
+<!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->

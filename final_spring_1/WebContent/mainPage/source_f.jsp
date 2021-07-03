@@ -28,9 +28,8 @@
   <%-- header 영역 :: 마이페이지, 상품판매, 코인충전 등 --%><%@ include file="../common/assets/js/header_js.jsp" %>
   <%-- 자동완성 --%><%@ include file="../mainPage/assets/js/autocomplete_js.jsp"%>
   <!-- ============================================ ▲ ＣＵＳＴＯＭ　－　ＳＣＲＩＰＴ  ▲ ============================================== -->
-  
-  
-<!--   Google Map Script -->
-<!--   Async script executes immediately and must be after any DOM elements used in callback. -->
-<!--   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4pd9w90oFRuCZOILRd07MBwVAthwIbIA&callback=initMap&region=kr" async></script> -->
-<!--   <script src="./google_map/src/main.js"></script> -->
+
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+		<!-- 여기에 구글맵 스크립트들 있었던가? 다른곳으로 옮기고 여기에 있던 코드는 삭제함 -->
+						<!-- 확인했으면 주석을 지우셔도 됩니다. -->
+<!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
