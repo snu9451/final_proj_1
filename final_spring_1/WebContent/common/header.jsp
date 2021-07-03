@@ -9,9 +9,8 @@
   			<i class="fas fa-bars"></i>
   		</button>
 		<div class="dropdown-menu" aria-labelledby="category_drop">
-			<a class="dropdown-item" href="#">Action</a>
-			<a class="dropdown-item" href="#">Another action</a>
-			<a class="dropdown-item" href="#">Something else here</a>
+			<ul class="pl-0 mb-0" id="category_item">
+			</ul>
 		</div>
 	</div>
 	<div style="width: 85%; padding-left: 50px;">

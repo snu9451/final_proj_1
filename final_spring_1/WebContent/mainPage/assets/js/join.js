@@ -89,7 +89,7 @@
     $("#checkPassWord").focusout(function () {
       if ($(this).val().length < 8) {
         console.log($(this).val().length);
-        swal("비밀번호는 8자리 이상 입력해주세요.", "경고!!", "warning");
+        swal("비밀번호를 다시 입력해주세요.", "경고!!", "warning");
       } else {
         return;
       }
@@ -230,7 +230,7 @@
       console.log(radio_chck);
 
       //유효성 체크
-      if (!radio_chck && select_chck) {
+      if (chck_validation && !radio_chck && select_chck) {
         console.log(select_chck);
 
         //정보 모두 입력시

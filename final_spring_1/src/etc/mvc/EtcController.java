@@ -39,7 +39,7 @@ public class EtcController extends MultiActionController {
 		// Front에 내보내기
 		Gson g = new Gson();
 		String data = g.toJson(plist);
-		AjaxDataPrinter.out(res, "application/json", plist);
+		AjaxDataPrinter.out(res, "application/json", data);
 	}
 	
  // 검색어 자동완성(검색횟수(누적검색수 기준)가 10번이상인 것 중에서 상위 10개만)
