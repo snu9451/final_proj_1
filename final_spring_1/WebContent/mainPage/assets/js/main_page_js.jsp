@@ -188,7 +188,7 @@ function allItemList(pr_choice){
 	let item = {"pr_choice":pr_choice.id};
     $.ajax({
     	type: "GET",
-    	url: "/item/selectItemList.nds",
+    	url: "http://192.168.0.163:9696/item/selectItemList.nds",
 		data: item,
     	success:function(data){
 			viewItemList(data);
@@ -204,7 +204,7 @@ function itemSearch(){
 	let search = document.querySelector(".text-center").value;
     $.ajax({
     	type: "GET",
-    	url: "/item/selectBySearch.nds",
+    	url: "http://192.168.0.163:9696/item/selectBySearch.nds",
 		data: {"pr_search": search},
     	success:function(data){
     		alert(data);
@@ -252,7 +252,7 @@ function likeItem(itemno){
 	let item = {"pr_bm_no":itemno.id};
     $.ajax({
     	type: "POST",
-    	url: "/item/likeItem.nds",
+    	url: "http://192.168.0.163:9696/item/likeItem.nds",
 		data: item,
     	success:function(data){
     		if(data==1) {
@@ -276,7 +276,7 @@ function deleteComment(comment){
 	let p_comment_step = comment.id; //삭제할번호
     $.ajax({
     	type: "POST",
-    	url: "/item/deleteComment.nds",
+    	url: "http://192.168.0.163:9696/item/deleteComment.nds",
 		data: {"p_comment_step":p_comment_step},
     	success:function(data){
     		if(data=='true') {
@@ -299,7 +299,7 @@ function insertComment(comment){
 	let item = {"pr_comment_pos":commentType_No[0],"pr_comment_group":commentgroup,"pr_comment_msg":msg,"pr_bm_no":commentType_No[1]};
     $.ajax({
     	type: "POST",
-    	url: "/item/insertComment.nds",
+    	url: "http://192.168.0.163:9696/item/insertComment.nds",
 		data: item,
     	success:function(data){
 			console.log(data);
