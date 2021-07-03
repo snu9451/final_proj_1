@@ -86,8 +86,8 @@ public class HashMapBinder {
 		//<input type="text" name="mem_id"
 		while(en.hasMoreElements()) {
 			String key = (String)en.nextElement();
-			logger.info("value:"+HangulConversion.toUTF(request.getParameter(key)));
-			target.put(key, HangulConversion.toUTF(request.getParameter(key)));
+			logger.info("value:"+HangulConversionGet.toUTF(request.getParameter(key)));
+			target.put(key, HangulConversionGet.toUTF(request.getParameter(key)));
 		}
 	}////////end of bind
 }

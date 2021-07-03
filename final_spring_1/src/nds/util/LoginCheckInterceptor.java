@@ -30,7 +30,10 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		"/member/sendSMSCode.nds",
 		"/member/issueTempPw.nds",
 		"/member/issueTempPw.nds",
-		"/mainPage/main_page.nds"
+		"/mainPage/main_page.nds",
+		"/item/selectItemList.nds",
+		"/item/selectBySearch.nds",
+		"/item/selectByCategory.nds"
 	};
 	
 	@Override

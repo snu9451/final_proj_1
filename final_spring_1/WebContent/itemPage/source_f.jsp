@@ -26,7 +26,6 @@
   <%-- 로그인 --%><%@ include file="../mainPage/assets/js/login_js.jsp" %>
   <%-- 로그아웃 --%><%@ include file="../mainPage/assets/js/logout_js.jsp" %>
   <%-- header 영역 :: 마이페이지, 상품판매, 코인충전 등 --%><%@ include file="../common/assets/js/header_js.jsp" %>
-  <%-- 자동완성 --%><%@ include file="../mainPage/assets/js/autocomplete_js.jsp"%>
   <!-- ============================================ ▲ ＣＵＳＴＯＭ　－　ＳＣＲＩＰＴ  ▲ ============================================== -->
   
   

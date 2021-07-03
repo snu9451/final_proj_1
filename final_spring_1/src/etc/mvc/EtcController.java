@@ -35,11 +35,11 @@ public class EtcController extends MultiActionController {
 		List<String> plist = new ArrayList<>();
 		plist = etcLogic.selectCategory();
 		
-//		logger.info(plist); [가구, 기타, 도서, 디지털기기, 반려동물용품, 스포츠, 식물, 유아동, 의류, 화장품]
+		logger.info(plist); //[가구, 기타, 도서, 디지털기기, 반려동물용품, 스포츠, 식물, 유아동, 의류, 화장품]
 		// Front에 내보내기
 		Gson g = new Gson();
 		String data = g.toJson(plist);
-		AjaxDataPrinter.out(res, "application/json", plist);
+		AjaxDataPrinter.out(res, "application/json", data);
 	}
 	
  // 검색어 자동완성(검색횟수(누적검색수 기준)가 10번이상인 것 중에서 상위 10개만)

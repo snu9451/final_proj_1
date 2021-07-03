@@ -1050,10 +1050,12 @@ section {
 .product__description {
   background-color: #8aaee2;
   width: 100%;
+  padding-top: 100px !important;
 }
 
 #pd__top {
   background-color: white;
+  border-radius: 10px;
   padding: 1rem;
 }
 

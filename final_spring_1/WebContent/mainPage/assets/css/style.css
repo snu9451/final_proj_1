@@ -702,6 +702,7 @@ section {
 --------------------------------------------------------------*/
 .product {
   background-color: #8aaee2;
+  padding-bottom: 500px;
 }
 
 .product__title h2 {
@@ -765,6 +766,10 @@ section {
   padding: 20px 10px;
   transition: all ease-in-out 0.3s;
   background: white;
+}
+.product .product__box:hover {
+	filter: brightness(60%);
+	cursor: pointer;
 }
 
 .product .product__box .product__img {

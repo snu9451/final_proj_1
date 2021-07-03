@@ -16,6 +16,5 @@
   <link href="../common/assets/vendor/aos/aos.css" rel="stylesheet">
   <!-- Template Main CSS File -->
   <link href="../mainPage/assets/css/style.css" rel="stylesheet">
-  <link href="../itemPage/assets/css/style.css" rel="stylesheet">
   <link href="../mainPage/assets/css/main_page.css" rel="stylesheet">
   <link href="../common/assets/css/header.css" rel="stylesheet">
