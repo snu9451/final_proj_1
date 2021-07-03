@@ -51,8 +51,8 @@
                   <th scope="cols" width="9%">선택</th>
                   <th scope="cols" width="12%">구분</th>
                   <th scope="cols" width="18%">날짜</th>
-                  <th scope="cols" width="37%">제목</th>
-                  <th scope="cols" width="12%">가격</th>
+                  <th scope="cols" width="33%">제목</th>
+                  <th scope="cols" width="16%">가격</th>
                   <th scope="cols" width="12%">닉네임</th>
                </tr>
             </thead>
@@ -60,6 +60,11 @@
             <!-- DB에서 불러온 데이터가 들어갈 자리 -->
             </tbody>
          </table>
+	      <div class="delete">
+	            <a href="#" data-toggle="modal" data-target="#selDelete">
+	               <button type="button" class="btn btn-danger">삭제</button>
+	            </a>
+	      </div>
       </div>
       <div class="errand_bottom nds_errand_tb">
          <span class="total_rec coin2" > 전체 : <span id="allcnt1"></span> </span>
@@ -71,8 +76,8 @@
                <tr>
                   <th scope="cols" width="9%">선택</th>
                   <th scope="cols" width="18%">날짜</th>
-                  <th scope="cols" width="49%">제목</th>
-                  <th scope="cols" width="12%">가격</th>
+                  <th scope="cols" width="44%">제목</th>
+                  <th scope="cols" width="17%">가격</th>
                   <th scope="cols" width="12%">닉네임</th>
                </tr>
             </thead>
@@ -80,12 +85,12 @@
             <!-- DB에서 불러온 데이터가 들어갈 자리 -->
             </tbody>
          </table>
-      </div>
          <div class="delete">
-            <a href="#" data-toggle="modal" data-target="#selDelete">
+            <a href="#" data-toggle="modal" data-target="#selDelete1">
                <button type="button" class="btn btn-danger">삭제</button>
             </a>
          </div>
+      </div>
       </div>
 </div>
 

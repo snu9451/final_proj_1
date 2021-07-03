@@ -60,4 +60,22 @@ public class ErrandController extends MultiActionController{
 //      return mav;
          
    }
+   public void errandRecordUpdate(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	   logger.info("ctrl : errandRecordUpdate 호출 성공");
+	   Map<String,Object> pmap = new HashMap<>();      
+	   HashMapBinder hmb = new HashMapBinder(req);
+	   hmb.bindPost(pmap);
+	   HttpSession session = req.getSession();
+	   Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+	   
+	   String mem_email = (String) login.get("MEM_EMAIL");
+	   if("req".equals((String)pmap.get("gubun"))) {
+		   pmap.put("mem_email_req", mem_email);
+		   logger.info("mem_req:"+mem_email);
+	   } else if ("nds".equals((String)pmap.get("gubun"))) {
+		   pmap.put("mem_email_nds", mem_email);
+		   logger.info("mem_nds:"+mem_email);
+	   }
+	   errandLogic.errandRecordUpdate(pmap);
+   }
 }

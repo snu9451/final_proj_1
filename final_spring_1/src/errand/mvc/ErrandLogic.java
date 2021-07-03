@@ -17,4 +17,9 @@ public class ErrandLogic {
       errandRecord = errandDao.selectErrandRecord(pmap);
       return errandRecord;
    }
+   
+   public void errandRecordUpdate(Map<String, Object> pmap) {
+	   logger.info("logic : errandRecordUpdate 호출 성공");
+	   errandDao.errandRecordUpdate(pmap);
+   }
 }

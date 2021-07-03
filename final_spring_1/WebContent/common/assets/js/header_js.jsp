@@ -25,7 +25,16 @@ $(document).ready(function(){
 	$('.dropdown-toggle').dropdown('toggle');
 	$(".dropdown-toggle").dropdown("toggle");
 	
-	
+	$('.h_coin').click(function(){
+		$.ajax({
+            url : "/member/selectCoin.nds",
+            success : function(data) {
+            },
+            error : function(e) {
+           	 console.log("error="+e.toString());
+            }
+         });
+	});
 	
 	
 })

@@ -15,12 +15,13 @@
 <body>
 
 
-
   <!-- =========================================== ▼ ＣＯＭＭＯＮ　ＳＥＣＴＩＯＮ  ▼ ============================================= -->
 <%@ include file="../common/header.jsp" %>
 <%@ include file="../myPage/left_bar.jsp" %>
   <!-- =========================================== ▲ ＣＯＭＭＯＮ　ＳＥＣＴＩＯＮ ▲ ============================================= -->
+<%
 
+%>
 
 
 
@@ -31,7 +32,7 @@
 					<h4 class="coin">보유 코인 :</h4>
 					<h4 class="coin1"><%=coin_remain %></h4>
 					<h4 class="coin won">원</h4>
-					<button type="button" class="btn btn-outline-warning">충전</button>
+					<button type="button" data-toggle="modal" data-target="#coinCharge" class="h_coin btn btn-outline-warning">충전</button>
 					<button type="button" class="btn btn-outline-warning">출금</button>
 				</span>
 			</div>
@@ -57,159 +58,18 @@
 							<td>10600원</td>
 							<td>입금</td>
 						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
-						<tr>
-							<td>inserthere</td>
-							<td>ex) 셀보다 길이가 크면 '...' 처리</td>
-							<td>inserthere</td>
-							<td>inserthere</td>
-							<td>insert</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
-
+	
+	
+	
+	
+  <!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ ▼ ＭＯＤＡＬ　ＰＡＲＴ ▼ /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+<%-- <!-- CoinCharge 모달 --><%@ include file="../common/coinCharge.jsp" %> --%>
+  <!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ ▼ ＭＯＤＡＬ　ＰＡＲＴ ▼ \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
 
 
 

@@ -168,13 +168,53 @@ function resAction() {
    
 }
 $(document).ready(function () {
-   reqAction();
-   $('.delete').on('click', function(){
+	pageReq = "req";
+	pageRes = "res";
+	var url = location.href;
+	var getPage1 = url.indexOf(pageReq);
+	var getPage2 = url.indexOf(pageRes);
+	console.log(getPage1);
+	console.log(getPage2);
+	if (getPage2 != -1) {
+		$(".response").addClass("active");
+		$(".request").removeClass("active");
+		resAction();
+	} else {
+		reqAction();
+	}
+   $('#errReqDel').on('click', function(){
       $('.custom-control-input:checked').each(function(index){
-         console.log($('.custom-control-input:checked').eq(index).attr('id'));
+    	 let errandKey = $('.custom-control-input:checked').eq(index).attr('id');
+    	 errandKey = errandKey.substr(11,errandKey.length-1);
+         console.log(errandKey);
+         $.ajax({
+             url : "/errand/errandRecordUpdate.nds?gubun=req&errandKey="+errandKey,
+             success : function(data) {//@data-json,xml,html,text
+                 location.href = "my_errand.nds?req";
+             },
+             error : function(e) {//@param-XMLHttpRequest
+            	 console.log("error="+e.toString());
+             }
+          });
+         //window.location.reload();
       })
    });
-   
-   
+   $('#errNdsDel').on('click', function(){
+      $('.custom-control-input:checked').each(function(index){
+    	 let errandKey = $('.custom-control-input:checked').eq(index).attr('id');
+    	 errandKey = errandKey.substr(11,errandKey.length-1);
+         console.log(errandKey);
+         $.ajax({
+             url : "/errand/errandRecordUpdate.nds?gubun=nds&errandKey="+errandKey,
+             success : function(data) {//@data-json,xml,html,text
+                 location.href = "my_errand.nds?res";
+             },
+             error : function(e) {//@param-XMLHttpRequest
+            	 console.log("error="+e.toString());
+             }
+          });
+         //window.location.reload();
+      })
+   });
 });
 </script>

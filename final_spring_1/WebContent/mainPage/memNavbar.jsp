@@ -15,7 +15,10 @@
 	</li>
 	<li><a href=""><%=mem_nickname%></a></li>
 	<li><a href="">상품판매</a></li>
-	<li><a href="">코인충전</a></li>
+	<li><a class="h_coin" data-toggle="modal" data-target="#coinCharge" href="">코인충전</a></li>
 	<li><a id="h_myPage" style="cursor:pointer;">마이페이지</a></li>
 	<li><a id="h_logout" style="cursor:pointer;">로그아웃</a></li>
 </div>
+
+
+

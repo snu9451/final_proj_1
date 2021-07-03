@@ -41,12 +41,13 @@
 		mem_nickname = login.get("MEM_NICKNAME").toString();
 		mem_email = login.get("MEM_EMAIL").toString();
 		mem_star = Double.parseDouble(String.valueOf(login.get("MEM_STAR")));
-		coin_remain = Integer.parseInt(String.valueOf(login.get("COIN_REMAIN")));
+// 		coin_remain = Integer.parseInt(String.valueOf(login.get("COIN_REMAIN")));
 		
 %>
 	<!-- 회원 로그인시 나타나는 nav bar --><%@ include file="../mainPage/memNavbar.jsp" %>
 <%
 	}
+
 %>
 		</ul>
 		</nav>
@@ -61,4 +62,6 @@
 
   <!-- ====================================== ▼ HEADER에서 쓰이는 모달 ▼ ====================================== -->
   <!-- 로그인 모달 --><%@ include file="../mainPage/login_modal.jsp" %>
+  
+  <!-- 코인충전 모달 있던 자리 --><%@ include file="../common/coinCharge.jsp" %>
   <!-- ====================================== ▲ HEADER에서 쓰이는 모달 ▲ ====================================== -->

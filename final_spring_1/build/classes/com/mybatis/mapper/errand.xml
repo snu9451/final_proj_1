@@ -3,14 +3,35 @@
 <mapper namespace="com.mybatis.mapper.errand">
 <!-- ==================================== 심부름 내역보기 Select문 ==================================== -->
     <select id="selectErrand" parameterType="map" resultType="map">
-       SELECT er.errandkey, er.errand_status, SUBSTR(er.errand_request_date, 1,10) errand_request_date, er.errand_content, er.errand_total_price, er.mem_email_nds, er.mem_email_req, mb.mem_nickname
+       SELECT er.errandkey, er.errand_status, SUBSTR(er.errand_request_date, 1,10) errand_request_date, 
+       		  er.errand_content, er.errand_total_price, er.mem_email_nds, er.mem_email_req, mb.mem_nickname
  		 FROM Errand er, MEMBER mb
       <if test='mem_email_req!=null'>
-        WHERE mb.mem_email = er.mem_email_nds AND mem_email_req = #{mem_email_req}
+        WHERE mb.mem_email = er.mem_email_nds 
+          AND er.req_isshow = 'T' 
+          AND mem_email_req = #{mem_email_req}
       </if>
       <if test='mem_email_nds!=null'>
-        WHERE mb.mem_email = er.mem_email_req AND mem_email_nds = #{mem_email_nds}
+        WHERE mb.mem_email = er.mem_email_req 
+          AND er.nds_isshow = 'T' 
+          AND mem_email_nds = #{mem_email_nds}
       </if>
    </select>
 <!-- ==================================== 심부름 내역보기 Select문 ==================================== -->
+
+<!-- ==================================== 심부름 내역보기 Update문 ==================================== -->
+   <update id="errandRecordUpdate" parameterType="map">
+       UPDATE errand
+      <if test='mem_email_req!=null'>
+          SET req_isshow = 'F'
+        Where errandKey = #{errandKey}
+          AND mem_email_req = #{mem_email_req}
+      </if>
+      <if test='mem_email_nds!=null'>
+          SET nds_isshow = 'F'
+        Where errandKey = #{errandKey}
+          AND mem_email_nds = #{mem_email_nds}
+      </if>
+   </update>
+<!-- ==================================== 심부름 내역보기 Update문 ==================================== -->
 </mapper>

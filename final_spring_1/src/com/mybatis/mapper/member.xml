@@ -55,6 +55,7 @@
 		<set>
 			<if test='mem_nickname!=null'>mem_nickname = #{mem_nickname}</if>
 			<if test='change_img!=null'>mem_img = #{change_img}</if>
+			<if test='remainCoin!=null'>coin_remain = #{remainCoin}</if>
 		</set>
 		 WHERE mem_email = #{mem_email}
 	</update>

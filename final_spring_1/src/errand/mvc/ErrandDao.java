@@ -20,5 +20,9 @@ public class ErrandDao {
       errandRecord = sqlSessionTemplate.selectList("selectErrand", pmap);
       return errandRecord;
    }
-
+   
+   public void errandRecordUpdate(Map<String, Object> pmap){
+	   logger.info("dao : errandRecordUpdate 호출 성공");
+	   sqlSessionTemplate.update("errandRecordUpdate", pmap);
+   }
 }

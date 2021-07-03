@@ -120,6 +120,19 @@ public class MemberController extends MultiActionController {
 		
 		
 	}
+	public void selectCoin(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session = req.getSession();
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		HashMapBinder hmb = new HashMapBinder(req);
+	    Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+	    String mem_email = (String) login.get("MEM_EMAIL");
+		pmap.put("mem_email", mem_email);
+		hmb.bindPost(pmap);
+		memberLogic.selectMemberAdmin(pmap);
+		logger.info("************맵*********** : "+ pmap);
+		String coin_remain = (String)pmap.get("coin_remain");
+		logger.info("************남은 코인 얼마냐*********** : "+coin_remain);
+	}
 	
 	// ===================================== [[ INSERT ]] =====================================
 	// 회원가입 모달에서 확인 버튼 클릭 시
@@ -278,25 +291,9 @@ public class MemberController extends MultiActionController {
 		String mem_email = ((MemberVO)session.getAttribute("login")).getMem_email();
 		pmap.put("mem_email", mem_email);
 		// 프로시저 실행 결과를 받아줄 proc_result 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
-		pmap.put("proc_result", 0);
-		int result = 0;///////////////////////////////////////////////////////////////////////////////////////여기수정
-//		int result = memberLogic.updateMoney(pmap);///////////////////////////////////////////////////////////
+		memberLogic.updateMember(pmap);///////////////////////////////////////////////////////////
 		// 처리 결과가 성공이면 (coin_trans 테이블에 insert와 member 테이블에 update 모두 성공) 2를 반환한다.
-		String io = (String)pmap.get("trans_io");
-		if(result == 2) {
-			// 충전인 경우
-			if(io != null && "I".equals(io)) {
-				AjaxDataPrinter.out(res, "text/html", "충전이 완료되었습니다.");				
-			}
-			// 출금인 경우
-			else if(io != null && "O".equals(io)) {
-				AjaxDataPrinter.out(res, "text/html", "입력하신 금액이 계좌로 출금되었습니다.");				
-			}
-		}
-		// 오라클 서버 장애 등으로 처리가 실패한 경우
-		else {
-			
-		}
+		
 		
 	}
 	// (2) 계좌로 출금
@@ -778,7 +775,16 @@ public class MemberController extends MultiActionController {
 		return mav;
 	}
 	public ModelAndView getMyWallet(HttpServletRequest req, HttpServletResponse res) {
+		//logger.info("getMyWallet 메소드 호출");
+		//HttpSession session = req.getSession();
+		//Map<String, Object> map = (Map<String, Object>)session.getAttribute("login");
+		//String mem_email = (String)map.get("MEM_EMAIL");
+		//map.put("mem_email", mem_email);
+		//Map<String, Object> rmap = memberLogic.selectMemberAdmin(map);
+		//logger.info(map);
 		ModelAndView mav = new ModelAndView("/myPage/my_wallet.jsp");
+		//logger.info(Integer.parseInt(String.valueOf(rmap.get("COIN_REMAIN"))));
+		//mav.addObject("coin_remain", rmap.get("COIN_REMAIN"));
 		return mav;
 	}
 	public ModelAndView getMyLike(HttpServletRequest req, HttpServletResponse res) {

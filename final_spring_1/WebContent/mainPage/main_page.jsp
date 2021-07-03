@@ -285,7 +285,6 @@ toastr.info("알람 메시지", "안녕하세요~", {
   <!-- 로그인 모달 있던 자리 -->
   <!-- 회원가입(이메일) 모달 있던 자리 --><%@ include file="../mainPage/joinForm.jsp" %>
   <!-- 회원가입 양식 모달 있던 자리 --><%@ include file="../mainPage/joinForm.jsp" %>
-  <!-- 코인충전 모달 있던 자리 --><%@ include file="../mainPage/coinCharge.jsp" %>
   <!-- 심부름 모달 있던 자리 --><%@ include file="../mainPage/errand.jsp" %>
   <!-- 게시글 신고 모달 --><%@ include file="../mainPage/reportBoard.jsp" %>
   <!-- 회원 신고 모달 --><%@ include file="../mainPage/reportMem.jsp" %>
