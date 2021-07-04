@@ -5,7 +5,7 @@ let req_cnt = -1;
 let nds_cnt = -1;
 function reqAction() {
 	$('.nds_errand_tb').hide();
-	console.log("요청심부름1"+$('#nds_tbody_req').children().size());
+	console.log("요청심부름1"+$('#nds_tbody_req').children().length);
 	$.ajax({
 		url : "myErrand_req_rec_FB.jsp",
 		success : function(data) {//@data-json,xml,html,text
@@ -15,9 +15,9 @@ function reqAction() {
 		}
 	});
 	console.log('req_cnt(1)='+req_cnt);
-	if($('#nds_tbody_req').children().size() == 0){
+	if($('#nds_tbody_req').children().length == 0){
 		$.ajax({
-			url : "http://192.168.0.163:9696/errand/selectErrandRecord.nds?gubun=req",
+			url : "http://localhost:9696/errand/selectErrandRecord.nds?gubun=req",
 			success : function(data) {//@data-json,xml,html,text
 				console.log(data);
 				let str = "";
@@ -105,9 +105,9 @@ function resAction() {
 	console.log("수행심부름");
 	$(".errand_FB").html("");
 	console.log('nds_cnt(1)='+nds_cnt);
-	if($('#nds_tbody_nds').children().size() == 0){
+	if($('#nds_tbody_nds').children().length == 0){
 		$.ajax({
-			url : "http://192.168.0.163:9696/errand/selectErrandRecord.nds?gubun=nds",
+			url : "http://localhost:9696/errand/selectErrandRecord.nds?gubun=nds",
 			success : function(data) {//@data-json,xml,html,text
 				console.log(data);
 				let str = "";

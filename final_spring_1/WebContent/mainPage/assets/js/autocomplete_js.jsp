@@ -20,7 +20,7 @@
 			/* 입력된 검색어가 없는 경우(지워진 경우) 자동완성창을 닫아주어야 함 */
 			if(keyword.length > 0){
 				$.ajax({
-					url: "http://192.168.0.163:9696/etc/selectAutocompleteList.nds",
+					url: "http://localhost:9696/etc/selectAutocompleteList.nds",
 					type: 'post',
 					dataType: 'json',
 					data: keyword,
