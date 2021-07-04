@@ -5,9 +5,7 @@
   <!-- Favicons -->
   <link href="../common/assets/img/mybro_favicon.png" rel="icon">
   <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Jua&family=Sunflower:wght@300&display=swap" rel="stylesheet">
   <!-- Vendor CSS Files -->
   <link href="../common/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -18,5 +16,6 @@
   <link href="../common/assets/vendor/aos/aos.css" rel="stylesheet">
   <!-- Template Main CSS File -->
   <link href="../mainPage/assets/css/style.css" rel="stylesheet">
+  <link href="../itemPage/assets/css/style.css" rel="stylesheet">
   <link href="../mainPage/assets/css/main_page.css" rel="stylesheet">
   <link href="../common/assets/css/header.css" rel="stylesheet">

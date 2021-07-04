@@ -1,21 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>  
+<%
+	Map<String,Object> itemContext = null;
+	List<String> imgs = null;
+	if(request.getAttribute("item")!=null&&request.getAttribute("itemImgs")!=null){
+		itemContext =(Map<String,Object>)request.getAttribute("item");
+		//결과값[4.png] 사진
+		imgs = (List<String>) request.getAttribute("itemImgs");
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>상품등록페이지</title>
+  <title>BizLand Bootstrap Template - Index</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-  <!-- =============================================== ▼ ＳＣＲＩＰＴ  ▼ ================================================= -->
-<%@ include file="../itemUpload/source_h.jsp" %>
-  <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
+<%@ include file="../itemUpload/source_f.jsp" %>
 </head>
 <body>
-  <!-- =========================================== ▼ ＣＯＭＭＯＮ　ＳＥＣＴＩＯＮ  ▼ ============================================= -->
-<%@ include file="../common/header.jsp" %>
-  <!-- =========================================== ▲ ＣＯＭＭＯＮ　ＳＥＣＴＩＯＮ ▲ ============================================= -->
+
+
+
+  <!-- ========================================= ▼ ＨＥＡＤＥＲ　ＳＥＣＴＩＯＮ ▼ ========================================= -->
+  <%@ include file="../common/header.jsp" %>
+  <!-- ========================================= ▲ ＨＥＡＤＥＲ　ＳＥＣＴＩＯＮ ▲ ========================================= -->
+
+
+
 
   <!-- ======= 상품등록페이지 시작 ======= -->
   <section id="featured-services" class="featured-services">
@@ -66,9 +80,16 @@
                   <h4 class="item_info_title">분류</h4>
                   <select id="essential3" class="form-select">
                     <option selected>카테고리 선택</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="1">디지털기기</option>
+                    <option value="2">가구</option>
+                    <option value="3">화장품</option>
+                    <option value="4">유아동</option>
+                    <option value="5">의류</option>
+                    <option value="6">도서</option>
+                    <option value="7">식물</option>
+                    <option value="8">스포츠</option>
+                    <option value="9">반려동물용품</option>
+                    <option value="10">기타</option>
                   </select>
                   <h4 class="item_info_title" style="color: rgb(211, 69, 69); font-size: 16px;">필수 입력 사항입니다.</h4>
                 </div>
@@ -76,16 +97,31 @@
               <div class="item_info_title_price_section">
                 <div class="item_info_title_section">
                   <h4 class="item_info_title">제목</h4>
-                  <input class="textbox_com" id="essential1" type="text" placeholder="&nbsp필수 입력 사항입니다." size="50" maxlength="50">
+                     <% if(itemContext!=null){ %> 
+                  		<input class="textbox_com" id="essential1" type="text" placeholder="&nbsp필수 입력 사항입니다." 
+                  		value = "<%=itemContext.get("BM_TITLE")%>" size="50" maxlength="50">
+                  	<% } else{ %>
+                  		<input class="textbox_com" id="essential1" type="text" placeholder="&nbsp필수 입력 사항입니다." size="50" maxlength="50"> 
+                  	<% } %>
                 </div>
                 <div class="item_info_price_section">
                   <h4 class="item_info_title">&nbsp&nbsp&nbsp가격</h4>
-                  <input class="textbox_com" id="essential2" type="number" placeholder="&nbsp필수 입력 사항입니다." max="10000000">
+                  	<% if(itemContext!=null){ %> 
+                  		<input class="textbox_com" id="essential2" type="number" placeholder="&nbsp필수 입력 사항입니다." 
+                  		value = "<%=Integer.parseInt(itemContext.get("BM_PRICE").toString())%>" max="10000000">
+                  	<% } else{ %>
+	                  <input class="textbox_com" id="essential2" type="number" placeholder="&nbsp필수 입력 사항입니다." max="10000000">
+                  	<% } %>
                 </div>
               </div>
                 <div class="item_info_content_section">
                   <h4 class="item_info_title">내용</h4>
-                  <textarea class="textarea" cols="119" rows="10" size="200" maxlength="200"></textarea>
+                  	<textarea class="textarea" cols="119" rows="10" size="200" maxlength="200">
+                    <% if(itemContext!=null){ %> 
+                  		<%= itemContext.get("BM_CONTENT") %></textarea>
+                  	<% } else{ %>
+                  		</textarea>
+                  	<% } %>
                 </div>
             <div class="footer">
               <div class="item_submit">
@@ -104,22 +140,17 @@
 
 
 
-
-  <!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ ▼ ＭＯＤＡＬ　ＰＡＲＴ ▼ /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
-<!-- myInfo 모달 --><%@ include file="../itemUpload/itemUpload_modal.jsp" %>
-  <!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ ▼ ＭＯＤＡＬ　ＰＡＲＴ ▼ \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
-
-
-
-
-
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ ▼ ＭＯＤＡＬ　ＰＡＲＴ ▼ /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+<%@ include file="../itemUpload/itemUpload_modal.jsp" %>
+<!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ ▼ ＭＯＤＡＬ　ＰＡＲＴ ▼ \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
 
 
 
 
   <!-- =============================================== ▼ ＳＣＲＩＰＴ  ▼ ================================================= -->
-<%@ include file="../itemUpload/source_f.jsp" %>
+  <%@ include file="../itemUpload/source_f.jsp" %>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
+
 </body>
 
 </html>
