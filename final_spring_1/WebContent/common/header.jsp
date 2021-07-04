@@ -9,9 +9,8 @@
   			<i class="fas fa-bars"></i>
   		</button>
 		<div class="dropdown-menu" aria-labelledby="category_drop">
-			<a class="dropdown-item" href="#">Action</a>
-			<a class="dropdown-item" href="#">Another action</a>
-			<a class="dropdown-item" href="#">Something else here</a>
+        	<ul class="pl-0 mb-0" id="category_item">
+         	</ul>
 		</div>
 	</div>
 	<div style="width: 85%; padding-left: 50px;">
@@ -64,4 +63,8 @@
   <!-- 로그인 모달 --><%@ include file="../mainPage/login_modal.jsp" %>
   
   <!-- 코인충전 모달 있던 자리 --><%@ include file="../common/coinCharge.jsp" %>
+  <!-- 회원가입 모달 --><%@ include file="../mainPage/join.jsp" %>
+  <!-- 회원가입 양식 모달 --><%@ include file="../mainPage/joinForm.jsp" %>
+  <!-- 코인충전 모달 --><%@ include file="../mainPage/coinCharge.jsp" %>
+  <!-- 심부름 모달 --><%@ include file="../mainPage/errand.jsp" %>
   <!-- ====================================== ▲ HEADER에서 쓰이는 모달 ▲ ====================================== -->

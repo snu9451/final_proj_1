@@ -110,22 +110,22 @@
 }
 
 /* 중고상품 좋아요 버튼 */
-#likeBtn {
+.likeBtn {
   background-color: transparent;
   border: none;
   outline: none;
 }
 
-#likeBtn > i {
+.likeBtn > i {
   transition: all 0.1s ease-out;
 }
 
-#likeBtn:hover > i {
+.likeBtn:hover > i {
   transform: scale(1.1);
   color: red;
 }
 
-#likeBtn:active > i {
+.likeBtn:active > i {
   transform: scale(0.9);
   color: rgb(255, 139, 139);
 }

@@ -19,7 +19,7 @@
 							<div class="form-row col-12 ">
 								<div class="col-9 d-flex flex-column">
 									<input name="mem_email" class="form-control mb-2 w-100"
-										type="text" placeholder="id를 입력해주세요."> <input
+										type="text" placeholder="id를 입력해주세요."> <input onkeyup="javascript:if(event.keyCode==13){doLogin();}"
 										name="mem_pw" class="form-control mb-2 w-100" type="password"
 										placeholder="password를 입력해주세요.">
 								</div>

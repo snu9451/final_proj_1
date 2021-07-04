@@ -78,6 +78,15 @@ public class ItemLogic {
 		return itemDao.editItemImg(pr_bm_no);
 	}
 	
+	//하나의 상품에 대한 댓글들을 가져옴
+	public List<Map<String, Object>> selectItemDetailComment(int pr_bm_no, String nickName) {
+		Map<String, Object> pmap = new HashMap<>();
+		pmap.put("pr_bm_no",pr_bm_no);
+		pmap.put("pr_nickName",nickName);		
+		return (List<Map<String, Object>>)itemDao.selectItemDetailComment(pmap).get("p_temp");
+	}
+	
+	
 	//상품 삭제 시
 	public void deleteItem(Map<String, Object>  pmap) {
 		logger.info("Logic : deleteItem메소드 호출");
@@ -99,7 +108,11 @@ public class ItemLogic {
 	//댓글 달기. 대댓글 달기
 	public Map<String, Object> insertComment(Map<String, Object> pmap) {
 		logger.info("Logic : insertComment메소드 호출");
-		return itemDao.insertComment(pmap);
+		Map<String, Object> map = itemDao.insertComment(pmap);
+		Map<String, Object> remap = (Map<String, Object>) ((List<Map<String, Object>>) map.get("p_temp")).get(0);
+		remap.put("result",map.get("result"));
+		remap.put("COMMENT_ME", 1);
+		return remap;
 	}
 	//댓글 or 대댓글 삭제
 	public String deleteComment(Map<String, Object> pmap) {

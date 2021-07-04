@@ -84,8 +84,7 @@
   $(".owl-carousel").owlCarousel({
     items: 1,
     loop: true,
-    mergeFit: true,
-    margin: 30,
+    margin: 10,
     nav: true,
     navText: [
       [`<i class="fas fa-chevron-left"></i>`],

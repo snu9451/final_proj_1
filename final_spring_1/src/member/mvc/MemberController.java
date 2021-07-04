@@ -95,8 +95,9 @@ public class MemberController extends MultiActionController {
 		// 세션에 담긴 회운정보(이메일) 가져오기
 		HttpSession session = req.getSession();
 		Map<String, Object> pmap = new HashMap<String, Object>();
-		MemberVO mvo = (MemberVO)session.getAttribute("login");
-		String mem_email = mvo.getMem_email();
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+		logger.info(mvo);
+		String mem_email = (String)mvo.get("MEM_EMAIL");
 		pmap.put("mem_email", mem_email);
 		Map<String, Object> rmap = memberLogic.selectMemberAdmin(pmap);
 		req.setAttribute("memberMap", rmap);
@@ -171,9 +172,9 @@ public class MemberController extends MultiActionController {
 		hmb.bindPost(pmap);
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
-		MemberVO mvo = (MemberVO)session.getAttribute("login");
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
 		logger.info(mvo);
-		String mem_email = mvo.getMem_email();
+		String mem_email = (String)mvo.get("MEM_EMAIL");
 		pmap.put("mem_email", mem_email);
 		int result = memberLogic.updateMember(pmap);
 		logger.info("NickName 업데이트 결과 ===> "+result);
@@ -201,15 +202,15 @@ public class MemberController extends MultiActionController {
 		hmb.bindPost(pmap);
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
-		MemberVO mvo = (MemberVO)session.getAttribute("login");
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
 		logger.info(mvo);
-		String mem_email = mvo.getMem_email();
+		String mem_email = (String)mvo.get("MEM_EMAIL");
 		pmap.put("mem_email", mem_email);
 		int result = memberLogic.updateMember(pmap);
 		logger.info("프로필 사진 업데이트 결과 ===> "+result);
 		// 프로필 사진 변경 실패 시
 		if(result == 0) {
-			AjaxDataPrinter.out(res, "text/html", "[ERROR] 프로필 사진 변경에 <b>실패</b>하였습니다.");
+			AjaxDataPrinter.out(res, "text/html", "[ERROR] 프로필 사진 변경에 <b style=\"color: red\">실패</b>하였습니다.");
 		}
 		// 프로필 사진 변경 성공 시
 		else {
@@ -224,9 +225,9 @@ public class MemberController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bindPost(pmap);
 		HttpSession session = req.getSession();
-		MemberVO mvo = (MemberVO)session.getAttribute("login");
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
 		logger.info(mvo);
-		String mem_email = mvo.getMem_email();
+		String mem_email = (String)mvo.get("MEM_EMAIL");
 		pmap.put("mem_email", mem_email);
 		// 프로시저 실행 결과를 받아줄 RESULT 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
 		pmap.put("RESULT", 0);
@@ -234,7 +235,7 @@ public class MemberController extends MultiActionController {
 		logger.info("비밀번호 업데이트 결과 ===> "+result);
 		// 비밀번호 변경 실패 시
 		if(result == 0) {
-			AjaxDataPrinter.out(res, "text/html", "[ERROR] 비밀번호 변경에 <b>실패</b>하였습니다.");
+			AjaxDataPrinter.out(res, "text/html", "[ERROR] 비밀번호 변경에 <b style=\"color: red\">실패</b>하였습니다.");
 		}
 		// 비밀번호 변경 성공 시
 		else if(result ==1) {
@@ -252,8 +253,9 @@ public class MemberController extends MultiActionController {
 		hmb.bindPost(pmap); //
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
-		MemberVO mvo = (MemberVO)session.getAttribute("login");
-		String mem_email = mvo.getMem_email();
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+		logger.info(mvo);
+		String mem_email = (String)mvo.get("MEM_EMAIL");
 		pmap.put("mem_email", mem_email);
 		// 프로시저 실행 결과를 받아줄 proc_result 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
 		pmap.put("proc_result", 0);
@@ -261,7 +263,7 @@ public class MemberController extends MultiActionController {
 		logger.info("회원상태(mem_active) 업데이트 결과(탈퇴 처리 결과) ===> "+result);
 		// 입력 받은 현재 비밀번호가 [DB]에서 조회한 사용자의 비밀번호와 달라 회원 탈퇴 처리에 실패 시
 		if(result == 0) {
-			AjaxDataPrinter.out(res, "text/html", "<b>비밀번호</b>가 일치하지 않습니다. 다시 입력해주세요.");
+			AjaxDataPrinter.out(res, "text/html", "<b>비밀번호</b>가 일치하지 <b>않습니다.</b> 다시 입력해주세요.");
 		}
 		// 요청중 혹은 진행중인 심부름이 존재해서 회원 탈퇴 처리에 실패 시
 		else if(result == -1) {
@@ -288,7 +290,9 @@ public class MemberController extends MultiActionController {
 		hmb.bindPost(pmap);
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
-		String mem_email = ((MemberVO)session.getAttribute("login")).getMem_email();
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+		logger.info(mvo);
+		String mem_email = (String)mvo.get("MEM_EMAIL");
 		pmap.put("mem_email", mem_email);
 		// 프로시저 실행 결과를 받아줄 proc_result 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
 		memberLogic.updateMember(pmap);///////////////////////////////////////////////////////////
@@ -313,8 +317,9 @@ public class MemberController extends MultiActionController {
 			// 출금(O)이므로 map에 담아준다.
 			pmap.put("trans_io","O");
 			// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
-			MemberVO mvo = (MemberVO)session.getAttribute("login");
-			String mem_email = mvo.getMem_email();
+			Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+			logger.info(mvo);
+			String mem_email = (String)mvo.get("MEM_EMAIL");
 			pmap.put("mem_email", mem_email);
 			// [DB]에 update 및 insert 처리
 			int result = memberLogic.withdraw(pmap);
@@ -705,8 +710,9 @@ public class MemberController extends MultiActionController {
 		String numberCode = memberLogic.getRandomCode("ON", 6);
 		// 인증번호 발송을 요청한 사용자의 이메일을 세션에서 꺼내오기
 		HttpSession session = req.getSession();
-		MemberVO mvo = (MemberVO)session.getAttribute("login");
-		String mem_email = mvo.getMem_email();
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+		logger.info(mvo);
+		String mem_email = (String)mvo.get("MEM_EMAIL");
 		// 인증코드를 메일로 발송하기
 		Mail mail = new Mail();
 		mail.setReceiveEmail(mem_email, "[내동생] 인증코드 발송", "내동생 서비스를 이용해주셔서 감사합니다.<br>인증코드는 <b>"+numberCode+"</b>입니다.");
@@ -836,18 +842,18 @@ public class MemberController extends MultiActionController {
 //			e.printStackTrace();
 //		}
 	}
-	public void getAuth(HttpServletRequest req, HttpServletResponse res) {
-		HttpSession session = req.getSession();
-		MemberVO mvo = new MemberVO();
-		mvo.setMem_email("apple@good.com");
-		mvo.setMem_nickname("사과");
-		session.setAttribute("login", mvo);
-		Cookie cookie = new Cookie("NDS_SKEY", "010010010");
-		cookie.setPath("/");
-		cookie.setMaxAge(0);
-		res.addCookie(cookie);
-		logger.info("관리자로 로그인하였음");
-	}
+//	public void getAuth(HttpServletRequest req, HttpServletResponse res) {
+//		HttpSession session = req.getSession();
+//		MemberVO mvo = new MemberVO();
+//		mvo.setMem_email("apple@good.com");
+//		mvo.setMem_nickname("사과");
+//		session.setAttribute("login", mvo);
+//		Cookie cookie = new Cookie("NDS_SKEY", "010010010");
+//		cookie.setPath("/");
+//		cookie.setMaxAge(0);
+//		res.addCookie(cookie);
+//		logger.info("관리자로 로그인하였음");
+//	}
 	public void showEmail(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 //		MemberVO mvo = (MemberVO)session.getAttribute("login");

@@ -702,6 +702,7 @@ section {
 --------------------------------------------------------------*/
 .product {
   background-color: #8aaee2;
+  padding-bottom: 500px;
 }
 
 .product__title h2 {
@@ -766,6 +767,10 @@ section {
   transition: all ease-in-out 0.3s;
   background: white;
 }
+.product .product__box:hover {
+	filter: brightness(60%);
+	cursor: pointer;
+}
 
 .product .product__box .product__img {
   margin: 0 auto;
@@ -823,6 +828,8 @@ section {
   right: 3%;
   text-align: center;
   opacity: 0;
+  border-radius: 2%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 .search__visible {
