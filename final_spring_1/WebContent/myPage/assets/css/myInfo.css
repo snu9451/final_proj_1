@@ -957,8 +957,7 @@ table.like_tb td {
   border-bottom: 1px solid #cccccc;
 }
 #item_image {
-  width: 140px;
-  height: 85px;
+  height: 100px;
   border-radius: 8px;
   margin-left: 15px;
   border-bottom: 1px solid #cccccc;

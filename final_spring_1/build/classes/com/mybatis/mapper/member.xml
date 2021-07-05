@@ -68,6 +68,10 @@
 		</set>
 		 WHERE mem_email = #{mem_email}
 	</update>
+	<update id="proc_my_like_change" parameterType="map">
+	   {CALL proc_my_like_change(#{pr_MEM_EMAIL}, #{pr_BM_NO}
+	                  , #{i_like, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
+	</update>
 <!-- ==================================== [[ ＩＮＳＥＲＴ ]] ==================================== -->
 	<insert id="insertMember">
 		INSERT INTO member(mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_star_num)
