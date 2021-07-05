@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
@@ -15,8 +16,8 @@ function ajaxPW(){
 //	let pw = $("#mem_pw").val();
 	let mydata =  $('#f_myinfo').serialize();
 	$.ajax({
-		url : "http://192.168.0.163:9696/member/updatePw.nds",
-// 		url : "/ndshttp://192.168.0.163:9696/member/updatePw.nds?mem_email=banana@good.com&mem_pw="+pw+"&change_pw="+ch_pw,
+		url : "http://localhost:9696/member/updatePw.nds",
+// 		url : "/ndshttp://localhost:9696/member/updatePw.nds?mem_email=banana@good.com&mem_pw="+pw+"&change_pw="+ch_pw,
 		type : "post",
 		data: mydata,
 // 		data: { mem_email: banana@good.com, mem_pw: pw , change_pw: ch_pw}
@@ -48,7 +49,7 @@ function pwChange(){
 function nickSelect(){
 	let mynick = $('#f_checknickname').serialize();
 	$.ajax({
-		url: "http://192.168.0.163:9696/member/selectNickName.nds",
+		url: "http://localhost:9696/member/selectNickName.nds",
 		type : "post",
 		data: mynick,
 		success : function(data) {//@data-json,xml,html,text
@@ -75,13 +76,14 @@ function nickSelect(){
 function nickChange(){
 	let mynick = $('#f_checknickname').serialize();
 	$.ajax({
-		url: "http://192.168.0.163:9696/member/updateNickName.nds",
+		url: "http://localhost:9696/member/updateNickName.nds",
 		type : "post",
 		data: mynick,
 		success : function(data) {//@data-json,xml,html,text
 			if(data == 1){
 				// 성공한 경우
 				$("#nickChangeSuccs").modal('show');
+
 			} else {
 				$("#nickChangeFail").modal('show');
 			}
@@ -93,7 +95,7 @@ function nickChange(){
 function leave(){
 	let myleave =  $('#f_leave').serialize();
 	$.ajax({
-		url : "http://192.168.0.163:9696/member/leave.nds",
+		url : "http://localhost:9696/member/leave.nds",
 		type : "post",
 		data: myleave,
 		success : function(data) {

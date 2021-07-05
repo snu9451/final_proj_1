@@ -1,9 +1,12 @@
 package errand.mvc;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -60,4 +63,67 @@ public class ErrandController extends MultiActionController{
 //      return mav;
          
    }
+   /* /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
+ 	public void getErrand(HttpServletRequest req, HttpServletResponse res) {
+ 		HttpSession session = req.getSession();
+ 		Map<String, Object> pmap = new HashMap<String, Object>();
+ 		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+ 		String mem_email = (String)mvo.get("MEM_EMAIL");
+ 		pmap.put("mem_email", mem_email);
+ 		Map<String, Object> rmap = errandLogic.getErrand(pmap);
+ 		req.setAttribute("memberMap", rmap);
+ 		RequestDispatcher rd = req.getRequestDispatcher("/myPage/chatroomNotice.jsp");
+ 		try {
+ 			rd.forward(req, res);
+ 		} catch (ServletException e) {
+ 			e.printStackTrace();
+ 		} catch (IOException e) {
+ 			e.printStackTrace();
+ 		}
+ 	}
+ 	public void insertErrand(HttpServletRequest req, HttpServletResponse res) {
+ 		logger.info("insertErrand 메소드 호출 성공!");
+ 		Map<String, Object> pmap = new HashMap<String, Object>();
+ 		HashMapBinder hmb = new HashMapBinder(req);
+ 		hmb.bindPost(pmap);
+ 		HttpSession session = req.getSession();
+ 		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+ 		logger.info(mvo);
+ 		String mem_email = (String)mvo.get("MEM_EMAIL");
+ 		pmap.put("mem_email", mem_email);
+ 		// 프로시저 실행 결과를 받아줄 RESULT 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
+ 		pmap.put("RESULT", 0);
+ 		int result = errandLogic.insertErrand(pmap);
+ 		logger.info("심부름 insert 결과 ===> "+result);
+ 		// 심부름 insert 실패 시
+ 		if(result == 0) {
+ 			AjaxDataPrinter.out(res, "text/html", "[ERROR] 심부름 insert <b>실패</b>하였습니다.");
+ 		}
+ 		// 심부름 insert 성공 시
+ 		else if(result ==1) {
+ 			AjaxDataPrinter.out(res, "text/html", "성공.");
+ 		}
+ 	}
+ 						/* 확인했으면 주석을 지우셔도 됩니다. */
+ 	/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */
+ 	
+    public void errandRecordUpdate(HttpServletRequest req, HttpServletResponse res) throws Exception {
+ 	   logger.info("ctrl : errandRecordUpdate 호출 성공");
+ 	   Map<String,Object> pmap = new HashMap<>();      
+ 	   HashMapBinder hmb = new HashMapBinder(req);
+ 	   hmb.bindPost(pmap);
+ 	   HttpSession session = req.getSession();
+ 	   Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+ 	   
+ 	   String mem_email = (String) login.get("MEM_EMAIL");
+ 	   if("req".equals((String)pmap.get("gubun"))) {
+ 		   pmap.put("mem_email_req", mem_email);
+ 		   logger.info("mem_req:"+mem_email);
+ 	   } else if ("nds".equals((String)pmap.get("gubun"))) {
+ 		   pmap.put("mem_email_nds", mem_email);
+ 		   logger.info("mem_nds:"+mem_email);
+ 	   }
+ 	   errandLogic.errandRecordUpdate(pmap);
+    }
+ 	
 }

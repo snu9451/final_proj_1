@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+<%
+	String join_email = (String)request.getAttribute("join_email");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,14 +41,14 @@
   <!-- ============================================== ▼ 중고거래 상품 ▼ ================================================ -->
 		<section id="product" class="product">
 			<!-- ▼ 검색순위 플로팅 시작 ▼ -->
-			<div id="search__rank"
-				class="serach__rank position-absolute position-fixed">
-				<h3 class="mt-1">현재 검색 순위</h3>
-				<div class="d-flex justify-content-sm-center align-items-center">
-					<span>1</span>
-					<h4 class="mb-0">나이키 샌달</h4>
-				</div>
-			</div>
+<!-- 			<div id="search__rank" -->
+<!-- 				class="serach__rank position-absolute position-fixed"> -->
+<!-- 				<h3 class="mt-1">현재 검색 순위</h3> -->
+<!-- 				<div class="d-flex justify-content-sm-center align-items-center"> -->
+<!-- 					<span>1</span> -->
+<!-- 					<h4 class="mb-0">나이키 샌달</h4> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 			<!-- ▲ 검색순위 플로팅 끝 ▲ -->
 			<div class="container" data-aos="fade-up">
 				<!-- ▼ 메인 타이틀 시작 ▼ -->
@@ -117,6 +119,14 @@
   <!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ ▼ ＭＯＤＡＬ　ＰＡＲＴ ▼ \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
   <!-- =============================================== ▼ ＳＣＲＩＰＴ  ▼ ================================================= -->
 　　<%@ include file="../mainPage/source_f.jsp" %>
+<script type="text/javascript">
+<% if(join_email != null){ %>
+		$(document).ready(function(){
+			$('#inputEmail').val("<%=join_email%>");
+			$('#signUpModal').modal('show');
+		});
+<% } %>
+</script>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
 </body>
 </html>

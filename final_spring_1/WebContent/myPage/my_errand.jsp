@@ -60,31 +60,36 @@
 				<!-- DB에서 불러온 데이터가 들어갈 자리 -->
 				</tbody>
 			</table>
-		</div>
-		<div class="errand_bottom nds_errand_tb">
-			<span class="total_rec coin2" > 전체 : <span id="allcnt"></span> </span>
-			<table class="errand_tb" id="products">
-			<form action="" id="setRows">
-				<input type="hidden" name="rowPerPage" value="8" id="rowPerPage">
-			</form>
-				<thead>
-					<tr>
-						<th scope="cols" width="9%">선택</th>
-						<th scope="cols" width="18%">날짜</th>
-						<th scope="cols" width="49%">제목</th>
-						<th scope="cols" width="12%">가격</th>
-						<th scope="cols" width="12%">닉네임</th>
-					</tr>
-				</thead>
-				<tbody id="nds_tbody_nds">
-				<!-- DB에서 불러온 데이터가 들어갈 자리 -->
-				</tbody>
-			</table>
-		</div>
-			<div class="delete">
-				<a href="#" data-toggle="modal" data-target="#selDelete">
-					<button type="button" class="btn btn-danger">삭제</button>
-				</a>
+	      <div class="delete">
+	            <a href="#" data-toggle="modal" data-target="#selDelete">
+	               <button type="button" class="btn btn-danger">삭제</button>
+	            </a>
+	      </div>
+      </div>
+      <div class="errand_bottom nds_errand_tb">
+         <span class="total_rec coin2" > 전체 : <span id="allcnt1"></span> </span>
+         <table class="errand_tb" id="products">
+         <form action="" id="setRows">
+            <input type="hidden" name="rowPerPage" value="8" id="rowPerPage">
+         </form>
+            <thead>
+               <tr>
+                  <th scope="cols" width="9%">선택</th>
+                  <th scope="cols" width="18%">날짜</th>
+                  <th scope="cols" width="44%">제목</th>
+                  <th scope="cols" width="17%">가격</th>
+                  <th scope="cols" width="12%">닉네임</th>
+               </tr>
+            </thead>
+            <tbody id="nds_tbody_nds">
+            <!-- DB에서 불러온 데이터가 들어갈 자리 -->
+            </tbody>
+         </table>
+         <div class="delete">
+            <a href="#" data-toggle="modal" data-target="#selDelete1">
+               <button type="button" class="btn btn-danger">삭제</button>
+            </a>
+         </div>
 			</div>
 		</div>
 </div>
@@ -108,7 +113,12 @@
   <!-- =============================================== ▼ ＳＣＲＩＰＴ  ▼ ================================================= -->
 <%@ include file="../myPage/source_f.jsp" %>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
-	
+<script type="text/javascript">/* 김은영작업 - 추후에 include로 뺄 예쩡 */
+	$(document).ready(function () {
+		
+		   reqAction();
+	});
+</script>
 	
 	
 	

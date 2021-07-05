@@ -32,6 +32,7 @@
 		<property name="mappings">
 			<props>
 				<prop key="/member/reqLoginView.nds">member-controller</prop>
+				<prop key="/mainPage/reqJoinView.nds">member-controller</prop>
 				<prop key="/member/selectNickName.nds">member-controller</prop>
 				<prop key="/member/selectEmail.nds">member-controller</prop>
 				<prop key="/member/updateNickName.nds">member-controller</prop>
@@ -71,6 +72,7 @@
 		<property name="mappings">
 			<props>
 				<prop key="/member/reqLoginView.nds">reqLoginView</prop>
+				<prop key="/mainPage/reqJoinView.nds">reqJoinView</prop>
 				<prop key="/member/selectNickName.nds">selectNickName</prop>
 				<prop key="/member/selectEmail.nds">selectEmail</prop>
 				<prop key="/member/updateNickName.nds">updateNickName</prop>

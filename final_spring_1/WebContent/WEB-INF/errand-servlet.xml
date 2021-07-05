@@ -19,6 +19,7 @@
       <property name="mappings">
          <props>
             <prop key="/errand/selectErrandRecord.nds">errand-controller</prop>
+            <prop key="/errand/errandRecordUpdate.nds">errand-controller</prop>
          </props>
       </property>
    </bean>
@@ -28,6 +29,7 @@
       <property name="mappings">
          <props>
             <prop key="/errand/selectErrandRecord.nds">selectErrandRecord</prop>
+            <prop key="/errand/errandRecordUpdate.nds">errandRecordUpdate</prop>
          </props>
       </property>
    </bean>

@@ -194,4 +194,33 @@ public class MemberDao {
 		return rmap;
 	}
 
+
+
+
+
+
+
+	public List<Map<String, Object>> myWalletRecord(Map<String, Object> pmap) {
+		List<Map<String, Object>> walletRec = null;
+		logger.info(pmap);
+		walletRec= sqlSessionTemplate.selectList("myWalletRecord", pmap);
+		logger.info(pmap.get("mem_email"));
+		return walletRec;
+	}
+
+
+
+
+
+
+
+	public int insertCoinTrans(Map<String, Object> pmap) {
+		int result = 0;
+		logger.info(pmap);
+		result = sqlSessionTemplate.insert("insertCoinTrans", pmap);
+		logger.info(result);
+		return result;
+	}
+
+
 }
