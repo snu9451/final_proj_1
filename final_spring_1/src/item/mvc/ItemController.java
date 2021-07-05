@@ -307,7 +307,7 @@ public class ItemController extends MultiActionController {
 		//}
 	}
 	//마이페이지 찜 목록 클릭시
-	public void selectMyLike(HttpServletRequest req, HttpServletResponse res){
+	public ModelAndView getMyLike(HttpServletRequest req, HttpServletResponse res){
 		logger.info("controller : selectMyLike메소드 호출");
 		Map<String,Object> pmap = new HashMap<>();
 		HttpSession session= req.getSession(); 
@@ -318,9 +318,11 @@ public class ItemController extends MultiActionController {
 		logger.info("controller의 mem_email : "+ mem_email );
 		likeList = itemLogic.selectMyLike(pmap);
 		logger.info("controller의 likeList : "+ likeList );
-		
-		//}
+		ModelAndView mav = new ModelAndView("/myPage/my_like.jsp");
+		mav.addObject("walletRec", likeList);
+		return mav;
 	}
+		//}
 
 	//댓글 등록 - 댓글인지 대댓글인지 구분
 	public ModelAndView insertComment(HttpServletRequest req, HttpServletResponse res) {

@@ -50,51 +50,6 @@
 							<td class="divider">등록일 inserthere<br>inserthere원
 							</td>
 						</tr>
-						<tr>
-							<td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호
-								1</td>
-							<td class="divider_img"><img id="item_image"
-								src="../myPage/assets/img/ndschar.png"></td>
-							<td class="divider_con">카메라 팔아요.</td>
-							<td class="divider">등록일 2021-06-20<br>70000원
-							</td>
-						</tr>
-						<tr>
-							<td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호
-								1</td>
-							<td class="divider_img"><img id="item_image"
-								src="../myPage/assets/img/ndschar.png"></td>
-							<td class="divider_con">카메라 팔아요.</td>
-							<td class="divider">등록일 2021-06-20<br>70000원
-							</td>
-						</tr>
-						<tr>
-							<td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호
-								1</td>
-							<td class="divider_img"><img id="item_image"
-								src="../myPage/assets/img/ndschar.png"></td>
-							<td class="divider_con">카메라 팔아요.</td>
-							<td class="divider">등록일 2021-06-20<br>70000원
-							</td>
-						</tr>
-						<tr>
-							<td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호
-								1</td>
-							<td class="divider_img"><img id="item_image"
-								src="../myPage/assets/img/ndschar.png"></td>
-							<td class="divider_con">카메라 팔아요.</td>
-							<td class="divider">등록일 2021-06-20<br>70000원
-							</td>
-						</tr>
-						<tr>
-							<td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호
-								1</td>
-							<td class="divider_img"><img id="item_image"
-								src="../myPage/assets/img/ndschar.png"></td>
-							<td class="divider_con">카메라 팔아요.</td>
-							<td class="divider">등록일 2021-06-20<br>70000원
-							</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>

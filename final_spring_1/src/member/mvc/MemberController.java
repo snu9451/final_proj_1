@@ -838,10 +838,7 @@ public class MemberController extends MultiActionController {
 		//out.print(walletRec);
 		return mav;
 	}
-	public ModelAndView getMyLike(HttpServletRequest req, HttpServletResponse res) {
-		ModelAndView mav = new ModelAndView("/myPage/my_like.jsp");
-		return mav;
-	}
+
 	public ModelAndView getMyTrade(HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView mav = new ModelAndView("/myPage/my_trade.jsp");
 		return mav;

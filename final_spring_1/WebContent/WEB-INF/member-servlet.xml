@@ -51,7 +51,6 @@
 				<!-- ================== [[ 페이지 요청 url ]] ================== -->
 				<prop key="/myPage/my_info.nds">member-controller</prop>
 				<prop key="/myPage/my_wallet.nds">member-controller</prop>
-				<prop key="/myPage/my_like.nds">member-controller</prop>
 				<prop key="/myPage/my_trade.nds">member-controller</prop>
 				<prop key="/myPage/my_errand.nds">member-controller</prop>
 				<prop key="/mainPage/main_page.nds">member-controller</prop>
@@ -90,7 +89,6 @@
 				<prop key="/member/insertMember.nds">insertMember</prop>
 				<!-- ================== [[ 페이지 이동 url ]] ================== -->
 				<prop key="/myPage/my_info.nds">getMyInfo</prop>
-				<prop key="/myPage/my_wallet.nds">getMyWallet</prop>
 				<prop key="/myPage/my_like.nds">getMyLike</prop>
 				<prop key="/myPage/my_trade.nds">getMyTrade</prop>
 				<prop key="/myPage/my_errand.nds">getMyErrand</prop>
