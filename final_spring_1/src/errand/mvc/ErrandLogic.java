@@ -1,5 +1,6 @@
 package errand.mvc;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +18,18 @@ public class ErrandLogic {
       errandRecord = errandDao.selectErrandRecord(pmap);
       return errandRecord;
    }
+   /* /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
+	public Map<String, Object> getErrand(Map<String, Object> pmap) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = errandDao.getErrand(pmap);
+		logger.info(rmap);
+		return rmap;
+	}
+	public int insertErrand(Map<String, Object> pmap) {
+		int result = 0;
+		result = errandDao.insertErrand(pmap);
+		return 0;
+	}
+						/* 확인했으면 주석을 지우셔도 됩니다. */
+	/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */
 }

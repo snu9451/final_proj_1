@@ -17,5 +17,6 @@
 	<link href="../common/assets/vendor/venobox/venobox.css" rel="stylesheet">
 	<link href="../common/assets/vendor/aos/aos.css" rel="stylesheet">
 	<!-- CSS -->
+	<link href="../mainPage/assets/css/style.css" rel="stylesheet">
 	<link href="../myPage/assets/css/myInfo.css" rel="stylesheet">
 	<link href="../common/assets/css/header.css" rel="stylesheet">

@@ -51,18 +51,18 @@
     
   });
 
-  //지도 말풍선 클릭시 이벤트
-  $(window).on("load", function () {
-    console.log(3, "window.onload");
-    if ($(".errand_regist").length) {
-      $(document).on("click", ".errand_regist", function () {
-        console.log("errand!!!!!!!");
-        const modal = document.querySelector("#errand_modal");
-        console.log(modal);
-        $(modal).modal("show");
-      });
-    }
-  });
+//  //지도 말풍선 클릭시 이벤트
+//  $(window).on("load", function () {
+//    console.log(3, "window.onload");
+//    if ($(".errand_regist").length) {
+//      $(document).on("click", ".errand_regist", function () {
+//        console.log("errand!!!!!!!");
+//        const modal = document.querySelector("#errand_modal");
+//        console.log(modal);
+//        $(modal).modal("show");
+//      });
+//    }
+//  });
 
   //버튼 누르면 top으로 이동
   $(".back-to-top").click(function () {

@@ -33,7 +33,7 @@
 							</div>
 							<div class="p-3 text-left">
 								<h3>
-									<a id="pTitle" name="pr_bm_no" href="http://192.168.0.163:9696/item/selectItemDetail.nds?pr_bm_no=<%= 3 %>">nike 데이브레이크</a>
+									<a id="pTitle" name="pr_bm_no" href="http://localhost:9696/item/selectItemDetail.nds?pr_bm_no=<%= 3 %>">nike 데이브레이크</a>
 								</h3>
 								<p id="pDescrip">[[ 상품내용 ]]Duis aute irure dolor in
 									reprehenderit in voluptate velit esse cillum dolore</p>

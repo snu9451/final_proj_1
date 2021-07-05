@@ -1,6 +1,12 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+  <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script defer src="../common/init-firebase.js"></script>
+
   <!-- ========================================= ▼ ＨＥＡＤＥＲ ▼ ========================================= -->
   <header id="header" class="fixed-top d-flex align-items-end">
   	<!-- drop down 시작 -->
@@ -19,7 +25,7 @@
 	<div class="d-flex align-items-center">
 		<img class="myBro__logo mr-2" src="../common/assets/img/mybro_logo.png" alt="mybro_favicon">
 		<h1 class="logo mr-auto main__title">
-			<a href="http://192.168.0.163:9696/mainPage/main_page.nds">내 동생<span>.</span></a>
+			<a href="http://localhost:9696/mainPage/main_page.nds">내 동생<span>.</span></a>
 		</h1>
 		<nav class="nav-menu d-none d-lg-block">
 		<ul>
@@ -54,6 +60,13 @@
   </header>
   <!-- ========================================= ▲ ＨＥＡＤＥＲ ▲ ========================================= -->
 
+
+					<!-- 여기까지 파이어베이스 구동에 필수적인 스크립트 -->
+<!--   <script defer src="../common/alert.js"></script> -->
+  <%@ include file="../common/toast.jsp" %>
+  <%@ include file="../common/alert_js.jsp" %>
+						<!-- 확인했으면 주석을 지우셔도 됩니다. -->
+<!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
 
 
 

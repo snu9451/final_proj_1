@@ -73,11 +73,11 @@
   // Activate smooth scroll on page load with hash links in the url
   $(document).ready(function () {
  	var subPage = new Array;
-	subPage[0] = "selectMember";
-	subPage[1] = "myWallet";
-	subPage[2] = "myLike";
-	subPage[3] = "myTrade";
-	subPage[4] = "myErrand";
+	subPage[0] = "my_info";
+	subPage[1] = "my_wallet";
+	subPage[2] = "my_like";
+	subPage[3] = "my_trade";
+	subPage[4] = "my_errand";
 	var url = location.href;
 	var getAr0 = url.indexOf(subPage[0]);
 	var getAr1 = url.indexOf(subPage[1]);
