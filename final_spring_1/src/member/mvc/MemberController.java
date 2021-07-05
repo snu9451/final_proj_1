@@ -295,7 +295,7 @@ public class MemberController extends MultiActionController {
 		String mem_email = (String)mvo.get("MEM_EMAIL");
 		pmap.put("mem_email", mem_email);
 		// 프로시저 실행 결과를 받아줄 proc_result 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
-		memberLogic.updateMember(pmap);///////////////////////////////////////////////////////////
+		pmap = memberLogic.updateMember(pmap);///////////////////////////////////////////////////////////
 		// 처리 결과가 성공이면 (coin_trans 테이블에 insert와 member 테이블에 update 모두 성공) 2를 반환한다.
 		
 		
