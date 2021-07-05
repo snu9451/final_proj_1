@@ -306,6 +306,21 @@ public class ItemController extends MultiActionController {
 			AjaxDataPrinter.out(res, like);
 		//}
 	}
+	//마이페이지 찜 목록 클릭시
+	public void selectMyLike(HttpServletRequest req, HttpServletResponse res){
+		logger.info("controller : selectMyLike메소드 호출");
+		Map<String,Object> pmap = new HashMap<>();
+		HttpSession session= req.getSession(); 
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		String mem_email = (String)login.get("MEM_EMAIL");
+		pmap.put("pr_MEM_EMAIL", mem_email);
+		List<Map<String, Object>> likeList = null;
+		logger.info("controller의 mem_email : "+ mem_email );
+		likeList = itemLogic.selectMyLike(pmap);
+		logger.info("controller의 likeList : "+ likeList );
+		
+		//}
+	}
 
 	//댓글 등록 - 댓글인지 대댓글인지 구분
 	public ModelAndView insertComment(HttpServletRequest req, HttpServletResponse res) {

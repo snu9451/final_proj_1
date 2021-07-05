@@ -127,7 +127,7 @@ public class MemberController extends MultiActionController {
 	
 	// ===================================== [[ INSERT ]] =====================================
 	// 회원가입 모달에서 확인 버튼 클릭 시
-	// 테스트: http://localhost:9696/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
+	// 테스트: http://localhost:8080/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
 	public ModelAndView insertMember(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		// request 객체에 담긴 정보를 map으로 옮겨 담기
 		Map<String, Object> pmap = new HashMap<String, Object>();
@@ -284,7 +284,7 @@ public class MemberController extends MultiActionController {
 		hmb.bindPost(pmap);
 		
 		// 단위 테스트
-//		pmap.put("coin_remain", 96969);
+//		pmap.put("coin_remain", 80809);
 //		pmap.put("mem_email", "snu9451@naver.com");
 //		pmap.put("trans_price", 3333);
 		
@@ -456,9 +456,9 @@ public class MemberController extends MultiActionController {
 	}
 	
 	// 테스트용 url
-	// 잘못된 아이디 http://localhost:9696/member/doLogin.nds?mem_email=grsdfpe@good.com&mem_pw=123&isAutoLoginChecked=true
-	// [아이디 저장] http://localhost:9696/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isSavedIdChecked=true
-	// [자동 로그인] http://localhost:9696/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isAutoLoginChecked=true
+	// 잘못된 아이디 http://localhost:8080/member/doLogin.nds?mem_email=grsdfpe@good.com&mem_pw=123&isAutoLoginChecked=true
+	// [아이디 저장] http://localhost:8080/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isSavedIdChecked=true
+	// [자동 로그인] http://localhost:8080/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isAutoLoginChecked=true
 	// 로그인 버튼이 클릭되었을 때 실행되는 메소드
 	public void doLogin(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		// 사용자가 자동로그인 체크박스와 아이디저장 체크박스에 체크 했는지 여부를 담을 변수 선언

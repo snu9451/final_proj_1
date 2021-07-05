@@ -12,7 +12,7 @@
 						</li>
 						<ul>
 							<div class="mypage_list">
-								<a href="http://localhost:9696/myPage/my_info.nds">
+								<a href="http://localhost:8080/myPage/my_info.nds">
 									<div class="each" id="each1">
 										<div class="icon">
 											<i class="fas fa-info-circle"></i>
@@ -21,7 +21,7 @@
 									</div>
 								</a>
 								<div class="left_div"></div>
-								<a href="http://localhost:9696/myPage/my_wallet.nds">
+								<a href="http://localhost:8080/myPage/my_wallet.nds">
 									<div class="each" id="each2">
 										<div class="icon">
 											<i class="fas fa-wallet"></i>
@@ -30,7 +30,7 @@
 									</div>
 								</a>
 								<div class="left_div"></div>
-								<a href="http://localhost:9696/myPage/my_like.nds">
+								<a href="http://localhost:8080/myPage/my_like.nds">
 									<div class="each" id="each3">
 										<div class="icon">
 											<i class="fas fa-heart"></i>
@@ -39,7 +39,7 @@
 									</div>
 								</a>
 								<div class="left_div"></div>
-								<a href="http://localhost:9696/myPage/my_trade.nds">
+								<a href="http://localhost:8080/myPage/my_trade.nds">
 									<div class="each" id="each4">
 										<div class="icon">
 											<i class="fas fa-box"></i>
@@ -50,7 +50,7 @@
 									</div>
 								</a>
 								<div class="left_div"></div>
-								<a href="http://localhost:9696/myPage/my_errand.nds">
+								<a href="http://localhost:8080/myPage/my_errand.nds">
 									<div class="each" id="each5">
 										<div class="icon">
 											<i class="fas fa-route"></i>

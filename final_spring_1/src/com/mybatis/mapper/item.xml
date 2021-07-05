@@ -116,6 +116,14 @@
 		insert into board_img(bi_no, bm_no, bi_file, bi_size) values
 		(seq_board_img.nextval, #{bm_no}, #{bi_file}, #{bi_size})
 	</insert>
+	
+	
+   <!-- 15 마이페이지 찜목록 가져오기 -->
+   <select id="proc_my_like"  statementType="CALLABLE" parameterType="java.util.Map">
+      {CALL proc_my_like(#{pr_MEM_EMAIL}
+                     , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
+   </select>
+   
 
 
 </mapper>

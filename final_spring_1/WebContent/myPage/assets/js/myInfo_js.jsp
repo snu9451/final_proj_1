@@ -16,8 +16,8 @@ function ajaxPW(){
 //	let pw = $("#mem_pw").val();
 	let mydata =  $('#f_myinfo').serialize();
 	$.ajax({
-		url : "http://localhost:9696/member/updatePw.nds",
-// 		url : "/ndshttp://localhost:9696/member/updatePw.nds?mem_email=banana@good.com&mem_pw="+pw+"&change_pw="+ch_pw,
+		url : "http://localhost:8080/member/updatePw.nds",
+// 		url : "/ndshttp://localhost:8080/member/updatePw.nds?mem_email=banana@good.com&mem_pw="+pw+"&change_pw="+ch_pw,
 		type : "post",
 		data: mydata,
 // 		data: { mem_email: banana@good.com, mem_pw: pw , change_pw: ch_pw}
@@ -49,7 +49,7 @@ function pwChange(){
 function nickSelect(){
 	let mynick = $('#f_checknickname').serialize();
 	$.ajax({
-		url: "http://localhost:9696/member/selectNickName.nds",
+		url: "http://localhost:8080/member/selectNickName.nds",
 		type : "post",
 		data: mynick,
 		success : function(data) {//@data-json,xml,html,text
@@ -76,7 +76,7 @@ function nickSelect(){
 function nickChange(){
 	let mynick = $('#f_checknickname').serialize();
 	$.ajax({
-		url: "http://localhost:9696/member/updateNickName.nds",
+		url: "http://localhost:8080/member/updateNickName.nds",
 		type : "post",
 		data: mynick,
 		success : function(data) {//@data-json,xml,html,text
@@ -95,7 +95,7 @@ function nickChange(){
 function leave(){
 	let myleave =  $('#f_leave').serialize();
 	$.ajax({
-		url : "http://localhost:9696/member/leave.nds",
+		url : "http://localhost:8080/member/leave.nds",
 		type : "post",
 		data: myleave,
 		success : function(data) {

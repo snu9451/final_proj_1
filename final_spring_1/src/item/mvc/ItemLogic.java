@@ -25,6 +25,12 @@ public class ItemLogic {
 		//인기상품 일시 "like_rank"로, 최근상품 일시 "new_rank" 인지만 반환 - String으로 변환
 		return itemDao.selectItemList(pmap);
 	}
+	//마이페이지 - 찜 목록 조회
+	public List<Map<String, Object>> selectMyLike(Map<String, Object> pmap) {
+		logger.info("Logic : sselectMyLike 메소드 호출");
+		logger.info(pmap);
+		return itemDao.selectMyLike(pmap);
+	}
 	
 	//사용자가 카테고리메뉴에서 카테고리 선택 시
 	public List<Map<String, Object>> selectByCategory(Map<String, Object> pmap) {
