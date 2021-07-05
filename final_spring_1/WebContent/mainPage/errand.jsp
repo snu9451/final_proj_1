@@ -55,7 +55,7 @@
             <div class="form-inline justify-content-end align-items-center mb-2">
               <h2 class="col-auto text-center mb-0" style="font-weight: bold;">총금액:</h2>
               <div class="col-9 d-flex justify-content-end align-items-baseline">
-                <h3 id="totalCost" class="col-auto">"총금액 위치예정"(6,500)</h3><span class="col-auto">원</span>
+                <h3 id="totalCost" class="col-auto">total price</h3><span class="col-auto">원</span>
               </div>
             </div>
             <div class="modal-footer">

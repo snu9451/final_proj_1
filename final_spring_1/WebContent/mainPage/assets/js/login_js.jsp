@@ -150,7 +150,7 @@ function doLogin(){
 				swal("환영합니다. "+data[1]+"님!")
 					.then(function(value){
 						/* 확인버튼 클릭 시 메인 페이지로 새로이 이동 */
-						location.reload();
+						location.href = "http://localhost:9696/mainPage/main_page.nds"
 					});
 //					/* ============== [[ 공통코드: 폼 비워주기 ]] ============== */
 //					$('#f_login input').each(function(index){

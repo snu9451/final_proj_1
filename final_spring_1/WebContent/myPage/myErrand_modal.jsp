@@ -4,7 +4,7 @@
 
   	<!-- 구매내역(삭제하기) -->
 	<div>
-	  <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="logIn" aria-hidden="true">
+	  <div class="modal fade" id="selDelete" tabindex="-1" role="dialog" aria-labelledby="logIn" aria-hidden="true"><!-- 김은영작업 id변경 -->
 	    <div class="modal-dialog modal-dialog-centered" role="document">
 	      <div class="modal-content">
 	        <div class="modal-header">
@@ -23,7 +23,7 @@
 	          </div>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+	          <button type="button" id="errand_del_confirm" class="btn btn-primary" data-dismiss="modal">확인</button><!-- 김은영작업 id추가 -->
 	          <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 	        </div>
 	      </div>
@@ -31,7 +31,7 @@
 	  </div>
 	</div>
 	<div>
-	  <div class="modal fade" id="selDelete" tabindex="-1" role="dialog" aria-labelledby="logIn" aria-hidden="true">
+	  <div class="modal fade" id="selDelete1" tabindex="-1" role="dialog" aria-labelledby="logIn" aria-hidden="true">
 	    <div class="modal-dialog modal-dialog-centered" role="document">
 	      <div class="modal-content">
 	        <div class="modal-header">
@@ -50,7 +50,7 @@
 	          </div>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+	          <button type="button" id="errand_del_confirm1" class="btn btn-primary" data-dismiss="modal">확인</button><!-- 김은영작업 id추가 -->
 	          <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 	        </div>
 	      </div>

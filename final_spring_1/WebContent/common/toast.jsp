@@ -8,9 +8,9 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
 // 알람 메시지
-$(document).ready(function(){
-	toast("title","content");
-});
+// $(document).ready(function(){
+// 	toast("title","content");
+// });
 function toast(title, content){
    toastr.info(content, title, {
       progressBar: 'true',

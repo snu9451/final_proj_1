@@ -30,6 +30,12 @@
 		<nav class="nav-menu d-none d-lg-block">
 		<ul>
 <%
+response.setHeader("Cache-Control","no-cache");
+response.setHeader("Pragma","no-cache");
+response.setDateHeader("Expires",0);
+%>
+
+<%
 	// 로그인 중이 아닐 때
 	Map<String, Object> login = new HashMap<>();
 	String mem_nickname = null;	// 전역에서 사용되는 정보
@@ -73,8 +79,9 @@
 
   <!-- ====================================== ▼ HEADER에서 쓰이는 모달 ▼ ====================================== -->
   <!-- 로그인 모달 --><%@ include file="../mainPage/login_modal.jsp" %>
-  <!-- 회원가입 모달 --><%@ include file="../mainPage/join.jsp" %>
-  <!-- 회원가입 양식 모달 --><%@ include file="../mainPage/joinForm.jsp" %>
-  <!-- 코인충전 모달 --><%@ include file="../mainPage/coinCharge.jsp" %>
+  <!-- 회원가입 모달 --><%@ include file="../common/join.jsp" %>
+  <!-- 회원가입 모달 --><%@ include file="../common/assets/js/join_js.jsp" %>
+  <!-- 회원가입 양식 모달 --><%@ include file="../common/joinForm.jsp" %>
+  <!-- 코인충전 모달 --><%@ include file="../common/coinCharge.jsp" %>
   <!-- 심부름 모달 --><%@ include file="../mainPage/errand.jsp" %>
   <!-- ====================================== ▲ HEADER에서 쓰이는 모달 ▲ ====================================== -->

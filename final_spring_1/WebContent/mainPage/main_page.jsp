@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+<%
+	String join_email = (String)request.getAttribute("join_email");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,6 +119,14 @@
   <!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ ▼ ＭＯＤＡＬ　ＰＡＲＴ ▼ \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
   <!-- =============================================== ▼ ＳＣＲＩＰＴ  ▼ ================================================= -->
 　　<%@ include file="../mainPage/source_f.jsp" %>
+<script type="text/javascript">
+<% if(join_email != null){ %>
+		$(document).ready(function(){
+			$('#inputEmail').val("<%=join_email%>");
+			$('#signUpModal').modal('show');
+		});
+<% } %>
+</script>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
 </body>
 </html>

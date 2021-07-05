@@ -32,4 +32,8 @@ public class ErrandLogic {
 	}
 						/* 확인했으면 주석을 지우셔도 됩니다. */
 	/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */
+	public void errandRecordUpdate(Map<String, Object> pmap) {
+		logger.info("logic : errandRecordUpdate 호출 성공");
+		errandDao.errandRecordUpdate(pmap);
+	}
 }

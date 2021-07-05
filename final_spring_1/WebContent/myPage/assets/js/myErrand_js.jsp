@@ -167,13 +167,68 @@ function resAction() {
 		$('.nds_errand_tb').show();
 	
 }
+// function showErrandHis(){
+// //		alert("afd");
+// 	pageReq = "req";
+// 	pageRes = "res";
+// 	var url = location.href;
+// 	var getPage1 = url.indexOf(pageReq);
+// 	var getPage2 = url.indexOf(pageRes);
+// //		alert(getPage1);
+// //		alert(getPage2);
+// 	if (getPage2 != -1) {
+// 		$(".response").addClass("active");
+// 		$(".request").removeClass("active");
+// 		resAction();
+// 	} else {
+// //			alert("req");
+// 		reqAction();
+// 	}
+// }
+
+
 $(document).ready(function () {
-	reqAction();
-	$('.delete').on('click', function(){
-		$('.custom-control-input:checked').each(function(index){
-			console.log($('.custom-control-input:checked').eq(index).attr('id'));
-		})
-	});
+	   $('#errand_del_confirm').on('click', function(){
+// 		   alert("눌렀음");
+		      $('.custom-control-input:checked').each(function(index){
+		    	 let errandKey = $('.custom-control-input:checked').eq(index).attr('id');
+		    	 errandKey = errandKey.substr(11,errandKey.length-1);
+		         console.log(errandKey);
+		         $.ajax({
+		             url : "http://localhost:9696/errand/errandRecordUpdate.nds?gubun=req&errandKey="+errandKey,
+		             success : function(data) {//@data-json,xml,html,text
+		                 location.href = "my_errand.nds?req";
+		             },
+		             error : function(e) {//@param-XMLHttpRequest
+		            	 console.log("error="+e.toString());
+		             }
+		          });
+		         //window.location.reload();
+		      })
+		   });
+		   $('#errand_del_confirm1').on('click', function(){
+		      $('.custom-control-input:checked').each(function(index){
+		    	 let errandKey = $('.custom-control-input:checked').eq(index).attr('id');
+		    	 errandKey = errandKey.substr(11,errandKey.length-1);
+		         console.log(errandKey);
+		         $.ajax({
+		             url : "http://localhost:9696/errand/errandRecordUpdate.nds?gubun=nds&errandKey="+errandKey,
+		             success : function(data) {//@data-json,xml,html,text
+		                 location.href = "my_errand.nds?res";
+		             },
+		             error : function(e) {//@param-XMLHttpRequest
+		            	 console.log("error="+e.toString());
+		             }
+		          });
+		         //window.location.reload();
+		      })
+		   });
+
+// 	$('.delete').on('click', function(){
+// 		$('.custom-control-input:checked').each(function(index){
+// 			console.log($('.custom-control-input:checked').eq(index).attr('id'));
+// 		})
+// 	});
 	
 	
 });

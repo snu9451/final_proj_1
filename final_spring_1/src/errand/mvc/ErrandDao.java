@@ -43,4 +43,9 @@ public class ErrandDao {
 						/* 확인했으면 주석을 지우셔도 됩니다. */
 	/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */
 
+	public void errandRecordUpdate(Map<String, Object> pmap) {
+		logger.info("dao : errandRecordUpdate 호출 성공");
+		sqlSessionTemplate.update("errandRecordUpdate", pmap);
+	}
+
 }

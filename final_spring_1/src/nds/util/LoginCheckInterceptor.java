@@ -31,6 +31,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		"/member/issueTempPw.nds",
 		"/member/issueTempPw.nds",
 		"/mainPage/main_page.nds",
+		"/mainPage/reqJoinView.nds",
 		"/item/selectItemList.nds",
 		"/item/selectBySearch.nds",
 		"/item/selectByCategory.nds"

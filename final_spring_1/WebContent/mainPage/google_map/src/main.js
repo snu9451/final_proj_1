@@ -33,7 +33,7 @@
 //		onSuccessGeolocation();
       } else {
         removeAllMarkers();
-		removeMyLoc();
+//		removeMyLoc();
         markerContainer = new Map();
         refErrand.off();
         clearInterval(riderTimer);
@@ -250,8 +250,8 @@
         //mem_email : mem_email,
         timestamp : getTime()
       };
-      refRider.child(mem_email).update(riderData);
-      console.log(mem_email+" rider loc updated. lat="+my_lat+" lng="+my_lng);
+//      refRider.child(mem_email).update(riderData);/* 김은영작업 - 로그인하지 않은 회원인 경우 오류나서 지도안뜨는 듯 시연을 위해 주석*/
+//      console.log(mem_email+" rider loc updated. lat="+my_lat+" lng="+my_lng);
     }
 function removeMyLoc(){
 	refRider.child(mem_email).remove();

@@ -19,10 +19,36 @@
 // 			});
 // 		});
 		$('#h_join').click(function(){
-			alert("Ads");
 			$("#singIn").show();
 			$("#singIn").modal();
 		})
+		
+		$('#btn_reqJoinForm').on('click', function(){
+			const mem_email = $('#exampleInputEmail1').val();
+			// 회원가입 링크 전송 (ajax):
+			$.ajax({
+				type: 'post',
+				data: {mem_email: mem_email},
+				url: "http://localhost:9696/member/selectEmail.nds",
+				success: function(data){
+					if(data == '0'){
+						swal("실패ㅠ_ㅠ", "입력하신 이메일("+mem_email+")은 이미 가입되었거나 탈퇴한 회원입니다.", "warning").then(function(){
+							// 모달창 닫히면 값 비우기
+							$('#exampleInputEmail1').val("");
+				        });
+					} else if (data == '1'){
+				        swal("발송완료!", "입력하신 이메일("+mem_email+")로 회원가입 링크가 전송되었습니다.", "success").then(function(){
+							// 모달창 닫히면 값 비우기
+							$('#exampleInputEmail1').val("");
+				        });
+					}
+				},
+		    	error: function(e){
+		    		alert("에러: "+e.responseText);
+		    	}
+			});
+		});
+		
 		
 		
 		  /*==============[[ 회원가입 모달창 나타났을때 이벤트 ]]===============*/
@@ -55,7 +81,7 @@
 		        $.ajax({
 		          type: "post",
 		          data: dt,
-		          url: "http://192.168.0.206:7000/member/sendSMSCode.nds",
+		          url: "http://localhost:9696/member/sendSMSCode.nds",
 		          success: function (data) {
 		            console.log(data);
 		            safetyCode = data;
@@ -171,24 +197,10 @@
 		      //연령대 선택 여부
 		      if (select_chck <= 0) {
 		        ageChck__box.empty();
-		        ageChck__box.html(`<small id="ageChck"
-		        class="form-text"
-		        style="color:red; font-weight:bold ;
-		        font-size: 15px; "
-		        value="0">
-		        연령대를 선택해주세요.
-		        </small>
-		        `);
+		        ageChck__box.html("<small id=ageChc\" class=\"form-text\" style=\"color:red; font-weight:bold ; font-size: 15px; \" value=\"0\"> 연령대를 선택해주세요.</small>");
 		      } else {
 		        ageChck__box.empty();
-		        ageChck__box.html(`<small id="ageChck"
-		        class="form-text"
-		        style="color:green; font-weight:bold ;
-		        font-size: 15px;"
-		        value="1">
-		        선택되었습니다.
-		        </small>
-		        `);
+		        ageChck__box.html("<small id=ageChc\" class=\"form-text\" style=\"color:green; font-weight:bold ; font-size: 15px; \" value=\"1\">선택되었습니다.</small>");
 		      }
 		    });
 

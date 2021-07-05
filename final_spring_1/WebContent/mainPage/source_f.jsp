@@ -22,7 +22,7 @@
 
   <!-- ============================================ ▼ ＣＵＳＴＯＭ　－　ＳＣＲＩＰＴ  ▼ ============================================== -->
   <%-- Custom JS --%><%@ include file="../mainPage/assets/js/main_page_js.jsp" %>
-  <%-- 회원가입 --%><%@ include file="../mainPage/assets/js/join_js.jsp" %>
+  <%-- 회원가입 --%>
   <%-- 로그인 --%><%@ include file="../mainPage/assets/js/login_js.jsp" %>
   <%-- 로그아웃 --%><%@ include file="../mainPage/assets/js/logout_js.jsp" %>
   <%-- header 영역 :: 마이페이지, 상품판매, 코인충전 등 --%><%@ include file="../common/assets/js/header_js.jsp" %>
@@ -34,6 +34,6 @@
 <!--   Async script executes immediately and must be after any DOM elements used in callback. -->
 				<!-- 지도, 심부름 테스트를 위해 구글맵 api 주석처리를 풀어둠 -->
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4pd9w90oFRuCZOILRd07MBwVAthwIbIA&callback=initMap&region=kr" async></script>
-   <script defer src="./google_map/src/main.js"></script>
+   <script defer src="./google_map/src/main.js"></script><!-- 김은영작업-->
 						<!-- 확인했으면 주석을 지우셔도 됩니다. -->
 <!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->

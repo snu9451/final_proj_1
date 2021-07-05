@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
   <!-- =========================================== ▼ 회원가입 양식 모달 ▼ ============================================= -->
-  <div class="modal modal-center fade" id="signInForm" tabindex="-1" role="dialog" aria-labelledby="signIn" aria-hidden="true">
+  <div class="modal modal-center fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signIn" aria-hidden="true">
     <div class="modal-dialog modal-center" style="width: 600px;" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -24,7 +24,7 @@
                     <input type="text" class="form-control" id="inputCellPhone" placeholder="(-) 없이 번호를 입력해주세요." required minlength="11">
                   </div>
                   <div class="form-group col-md-4 mb-0 text-right">
-                    <button type="button" id="getCpCode" class="btn btn-primary">인증번호 받기</button>
+                    <button type="button" id="btn_getCode" class="btn btn-primary">인증번호 받기</button>
                   </div>
                 </div>
                 <div class="valid-feedback">Good</div>
@@ -39,7 +39,7 @@
                     <input type="text" class="form-control" id="inputSafetyCode" placeholder="인증번호를 입력해주세요." required minlength="6">
                     </div>
                     <div class="form-group col-md-3 mb-0 text-right">
-                      <button type="button" class="btn btn-primary">확인</button>
+                      <button type="button" id="btn__codeChck" class="btn btn-primary">확인</button>
                     </div>
                 </div>
                 <div id="safetyCodeChck__box" class="doEmpty">
@@ -69,7 +69,7 @@
                     <input type="text" class="form-control" id="inputNickName" placeholder="사용하실 닉네임을 입력해주세요." required minlength="2">
                   </div>
                   <div class="form-group col-md-3 mb-0 text-right">
-                    <button type="button" class="btn btn-primary">중복확인</button>
+                    <button type="button" id="btn_nickChck" class="btn btn-primary">중복확인</button>
                   </div>
                 </div>
                 <div id="nickChck__box" class="doEmpty">

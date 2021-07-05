@@ -178,6 +178,24 @@ public class MemberLogic {
 	}
 
 
+	public List<Map<String, Object>> myWalletRecord(Map<String, Object> pmap) {
+		List<Map<String, Object>> walletRec = null;
+		walletRec = memberDao.myWalletRecord(pmap);
+		logger.info(pmap);
+		logger.info(walletRec);
+		return walletRec;
+	}
+
+
+	public int insertCoinTrans(Map<String, Object> pmap) {
+		int result = 0;
+		logger.info(pmap);
+		result = memberDao.insertCoinTrans(pmap);
+		logger.info(result);
+		return result;
+	}
+
+
 
 
 	// 테스트용 메인
