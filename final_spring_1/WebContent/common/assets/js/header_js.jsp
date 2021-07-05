@@ -9,7 +9,7 @@ pageEncoding="UTF-8"%>
     //버튼 클릭시 모달창 show
     $(".btnTest").click(function () {
       console.log("modal test");
-      $("#report_board").modal("show");
+      $("#signIn").modal("show");
     });
 
     //모달창 버튼 클릭시 이벤트

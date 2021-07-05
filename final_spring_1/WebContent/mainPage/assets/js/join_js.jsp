@@ -189,18 +189,6 @@ pageEncoding="UTF-8"%>
       }
     });
 
-    //회원가입 모달창이 사라졌을 때 이벤트
-    $("#signUpModal").on("hidden.bs.modal", function () {
-      console.log("modal hidden");
-      //input 값 리셋
-      $("#signUpForm")[0].reset();
-
-      //인증번호, 비밀번호, 닉네임 등 확인여부 문장들 리셋
-      $(".doEmpty").each(function () {
-        $(this).empty();
-      });
-    });
-
     //e-mail value 임의 지정
     $("#inputEmail").val("webtree12@gmail.com");
 
@@ -259,6 +247,18 @@ pageEncoding="UTF-8"%>
       } else {
         swal("정보들을 모두 입력해주세요.", "", "warning");
       }
+    });
+
+    //회원가입 모달창이 사라졌을 때 이벤트
+    $("#signUpModal").on("hidden.bs.modal", function () {
+      console.log("modal hidden");
+      //input 값 리셋
+      $("#signUpForm")[0].reset();
+
+      //인증번호, 비밀번호, 닉네임 등 확인여부 문장들 리셋
+      $(".doEmpty").each(function () {
+        $(this).empty();
+      });
     });
   }); /*================================ END document ready ============================*/
 </script>
