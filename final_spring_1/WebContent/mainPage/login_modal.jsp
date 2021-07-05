@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
   <!-- ========================================= ▼ ＬＯＧＩＮ　ＭＯＤＡＬ ▼ ========================================= -->
-	<div class="modal fade" id="logIn" tabindex="-1" role="dialog"
+  	<div class="modal fade" id="logIn" tabindex="-1" role="dialog"
 		aria-labelledby="logIn" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -19,7 +19,7 @@
 							<div class="form-row col-12 ">
 								<div class="col-9 d-flex flex-column">
 									<input name="mem_email" class="form-control mb-2 w-100"
-										type="text" placeholder="id를 입력해주세요."> <input
+										type="text" placeholder="id를 입력해주세요."> <input onkeyup="javascript:if(event.keyCode==13){doLogin();}"
 										name="mem_pw" class="form-control mb-2 w-100" type="password"
 										placeholder="password를 입력해주세요.">
 								</div>

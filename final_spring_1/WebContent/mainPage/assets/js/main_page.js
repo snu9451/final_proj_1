@@ -28,6 +28,22 @@
         $("#search__rank").addClass("search__invisible");
       }
     });
+
+    //회원가입 - 입력창 유효값 확인 이벤트
+    const form = document.querySelector(".needs-validation");
+    form.addEventListener(
+      "submit",
+      function (event) {
+        if (form.checkValidity() == false) {
+          event.preventDefault();
+          event.stopPropagation();
+          form.classList.add("was-validated");
+        }
+
+        // 서버 연동 처리
+      },
+      false
+    );
   });
 
   //회원가입 모달창 이벤트들
@@ -35,17 +51,18 @@
     
   });
 
-  //지도 말풍선 클릭시 이벤트
-  $(window).on("load", function () {
-    if ($(".errand_regist").length) {
-      $(document).on("click", ".errand_regist", function () {
-        console.log("errand!!!!!!!");
-        const modal = document.querySelector("#errand_modal");
-        console.log(modal);
-        $(modal).modal("show");
-      });
-    }
-  });
+//  //지도 말풍선 클릭시 이벤트
+//  $(window).on("load", function () {
+//    console.log(3, "window.onload");
+//    if ($(".errand_regist").length) {
+//      $(document).on("click", ".errand_regist", function () {
+//        console.log("errand!!!!!!!");
+//        const modal = document.querySelector("#errand_modal");
+//        console.log(modal);
+//        $(modal).modal("show");
+//      });
+//    }
+//  });
 
   //버튼 누르면 top으로 이동
   $(".back-to-top").click(function () {
@@ -92,28 +109,8 @@
     });
   });
 
-  //회원가입 - 입력창 유효값 확인 이벤트
-  const form = document.querySelector(".needs-validation");
-  form.addEventListener(
-    "submit",
-    function (event) {
-      if (form.checkValidity() == false) {
-        event.preventDefault();
-        event.stopPropagation();
-        form.classList.add("was-validated");
-      }
-
-      // 서버 연동 처리
-    },
-    false
-  );
-
   //drop down toggle
-  $(document).ready(function () {
-	$("#category_drop").on('click', function(){
-    	$(".dropdown-toggle").dropdown("toggle");
-	})
-  });
+  $('.dropdown-toggle').dropdown('toggle');
 
   /*==========================================[[ Not Mine ]]==================================================*/
 

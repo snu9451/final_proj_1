@@ -25,6 +25,7 @@ public class ItemDao {
 		logger.info("Dao :selectItemList메소드 호출");
 		//프로시져 돌리기
 		sqlSessionTemplate.selectList("proc_board_main",pmap);
+		logger.info("pmap ===> "+pmap);
 		//결과 값만 전송
 		return (List<Map<String, Object>>)pmap.get("p_temp");
 	}
@@ -33,6 +34,7 @@ public class ItemDao {
 		logger.info("Dao : selectByCategory메소드 호출");
 		//프로시져 돌리기
 		sqlSessionTemplate.selectList("proc_board_main_categori",pmap);
+		logger.info("pmap ===> "+pmap);
 		//결과 값만 전송
 		return (List<Map<String, Object>>)pmap.get("p_temp");
 	}
@@ -41,6 +43,7 @@ public class ItemDao {
 		logger.info("Dao : selectBySearch메소드 호출");
 		//프로시져 돌리기
 		sqlSessionTemplate.selectList("proc_board_search",pmap);
+		logger.info("pmap ===> "+pmap);
 		//결과 값만 전송
 		return (List<Map<String, Object>>)pmap.get("p_temp");
 	}
@@ -50,6 +53,7 @@ public class ItemDao {
 		Map<String, Object> map = new HashMap<>();
 		//select문 돌림
 		map = sqlSessionTemplate.selectOne("editItemContext",pr_bm_no);
+		logger.info("map ===> "+map);
 		//결과 값만 전송
 		return map;
 	}
@@ -60,6 +64,7 @@ public class ItemDao {
 		List<String> list = new ArrayList();
 		//select문 돌림
 		list = sqlSessionTemplate.selectList("editItemImg",pr_bm_no);
+		logger.info("list ===> "+list);
 		//결과 값만 전송
 		return list;
 	}
@@ -68,14 +73,15 @@ public class ItemDao {
 		logger.info("Dao : updateItem메소드 호출");
 		//프로시져 사용 - 상품 정보 저장 
 		sqlSessionTemplate.selectList("proc_board_update",pmap);
+		logger.info("pmap ===> "+pmap);
 		//이미지들 삭제 후 저장
 		//삭제
-		sqlSessionTemplate.delete("itemImgdelete",pr_bm_no);	
+		sqlSessionTemplate.delete("itemImgdelete",pr_bm_no);
 		//저장
 		for(Map<String, Object> item: itemImgs) {
 			item.put("bm_no",pr_bm_no);
 			//등록된 상품 번호를 이용해서 사진을 넣고 insert문 돌림
-			sqlSessionTemplate.insert("edit",item);			
+			sqlSessionTemplate.insert("edit",item);
 		}
 		
 	}
@@ -84,21 +90,34 @@ public class ItemDao {
 		logger.info("Dao : selectItemDetailContext메소드 호출");
 		//프로시져 돌리기
 		sqlSessionTemplate.selectList("proc_board_select",pmap);
+		logger.info("pmap ===> "+pmap);
 		//결과 값만 전송
 		return (List<Map<String, Object>>)pmap.get("p_temp");
 	}
 
+	//상품에 대한 댓글들 가져옴
+	public Map<String, Object> selectItemDetailComment(Map<String, Object> pmap) {
+		logger.info("Dao : selectItemDetailComment메소드 호출");
+		//프로시져 돌리기
+		sqlSessionTemplate.selectList("proc_board_select_comments",pmap);
+		logger.info("pmap ===> "+pmap);
+		return pmap;
+	}
+	
+	
 	//상품 삭제 시
 	public void deleteItem(Map<String, Object>  pmap) {
 		logger.info("Dao : deleteItem메소드 호출");
 		//프로시져
 		sqlSessionTemplate.selectOne("proc_board_master_delete",pmap);
+		logger.info("pmap ===> "+pmap);
 	}
 	//상품 판매 완료 처리 
 	public String updateItemToConfirm(Map<String, Object> pmap) {
 		logger.info("Dao : updateItemToConfirm메소드 호출");
 		//프로시져
 		sqlSessionTemplate.selectOne("proc_board_bm_status",pmap);
+		logger.info("pmap ===> "+pmap);
 		return pmap.get("result").toString();
 	}
 	//상품 찜하기
@@ -106,6 +125,7 @@ public class ItemDao {
 		logger.info("Dao : likeItem메소드 호출");
 		//프로시져
 		sqlSessionTemplate.selectOne("proc_my_like_change",pmap);
+		logger.info("pmap ===> "+pmap);
 		return Integer.parseInt(pmap.get("i_like").toString());		
 	}
 	//댓글 달기. 대댓글 달기
@@ -113,6 +133,7 @@ public class ItemDao {
 		logger.info("Dao : insertComment메소드 호출");
 		//프로시져
 		sqlSessionTemplate.selectOne("proc_comment_insert",pmap);
+		logger.info("pmap ===> "+pmap);
 		return pmap;		
 	}
 	//댓글 or 대댓글 삭제
@@ -120,6 +141,7 @@ public class ItemDao {
 		logger.info("Dao : deleteComment메소드 호출");
 		//프로시져
 		sqlSessionTemplate.selectOne("proc_comment_delete",pmap);
+		logger.info("pmap ===> "+pmap);
 		return pmap.get("result").toString();		
 	}
 	//댓글 or 대댓글 수정
@@ -127,6 +149,7 @@ public class ItemDao {
 		logger.info("Dao : updateComment메소드 호출");
 		//프로시져
 		sqlSessionTemplate.selectOne("proc_comment_update",pmap);
+		logger.info("pmap ===> "+pmap);
 		return pmap.get("result").toString();		
 	}
 	//사용자가 상품을 등록 시에
@@ -134,6 +157,7 @@ public class ItemDao {
 		logger.info("Dao : insertItem메소드 호출");
 		//프로시져 - 상품 등록 정보
 		sqlSessionTemplate.selectOne("proc_board_insert",pmap);
+		logger.info("pmap ===> "+pmap);
 		//등록된 상품의 번호
 		int result = Integer.parseInt(pmap.get("result").toString());
 		for(Map<String, Object> item: itemImgs) {
@@ -143,8 +167,6 @@ public class ItemDao {
 		}
 		
 	}
-	
-	
-	
+
 	
 }

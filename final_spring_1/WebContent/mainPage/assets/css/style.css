@@ -62,9 +62,28 @@ h5,
 h6 {
   font-family: "Cafe24SsurroundAir";
 }
+/* /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
+/*--------------------------------------------------------------
+# 모달 관련 CSS
+--------------------------------------------------------------*/
 
-/* /**************************** 한글 폰트 ***************************/
-*/
+.profileImg {
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  border-radius: 25%;
+}
+
+#errandInfo_mainContent {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100px;
+  overflow-y: auto;
+}
+						/* 상철이형이랑 서로 확인한 css 부분 */
+						/* 확인했으면 주석을 지우셔도 됩니다. */
+/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */
+/* /**************************** 한글 폰트 ***************************/ */
 
 /* /* 헤더 타이틀 */ */
 /* @font-face { */
@@ -83,25 +102,6 @@ h6 {
 /*   font-weight: normal; */
 /*   font-style: normal; */
 /* } */
-
-
-/*--------------------------------------------------------------
-# 모달 관련 CSS
---------------------------------------------------------------*/
-
-.profileImg {
-  width: 150px;
-  height: 150px;
-  border: 1px solid rgb(0, 0, 0, 0.2);
-  border-radius: 25%;
-}
-
-#errandInfo_mainContent {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  width: 100%;
-  height: 100px;
-  overflow-y: auto;
-}
 
 /*--------------------------------------------------------------
 # Preloader
@@ -722,6 +722,7 @@ section {
 --------------------------------------------------------------*/
 .product {
   background-color: #8aaee2;
+  padding-bottom: 500px;
 }
 
 .product__title h2 {
@@ -786,6 +787,10 @@ section {
   transition: all ease-in-out 0.3s;
   background: white;
 }
+.product .product__box:hover {
+	filter: brightness(60%);
+	cursor: pointer;
+}
 
 .product .product__box .product__img {
   margin: 0 auto;
@@ -843,6 +848,8 @@ section {
   right: 3%;
   text-align: center;
   opacity: 0;
+  border-radius: 2%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 .search__visible {

@@ -44,7 +44,7 @@
 								inserthere</td>
 							<td class="divider_img"><a href="http://naver.com"
 								style="color: black"><img id="item_image"
-									src="./assets/img/item/inserthere"></a></td>
+									src="../myPage/assets/img/ndschar.png"></a></td>
 							<td class="divider_con"><a href="http://naver.com"
 								style="color: black">inserthere</a></td>
 							<td class="divider">등록일 inserthere<br>inserthere원
@@ -54,7 +54,7 @@
 							<td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호
 								1</td>
 							<td class="divider_img"><img id="item_image"
-								src="./assets/img/item/camera.jpg"></td>
+								src="../myPage/assets/img/ndschar.png"></td>
 							<td class="divider_con">카메라 팔아요.</td>
 							<td class="divider">등록일 2021-06-20<br>70000원
 							</td>
@@ -63,7 +63,7 @@
 							<td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호
 								1</td>
 							<td class="divider_img"><img id="item_image"
-								src="./assets/img/item/camera.jpg"></td>
+								src="../myPage/assets/img/ndschar.png"></td>
 							<td class="divider_con">카메라 팔아요.</td>
 							<td class="divider">등록일 2021-06-20<br>70000원
 							</td>
@@ -72,7 +72,7 @@
 							<td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호
 								1</td>
 							<td class="divider_img"><img id="item_image"
-								src="./assets/img/item/camera.jpg"></td>
+								src="../myPage/assets/img/ndschar.png"></td>
 							<td class="divider_con">카메라 팔아요.</td>
 							<td class="divider">등록일 2021-06-20<br>70000원
 							</td>
@@ -81,7 +81,7 @@
 							<td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호
 								1</td>
 							<td class="divider_img"><img id="item_image"
-								src="./assets/img/item/camera.jpg"></td>
+								src="../myPage/assets/img/ndschar.png"></td>
 							<td class="divider_con">카메라 팔아요.</td>
 							<td class="divider">등록일 2021-06-20<br>70000원
 							</td>
@@ -90,7 +90,7 @@
 							<td class="divider"><i class="fas fa-heart likebutton"></i><br>글번호
 								1</td>
 							<td class="divider_img"><img id="item_image"
-								src="./assets/img/item/camera.jpg"></td>
+								src="../myPage/assets/img/ndschar.png"></td>
 							<td class="divider_con">카메라 팔아요.</td>
 							<td class="divider">등록일 2021-06-20<br>70000원
 							</td>

@@ -15,7 +15,6 @@
           </button>
         </div>
         <div class="modal-body">
-          <form>
             <div class="form-group">
               <h5 for="errandItem" style="font-weight: bold;">심부름 아이템</h5>
               <input type="text" class="form-control" id="errandItem" placeholder="어떤 심부름을 원하시나요??">
@@ -56,18 +55,19 @@
             <div class="form-inline justify-content-end align-items-center mb-2">
               <h2 class="col-auto text-center mb-0" style="font-weight: bold;">총금액:</h2>
               <div class="col-9 d-flex justify-content-end align-items-baseline">
-                <h3 id="totalCost" class="col-auto">"총금액 위치예정"(6,500)</h3><span class="col-auto">원</span>
+                <h3 id="totalCost" class="col-auto">total price</h3><span class="col-auto">원</span>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" id="errandBtn" class="btn btn-primary">심부름 등록하기</button>
+              <button type="submit" id="errandBtn" class="btn btn-primary" data-dismiss="modal">심부름 등록하기</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
             </div>
-          </form>
         </div>
       </div>
     </div>
   </div>
+<!-- /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ -->
+			<!-- 기존에 있던 미완성 모달창 대신 새로운 모달창으로 갈아끼움 -->
   <!-- 심부름 확인 모달 시작 -->
   <div class="modal modal-center fade" id="errand_check_modal" tabindex="-1" role="dialog" aria-labelledby="errand_check_modal"
     aria-hidden="true">
@@ -120,7 +120,7 @@
                   <div class="d-flex justify-content-between">
                     <h4 class="text-center mb-0" style="font-weight: bold;">제안된 금액:</h4>
                     <div class="d-flex align-items-baseline">
-                      <h4 class="" id="errandInfo_itemPr">5,500</h4><span class="">원</span>
+                      <h4 class="" id="errandInfo_itemPr">5,000</h4><span class="">원</span>
                     </div>
                   </div>
                   <div class="d-flex justify-content-between" >
@@ -140,11 +140,13 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" id="" class="btn btn-primary">심부름하기</button>
+            <button type="button" id="" class="btn btn-primary" data-dismiss="modal">심부름하기</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
           </div>
       </div>
     </div>
   </div>
   <!-- 심부름 확인 모달 끝 -->
+						<!-- 확인했으면 주석을 지우셔도 됩니다. -->
+<!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
   <!-- =============================================== ▲ 심부름 모달 ▲ ================================================= -->

@@ -25,7 +25,7 @@ response.setDateHeader("Expires",0);
 		/* 서블릿을 타서 아이디 저장 회원인지를 조회해야 한다. */
 		let mem_sessionid = '<%=mem_sessionid%>';
 		$.ajax({
-			url: 'http://192.168.0.163:9696/member/reqLoginView.nds?mem_sessionid='+mem_sessionid,
+			url: 'http://localhost:9696/member/reqLoginView.nds?mem_sessionid='+mem_sessionid,
 			type: 'get',
 			dataType: 'json',
 			success: function(data){
@@ -72,70 +72,10 @@ $(document).ready(function(){
 	
 	
 	/* 로그인 모달에서 로그인 버튼이 클릭되었을 때 */
-	$('#nds_login_button').on('click',function(){
-
-		
-		
-		let mem_email = $('input[name=mem_email]').val().trim();
-		let mem_pw = $('input[name=mem_pw]').val().trim();
-		let isSavedIdChecked = $('input[name=isSavedIdChecked]').is(':checked'); // 반환값: true/false
-		let isAutoLoginChecked = $('input[name=isAutoLoginChecked]').is(':checked'); // 반환값: true/false
-// 		alert(mem_email+', '+mem_pw+', '+isSavedIdChecked+', '+isAutoLoginChecked);
-		let dt = "mem_email="+mem_email+"&mem_pw="+mem_pw+"&isSavedIdChecked="+isSavedIdChecked+"&isAutoLoginChecked="+isAutoLoginChecked;
-		$.ajax({
-			url: 'http://192.168.0.163:9696/member/doLogin.nds',
-			data: dt,
-			type: 'post',
-			dataType: 'json',
-			success: function(data){
-				/* 로그인에 실패한 경우 */
-				/* ===================== 테스트 =======================*/
-<%-- 				<% --%>
-// 				Map<String, Object> map = (Map<String, Object>)session.getAttribute("login");
-// 				String mem_nickname = "알수없음";
-// 				if(map != null){
-// 					mem_nickname = (String)map.get("MEM_NICKNAME");	
-// 				}
-<%-- 				%> --%>
-<%-- 				console.log("갱신전 세션에 저장된 정보 ==> "+'<%=mem_nickname%>') --%>
-				/* ===================== 테스트 =======================*/
-				console.log(data[0]);	// 성공여부
-				console.log(data[1]);	// 닉네임
-				if(data[0] == 0 || data[1] == null){
-					swal("아이디 또는 비밀번호가 잘못되었습니다.").then(function(value){
-// 						location.reload();						
-					});
-					/* ============== [[ 공통코드: 폼 비워주기 ]] ============== */
-					$('#f_login input').each(function(index){
-						$('#f_login input').eq(index).val('');
-					});
-					/* 체크박스 체크 해제하기 */
-					$('input[name=isSavedIdChecked]').prop('checked', false);
-					$('input[name=isAutoLoginChecked]').prop('checked', false);
-					
-				}
-				else {
-					swal("환영합니다. "+data[1]+"님!")
-						.then(function(value){
-							/* 확인버튼 클릭 시 메인 페이지로 새로이 이동 */
-							location.reload();
-						});
-// 					/* ============== [[ 공통코드: 폼 비워주기 ]] ============== */
-// 					$('#f_login input').each(function(index){
-// 						$('#f_login input').eq(index).val('');
-// 					});
-// 					/* 체크박스 체크 해제하기 */
-// 					$('input[name=isSavedIdChecked]').prop('checked', false);
-// 					$('input[name=isAutoLoginChecked]').prop('checked', false);
-					
-				}
-			},
-			error: function(xhrObject){
-				alert(xhrObject.resposeText);
-			}
+	$('#nds_login_button').on('click', doLogin);
 			
-		});
-	});
+			
+
 	
 	/* 비밀번호 잊으셨나요 글씨 클릭 시 */
 	$('#issueTempPw').on('click',function(){
@@ -149,7 +89,7 @@ $(document).ready(function(){
 				/* 입력한 이메일의 존재여부를 확인하고 임시비번 발급 */
 				let dt = "mem_email="+value.trim();
 				$.ajax({
-					url: 'http://192.168.0.163:9696/member/issueTempPw.nds',
+					url: 'http://localhost:9696/member/issueTempPw.nds',
 					data: dt,
 					type: 'post',
 					dataType: 'html',
@@ -167,5 +107,65 @@ $(document).ready(function(){
 			});
 	});
 });
-
+function doLogin(){
+	let mem_email = $('input[name=mem_email]').val().trim();
+	let mem_pw = $('input[name=mem_pw]').val().trim();
+	let isSavedIdChecked = $('input[name=isSavedIdChecked]').is(':checked'); // 반환값: true/false
+	let isAutoLoginChecked = $('input[name=isAutoLoginChecked]').is(':checked'); // 반환값: true/false
+//		alert(mem_email+', '+mem_pw+', '+isSavedIdChecked+', '+isAutoLoginChecked);
+	let dt = "mem_email="+mem_email+"&mem_pw="+mem_pw+"&isSavedIdChecked="+isSavedIdChecked+"&isAutoLoginChecked="+isAutoLoginChecked;
+	$.ajax({
+		url: 'http://localhost:9696/member/doLogin.nds',
+		data: dt,
+		type: 'post',
+		dataType: 'json',
+		success: function(data){
+			/* 로그인에 실패한 경우 */
+			/* ===================== 테스트 =======================*/
+<%-- 				<% --%>
+//				Map<String, Object> map = (Map<String, Object>)session.getAttribute("login");
+//				String mem_nickname = "알수없음";
+//				if(map != null){
+//					mem_nickname = (String)map.get("MEM_NICKNAME");	
+//				}
+<%-- 				%> --%>
+<%-- 				console.log("갱신전 세션에 저장된 정보 ==> "+'<%=mem_nickname%>') --%>
+			/* ===================== 테스트 =======================*/
+			console.log(data[0]);	// 성공여부
+			console.log(data[1]);	// 닉네임
+			if(data[0] == 0 || data[1] == null){
+				swal("아이디 또는 비밀번호가 잘못되었습니다.").then(function(value){
+//						location.reload();						
+				});
+				/* ============== [[ 공통코드: 폼 비워주기 ]] ============== */
+				$('#f_login input').each(function(index){
+					$('#f_login input').eq(index).val('');
+				});
+				/* 체크박스 체크 해제하기 */
+				$('input[name=isSavedIdChecked]').prop('checked', false);
+				$('input[name=isAutoLoginChecked]').prop('checked', false);
+				
+			}
+			else {
+				swal("환영합니다. "+data[1]+"님!")
+					.then(function(value){
+						/* 확인버튼 클릭 시 메인 페이지로 새로이 이동 */
+						location.href = "http://localhost:9696/mainPage/main_page.nds"
+					});
+//					/* ============== [[ 공통코드: 폼 비워주기 ]] ============== */
+//					$('#f_login input').each(function(index){
+//						$('#f_login input').eq(index).val('');
+//					});
+//					/* 체크박스 체크 해제하기 */
+//					$('input[name=isSavedIdChecked]').prop('checked', false);
+//					$('input[name=isAutoLoginChecked]').prop('checked', false);
+				
+			}
+		},
+		error: function(xhrObject){
+			alert(xhrObject.resposeText);
+		}
+		
+	});
+};
 </script>

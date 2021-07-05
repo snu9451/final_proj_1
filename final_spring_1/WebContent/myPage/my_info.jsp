@@ -38,7 +38,7 @@
 						<input type='file' name="change_img" id="imgInput" accept="image/*" style="display: none;"/>
 	                	<label class="img_add">
 							<div class="img_wrapper">
-		                		<img class="img_upload" id="image_section" src="../myPage/assets/img/profile/profile1.jpg"/>
+		                		<img class="img_upload" id="image_section" src="../myPage/assets/img/profile/ndschar.png"/>
 							</div>
 		                	<!-- src="../myPage/assets/img/profile/1.png" -->
 							<label type="button" for="imgInput" class="btn btn-danger">사진변경</label>
