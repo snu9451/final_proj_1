@@ -185,6 +185,14 @@ public class MemberLogic {
 		logger.info(walletRec);
 		return walletRec;
 	}
+	
+	//마이페이지 - 찜 목록 조회
+	public List<Map<String, Object>> selectMyLike(Map<String, Object> pmap) {
+		logger.info("Logic : sselectMyLike 메소드 호출");
+		logger.info(pmap);
+		return memberDao.selectMyLike(pmap);
+	}
+	
 
 
 	public int insertCoinTrans(Map<String, Object> pmap) {

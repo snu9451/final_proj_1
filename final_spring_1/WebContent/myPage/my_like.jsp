@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%
+		List<Map<String, Object>> likeList = null;
+		likeList = (List<Map<String, Object>>) request.getAttribute("likeList");
+		String trans_date 		= null;
+		String trans_content 	= null;
+		String trans_price 		= null;
+		String trans_remain 	= null;
+		String trans_io			= null;
+		out.print(likeList);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

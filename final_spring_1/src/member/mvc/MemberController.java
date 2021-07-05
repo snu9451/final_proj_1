@@ -838,6 +838,22 @@ public class MemberController extends MultiActionController {
 		//out.print(walletRec);
 		return mav;
 	}
+	//마이페이지 찜 목록 클릭시
+	public ModelAndView getMyLike(HttpServletRequest req, HttpServletResponse res){
+		logger.info("controller : selectMyLike메소드 호출");
+		Map<String,Object> pmap = new HashMap<>();
+		HttpSession session= req.getSession(); 
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		String mem_email = (String)login.get("MEM_EMAIL");
+		pmap.put("pr_MEM_EMAIL", mem_email);
+		List<Map<String, Object>> likeList = null;
+		logger.info("controller의 mem_email : "+ mem_email );
+		likeList = memberLogic.selectMyLike(pmap);
+		logger.info("controller의 likeList : "+ likeList );
+		ModelAndView mav = new ModelAndView("/myPage/my_like.jsp");
+		mav.addObject("likeList", likeList);
+		return mav;
+	}
 
 	public ModelAndView getMyTrade(HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView mav = new ModelAndView("/myPage/my_trade.jsp");

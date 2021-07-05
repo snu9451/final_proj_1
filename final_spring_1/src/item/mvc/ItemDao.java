@@ -167,15 +167,6 @@ public class ItemDao {
 		}
 		
 	}
-	//마이페이지 - 찜 목록 조회
-	public List<Map<String, Object>> selectMyLike(Map<String, Object> pmap) {
-		logger.info("Dao : sselectMyLike 메소드 호출");
-		//프로시져 돌리기
-		sqlSessionTemplate.selectList("proc_my_like", pmap);
-		logger.info("pmap ===> "+pmap);
-		//결과 값만 전송
-		return (List<Map<String, Object>>)pmap.get("p_temp");
-	}
 
 	
 }
