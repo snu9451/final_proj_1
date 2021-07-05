@@ -6,22 +6,18 @@
    <!-- 1  최근상품,인기상품 가져오기 -->
    <select id="proc_board_main" statementType="CALLABLE" parameterType="java.util.Map">
       {CALL proc_board_main(#{pr_choice}
-      				 , #{pr_MEM_EMAIL}
                      , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
    </select>
    
    <!-- 2 사용자가 카테고리메뉴에서 카테고리 선택 시 -->
    <select id="proc_board_main_categori" statementType="CALLABLE" parameterType="java.util.Map">
-      {CALL proc_board_main_categori(#{pr_categori}
-       				 , #{pr_MEM_EMAIL}
-                     , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
+      {CALL proc_board_main_categori(#{pr_categori},#{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
    </select>
    
    <!-- 3 검색어를 입력하여 찾기 -->
    <select id="proc_board_search" statementType="CALLABLE" parameterType="java.util.Map">
       {CALL proc_board_search(#{pr_search_order}
       				 , #{pr_search}
-      				 , #{pr_MEM_EMAIL}
                      , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
    </select>
    

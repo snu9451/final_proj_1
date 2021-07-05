@@ -1,6 +1,8 @@
 package member.mvc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -16,14 +18,31 @@ public class MemberLogic {
 	
 	
 	public void setMemberDao(MemberDao memberDao) {
+		logger.info("asdfasdfasdfdsfsfadsfs");
 		this.memberDao = memberDao;
 	}
 
 
-	public String selectMemberInfo(Map<String, Object> pmap) {
-		return null;
+	public List<Map<String, Object>> selectMemberList() {
+		List<Map<String, Object>> memberList = new ArrayList<Map<String,Object>>();
+		memberList = memberDao.selectMemberList();
+		return memberList;
+	}
+	public Map<String, Object> selectMember(Map<String, Object> pmap) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = memberDao.selectMember(pmap);
+		logger.info(rmap);
+		return rmap;
+	}
+	public int uiToSession(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.uiToSession(pmap);
+		logger.info("로그인 처리 결과::uiToSession ===> "+result);
+		return result;
 	}
 
+	
+	
 
 
 	public Map<String, Object> selectOneBySession(String sessionValue) {
@@ -34,32 +53,46 @@ public class MemberLogic {
 /* ===========================================================================
 	아 이 디   저 장   또 는   자 동 로 그 인   구 현 - NDS_SKEY 발급 또는 만료일 갱신
 =========================================================================== */ 
-	public int saveId(Map<String, Object> pmap) {
+//	public int saveId(Map<String, Object> pmap) {
+//		int result = 0;
+//		result = memberDao.saveId(pmap);
+//		return result;
+//	}
+//	public int setAutoLogin(Map<String, Object> pmap) {
+//		int result = 0;
+//		result = memberDao.setAutoLogin(pmap);
+//		return result;
+//	}
+
+	
+	public int selectIsMemberPw(Map<String, Object> pmap) {
 		int result = 0;
-		result = memberDao.saveId(pmap);
+		logger.info(memberDao);
+		result = memberDao.selectIsMemberPw(pmap);
 		return result;
 	}
-	public int setAutoLogin(Map<String, Object> pmap) {
+
+	public int selectIsMember(Map<String, Object> pmap) {
 		int result = 0;
-		result = memberDao.setAutoLogin(pmap);
+		result = memberDao.selectIsMember(pmap);
 		return result;
 	}
 
 
-	public int selectIsMember(String inputEmail) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	public String getRandomCode(int length) {
+	public String getRandomCode(String option, int length) {
 		String randomCode = null;
 		ArrayList<String> result = new ArrayList<String>();
 		String[] eng =  {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		String[] eng2 = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
 		Random r = new Random();
 		for(int j=0; j<length; j++) {
-			int which = r.nextInt(3);
+			// 숫자로만 구성된 인증코드를 생성하는 경우
+			int which = 0;
+			if("ON".equals(option)) {
+				which = 0;
+			} else if("NUL".equals(option)) {
+				which = r.nextInt(3);				
+			}
 			// 숫자
 			if(which == 0) {
 				// 0부터 9까지 중 랜덤한 숫자를 가져와줘.
@@ -87,6 +120,90 @@ public class MemberLogic {
 		return randomCode;
 	}
 
+
+	public int updateMember(Map<String, Object> pmap) {
+		int result = 0;
+		// 변경되는 항목이 [gubun]닉네임/비밀번호/사진(img)/active(활동중->탈퇴)/보유코인(deposit)인 경우
+		// 이메일로 제한조건을 걸어 update할 것이므로
+		result = memberDao.updateMember(pmap);
+		return result;
+	}
+
+
+	public int updatePw(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.updatePw(pmap);
+		return result;
+	}
+
+
+	public int updateActive(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.updateActive(pmap);
+		return result;
+	}
+
+
+	public int withdraw(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.withdraw(pmap);
+		return result;
+	}
+
+
+	public Map<String, Object> selectEmail(Map<String, Object> pmap) {
+		Map<String, Object> rmap = null;
+		rmap = memberDao.selectEmail(pmap);
+		return rmap;
+	}
+	public Map<String, Object> selectNickName(Map<String, Object> pmap) {
+		Map<String, Object> rmap = null;
+		rmap = memberDao.selectNickName(pmap);
+		return rmap;
+	}
+
+
+	public int insertMember(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.insertMember(pmap);
+		return result;
+	}
+
+
+	public Map<String, Object> selectMemberAdmin(Map<String, Object> pmap) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = memberDao.selectMemberAdmin(pmap);
+		logger.info(rmap);
+		return rmap;
+	}
+
+
+	public List<Map<String, Object>> myWalletRecord(Map<String, Object> pmap) {
+		List<Map<String, Object>> walletRec = null;
+		walletRec = memberDao.myWalletRecord(pmap);
+		logger.info(pmap);
+		logger.info(walletRec);
+		return walletRec;
+	}
+
+
+	public int insertCoinTrans(Map<String, Object> pmap) {
+		int result = 0;
+		logger.info(pmap);
+		result = memberDao.insertCoinTrans(pmap);
+		logger.info(result);
+		return result;
+	}
+
+
+
+
+	// 테스트용 메인
+//	public static void main(String[] args) {
+//		System.out.println(new MemberLogic().getRandomCode("ON", 6));
+//		System.out.println(new MemberLogic().getRandomCode("NUL", 15));
+//	}
+	
 
 
 

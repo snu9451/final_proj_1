@@ -1119,7 +1119,10 @@ table.errand_tb td {
 .delete {
   text-align: right;
   margin-right: 15px;
-  margin-top : -35px;
+  margin-top: -35px;
+  display: inline-flex;
+  width: 100%;
+  flex-flow: row-reverse;
 }
 #nav a {
   display: inline-block;

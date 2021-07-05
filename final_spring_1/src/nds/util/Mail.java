@@ -200,7 +200,7 @@ public class Mail {
 			"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Montserrat',sans-serif;\" align=\"left\">\r\n" + 
 			"        \r\n" + 
 			"  <div class=\"v-text-align\" style=\"color: #ffffff; line-height: 140%; text-align: left; word-wrap: break-word;\">\r\n" + 
-			"    <p style=\"font-size: 14px; line-height: 140%; text-align: center;\"><span style=\"font-size: 24px; line-height: 33.6px; color: #34495e;\"><strong><span><a href=\"http://192.168.0.163:9696/member/test.nds\" style=\"line-height: 33.6px; font-size: 24px; color: #5e4121; text-decoration: none\">클릭하여 회원가입하기</a></span></strong></span></p>\r\n" + 
+			"    <p style=\"font-size: 14px; line-height: 140%; text-align: center;\"><span style=\"font-size: 24px; line-height: 33.6px; color: #34495e;\"><strong><span><a href=\"http://localhost:9696/mainPage/reqJoinView.nds\" style=\"line-height: 33.6px; font-size: 24px; color: #5e4121; text-decoration: none\">클릭하여 회원가입하기</a></span></strong></span></p>\r\n" + 
 			"  </div>\r\n" + 
 			"\r\n" + 
 			"      </td>\r\n" + 
@@ -234,7 +234,7 @@ public class Mail {
 			"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:10px 10px 17px 20px;font-family:'Montserrat',sans-serif;\" align=\"left\">\r\n" + 
 			"        \r\n" + 
 			"  <div class=\"v-text-align\" style=\"color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;\">\r\n" + 
-			"    <p style=\"font-size: 14px; line-height: 140%; text-align: left;\">회원가입 유효 날짜를 넣어주세요 valid date</p>\r\n" + 
+			"    <p style=\"font-size: 14px; line-height: 140%; text-align: left;\">from NDS_Company</p>\r\n" + 
 			"  </div>\r\n" + 
 			"\r\n" + 
 			"      </td>\r\n" + 
@@ -269,7 +269,7 @@ public class Mail {
 			"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:40px;font-family:'Montserrat',sans-serif;\" align=\"left\">\r\n" + 
 			"        \r\n" + 
 			"  <div class=\"v-text-align\" style=\"color: #828388; line-height: 140%; text-align: left; word-wrap: break-word;\">\r\n" + 
-			"    <p style=\"font-size: 14px; line-height: 140%; text-align: center;\"><span style=\"font-size: 14px; line-height: 19.6px;\">&copy; NDS.&nbsp; All Rights Reserved </span></p>\r\n" + 
+			"    <p style=\"font-size: 14px; line-height: 140%; text-align: center;\"><span style=\"font-size: 14px; line-height: 19.6px;\">&copy; NDS.&nbsp; 2021 All Rights Reserved </span></p>\r\n" + 
 			"  </div>\r\n" + 
 			"\r\n" + 
 			"      </td>\r\n" + 

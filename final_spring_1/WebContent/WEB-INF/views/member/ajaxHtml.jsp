@@ -9,7 +9,7 @@
 <body style="background-color:red;">
 	<h1 style="background-color:yellow;">서블릿 타고 왔음</h1>
 	<h1>서블릿 타고 왔음</h1>
-	여기여기여기여ㅣㅣㅣㅣㅣㅣㅣ<%=request.getAttribute("보내는 키")%>
+	여기여기여기여ㅣㅣㅣㅣㅣㅣㅣ<%=request.getAttribute("mylist")%>
 	<h1 style="background-color:yellow;">서블릿 타고 왔음</h1>
 	<h1 style="background-color:yellow;">서블릿 타고 왔음</h1>
 	<h1 style="background-color:yellow;">서블릿 타고 왔음</h1>

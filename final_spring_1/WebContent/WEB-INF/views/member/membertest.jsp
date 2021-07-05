@@ -33,9 +33,10 @@
 		$('#bt').on('click',function(){
 			console.log('안ㄴ녕ㅇ');
 			$.ajax({
-// 				url: '${pageContext.request.contextPath}/member/issueTempPw.nds?mem_email=snu9451',				
-// 				url: "${pageContext.request.contextPath}/member/reqLoginView.nds",				
-				url: '/member/ajaxHtml.nds',
+// 				url: '${pageContext.request.contextPath}http://localhost:9696/member/issueTempPw.nds?mem_email=snu9451',				
+// 				url: "${pageContext.request.contextPath}http://localhost:9696/member/reqLoginView.nds",				
+// 				url: 'http://localhost:9696/member/ajaxHtml.nds',
+				url: 'http://localhost:9696/member/leave.nds',
 				type: 'get',
 				dataType: "html",
 				success: function(data){
@@ -48,6 +49,7 @@
 					// ===================[[ ▼ contentType이 json인 data 받아서 처리하기 ]]
 // 					let imsi = JSON.parse(data);
 // 					console.log(imsi[0].name);
+					alert(data);
 					$('#myButton').html(data);
 					// ===================[[ ▲ contentType이 json인 data 받아서 처리하기 ]]
 // 					alert(data);
@@ -57,6 +59,23 @@
 
 	})
 </script>
+	<script type="text/javascript">
+		function send(){
+			alert("전송버튼");
+			let arr = "";
+			$('#p_div p').each(function(index){
+				arr = arr + $('#p_div p').eq(index).text() + "*";
+			});
+			alert(arr);
+			$('#myform > input').val(arr);
+			alert($('#myform > input').val());
+			$('#myform').submit();
+			alert("Afs");	// submit으로 제출한 form은 서블릿에서(자바/Back) getAttribute가 아닌 getParameter로 받아와야 한다!!!
+// 			let arr1 = JSON.stringify(arr);
+// 			let mydt = JSON.parse(arr1);
+// 			document.write(mydt);
+		}
+	</script>
 <style>
 .modal {
 	color: black;
@@ -66,6 +85,16 @@
 </style>
 </head>
 <body style="background-color:orange;">
+	<div id="p_div">
+		<p>안녕하세요</p>
+		<p>반갑습니다</p>
+		<p>감사합니다</p>
+	</div>	
+
+	<form id="myform" action="http://localhost:9696/member/ajaxHtml.nds?mylist112=afafvs">
+		<input type="text" name="mylist112" value="임시">
+	</form>
+	<button id="sendButton" onclick="javascript:send()">전송</button>
 	<h1 class="ajax">환경 구축 테스트 페이지입니다.</h1>
 	<input id="in" type="text" />
 	<div id="ex" class="modal" style="width: 300px; height: 100px;">
