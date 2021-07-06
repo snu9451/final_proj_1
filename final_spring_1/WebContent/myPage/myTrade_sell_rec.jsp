@@ -15,11 +15,11 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
+			<td class="divider">글번호1 inserthere</td>
+			<td class="divider_img"><a href="#"
 				style="color: black"><img id="item_image"
 					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
+			<td class="divider_con"><a href="#"
 				style="color: black">inserthere</a></td>
 			<td class="divider">등록일 inserthere<br>inserthere원<br>
 				<button type="button" class="btn btn-warning btn-sm" disabled>판매 중</button> <br>
@@ -32,11 +32,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
+			<td class="divider">글번호2 inserthere</td>
+			<td class="divider_img"><a href="#"
 				style="color: black"><img id="item_image"
 					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
+			<td class="divider_con"><a href="#"
 				style="color: black">inserthere</a></td>
 			<td class="divider">등록일 inserthere<br>inserthere원<br>
 				<button type="button" class="btn btn-secondary btn-sm" disabled>판매
@@ -47,128 +47,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
+			<td class="divider">글번호3 inserthere</td>
+			<td class="divider_img"><a href="#"
 				style="color: black"><img id="item_image"
 					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
-				style="color: black">inserthere</a></td>
-			<td class="divider">등록일 inserthere<br>inserthere원<br>
-				<button type="button" class="btn btn-secondary btn-sm">판매
-					완료</button>
-				<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-			</td>
-		</tr>
-		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
-				style="color: black"><img id="item_image"
-					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
-				style="color: black">inserthere</a></td>
-			<td class="divider">등록일 inserthere<br>inserthere원<br>
-				<button type="button" class="btn btn-secondary btn-sm">판매
-					완료</button>
-				<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-			</td>
-		</tr>
-		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
-				style="color: black"><img id="item_image"
-					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
-				style="color: black">inserthere</a></td>
-			<td class="divider">등록일 inserthere<br>inserthere원<br>
-				<button type="button" class="btn btn-secondary btn-sm">판매
-					완료</button>
-				<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-			</td>
-		</tr>
-		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
-				style="color: black"><img id="item_image"
-					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
-				style="color: black">inserthere</a></td>
-			<td class="divider">등록일 inserthere<br>inserthere원<br>
-				<button type="button" class="btn btn-secondary btn-sm">판매
-					완료</button>
-				<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-			</td>
-		</tr>
-		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
-				style="color: black"><img id="item_image"
-					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
-				style="color: black">inserthere</a></td>
-			<td class="divider">등록일 inserthere<br>inserthere원<br>
-				<button type="button" class="btn btn-secondary btn-sm">판매
-					완료</button>
-				<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-			</td>
-		</tr>
-		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
-				style="color: black"><img id="item_image"
-					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
-				style="color: black">inserthere</a></td>
-			<td class="divider">등록일 inserthere<br>inserthere원<br>
-				<button type="button" class="btn btn-secondary btn-sm">판매
-					완료</button>
-				<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-			</td>
-		</tr>
-		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
-				style="color: black"><img id="item_image"
-					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
-				style="color: black">inserthere</a></td>
-			<td class="divider">등록일 inserthere<br>inserthere원<br>
-				<button type="button" class="btn btn-secondary btn-sm">판매
-					완료</button>
-				<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-			</td>
-		</tr>
-		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
-				style="color: black"><img id="item_image"
-					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
-				style="color: black">inserthere</a></td>
-			<td class="divider">등록일 inserthere<br>inserthere원<br>
-				<button type="button" class="btn btn-secondary btn-sm">판매
-					완료</button>
-				<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-			</td>
-		</tr>
-		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
-				style="color: black"><img id="item_image"
-					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
-				style="color: black">inserthere</a></td>
-			<td class="divider">등록일 inserthere<br>inserthere원<br>
-				<button type="button" class="btn btn-secondary btn-sm">판매
-					완료</button>
-				<button type="button" class="btn btn-danger btn-sm">삭제하기</button>
-			</td>
-		</tr>
-		<tr>
-			<td class="divider">글번호 inserthere</td>
-			<td class="divider_img"><a href="http://naver.com"
-				style="color: black"><img id="item_image"
-					src="./assets/img/item/inserthere"></a></td>
-			<td class="divider_con"><a href="http://naver.com"
+			<td class="divider_con"><a href="#"
 				style="color: black">inserthere</a></td>
 			<td class="divider">등록일 inserthere<br>inserthere원<br>
 				<button type="button" class="btn btn-secondary btn-sm">판매

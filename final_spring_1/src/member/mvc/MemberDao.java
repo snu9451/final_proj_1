@@ -223,4 +223,18 @@ public class MemberDao {
 	}
 
 
+
+
+
+
+
+	public List<Map<String, Object>> getMyTrade(Map<String, Object> pmap) {
+		logger.info("Logic getMyTrade 호출성공");
+		List<Map<String,Object>> tradeRec = null;
+		tradeRec = sqlSessionTemplate.selectList("getMyTrade", pmap);
+		
+		return tradeRec;
+	}
+
+
 }

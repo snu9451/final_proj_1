@@ -47,6 +47,19 @@
 		  WHERE mem_email= #{mem_email}
 	   ORDER BY trans_date DESC
 	</select>
+	<!-- 중고거래 내역 조회 -->
+	<select id="getMyTrade" parameterType="map" resultType="map">
+	select bm_no, bm_title, bm_date, bm_content, bm_price
+	from board_master
+	<if test='mem_nickName_buyer!=null'>
+		WHERE mem_nickName = er.mem_email_nds
+		AND mem_email_req = #{mem_email_req}
+	</if>
+	<if test='mem_email_nds!=null'>
+		WHERE mb.mem_email = er.mem_email_req
+		AND mem_email_nds = #{mem_email_nds}
+	</if>
+	</select>
 	
 <!-- ==================================== [[ ＵＰＤＡＴＥ ]] ==================================== -->
 	<select id="updatePw" statementType="CALLABLE" parameterType="map">
