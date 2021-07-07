@@ -16,6 +16,18 @@ public class AdminDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
+	public List<Map<String, Object>> getAdminPage(Map<String, Object> pmap) {
+		List<Map<String, Object>> adminPage = null;
+		adminPage = sqlSessionTemplate.selectList("memberVO",pmap); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		
+		return adminPage;
+	}
+	
+	
+	
+	
+	
+	
  // 회원 탈퇴하기(mem_active를 T에서 F로)
 	public int outMember(Map<String, Object> pmap) {
 		logger.info("outMember 메소드 호출");

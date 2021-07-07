@@ -8,6 +8,10 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- ==================================================== [[ 컨트롤러 영역 ]] 
 		==================================================== -->
+	<bean id="admin-controller" class="member.mvc.AdminController">
+		<property name="methodNameResolver" ref="admin-resolver" />
+		<property name="adminLogic" ref="admin-logic"/>
+	</bean>
 	<bean id="member-controller" class="member.mvc.MemberController">
 		<property name="methodNameResolver" ref="member-resolver" />
 		<property name="memberLogic" ref="member-logic"/>
@@ -30,7 +34,8 @@
 			</list>
 		</property>
 		<property name="mappings">
-			<props>
+			<props>			
+				<prop key="/admin/admin_page1.nds">admin-controller</prop>
 				<prop key="/member/reqLoginView.nds">member-controller</prop>
 				<prop key="/mainPage/reqJoinView.nds">member-controller</prop>
 				<prop key="/member/selectNickName.nds">member-controller</prop>
@@ -71,6 +76,7 @@
 		class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
 		<property name="mappings">
 			<props>
+				<prop key="/admin/admin_page1.nds">getAdminPage</prop>
 				<prop key="/member/reqLoginView.nds">reqLoginView</prop>
 				<prop key="/mainPage/reqJoinView.nds">reqJoinView</prop>
 				<prop key="/member/selectNickName.nds">selectNickName</prop>

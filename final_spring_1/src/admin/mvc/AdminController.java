@@ -1,5 +1,6 @@
 package admin.mvc;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,26 @@ public class AdminController extends MultiActionController {
 		this.adminLogic = adminLogic;
 	}
 
+	
+	public ModelAndView getAdminPage(HttpServletRequest req, HttpServletResponse res)
+			throws IOException{
+		logger.info("getadminPage 호출 성공.");
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String, Object> target = new HashMap<>(); //req에 담겨 있는 수많은 정보들 중에서 우리가(사용자) 전송한 정보만 담기 위해서 만들어준 것.(target)
+		hmb.bind(target);//여기서는 타겟 안에 아무것도 안 들어있음.
+		
+		List<Map<String,Object>> adminPage = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
+		
+		adminPage=adminLogic.getAdminPage(target);//where bm_no=? and bm_title LIKE '%'||?||'%'
+		logger.info("getAdminPage:"+adminPage);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/admin_page1");
+		mav.addObject("adminPage", adminPage);
+		return mav;
+		
+	}
+	
+	
 	// 회원 탈퇴하기(mem_active를 T에서 F로)
 	public void outMember(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("outMember 메소드 호출");
@@ -93,7 +114,7 @@ public class AdminController extends MultiActionController {
 		// logger.info("result" + searchMember);
 	}
 
-	// http://localhost:9696/admin/selectBoardBySearch.nds?nick_title_type=%EC%A0%9C%EB%AA%A9&pr_search=%EB%93%9C
+	// http://localhost:4444/admin/selectBoardBySearch.nds?nick_title_type=%EC%A0%9C%EB%AA%A9&pr_search=%EB%93%9C
 	/////////////////////////////////////////★//////////////////////////////////////////////
 	// 게시글 검색
 	// 게시글 제목 또는 작성자로 검색

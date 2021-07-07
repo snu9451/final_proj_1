@@ -3,11 +3,11 @@
 <mapper namespace="com.mybatis.mapper.AdminMapper">
 <!-- 회원VO -->
  <resultMap type="map" id="memberVO">
-<!--   <result column="MEM_CREATE_DATE" property="MEM_CREATE_DATE"/>  -->
-<!--   <result column="MEM_EMAIL" property="MEM_EMAIL"/>  -->
-<!--   <result column="MEM_NICKNAME" property="MEM_NICKNAME"/>  -->
-<!--   <result column="MEM_GENDER" property="MEM_GENDER"/>  -->
-<!--   <result column="MEM_AGE" property="MEM_AGE"/>  -->
+  <result column="MEM_CREATE_DATE" property="MEM_CREATE_DATE"/> 
+  <result column="MEM_EMAIL" property="MEM_EMAIL"/> 
+  <result column="MEM_NICKNAME" property="MEM_NICKNAME"/> 
+  <result column="MEM_GENDER" property="MEM_GENDER"/> 
+  <result column="MEM_AGE" property="MEM_AGE"/> 
  </resultMap>
  
 <!-- 신고된 회원VO -->

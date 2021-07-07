@@ -192,7 +192,7 @@ function allItemList(pr_choice){
 	let item = {"pr_choice":pr_choice.id};
     $.ajax({
     	type: "GET",
-    	url: "http://localhost:9696/item/selectItemList.nds",
+    	url: "http://localhost:4444/item/selectItemList.nds",
 		data: item,
     	success:function(data){
 			viewItemList(data);
@@ -209,7 +209,7 @@ function itemSearch(){
     $.ajax({
     	type: "GET",
 //     	data: search,
-    	url: "http://localhost:9696/item/selectBySearch.nds?pr_search="+$('input[name=nds_search]').val(),
+    	url: "http://localhost:4444/item/selectBySearch.nds?pr_search="+$('input[name=nds_search]').val(),
     	success:function(data){
 //     		alert(data);
 			viewItemList(data);
@@ -240,7 +240,7 @@ function likeItem(itemno){
 	let item = {"pr_bm_no":itemno.id};
     $.ajax({
     	type: "POST",
-    	url: "http://localhost:9696/item/likeItem.nds",
+    	url: "http://localhost:4444/item/likeItem.nds",
 		data: item,
     	success:function(data){
     		if(data==1) {
@@ -264,7 +264,7 @@ function deleteComment(comment){
 	let p_comment_step = comment.id; //삭제할번호
     $.ajax({
     	type: "POST",
-    	url: "http://localhost:9696/item/deleteComment.nds",
+    	url: "http://localhost:4444/item/deleteComment.nds",
 		data: {"p_comment_step":p_comment_step},
     	success:function(data){
     		if(data=='true') {
@@ -290,7 +290,7 @@ function insertComment(comment){
 	let item = {"pr_comment_pos":commentType_No[0],"pr_comment_group":commentgroup,"pr_comment_msg":msg,"pr_bm_no":commentType_No[1]};
     $.ajax({
     	type: "POST",
-    	url: "http://localhost:9696/item/insertComment.nds",
+    	url: "http://localhost:4444/item/insertComment.nds",
 		data: item,
     	success:function(data){
     		$('#pd__comment__list').append(data);
@@ -332,7 +332,7 @@ $(document).ready(function(){
 		let item = {"pr_choice":"like_rank"};
 		$.ajax({
 	    	type: "GET",
-	    	url: "http://localhost:9696/item/selectItemList.nds",
+	    	url: "http://localhost:4444/item/selectItemList.nds",
 			data: item,
 	    	success:function(data){
 				viewItemList(data);

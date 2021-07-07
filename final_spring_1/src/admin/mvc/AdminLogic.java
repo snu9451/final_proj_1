@@ -19,6 +19,27 @@ public class AdminLogic {
 		this.adminDao = adminDao;
 	}
 	
+	public List<Map<String,Object>> getAdminPage(Map<String, Object> pmap) {
+		logger.info("getAdminPage 호출 성공"+pmap.containsKey("gubun")); //키 이름이 구분인 녀석이 들어 있니?
+		List<Map<String,Object>> adminPage = null;
+		String gubun = null;
+		if(pmap.get("gubun")!=null) {//값이 들어 있니?
+			gubun = pmap.get("gubun").toString();			
+		}
+//		if(gubun!=null && "detail".equals(gubun)) {//구분이 널이 아니고, 구분에 들어있는 게 디테일과 같냐?
+//			int bm_no = 0;
+//			bm_no = Integer.parseInt(pmap.get("bm_no").toString());
+//			adminDao.hitCount(bm_no);
+//		}
+		adminPage = adminDao.getAdminPage(pmap);
+		return adminPage;
+	}
+	
+	
+	
+	
+	
+	
  // 회원 탈퇴하기(mem_active를 T에서 F로)
 	public int outMember(Map<String, Object> pmap) {
 		logger.info("outMember 메소드 호출");

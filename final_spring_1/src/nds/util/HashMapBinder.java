@@ -72,13 +72,14 @@ public class HashMapBinder {
 	}////////end of bind
 			
 	public void bindPost(Map<String,Object> target) {
-		Enumeration en = request.getParameterNames();//배열 구조체 묶음
+		//mem_nickName = 재훈재훈
+		Enumeration en = request.getParameterNames();//배열 구조체 묶음 //mem_nickNmae, 재훈재훈 뭐가 들어감?? 
 		//<input type="text" name="mem_id"
-		while(en.hasMoreElements()) {
-			String key = (String)en.nextElement();
-			logger.info("value:"+request.getParameter(key));
-			target.put(key, HangulConversion.toUTF(request.getParameter(key)));
-			logger.info("value:"+target);
+		while(en.hasMoreElements()) { //요소가 더 있냐? 
+			String key = (String)en.nextElement(); //mem_nickName이 들어가나 보다...
+			logger.info("value:"+request.getParameter(key)); //value:재훈재훈
+			target.put(key, HangulConversion.toUTF(request.getParameter(key))); //타겟에 mem_nickName=재훈재훈 넣음.
+			logger.info("value:"+target); //mem_nickName=재훈재훈 출력.
 		}
 	}////////end of bind
 	public void bind(Map<String,Object> target) {
