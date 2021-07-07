@@ -111,6 +111,7 @@ function resAction() {
 			success : function(data) {//@data-json,xml,html,text
 				console.log(data);
 				let str = "";
+				$('#allcnt1').html(data.length);
 				console.log(data.length);
 				
 				if(data.length != nds_cnt){

@@ -355,7 +355,19 @@ public class MemberController extends MultiActionController {
 		// 인증번호
 	}
 	
-	
+	//마이페이지 찜 목록 삭제
+	public void deleteMyLike(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("controller : deleteMyLike메소드 호출");
+		Map<String,Object> pmap = new HashMap<>();
+		HttpSession session= req.getSession(); 
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		HashMapBinder hmb = new HashMapBinder(req);
+		String mem_email = (String)login.get("MEM_EMAIL");
+		pmap.put("mem_email", mem_email);
+		hmb.bindPost(pmap);
+		memberLogic.deleteMyLike(pmap);
+		logger.info("controller의 pmap : "+ pmap );
+	}
 	
 	
 	

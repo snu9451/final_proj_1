@@ -941,6 +941,7 @@ table.like_tb {
   color: red;
   cursor: pointer;
   transition: color 0.2s ease;
+  font-size:30px;
 }
 .likebutton:hover {
 }
