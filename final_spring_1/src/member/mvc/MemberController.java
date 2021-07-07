@@ -848,7 +848,9 @@ public class MemberController extends MultiActionController {
 		ModelAndView mav = new ModelAndView("/myPage/my_like.jsp");
 		return mav;
 	}
-	public void getMyTrade(HttpServletRequest req, HttpServletResponse res) {
+	
+	public void selectMyTrade(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("Controller: getMyTrade 호출");
 		HttpSession session = req.getSession();
 		HashMapBinder hmb = new HashMapBinder(req);
 		
@@ -865,11 +867,11 @@ public class MemberController extends MultiActionController {
 		//mem_nickname에 세션에 들어있는 MEM_NICKNAME의 정보를 넣어줌
 		//expect mem_nickname = 포도;
 		String mem_nickname = (String)login.get("MEM_NICKNAME");
-	      if("buyer".equals((String)pmap.get("gubun"))) {
-	    	  pmap.put("mem_nickName_buyer", mem_nickname);
-	      } else if ("seller".equals((String)pmap.get("gubun"))) {
-	    	  pmap.put("mem_nickName_seller", mem_nickname);
-	      }
+		if("buyer".equals((String)pmap.get("gubun"))) {
+			pmap.put("buyer_nickname", mem_nickname);
+		} else if ("seller".equals((String)pmap.get("gubun"))) {
+			pmap.put("seller_nickname", mem_nickname);
+		}
 		logger.info("mem_nickname: "+mem_nickname);
 		
 		//DB에서 가져오는 정보를 담아주는 List - Map;
@@ -881,6 +883,12 @@ public class MemberController extends MultiActionController {
 		
 		//ajax요청시 json으로 변환된 data 전송;
 		AjaxDataPrinter.out(res, "aplication/json", jsondata);
+	}
+	
+	public ModelAndView getMyTrade(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("Controller: getMyTrade 호출");
+		ModelAndView mav = new ModelAndView("/myPage/my_trade.jsp");
+		return mav; 
 	}
 	
 	public ModelAndView getMyErrand(HttpServletRequest req, HttpServletResponse res) {

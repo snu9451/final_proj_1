@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%
+List<Map<String, Object>> item = (List<Map<String, Object>>)request.getAttribute("tradeRec");
+
+%>	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +19,12 @@
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
 </head>
 <body>
-
+<script>
+$(document).ready(function () {
+	console.log("mytrade js ready");
+	buyAction();
+});
+</script>
 
 
   <!-- =========================================== ▼ ＣＯＭＭＯＮ　ＳＥＣＴＩＯＮ  ▼ ============================================= -->
@@ -32,7 +43,8 @@
 				<a class="total_trade sell" href="javascript:sellAction()"> <span><h4 class="all_rec">판매내역</h4></span></a> 
 				<span></span> <span></span> <span></span><span></span>
 			</div>
-			<div class="trade_bottom"></div>
+			<div class="trade_bottom">
+			</div>
 		</div>
 	</div>
 
