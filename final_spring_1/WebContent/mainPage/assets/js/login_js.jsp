@@ -168,4 +168,20 @@ function doLogin(){
 		
 	});
 };
+
+
+function naverLogin(){
+	$.ajax({
+		url: 'http://127.0.0.1:9696/member/NaverLogin.nds',
+		type: 'get',
+		success: function(data){
+			alert("dfsdf");
+			location.href = "http://127.0.0.1:9696/mainPage/main_page.nds"
+		},
+		error: function(e){
+			alert(e);
+		}
+		
+	});
+};
 </script>

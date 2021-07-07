@@ -11,7 +11,9 @@
 	<bean id="member-controller" class="member.mvc.MemberController">
 		<property name="methodNameResolver" ref="member-resolver" />
 		<property name="memberLogic" ref="member-logic"/>
+		<property name="NaverLoginApi" ref="naver-loginapi" />
 	</bean>
+	<bean id="naver-loginapi" class="member.mvc.NaverLoginApi"/>
 	<!-- 인터셉터에 logic 클래스를 주입 -->
 	<bean id="auth-check-interceptor" class="nds.util.AuthInterceptor">
 		<property name="memberLogic" ref="member-logic"/>
@@ -44,6 +46,7 @@
 				<prop key="/member/sendSMSCode.nds">member-controller</prop>
 				<prop key="/member/issueTempPw.nds">member-controller</prop>
 				<prop key="/member/doLogin.nds">member-controller</prop>
+				<prop key="/member/NaverLogin.nds">member-controller</prop>
 				<prop key="/member/doLogout.nds">member-controller</prop>
 				<prop key="/member/leave.nds">member-controller</prop>
 				<prop key="/member/join.nds">member-controller</prop>
@@ -84,6 +87,7 @@
 				<prop key="/member/sendSMSCode.nds">sendSMSCode</prop>
 				<prop key="/member/issueTempPw.nds">issueTempPw</prop>
 				<prop key="/member/doLogin.nds">doLogin</prop>
+				<prop key="/member/NaverLogin.nds">naverLogin</prop>
 				<prop key="/member/doLogout.nds">doLogout</prop>
 				<prop key="/member/leave.nds">leave</prop>
 				<prop key="/member/join.nds">join</prop>

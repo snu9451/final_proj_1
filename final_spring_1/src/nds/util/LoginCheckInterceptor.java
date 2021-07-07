@@ -43,6 +43,9 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		// 요청이 발생하면 그 요청에 대한 세션을 가져온다.
 		HttpSession session = req.getSession();
 		logger.info("요청된 URI =====> "+req.getRequestURI());
+		if(req.getRequestURI().equals("/member/NaverLogin.nds")) {
+			return true;
+		}
 		for(int i=0; i<excludedURIs.length; i++) {
 			if(excludedURIs[i].equals(req.getRequestURI())) {
 				logger.info("비회원도 이용 가능한 페이지 || 예외url 요청입니다.");

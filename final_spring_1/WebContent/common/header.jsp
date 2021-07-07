@@ -50,6 +50,7 @@ response.setDateHeader("Expires",0);
 	} else if(session.getAttribute("login") != null){
 		login = (Map<String, Object>)session.getAttribute("login");
 		mem_nickname = login.get("MEM_NICKNAME").toString();
+		if(mem_nickname.length()>10) mem_nickname = mem_nickname.toString().substring(0, 10);
 		mem_email = login.get("MEM_EMAIL").toString();
 		mem_star = Double.parseDouble(String.valueOf(login.get("MEM_STAR")));
 		coin_remain = Integer.parseInt(String.valueOf(login.get("COIN_REMAIN")));
