@@ -375,17 +375,28 @@ public class ItemController extends MultiActionController {
 		AjaxDataPrinter.out(res,result);
 
 	}
-
-	
+	public ModelAndView itemUploadPage(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("controller : itemUploadPage메소드 호출");
+		ModelAndView mav = new ModelAndView("/itemUpload/itemUpload.jsp");
+		return mav;
+	}
 	//사용자가 상품을 등록 시에
-	public ModelAndView insertItem(HttpServletRequest req, HttpServletResponse res) {
+	public void insertItem(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : insertItem메소드 호출");
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		HttpSession session = req.getSession();
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		String mem_nickname = (String)login.get("MEM_NICKNAME");
+		pmap.put("pr_SELLER_NICKNAME", mem_nickname);
+		hmb.multiBind(pmap);
+		logger.info("==============================" + pmap);
+		itemLogic.insertItem(pmap);
 		//front : key는 pr_BM_TITLE   /   pr_BM_CONTENT  /  pr_BM_PRICE  /   pr_SELLER_NICKNAME  /  pr_CATEGORY_NAME  
 		//      value는   제목                 내용              가격                닉네임                  카테고리         
 		//        key는 "Img1" "img2" ....
 		//ModelAndView mav = new ModelAndView();
 		////한글 처리
-		//HashMapBinder hmb = new HashMapBinder(req);
 		//Map<String,Object> pmap = new HashMap<>();
 		//hmb.multiBind(pmap);
 		////사이즈 초과시 에러를 전송시킴
@@ -396,23 +407,16 @@ public class ItemController extends MultiActionController {
 		//	return mav;
 		//}
 		////상품의 내용, 상품의 사진들을 저장한다.
-		//itemLogic.insertItem(pmap);
 		////페이지 전송
 		//mav.setViewName("itemTest");
 		//return mav;
-		
-		ModelAndView mav = new ModelAndView();
-		//한글 처리
-		HashMapBinder hmb = new HashMapBinder(req);
-		Map<String,Object> pmap = new HashMap<>();
-		hmb.multiBind(pmap);
-		pmap.put("pr_BM_TITLE","내용" );
-		pmap.put("pr_BM_CONTENT","내용" );
-		pmap.put("pr_BM_PRICE",3000);
-		pmap.put("pr_SELLER_NICKNAME","바나나" );
-		pmap.put("pr_CATEGORY_NAME","기타" );
+		//pmap.put("pr_BM_TITLE","내용" );
+		//pmap.put("pr_BM_CONTENT","내용" );
+		//pmap.put("pr_BM_PRICE",3000);
+		//pmap.put("pr_SELLER_NICKNAME","바나나" );
+		//pmap.put("pr_CATEGORY_NAME","기타" );
 		//사이즈 초과시 에러를 전송시킴
-		if(pmap.containsKey("error")) {
+		/*if(pmap.containsKey("error")) {
 			System.out.println(pmap.get("error"));
 			//페이지 전송
 			mav.setViewName("itemTest");
@@ -421,8 +425,7 @@ public class ItemController extends MultiActionController {
 		//상품의 내용, 상품의 사진들을 저장한다.
 		itemLogic.insertItem(pmap);
 		//페이지 전송
-		mav.setViewName("itemTest");
-		return mav;
+		mav.setViewName("itemTest");*/
 	}
 	
 	

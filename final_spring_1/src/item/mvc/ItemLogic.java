@@ -130,7 +130,7 @@ public class ItemLogic {
 		//등록된 상품들의 사진
 		List<Map<String,Object>> itemImgs = (List<Map<String, Object>>) pmap.get("itemImgs");
 		//상품의 정보와 사진을 파라미터로 넣는다.
-		itemDao.insertItem(pmap,itemImgs);
+		itemDao.insertItem(pmap, itemImgs);
 	}
 
 
