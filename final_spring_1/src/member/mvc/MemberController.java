@@ -367,6 +367,11 @@ public class MemberController extends MultiActionController {
 	
 	// ===================================== [[ DELETE ]] =====================================
 	
+	public void deleteTradeRec(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("deleteTradeRec 호출 성공");
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		
+	}
 	
 	// ======================================= [[ 그 외 ]] =======================================
 	public void issueTempPw(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
@@ -849,6 +854,7 @@ public class MemberController extends MultiActionController {
 		return mav;
 	}
 	
+	//중고거래 구매내역 또는 판매내역 조회
 	public void selectMyTrade(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("Controller: getMyTrade 호출");
 		HttpSession session = req.getSession();
@@ -885,6 +891,7 @@ public class MemberController extends MultiActionController {
 		AjaxDataPrinter.out(res, "aplication/json", jsondata);
 	}
 	
+	//중고거래 내역 첫 페이지 로드
 	public ModelAndView getMyTrade(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("Controller: getMyTrade 호출");
 		ModelAndView mav = new ModelAndView("/myPage/my_trade.jsp");

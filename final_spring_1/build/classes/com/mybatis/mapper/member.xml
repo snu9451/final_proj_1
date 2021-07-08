@@ -52,7 +52,7 @@
 	<select id="getMyTrade" parameterType="map" resultType="map">
 select b.bm_no, b.bm_title, b.bm_date, b.bm_content, b.bm_price, b.seller_nickname, b.buyer_nickname,
        img.bi_file
-    from board_master b, board_img img
+    from board_master b, (select min(bi_no) bi_no, bm_no, min(bi_file) bi_file from board_img group by bm_no) img
 	<if test='buyer_nickname!=null'>
 		WHERE buyer_nickname = #{buyer_nickname}
 		and b.bm_no = img.bm_no

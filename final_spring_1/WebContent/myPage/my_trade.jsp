@@ -2,10 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
-<%
-List<Map<String, Object>> item = (List<Map<String, Object>>)request.getAttribute("tradeRec");
-
-%>	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +17,6 @@ List<Map<String, Object>> item = (List<Map<String, Object>>)request.getAttribute
 <body>
 <script>
 $(document).ready(function () {
-	console.log("mytrade js ready");
 	buyAction();
 });
 </script>
