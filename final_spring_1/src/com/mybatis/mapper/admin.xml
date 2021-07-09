@@ -43,6 +43,23 @@
 <!--   <collection property="board_masterVO" resultMap="board_masterVO"/> -->
 <!--   <collection property="report_boardVO" resultMap="report_boardVO"/> -->
  </resultMap>
+ <!--전체회원목록조회  -->
+  <select id="member_select" parameterType="java.util.Map" resultType="map">
+  select mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, mem.mem_age, mem.report_count
+  from (select  mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, mem.mem_age ,NVL(me.mem_count,0)  report_count
+        from member mem LEFT OUTER JOIN (select mem_email_to, count(*) mem_count from report_mem group by mem_email_to) me 
+        on mem.mem_email=me.mem_email_to order by mem.mem_email desc)mem
+ </select>
+ 
+ <!--전체게시글목록조회  -->
+  <select id="board_select" parameterType="java.util.Map" resultType="map">
+  select bm_no, bm_title, seller_nickname, bm_date, bm_hit
+  from BOARD_MASTER 
+ </select>
+ 
+ 
+ 
+ 
  
 <!-- 회원 탈퇴하기(mem_active를 T에서 F로) -->
  <update id="outMem" parameterType="map">
@@ -67,11 +84,18 @@
  </update>
  
 <!-- 회원 검색 --> 
- <select id="proc_member_all_select" statementType="CALLABLE" parameterType="java.util.Map">
-  {CALL proc_member_all_select(#{nick_email_type}, #{pr_search},
+ <select id="proc_member_all_select" parameterType="java.util.Map">
+  select mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, mem.mem_age, mem.report_count
+  from (select  mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, mem.mem_age ,NVL(me.mem_count,0)  report_count
+        from member mem LEFT OUTER JOIN (select mem_email_to, count(*) mem_count from report_mem group by mem_email_to) me 
+        on mem.mem_email=me.mem_email_to order by mem.mem_email desc)mem
+  
+  <!-- {CALL proc_member_all_select(#{nick_email_type}, #{pr_search},
+  
   							   #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=report_mem_memberVO})
-  }
+  } -->
  </select>
+
  
 <!-- 게시글 검색 -->
  <select id="proc_board_all_select" statementType="CALLABLE" parameterType="java.util.Map">

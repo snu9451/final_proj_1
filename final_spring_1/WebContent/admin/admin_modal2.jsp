@@ -35,7 +35,8 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
         <link rel="stylesheet" href="paging.css"/>
         <link rel="stylesheet" href="modalcss.css"/>
-        <script src="paging.js"></script>
+<!--         <script src="paging.js"></script> -->
+ <%@ include file="../admin/paging_js.jsp" %>
 		<script src="https://kit.fontawesome.com/ce3585cab0.js" crossorigin="anonymous"></script>
 		<script src="https://unpkg.com/@popperjs/core@2"></script>
       

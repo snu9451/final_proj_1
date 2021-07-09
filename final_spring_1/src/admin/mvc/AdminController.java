@@ -32,22 +32,59 @@ public class AdminController extends MultiActionController {
 	}
 
 	
-	public ModelAndView getAdminPage(HttpServletRequest req, HttpServletResponse res)
-			throws IOException{
-		logger.info("getadminPage 호출 성공.");
-		HashMapBinder hmb = new HashMapBinder(req);
-		Map<String, Object> target = new HashMap<>(); //req에 담겨 있는 수많은 정보들 중에서 우리가(사용자) 전송한 정보만 담기 위해서 만들어준 것.(target)
-		hmb.bind(target);//여기서는 타겟 안에 아무것도 안 들어있음.
-		
-		List<Map<String,Object>> adminPage = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
-		
-		adminPage=adminLogic.getAdminPage(target);//where bm_no=? and bm_title LIKE '%'||?||'%'
-		logger.info("getAdminPage:"+adminPage);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/admin_page1");
-		mav.addObject("adminPage", adminPage);
+//	public ModelAndView getAdminPage(HttpServletRequest req, HttpServletResponse res) throws Exception {
+//		logger.info("getadminPage 호출 성공.");
+//		HashMapBinder hmb = new HashMapBinder(req);
+//		Map<String, Object> target = new HashMap<>(); //req에 담겨 있는 수많은 정보들 중에서 우리가(사용자) 전송한 정보만 담기 위해서 만들어준 것.(target)
+//		hmb.bind(target);//여기서는 타겟 안에 아무것도 안 들어있음.
+//		
+//		List<Map<String,Object>> adminPage = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
+//		
+//		adminPage=adminLogic.getAdminPage(target);//where bm_no=? and bm_title LIKE '%'||?||'%'
+//		logger.info("getAdminPage:"+adminPage);
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("/admin/admin_page1.jsp");
+//		mav.addObject("adminPage", adminPage);
+//		return mav;
+//		
+//	}
+	//-------------------------------------------
+	public ModelAndView getAdminPage1(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("getAdminPage1 호출 성공");
+		List<Map<String,Object>> adminPage1 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
+		adminPage1=adminLogic.getAdminPage1();
+		ModelAndView mav = new ModelAndView("/admin/admin_page1.jsp");
+		mav.addObject("adminPage1", adminPage1);
+		logger.info("getAdminPage1:"+adminPage1);
+		return mav;	
+	}
+	public ModelAndView getAdminPage2(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("getAdminPage2 호출 성공");
+		List<Map<String,Object>> adminPage2 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
+		adminPage2=adminLogic.getAdminPage2();
+		ModelAndView mav = new ModelAndView("/admin/admin_page2.jsp");
+		mav.addObject("adminPage2", adminPage2);
+		logger.info("getAdminPage2:"+adminPage2);
 		return mav;
-		
+	}
+	
+	public ModelAndView getAdminModal1(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("getAdminModal1 호출 성공");
+		List<Map<String,Object>> adminModal1 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
+		adminModal1=adminLogic.getAdminModal1();
+		ModelAndView mav = new ModelAndView("/admin/admin_modal1.jsp");
+		mav.addObject("adminModal1", adminModal1);
+		logger.info("getAdminModal1:"+adminModal1);
+		return mav;		
+	}
+	public ModelAndView getAdminModal2(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("getAdminModal2 호출 성공");
+		List<Map<String,Object>> adminModal2 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
+		adminModal2=adminLogic.getAdminModal2();
+		ModelAndView mav = new ModelAndView("/admin/admin_modal2.jsp");
+		mav.addObject("adminModal2", adminModal2);
+		logger.info("getAdminModal2:"+adminModal2);
+		return mav;		
 	}
 	
 	

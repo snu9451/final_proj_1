@@ -19,22 +19,42 @@ public class AdminLogic {
 		this.adminDao = adminDao;
 	}
 	
-	public List<Map<String,Object>> getAdminPage(Map<String, Object> pmap) {
-		logger.info("getAdminPage 호출 성공"+pmap.containsKey("gubun")); //키 이름이 구분인 녀석이 들어 있니?
-		List<Map<String,Object>> adminPage = null;
-		String gubun = null;
-		if(pmap.get("gubun")!=null) {//값이 들어 있니?
-			gubun = pmap.get("gubun").toString();			
-		}
+//	public List<Map<String,Object>> getAdminPage(Map<String, Object> pmap) {
+//		logger.info("getAdminPage 호출 성공"+pmap.containsKey("gubun")); //키 이름이 구분인 녀석이 들어 있니?
+//		List<Map<String,Object>> adminPage = null;
+//		String gubun = null;
+//		if(pmap.get("gubun")!=null) {//값이 들어 있니?
+//			gubun = pmap.get("gubun").toString();			
+//		}
 //		if(gubun!=null && "detail".equals(gubun)) {//구분이 널이 아니고, 구분에 들어있는 게 디테일과 같냐?
 //			int bm_no = 0;
 //			bm_no = Integer.parseInt(pmap.get("bm_no").toString());
 //			adminDao.hitCount(bm_no);
 //		}
-		adminPage = adminDao.getAdminPage(pmap);
-		return adminPage;
+//		adminPage = adminDao.getAdminPage(pmap);
+//		return adminPage;
+//	}
+	//--------------------------------------------------------
+	public List<Map<String,Object>> getAdminPage1() {
+		List<Map<String,Object>> adminPage1 = null;
+		adminPage1 = adminDao.getAdminPage1();
+		return adminPage1;
 	}
-	
+	public List<Map<String,Object>> getAdminPage2() {
+		List<Map<String,Object>> adminPage2 = null;
+		adminPage2 = adminDao.getAdminPage2();
+		return adminPage2;
+	}
+	public List<Map<String,Object>> getAdminModal1() {
+		List<Map<String,Object>> adminModal1 = null;
+		adminModal1 = adminDao.getAdminModal1();
+		return adminModal1;
+	}
+	public List<Map<String,Object>> getAdminModal2() {
+		List<Map<String,Object>> adminModal2 = null;
+		adminModal2 = adminDao.getAdminModal2();
+		return adminModal2;
+	}
 	
 	
 	
