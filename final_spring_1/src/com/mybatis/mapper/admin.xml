@@ -45,19 +45,68 @@
  </resultMap>
  <!--전체회원목록조회  -->
   <select id="member_select" parameterType="java.util.Map" resultType="map">
-  select mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, mem.mem_age, mem.report_count
-  from (select  mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, mem.mem_age ,NVL(me.mem_count,0)  report_count
-        from member mem LEFT OUTER JOIN (select mem_email_to, count(*) mem_count from report_mem group by mem_email_to) me 
-        on mem.mem_email=me.mem_email_to order by mem.mem_email desc)mem
+SELECT mem.mem_create_date,
+       mem.mem_email,
+       mem.mem_nickname,
+       mem.mem_gender,
+       mem.mem_age,
+       mem.report_count
+  FROM (  SELECT mem.mem_create_date,
+                 mem.mem_email,
+                 mem.mem_nickname,
+                 mem.mem_gender,
+                 mem.mem_age,
+                 NVL (me.mem_count, 0) report_count
+            FROM    MEMBER mem
+                 LEFT OUTER JOIN
+                    (  SELECT mem_email_to, COUNT (*) mem_count
+                         FROM report_mem
+                     GROUP BY mem_email_to) me
+                 ON mem.mem_email = me.mem_email_to
+        ORDER BY mem.mem_email DESC) mem
  </select>
  
  <!--전체게시글목록조회  -->
-  <select id="board_select" parameterType="java.util.Map" resultType="map">
-  select bm_no, bm_title, seller_nickname, bm_date, bm_hit
-  from BOARD_MASTER 
- </select>
+
+  <select id="board_select" resultType="map">
+	SELECT bm.bm_no,
+	       bm.bm_title,
+	       bm.seller_nickname,
+	       bm.bm_date,
+	       bm.bm_hit,
+	       NVL (me.board_count, 0) report_count
+	  FROM    board_master bm
+	       LEFT OUTER JOIN
+	          (  SELECT bm_no, COUNT (*) board_count
+	               FROM report_board
+	           GROUP BY bm_no) me
+	       ON bm.bm_no = me.bm_no
+	 ORDER BY report_count desc
+ </select> 
  
- 
+ <!-- 신고된 회원 -->
+  <select id="report_member" parameterType="java.util.Map" resultType="map">
+	SELECT rm.report_no,
+           rm.report_type,
+           rm.mem_email_to,
+           rm.mem_email_from,
+           rm.report_msg,
+           rm.report_date
+  	FROM report_mem rm
+ </select> 
+ <!-- 신고된 게시글-->
+  <select id="report_board" parameterType="java.util.Map" resultType="map">
+	SELECT rb.report_no,
+     	   rb.report_type,
+       	   bm.bm_title,
+       	   rb.mem_email,
+       	   rb.report_msg,
+       	   rb.report_date    
+      FROM report_board rb 
+    LEFT OUTER JOIN board_master bm 
+    ON rb.bm_no = bm.bm_no
+    ORDER BY rb.bm_no    
+ </select> 
  
  
  

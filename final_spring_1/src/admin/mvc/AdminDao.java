@@ -35,12 +35,12 @@ public class AdminDao {
 	}
 	public List<Map<String, Object>> getAdminModal1() {
 		List<Map<String, Object>> adminModal1 = null;
-		adminModal1 = sqlSessionTemplate.selectList("member_select"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		adminModal1 = sqlSessionTemplate.selectList("report_member"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
 		return adminModal1;
 	}
 	public List<Map<String, Object>> getAdminModal2() {
 		List<Map<String, Object>> adminModal2 = null;
-		adminModal2 = sqlSessionTemplate.selectList("member_select"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		adminModal2 = sqlSessionTemplate.selectList("report_board"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
 		return adminModal2;
 	}
 	

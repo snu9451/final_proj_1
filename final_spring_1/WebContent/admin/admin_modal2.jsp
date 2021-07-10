@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>   
+<%
+	List<Map<String,Object>> adminModal2 = null;
+	adminModal2 = (List<Map<String,Object>>)request.getAttribute("adminModal2");
+	String report_no = null;
+	String report_type = null;
+	String bm_title = null;
+	String mem_email = null;
+	String report_msg = null;
+	String report_date  = null;
+%>        
 <!doctype html>
 <html lang="en">
     <head>
@@ -27,6 +38,7 @@
         <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
         <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
         <!-- pagination -->
+        <script src="assets/vendor/jquery/jquery.min.js"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
             <!-- <script src="/assets/vendor/jquery/jquery.min.js"></script> -->
@@ -96,513 +108,30 @@
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>욕설·비방</td>
-                                                    <td>액정 깨진 모든 핸드폰 비싸게 다 삽니다~~</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>
-                                                    <a href="javascript:open()">이새끼 사기꾼임 이새끼 사기꾼임이새끼 사기꾼임이새끼 사기꾼임</a>
-                                                    </td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1233</td>
-                                                    <td>비매너사용자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>욕을 너무 심하게...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1232</td>
-                                                    <td>기타</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이 사람 정신병이...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1231</td>
-                                                    <td>성희롱</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>ㅁㅊㄴ...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1230</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>허위매물 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1229</td>
-                                                    <td>비매너사용자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1228</td>
-                                                    <td>기타</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
                                             
+                 <%for(int i=0; i<adminModal2.size() ; i++){
+                       report_no = adminModal2.get(i).get("REPORT_NO").toString();
+                       report_type = adminModal2.get(i).get("REPORT_TYPE").toString();
+                       bm_title = adminModal2.get(i).get("BM_TITLE").toString();
+                       mem_email = adminModal2.get(i).get("MEM_EMAIL").toString();
+                       report_msg = adminModal2.get(i).get("REPORT_MSG").toString();
+                       report_date = adminModal2.get(i).get("REPORT_DATE").toString();
+                       report_date = report_date.substring(0,10);
+                       report_date = report_date.replace("-",".");
+                      %>                                      
+                                                <tr>
+                                                    <td><%=report_no%></td>
+                                                    <td><%=report_type%></td>
+                                                    <td><%=bm_title%></td>
+                                                    <td><%=mem_email%></td>
+                                                    <td>
+                                                    <a href="javascript:open('<%=report_msg%>')"><%=report_msg%></a>
+                                                    </td>
+                                                    <td><%=report_date%></td>
+                                                </tr>
+                       <%
+                       } 
+                       %>                  
                                             </tbody>
                                         </table>
                                     </div>
@@ -657,10 +186,10 @@
         <script src="assets/scripts/klorofil-common.js"></script>
 
         <!-- 신고메시지 모달 -->
-<div class="modal hidden">
+<div class="modal hidden" id="reportModal">
   <div class="bg"></div>
   <div class="modalBox">
-    <p style="min-height: 130px;">일이삼사구십 일팔구십일이삼삼사육칠팔구십오육칠팔구십일칠팔구십일이삼사오육칠팔구십 </p>
+    <p style="min-height: 130px;"> </p>
     
     <div class="modal-footer">
         <button class="closeBtn">확인</button>
@@ -670,11 +199,12 @@
 </div>
 
 <script>
-  const open = () => {
+function open(rpt_msg) {
     document.querySelector(".modal").classList.remove("hidden");
+    $("#reportModal").children(".modalBox").children("p").text(rpt_msg);
   }
 
-  const close = () => {
+  function close() {
     document.querySelector(".modal").classList.add("hidden");
   }
 
@@ -688,6 +218,8 @@
         <!-- 팝업창 닫기 함수 -->
         <script>
             function btn_close(){
+            	console.log("이게 왜 안눌러짐?");
+            	console.log("눌러지는데 안꺼지네 ㅡㅡ");
                 window.close();
             }
             getPagination('#products');

@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>   
+<%
+	List<Map<String,Object>> adminModal1 = null;
+	adminModal1 = (List<Map<String,Object>>)request.getAttribute("adminModal1");
+	String report_no = null;
+	String report_type = null;
+	String mem_email_to = null;
+	String mem_email_from = null;
+	String report_msg = null;
+	String report_date  = null;
+%>    
 <!doctype html>
 <html lang="en">
     <head>
@@ -27,6 +38,7 @@
         <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
         <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
         <!-- pagination -->
+           <script src="assets/vendor/jquery/jquery.min.js"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
         <link
@@ -83,8 +95,8 @@
                                             </form>
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align: center;" width="4%">신고번호</th>
-                                                    <th style="text-align: center;" width="8%">분류</th>
+                                                    <th style="text-align: center;" width="6%">신고번호</th>
+                                                    <th style="text-align: center;" width="9%">분류</th>
                                                     <th style="text-align: center;" width="14%">신고대상회원</th>
                                                     <th style="text-align: center;" width="14%">신고자</th>
                                                     <th style="text-align: center;" width="14%">신고메시지</th>
@@ -92,102 +104,34 @@
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>
-                                                        <a href="javascript:open()"> 이새끼 사기꾼임fjgjdfdsfdsㄷㄷㄷㄷㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㄱfh</a>
-                                                    </td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1233</td>
-                                                    <td>비매너사용자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>욕을 너무 심하게...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1232</td>
-                                                    <td>기타</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이 사람 정신병이...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1231</td>
-                                                    <td>성희롱</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>ㅁㅊㄴ...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1230</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>허위매물 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1229</td>
-                                                    <td>비매너사용자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1228</td>
-                                                    <td>기타</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                                <tr >
-                                                    <td>1234</td>
-                                                    <td>전문판매업자</td>
-                                                    <td>as97164@naver.com</td>
-                                                    <td>dnguddl9436@naver.com</td>
-                                                    <td>이새끼 사기꾼임...</td>
-                                                    <td>2021.06.26.</td>
-                                                </tr>
-                                           
                                             
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                      <%for(int i=0; i<adminModal1.size() ; i++){
+                       report_no = adminModal1.get(i).get("REPORT_NO").toString();
+                       report_type = adminModal1.get(i).get("REPORT_TYPE").toString();
+                       mem_email_to = adminModal1.get(i).get("MEM_EMAIL_TO").toString();
+                       mem_email_from = adminModal1.get(i).get("MEM_EMAIL_FROM").toString();
+                       report_msg = adminModal1.get(i).get("REPORT_MSG").toString();
+                       report_date = adminModal1.get(i).get("REPORT_DATE").toString();
+                       report_date = report_date.substring(0,10);
+                       report_date = report_date.replace("-",".");
+                      %>                     
+                         <tr>
+                             <td><%=report_no %></td>
+                             <td><%=report_type %></td>
+                             <td><%=mem_email_to %></td>
+                             <td><%=mem_email_from %></td>
+                             <td>
+                                 <a href="javascript:open('<%=report_msg%>')"><%=report_msg%> </a>
+                             </td>
+                             <td><%=report_date%></td>
+                          </tr>
+                       <%
+                      }
+                       %>   
+                          </tbody>
+                      </table>
+                  </div>
+               </div>
                                 <!-- END BASIC TABLE -->
                                 <!-- 페이지 선택 버튼 목록 -->
                                 <!-- <div class="paging-search" id="paging-search"> -->
@@ -237,7 +181,7 @@
         <script src="assets/scripts/klorofil-common.js"></script>
 
                     <!-- 신고메시지 모달 -->
-<div class="modal hidden">
+<div class="modal hidden" id="reportModal">
     <div class="bg"></div>
     <div class="modalBox">
       <p style="min-height: 130px;">일이삼사구십 일팔구십일이삼삼사육칠팔구십오육칠팔구십일칠팔구십일이삼사오육칠팔구십 </p>
@@ -250,8 +194,10 @@
   </div>
   
   <script>
-    const open = () => {
+    function open(rpt_msg) {
+      console.log("모달창 뜬다요~");
       document.querySelector(".modal").classList.remove("hidden");
+      $("#reportModal").children(".modalBox").children("p").text(rpt_msg);
     }
   
     const close = () => {

@@ -40,8 +40,8 @@
             rel="stylesheet">
         <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
         <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+        
+        <script src="assets/vendor/jquery/jquery.min.js"></script>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
@@ -171,6 +171,8 @@
                                             <tbody style="text-align: center;">
           	<%for(int i=0; i<adminPage1.size() ; i++){
           		mem_create_date = adminPage1.get(i).get("MEM_CREATE_DATE").toString();
+          		mem_create_date = mem_create_date.substring(0, 10);
+          		mem_create_date = mem_create_date.replace("-", ".");
           		mem_nickname = adminPage1.get(i).get("MEM_NICKNAME").toString();
           		mem_gender = adminPage1.get(i).get("MEM_GENDER").toString();
           		mem_age = adminPage1.get(i).get("MEM_AGE").toString();
@@ -185,17 +187,20 @@
 			</td>
 			<td> <%=mem_create_date %></td>
 			<td>
-	         <a href="" onClick="window.open('admin_modal1.jsp', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')"> <%=mem_email%></a>
+	         <a href="" onClick="window.open('admin_modal1.nds', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')"> <%=mem_email%></a>
 	        
 	         </td>
 			<td> <%=mem_nickname %></td>
-			<td> 
 	
-			<%=mem_gender%>
-			</td>
+			
+			<%if(mem_gender.equals("M")){%>
+			<td>남</td>
+			<%} else{%>
+			<td>여</td>
+			<%}%>
 			<td> <%=mem_age %>대</td>
 			<td> <%=report_count %></td>
-		<tr>
+		</tr>
 	<%
 	}
 	%> 
@@ -274,7 +279,6 @@
 		  </div>
         <!-- END WRAPPER -->
         <!-- Javascript -->
-        <script src="assets/vendor/jquery/jquery.min.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
         <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
         <script src="assets/scripts/klorofil-common.js"></script>

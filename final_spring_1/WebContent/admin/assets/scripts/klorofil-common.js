@@ -288,7 +288,4 @@ $.fn.clickToggle = function( f1, f2 ) {
 			return f1.apply(this, arguments);
 		});
 	});
-
-}
-
-
+});

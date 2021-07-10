@@ -11,7 +11,7 @@
 	String seller_nickname = null;
 	String bm_date = null;
 	String bm_hit = null;
-// 	String report_count    = null;
+	String report_count    = null;
 
 %>
 
@@ -36,6 +36,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 	<script src="https://kit.fontawesome.com/ce3585cab0.js" crossorigin="anonymous"></script>
 	<!-- pagination -->
+	<script src="assets/vendor/jquery/jquery.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 	<link
@@ -159,8 +160,10 @@
           		bm_title = adminPage2.get(i).get("BM_TITLE").toString();
           		seller_nickname = adminPage2.get(i).get("SELLER_NICKNAME").toString();
           		bm_date = adminPage2.get(i).get("BM_DATE").toString();
+          		bm_date = bm_date.substring(0,10);
+          		bm_date = bm_date.replace("-",".");
           		bm_hit = adminPage2.get(i).get("BM_HIT").toString();
-//           		report_count = adminPage2.get(i).get("REPORT_COUNT").toString();
+          		report_count = adminPage2.get(i).get("REPORT_COUNT").toString();
           	
 	%>
 	
@@ -170,7 +173,7 @@
 			</td>
 			<td> <%=bm_no %></td>
 			<td>
-	         <a href="" onClick="window.open('admin_modal2.jsp', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')"> <%=bm_title%></a>
+	         <a href="" onClick="window.open('admin_modal2.nds', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')"> <%=bm_title%></a>
 	        
 	         </td>
 			<td> <%=seller_nickname %></td>
@@ -179,8 +182,8 @@
 			<%=bm_date%>
 			</td>
 			<td> <%=bm_hit %></td>
-			<td> <%=0 %></td>
-		<tr>
+			<td> <%=report_count %></td>
+		</tr>
 	<%
 	}
 	%> 
@@ -251,7 +254,7 @@
 	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
-	<script src="assets/vendor/jquery/jquery.min.js"></script>
+	
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
