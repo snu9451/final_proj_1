@@ -181,7 +181,10 @@ function aos_init() {
 $(window).on("load", function () {
   aos_init();
 });
-
+/*==============================================================*/
+$('#addComment').click(function(){
+	console.log('sadfdsf');
+});
 
 
 

@@ -128,10 +128,10 @@ function insAction(){
                   <h4 class="item_info_title">&nbsp&nbsp&nbsp가격</h4>
                   
                   	<% if(itemContext!=null){ %> 
-                  		<input class="textbox_com" id="essential2" type="number" placeholder="&nbsp필수 입력 사항입니다." 
+                  		<input class="textbox_com" id="essential2" type="number" min="0" placeholder="&nbsp필수 입력 사항입니다." 
                   		value = "<%=Integer.parseInt(itemContext.get("BM_PRICE").toString())%>" name="pr_BM_PRICE" max="10000000">
                   	<% } else{ %>
-	                  <input class="textbox_com" id="essential2" type="number" name="pr_BM_PRICE" placeholder="&nbsp필수 입력 사항입니다." max="10000000">
+	                  <input class="textbox_com" id="essential2" type="number" min="0" name="pr_BM_PRICE" placeholder="&nbsp필수 입력 사항입니다." max="10000000">
                   	<% } %>
                   	
                 </div>

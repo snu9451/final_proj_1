@@ -30,6 +30,39 @@
 	let prevSender = "";//시간 삭제를 위한 전송자 저장 변수
 
 	$(document).ready(function(){	
+		$(".price").on('keyup', function(){
+			let abled = false;
+			abled = $(".price").val().length > 0 ? true : false;
+			console.log(abled);
+			$("#btn_confirm").attr("disabled", !abled);
+		});
+		$('#btn_confirm').click(function(){
+			$('#check1').addClass('active');
+			$("#btn_confirm").attr("disabled", true);
+			$(".price").attr("readonly", true);
+			$(".price").css({"bacground-color":"gray", "pointer-events": "none", "opacity":"0.5"});
+		});
+		$("#check1").click(function(){
+			$("#check1").removeClass('active');
+			abled = $(".price").val().length > 0 ? true : false;
+			console.log(abled);
+			$(".price").attr("readonly", false);
+			$("#btn_confirm").attr("disabled", !abled);
+			$(".price").css({"bacground-color":"gray", "pointer-events": "auto", "opacity":"1"});
+		});
+		
+		
+		$('.owl-carousel').owlCarousel({
+			loop:true,
+			nav: true,
+			margin: 10,
+			navigationText: ["<<<<",">>>>"],
+			responsive:{
+				234:{
+					items:1
+				}
+			},
+		});
 
 		$(".roomName").text(" < "+dest);
 		$(".roomName").off("click").on("click", function(){

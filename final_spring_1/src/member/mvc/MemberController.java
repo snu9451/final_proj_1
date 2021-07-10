@@ -188,29 +188,32 @@ public class MemberController extends MultiActionController {
 //		}
 	}
 	// 프로필 사진 변경 시
-	public void updateImg(HttpServletRequest req, HttpServletResponse res) {////////////////////////////////////////////
+	public void updateImg(HttpServletRequest req, HttpServletResponse res) throws IOException {////////////////////////////////////////////
 		logger.info("updateImg 메소드 호출 성공!");
 		// request객체로 받아온 정보를 map으로 옮겨 담는 작업
 		Map<String, Object> pmap = new HashMap<String, Object>();
-		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bindPost(pmap);
+		HashMapBinder hmb = new HashMapBinder(req,1);
+		hmb.profileBind(pmap);
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
 		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
 		logger.info(mvo);
 		String mem_email = (String)mvo.get("MEM_EMAIL");
 		pmap.put("mem_email", mem_email);
+		
+		logger.info(pmap);
 		int result = memberLogic.updateMember(pmap);
 		logger.info("프로필 사진 업데이트 결과 ===> "+result);
 		// 프로필 사진 변경 실패 시
-		if(result == 0) {
-			AjaxDataPrinter.out(res, "text/html", "[ERROR] 프로필 사진 변경에 <b style=\"color: red\">실패</b>하였습니다.");
+		if(result == 1) {
+//			//AjaxDataPrinter.out(res, "text/html", "[ERROR] 프로필 사진 변경에 <b style=\"color: red\">실패</b>하였습니다.");
+			res.sendRedirect("/myPage/my_info.nds");
 		}
-		// 프로필 사진 변경 성공 시
-		else {
-			// insert_here - 물리적인 위치에 저장된 파일을 삭제한다.
-			AjaxDataPrinter.out(res, "text/html", "변경되었습니다.");
-		}
+//		// 프로필 사진 변경 성공 시
+//		else {
+//			// insert_here - 물리적인 위치에 저장된 파일을 삭제한다.
+//			AjaxDataPrinter.out(res, "text/html", "변경되었습니다.");
+//		}
 	}
 	public void updatePw(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		logger.info("updatePw 메소드 호출 성공!");

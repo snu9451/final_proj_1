@@ -110,5 +110,6 @@ function leave(){
 };
 function addAction(){
 	$('#f_profile_picture').submit();
+	$('#imgChangeSuccs').modal('show');
 }
 </script>

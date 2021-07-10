@@ -206,7 +206,7 @@
 									<ul class="d-flex align-items-end mb-0">
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_POS").toString())==0){ %>
 										<li>
-											<button class="pd__comment__btn" id="">답글</button>
+											<button class="pd__comment__btn" id="addComment">답글</button>
 										</li>
 									<% } %>
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_ME").toString())==1){ %>
@@ -305,6 +305,7 @@
 　　<%@ include file="../itemPage/item_page_modal.jsp" %>
 　　<%@ include file="../mainPage/reportBoard.jsp" %>
 　　<%@ include file="../mainPage/reportMem.jsp" %>
+	<!-- <script src="../itemPage/assets/js/main_page2.js"></script> -->
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
 </body>
 </html>

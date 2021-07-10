@@ -40,6 +40,7 @@ response.setDateHeader("Expires",0);
 	Map<String, Object> login = new HashMap<>();
 	String mem_nickname = null;	// 전역에서 사용되는 정보
 	String mem_email = null;	// 전역에서 사용되는 정보
+	String mem_img = null;	// 전역에서 사용되는 정보
 	double mem_star = 0.0;		// 마이페이지에서 사용되는 정보
 	int coin_remain = 0;		// 마이페이지에서 사용되는 정보
 	if(session.getAttribute("login") == null){
@@ -52,6 +53,7 @@ response.setDateHeader("Expires",0);
 		mem_nickname = login.get("MEM_NICKNAME").toString();
 		mem_email = login.get("MEM_EMAIL").toString();
 		mem_star = Double.parseDouble(String.valueOf(login.get("MEM_STAR")));
+		mem_img = String.valueOf(login.get("MEM_IMG"));
 		coin_remain = Integer.parseInt(String.valueOf(login.get("COIN_REMAIN")));
 		
 %>
