@@ -244,7 +244,7 @@ public class MemberDao {
 	/* 마이페이지 중고거래 내역 삭제 */
 	public void deleteTradeRec(Map<String, Object> pmap) {
 		logger.info("Dao deleteTradeRec 호출성공");
-		sqlSessionTemplate.selectOne("proc_board_master_delete",pmap);
+		sqlSessionTemplate.selectOne("deleteTradeRec",pmap);
 		logger.info("pmap ===> "+pmap);
 	}
 

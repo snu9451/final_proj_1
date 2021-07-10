@@ -50,16 +50,18 @@
 	
 	<!-- 중고거래 내역 조회 -->
 	<select id="getMyTrade" parameterType="map" resultType="map">
-select b.bm_no, b.bm_title, b.bm_date, b.bm_content, b.bm_price, b.seller_nickname, b.buyer_nickname,
-       img.bi_file
+select b.bm_no, b.bm_title, b.bm_date, b.bm_content, b.bm_price, b.bm_status, b.seller_nickname, b.buyer_nickname
+       ,img.bi_file
     from board_master b, (select min(bi_no) bi_no, bm_no, min(bi_file) bi_file from board_img group by bm_no) img
 	<if test='buyer_nickname!=null'>
 		WHERE buyer_nickname = #{buyer_nickname}
 		and b.bm_no = img.bm_no
+		order by b.bm_no asc
 	</if>
 	<if test='seller_nickname!=null'>
 		WHERE seller_nickname = #{seller_nickname}
-		and b.bm_no = img.bm_no		
+		and b.bm_no = img.bm_no
+		order by b.bm_no asc		
 	</if>
 	</select>
 	
@@ -89,7 +91,7 @@ select b.bm_no, b.bm_title, b.bm_date, b.bm_content, b.bm_price, b.seller_nickna
      	VALUES (SEQ_COIN_TRANS.NEXTVAL, #{mem_email}, TO_CHAR (SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), #{trans_content}, #{trans_price}, #{trans_remain}, #{trans_io})
 	</insert>
 <!-- ==================================== [[ ＤＥＬＥＴＥ ]] ==================================== -->
-	<select id="deleteTradeRec" statementType="CALLABLE" parameterType="map">
+	<select id="deleteTradeRec" statementType="CALLABLE" parameterType="java.util.Map">
 		{call PROC_BOARD_MASTER_DELETE(#{br_sel_buy}, #{pr_bm_no})}
 	</select>
 

@@ -370,25 +370,25 @@ public class MemberController extends MultiActionController {
 	/* 마이페이지 중고거래 내역 삭제 */
 	public void deleteTradeRec(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("deleteTradeRec 호출 성공");
-		Map<String, Object> pmap = new HashMap<String, Object>();
+		Map<String, Object> pmap = new HashMap<>();
 		
 		//파라미터값 pmap에 넣어준다.
+		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));
 		pmap.put("br_sel_buy", req.getParameter("br_sel_buy")); 
-		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));	
+		
 		logger.info("br_sel_buy: "+req.getParameter("br_sel_buy").toString());
 		logger.info("pr_bm_no: "+req.getParameter("pr_bm_no").toString());
 		
 		if("buy".equals(pmap.get("br_sel_buy"))) {
-			logger.info("buy here");
 			logger.info("which one: "+ pmap.get("br_sel_buy").toString());
 			//상품을 삭제한다.
-			//memberLogic.deleteTradeRec(pmap);
-			return;
+			memberLogic.deleteTradeRec(pmap);
+			logger.info("buy here");
 		}
-		else if("sel".equals(pmap.get("br_sel_buy"))) {
-			logger.info("sel here");
+		else {
 			//상품을 삭제한다.
-			//memberLogic.deleteTradeRec(pmap);
+			memberLogic.deleteTradeRec(pmap);
+			logger.info("sel here");
 		}
 		
 		

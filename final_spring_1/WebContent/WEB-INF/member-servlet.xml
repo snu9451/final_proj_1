@@ -91,7 +91,7 @@
 				<prop key="/member/join.nds">join</prop>
 				<prop key="/member/insertMember.nds">insertMember</prop>
 				<prop key="/member/selectMyTrade.nds">selectMyTrade</prop>
-				<prop key="/member/deleteTradeRec.nds">selectMyTrade</prop>
+				<prop key="/member/deleteTradeRec.nds">deleteTradeRec</prop>
 				<!-- ================== [[ 페이지 이동 url ]] ================== -->
 				<prop key="/myPage/my_info.nds">getMyInfo</prop>
 				<prop key="/myPage/my_wallet.nds">getMyWallet</prop>

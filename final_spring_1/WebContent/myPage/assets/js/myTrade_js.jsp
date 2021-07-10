@@ -103,13 +103,12 @@ pageEncoding="UTF-8"%>
       success: function (data) {
         //@data-json,xml,html,text
         let count = JSON.stringify(data.length);
+        console.log(data);
         let seller_list = "";
-        seller_list +=
-          "<span class='total_rec coin2'>" + "전체: " + count + "</span>";
+        seller_list += "<span class='total_rec coin2'>" + "전체: " + count + "</span>";
         seller_list += "<table class='like_tb' id='products'>";
         seller_list += "<form action='' id='setRows'>";
-        seller_list +=
-          "	<input type='hidden' name='rowPerPage' value='4' id='rowPerPage'>";
+        seller_list += "	<input type='hidden' name='rowPerPage' value='4' id='rowPerPage'>";
         seller_list += "</form>";
         seller_list += "<thead>";
         seller_list += "	<tr>";
@@ -121,26 +120,37 @@ pageEncoding="UTF-8"%>
         seller_list += "</thead>";
         seller_list += "<tbody>";
         for (i = 0; i < data.length; i++) {
+        	let status = data[i].BM_STATUS;
           seller_list += "<tr>";
           seller_list += "	<td class='divider'>글번호 <span id='bm_no'>" + data[i].BM_NO + "</span></td>";
           seller_list += "	<td class='divider_img'><a href='http://naver.com'";
           seller_list += "		style='color: black'><img id='item_image'";
-          seller_list +=
-            "			src=../itemPage/assets/img/board_Img/" +
-            data[i].BI_FILE +
-            "></a></td>";
+          seller_list += "			src=../itemPage/assets/img/board_Img/" + data[i].BI_FILE +"></a></td>";
           seller_list += "	<td class='divider_con'><a href='http://naver.com'";
-          seller_list +=
-            "		style='color: black'>" + data[i].BM_TITLE + "</a></td>";
-          seller_list +=
-            "	<td class='divider'>등록일" +
-            data[i].BM_DATE +
-            "<br>" +
-            data[i].BM_PRICE +
-            "원<br>";
+          seller_list += "		style='color: black'>" + data[i].BM_TITLE + "</a></td>";
+          seller_list += "	<td class='divider'>등록일" + data[i].BM_DATE + "<br>" + data[i].BM_PRICE +"원<br>";
+          	//상품 거래 상태 (판매중 or 거래중 or 판매완료)
+        	if(data[i].BM_STATUS == 'N'){
+        		data[i].BM_STATUS = '';
+        		console.log('N');
+        		data[i].BM_STATUS = '판매중';
+        		seller_list += "		<button type='button' id='state' class='btn btn-warning btn-sm state' disabled>"+data[i].BM_STATUS+"</button> <br>";
+        	} else if (data[i].BM_STATUS == 'S') {
+        		data[i].BM_STATUS = '';
+        		console.log('S');
+        		data[i].BM_STATUS = '거래중';
+        		seller_list += "		<button type='button' id='state' class='btn btn-primary btn-sm state' disabled>"+data[i].BM_STATUS+"</button> <br>";
+        	} else if(data[i].BM_STATUS == 'C') {
+        		data[i].BM_STATUS = '';
+        		console.log('C');
+        		data[i].BM_STATUS = '판매완료';
+        		seller_list += "		<button type='button' id='state' class='btn btn-danger btn-sm state' disabled>"+data[i].BM_STATUS+"</button> <br>";
+        	}
           seller_list += "		<a href='#' data-toggle='modal' data-target=''>";
-          seller_list +=
-            "			<button type='button' id='deleteBtn' class='btn btn-danger btn-sm deleteBtn'>삭제하기</button>";
+          seller_list += "			<button type='button' id='editBtn' class='btn btn-primary btn-sm'>수정하기</button>";
+          seller_list += "		</a>";          
+          seller_list += "		<a href='#' data-toggle='modal' data-target=''>";
+          seller_list += "			<button type='button' id='deleteBtn' class='btn btn-danger btn-sm deleteBtn'>삭제하기</button>";
           seller_list += "		</a>";
           seller_list += "	</td>";
           seller_list += "</tr>";
@@ -149,9 +159,13 @@ pageEncoding="UTF-8"%>
         seller_list += "</table>";
 
         $(".trade_bottom").html(seller_list);
+        //페이지구분(판매내역)
         filter = 'sel';
+        
+        //삭제하기 버튼
   	  	let deleteBtn = $(".deleteBtn");
   	  	deleteAction(deleteBtn, filter);
+  	  	
       },
       error: function (e) {
         //@param-XMLHttpRequest
@@ -165,6 +179,7 @@ pageEncoding="UTF-8"%>
       url: "/member/selectMyTrade.nds?gubun=buy",
       success: function (data) {
         //@data-json,xml,html,text
+        console.log(data);
         let count = JSON.stringify(data.length);
         let buyer_list = "";
         buyer_list +=
@@ -193,17 +208,10 @@ pageEncoding="UTF-8"%>
             data[i].BI_FILE +
             "></a></td>";
           buyer_list += "	<td class='divider_con'><a href='http://naver.com'";
-          buyer_list +=
-            "		style='color: black'>" + data[i].BM_TITLE + "</a></td>";
-          buyer_list +=
-            "	<td class='divider'>등록일" +
-            data[i].BM_DATE +
-            "<br>" +
-            data[i].BM_PRICE +
-            "원<br>";
+          buyer_list += "		style='color: black'>" + data[i].BM_TITLE + "</a></td>";
+          buyer_list += "	<td class='divider'>등록일" + data[i].BM_DATE + "<br>" + data[i].BM_PRICE +"원<br>";
           buyer_list += "		<a href='#' data-toggle='modal' data-target=''>";
-          buyer_list +=
-            "			<button type='button' id='deleteBtn' class='btn btn-danger btn-sm deleteBtn'>삭제하기</button>";
+          buyer_list += "			<button type='button' id='deleteBtn' class='btn btn-danger btn-sm deleteBtn'>삭제하기</button>";
           buyer_list += "		</a>";
           buyer_list += "	</td>";
           buyer_list += "</tr>";
@@ -212,7 +220,10 @@ pageEncoding="UTF-8"%>
         buyer_list += "</table>";
 
         $(".trade_bottom").html(buyer_list);
+      	//페이지구분(구매내역)
         filter = 'buy';
+      	
+        //삭제하기 버튼
   	  	let deleteBtn = $(".deleteBtn");
   	  	deleteAction(deleteBtn, filter);
       },
@@ -222,24 +233,28 @@ pageEncoding="UTF-8"%>
     });
   }
   
+  /* 삭제 모달창 */
   function deleteModal(filter, bm_no){
 	  console.log('deleteModal');
 	  //삭제모달 나타내기
 	  $("#delete").modal('show');
 	  
-	  //모달이 브라우저에 나타났을 떄 실행되는 함수
+	  //모달이 브라우저에 나타났을 때 실행되는 함수
 	  $("#delete").on('shown.bs.modal', function(){
 		  console.log('deleteModal shown');
+		  
+		  //모달창에 있는 [확인]버튼 클릭 이벤트
 		  $("#btn_delete").click(function(){
 			 console.log('click delete confirm');
 			 console.log(filter+", "+bm_no);
-/*   			  $.ajax({
-				  url: "/member/deleteTradeRec.nds?br_sel_buy="+filter+"&pr__bm_no="+bm_no
+    			  $.ajax({
+				  url: "/member/deleteTradeRec.nds?br_sel_buy="+filter+"&pr_bm_no="+bm_no,
 				  success: function(){
-					  console.log("filter"+filter);
-					  console.log("no"+bm_no);
+					  //location.href="/member/selectMyTrade.nds?gubun=buy";
+					  console.log("filter: "+filter);
+					  console.log("no: "+bm_no);
 				  }
-			  }); */
+			  });
 		  });
 	  });
   }
