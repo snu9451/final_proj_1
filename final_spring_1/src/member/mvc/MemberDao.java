@@ -229,11 +229,23 @@ public class MemberDao {
 
 
 	public List<Map<String, Object>> getMyTrade(Map<String, Object> pmap) {
-		logger.info("Logic getMyTrade 호출성공");
+		logger.info("Dao getMyTrade 호출성공");
 		List<Map<String,Object>> tradeRec = null;
 		tradeRec = sqlSessionTemplate.selectList("getMyTrade", pmap);
 		
 		return tradeRec;
+	}
+
+
+
+
+
+
+	/* 마이페이지 중고거래 내역 삭제 */
+	public void deleteTradeRec(Map<String, Object> pmap) {
+		logger.info("Dao deleteTradeRec 호출성공");
+		sqlSessionTemplate.selectOne("proc_board_master_delete",pmap);
+		logger.info("pmap ===> "+pmap);
 	}
 
 

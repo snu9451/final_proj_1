@@ -367,9 +367,30 @@ public class MemberController extends MultiActionController {
 	
 	// ===================================== [[ DELETE ]] =====================================
 	
+	/* 마이페이지 중고거래 내역 삭제 */
 	public void deleteTradeRec(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("deleteTradeRec 호출 성공");
 		Map<String, Object> pmap = new HashMap<String, Object>();
+		
+		//파라미터값 pmap에 넣어준다.
+		pmap.put("br_sel_buy", req.getParameter("br_sel_buy")); 
+		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));	
+		logger.info("br_sel_buy: "+req.getParameter("br_sel_buy").toString());
+		logger.info("pr_bm_no: "+req.getParameter("pr_bm_no").toString());
+		
+		if("buy".equals(pmap.get("br_sel_buy"))) {
+			logger.info("buy here");
+			logger.info("which one: "+ pmap.get("br_sel_buy").toString());
+			//상품을 삭제한다.
+			//memberLogic.deleteTradeRec(pmap);
+			return;
+		}
+		else if("sel".equals(pmap.get("br_sel_buy"))) {
+			logger.info("sel here");
+			//상품을 삭제한다.
+			//memberLogic.deleteTradeRec(pmap);
+		}
+		
 		
 	}
 	
@@ -873,9 +894,9 @@ public class MemberController extends MultiActionController {
 		//mem_nickname에 세션에 들어있는 MEM_NICKNAME의 정보를 넣어줌
 		//expect mem_nickname = 포도;
 		String mem_nickname = (String)login.get("MEM_NICKNAME");
-		if("buyer".equals((String)pmap.get("gubun"))) {
+		if("buy".equals((String)pmap.get("gubun"))) {
 			pmap.put("buyer_nickname", mem_nickname);
-		} else if ("seller".equals((String)pmap.get("gubun"))) {
+		} else if ("sel".equals((String)pmap.get("gubun"))) {
 			pmap.put("seller_nickname", mem_nickname);
 		}
 		logger.info("mem_nickname: "+mem_nickname);

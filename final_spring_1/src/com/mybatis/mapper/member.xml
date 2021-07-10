@@ -89,7 +89,9 @@ select b.bm_no, b.bm_title, b.bm_date, b.bm_content, b.bm_price, b.seller_nickna
      	VALUES (SEQ_COIN_TRANS.NEXTVAL, #{mem_email}, TO_CHAR (SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), #{trans_content}, #{trans_price}, #{trans_remain}, #{trans_io})
 	</insert>
 <!-- ==================================== [[ ＤＥＬＥＴＥ ]] ==================================== -->
-
+	<select id="deleteTradeRec" statementType="CALLABLE" parameterType="map">
+		{call PROC_BOARD_MASTER_DELETE(#{br_sel_buy}, #{pr_bm_no})}
+	</select>
 
 <!-- ==================================== [[ Ｅ　Ｌ　Ｓ　Ｅ ]] ==================================== -->
 	
