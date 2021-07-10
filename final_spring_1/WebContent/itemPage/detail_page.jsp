@@ -32,9 +32,27 @@
   <%@ include file="../mainPage/source_h.jsp" %>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
 </head>
+
 <body>
   <!-- ========================================= ▼ ＨＥＡＤＥＲ　ＳＥＣＴＩＯＮ ▼ ========================================= -->
   <%@ include file="../common/header.jsp" %>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.owl-carousel').owlCarousel({
+			loop:true,
+			nav: true,
+			margin: 10,
+			navigationText: ["<<<<",">>>>"],
+			responsive:{
+				234:{
+					items:1
+				}
+			},
+			autoplay: true,
+			autoplayTimeout: 3000,
+		});
+	})
+</script>
   <!-- ========================================= ▲ ＨＥＡＤＥＲ　ＳＥＣＴＩＯＮ ▲ ========================================= -->
 	<!-- ============================= Detail Section ========================= -->
 	<main class="pd__main" id="main">
@@ -43,32 +61,28 @@
 				<div class="row h-100 justify-content-around p-2" id="pd__box">
 					<!-- 상품 img div -->
 					<div
-						class="
-                col-4 col-lg-4
-                d-flex
-                justify-content-center
-                align-items-center
-                p-0
-              "
+						class="col-4 col-lg-4 d-flex justify-content-center align-items-center p-0"
 						id="pd__img__box">
-						<div class="owl-carousel owl-theme owl-slider text-center"
+						<div class="owl-carousel text-center"
 							id="pd__img__carousel">
 							<% if("C".equals(BM_STATUS)) { %>
 								<% for(int i=0;i<imgs.size();i++){ %>
 									<div class="items" style="position: relative;">
-									   <img style="width: 100%; height: 100%; opacity: 0.1;" src="../itemPage/assets/img/board_Img/<%= imgs.get(i) %>" alt="" />
-									    <div style='font-size: 3.5rem; width: 100%; position: absolute; top: 50%; text-align: center;'> 판매완료 </div>
+									   <img style="width: 100%; height: 100%; opacity: 0.1;" src="../itemUpload/assets/img/itemupload/<%= imgs.get(i) %>" alt="" />
+<!-- 									    <div style='font-size: 3.5rem; width: 100%; position: absolute; top: 50%; text-align: center;'> 판매완료 </div> -->
 									</div>	
 							<% }}else if("S".equals(BM_STATUS)) { %>
 								<% for(int i=0;i<imgs.size();i++){ %>
 									<div class="items" style="position: relative;">
-									   <img style="width: 100%; height: 100%; opacity: 0.1;" src="../itemPage/assets/img/board_Img/<%= imgs.get(i) %>" alt="" />
+									   <img style="width: 100%; height: 100%; opacity: 0.1;" src="../itemUpload/assets/img/itemupload/<%= imgs.get(i) %>" alt="" />
 									   <div style='font-size: 3.5rem; width: 100%; position: absolute; top: 50%; text-align: center;'> 거래중 </div>
 									</div>	
 							<% }}else{ %>
 								<% for(int i=0;i<imgs.size();i++){ %>
 									<div class="items" style="position: relative;">
-									   <img style="width: 100%; height: 100%" src="../itemPage/assets/img/board_Img/<%= imgs.get(i) %>" alt="" />
+									   <img style="width: 100%; height: 100%" src="../itemUpload/assets/img/itemupload/<%= imgs.get(i) %>" alt="" />
+<!-- 									   <img style="width: 100%; height: 100%" src="../itemUpload/assets/img/itemupload/1.png" alt="" /> -->
+<!-- 									   <img style="width: 100%; height: 100%" src="../itemUpload/assets/img/itemupload/2.png" alt="" /> -->
 									</div>	
 								<% }} %>
 						</div>
@@ -82,9 +96,7 @@
 							<div class="d-flex justify-content-between align-items-end">
 								<div class="d-flex align-items-end">
 									<span class="" id="pd__title"><%= BM_TITLE %></span>
-									<div class="ml-3">
-										<span>조회수</span><span><%= BM_HIT %></span><span>회</span>
-									</div>
+									
 								</div>
 								<div>
 									<ul class="d-flex align-items-end mb-0">
@@ -104,22 +116,19 @@
 											</form>
 										</li>
 										<li>
-											<form action="/item/deleteItem.nds" method="post">
-												<input type="hidden" name="br_sel_buy" value='sel' />
-												<input type="hidden" name="pr_bm_no" value=<%= BM_NO %> />
-												<button>삭제</button>
-											</form>
+											<button data-toggle="modal" data-target="#boardDelete">삭제</button>
 										</li>
 									<%}else{%>
 										<li>
-											<form action="join" method="post"  id="main__shape">
-												<button>
-													게시물 신고 <i class="fas fa-exclamation warn"
-														style="color: red; font-size: 20px; font-weight: bold;"></i>
-												</button>
-											</form>
+											<button data-toggle="modal" data-target="#report_board">
+												게시물 신고 <i class="fas fa-exclamation warn"
+													style="color: red; font-size: 20px; font-weight: bold;"></i>
+											</button>
 										</li>
 									<% }%>
+									<div>
+										<span>조회수</span><span><%= BM_HIT %></span><span>회</span>
+									</div>
 									</ul>
 								</div>
 							</div>
@@ -202,15 +211,15 @@
 									<% } %>
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_ME").toString())==1){ %>
 										<li>
-											<button class="pd__comment__btn" id="">수정</button>
+											<button class="pd__comment__btn" id="" >수정</button>
 										</li>
 										<li>
 											<button class="pd__comment__btn" id="<%= itemComments.get(i).get("COMMENT_STEP") %>" onclick='deleteComment(this)' >삭제</button>
 										</li>
 									<% } else {%>
 										<li>
-											<button class="pd__comment__btn" id="">
-												유저신고 <i class="fas fa-exclamation warn"
+											<button class="pd__comment__btn" id="" data-toggle="modal" data-target="#report_user_modal">
+												회원신고 <i class="fas fa-exclamation warn"
 													style="color: red; font-size: 20px; font-weight: bold;"></i>
 											</button>
 										</li>
@@ -293,6 +302,9 @@
 
   <!-- =============================================== ▼ ＳＣＲＩＰＴ  ▼ ================================================= -->
 　　<%@ include file="../itemPage/source_f.jsp" %>
+　　<%@ include file="../itemPage/item_page_modal.jsp" %>
+　　<%@ include file="../mainPage/reportBoard.jsp" %>
+　　<%@ include file="../mainPage/reportMem.jsp" %>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
 </body>
 </html>

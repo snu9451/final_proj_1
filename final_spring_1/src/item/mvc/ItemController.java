@@ -145,12 +145,17 @@ public class ItemController extends MultiActionController {
 		int pr_bm_no = Integer.parseInt(req.getParameter("pr_bm_no").toString());
 		//상품의 내용, 상품의 사진들을 가져온다
 		Map<String,Object> item = itemLogic.editItem(pr_bm_no);
+		//List<String> itemImg = itemLogic.editItemImg(pr_bm_no);
 		List<String> itemImg = itemLogic.editItemImg(pr_bm_no);
+		String[] array = null;
+		array = itemImg.toArray(new String[5]);
 		//상품의 정보를 다 담는다.
 		//가지고 나오는 key&value => {BM_PRICE=5000, BM_NO=4, BM_CONTENT=자취 방 빼서 옷 내놔요, CATEGORY_NAME=의류, BM_TITLE=카라티 팝니다}
 		req.setAttribute("item",item);
+		logger.info("item=================" + item);
 		//가지고 나오는 list => [5.png, 6.png]
-		req.setAttribute("itemImg", itemImg);
+		req.setAttribute("array", array);
+		logger.info("itemImg=================" + itemImg);
 		System.out.println(item);
 		//페이지 전송
 		RequestDispatcher dispatcher= req.getRequestDispatcher("/itemUpload/itemUpload.jsp");
@@ -271,7 +276,7 @@ public class ItemController extends MultiActionController {
 		//상품을 삭제한다.
 		itemLogic.deleteItem(pmap);
 		//페이지 전송
-		res.sendRedirect("/item/main_page.jsp");
+		res.sendRedirect("/mainPage/main_page.jsp");
 	}
 	
 	//상품 판매 완료 클릭 시
@@ -367,8 +372,8 @@ public class ItemController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.bind(pmap);
-		pmap.put("pr_comment_step",223);
-		pmap.put("pr_comment_msg","호호로로로로로로로롤");
+		//pmap.put("pr_comment_step",223);
+		//pmap.put("pr_comment_msg","호호로로로로로로로롤");
 		String result = itemLogic.updateComment(pmap);
 		////여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
 		////- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지

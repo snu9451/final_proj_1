@@ -2,13 +2,21 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>  
 <%
-	/* Map<String,Object> itemContext = null;
+/* 	Map<String,Object> itemContext = null;
 	List<String> imgs = null;
 	if(request.getAttribute("item")!=null&&request.getAttribute("itemImgs")!=null){
 		itemContext =(Map<String,Object>)request.getAttribute("item");
 		//결과값[4.png] 사진
 		imgs = (List<String>) request.getAttribute("itemImgs");
 	} */
+	
+ 	Map<String,Object> itemContext = null;
+	itemContext =(Map<String,Object>)request.getAttribute("item");
+	String[] array = null;
+	array = (String[])request.getAttribute("array");
+	
+
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,10 +37,8 @@ function insAction(){
 </script>
 
   <!-- ========================================= ▼ ＨＥＡＤＥＲ　ＳＥＣＴＩＯＮ ▼ ========================================= -->
-  <%@ include file="../common/header.jsp" %>
+<%@ include file="../common/header.jsp" %>
   <!-- ========================================= ▲ ＨＥＡＤＥＲ　ＳＥＣＴＩＯＮ ▲ ========================================= -->
-
-
 
 
   <!-- ======= 상품등록페이지 시작 ======= -->
@@ -51,41 +57,34 @@ function insAction(){
               <hr>
               <form  id="f_insImg" method="post" enctype="multipart/form-data" action="insertItem.nds">
               <div class="img_list">
-                <div>
-                   <button type="button" id="delPic1" class="btn btn-secondary btn-sm delPic1">X</button>
-                  <input type='file' id="imgInput1" accept="image/*" style="display: none;" name="img1" />
-                  <label class="img_add" for="imgInput1" >
-                  	<img class="img_upload" id="image_section1" src="../itemUpload/assets/img/itemupload/default.png"/>
-                  </label>
-                </div>
-                <div>
-                  <button type="button" id="delPic2" class="btn btn-secondary btn-sm delPic2">X</button>
-                  <input type='file' id="imgInput2" accept="image/*" style="display: none;" name="img2"/>
-                  <label class="img_add" for="imgInput2" >
-                  	<img class="img_upload" id="image_section2" src="../itemUpload/assets/img/itemupload/default.png"/>
-                  </label>
-                </div>
-                <div>
-                  <button type="button" id="delPic3" class="btn btn-secondary btn-sm delPic3">X</button>
-                  <input type='file' id="imgInput3" accept="image/*"  style="display: none;" name="img3"/>
-                  <label class="img_add" for="imgInput3" >
-                  	<img class="img_upload" id="image_section3" src="../itemUpload/assets/img/itemupload/default.png"/>
-                  </label>
-                </div>
-                <div>
-                  <button type="button" id="delPic4" class="btn btn-secondary btn-sm delPic4">X</button>
-                  <input type='file' id="imgInput4" accept="image/*"  style="display: none;" name="img4"/>
-                  <label class="img_add" for="imgInput4" >
-                  	<img class="img_upload" id="image_section4" src="../itemUpload/assets/img/itemupload/default.png"/>
-                  </label>
-                </div>
-                <div>
-                  <button type="button" id="delPic5" class="btn btn-secondary btn-sm delPic5">X</button>
-                  <input type='file' id="imgInput5" accept="image/*" style="display: none;" name="img5"/>
-                  <label class="img_add" for="imgInput5" >
-                  	<img class="img_upload" id="image_section5" src="../itemUpload/assets/img/itemupload/default.png"/>
-                  </label>
-                </div>
+              
+             <%
+               if(array == null){
+		               	for(int i = 1 ; i <= 5 ; i++){%>
+		                <div>
+		                  <button type="button" id="delPic<%=i%>" class="btn btn-secondary btn-sm delPic<%=i%>">X</button>
+		                  <input type='file' id="imgInput<%=i%>" accept="image/*" style="display: none;" name="img<%=i%>" />
+		                  <label class="img_add" for="imgInput<%=i%>" >
+	                  		<img class="img_upload" id="image_section<%=i%>" src="../itemUpload/assets/img/itemupload/default.png"/>
+		                  </label>
+		                </div>
+               <%		}
+               }else {
+                		for(int i = 1 ; i <= 5 ; i++){%>
+		                <div>
+		                  <button type="button" id="delPic<%=i%>" class="btn btn-secondary btn-sm delPic<%=i%>">X</button>
+		                  <input type='file' id="imgInput<%=i%>" accept="image/*" style="display: none;" name="img<%=i%>" />
+		                  <label class="img_add" for="imgInput<%=i%>" >
+		   	            <%  	if(array[i-1] != null){ %> 
+		                  			<img class="img_upload" id="image_section<%=i%>" src="../itemUpload/assets/img/itemupload/<%=array[i-1] %>"/>
+			           	<% 		}
+		   	            		else{%>
+		                  			<img class="img_upload" id="image_section<%=i%>" src="../itemUpload/assets/img/itemupload/default.png"/>
+	           			<%  	} %>
+		                  </label>
+		                </div>
+               <% 	} 
+           		}%>
               </div>
             <div class="bottom">
               <h3 class="img_title" style="font-weight: bold; margin-left: 15px;">상세 정보 입력</h3>
@@ -94,7 +93,11 @@ function insAction(){
                 <div class="item_info_title_section">
                   <h4 class="item_info_title">분류</h4>
                   <select name="pr_CATEGORY_NAME" id="essential3" class="form-select">
+	            <% if(itemContext!=null){ %> 
+                    <option selected><%=itemContext.get("CATEGORY_NAME")%></option>
+	           	<% } else{ %>
                     <option selected>카테고리 선택</option>
+	           	<% } %>
                     <option value="디지털기기">디지털기기</option>
                     <option value="가구">가구</option>
                     <option value="화장품">화장품</option>
@@ -113,41 +116,45 @@ function insAction(){
                 <div class="item_info_title_section">
                   <h4 class="item_info_title">제목</h4>
                   
-<%--                      <% if(itemContext!=null){ %> 
+                    <% if(itemContext!=null){ %> 
                   		<input class="textbox_com" id="essential1" type="text" placeholder="&nbsp필수 입력 사항입니다." 
                   		value = "<%=itemContext.get("BM_TITLE")%>" name="pr_BM_TITLE" size="50" maxlength="50">
-                  	<% } else{ %> --%>
+                  	<% } else{ %>
                   		<input class="textbox_com" id="essential1" name="pr_BM_TITLE" type="text" placeholder="&nbsp필수 입력 사항입니다." size="50" maxlength="50"> 
-                  	<%-- <% } %> --%>
+                  	<% } %>
                   	
                 </div>
                 <div class="item_info_price_section">
                   <h4 class="item_info_title">&nbsp&nbsp&nbsp가격</h4>
                   
-                  	<%-- <% if(itemContext!=null){ %> 
+                  	<% if(itemContext!=null){ %> 
                   		<input class="textbox_com" id="essential2" type="number" placeholder="&nbsp필수 입력 사항입니다." 
                   		value = "<%=Integer.parseInt(itemContext.get("BM_PRICE").toString())%>" name="pr_BM_PRICE" max="10000000">
-                  	<% } else{ %> --%>
+                  	<% } else{ %>
 	                  <input class="textbox_com" id="essential2" type="number" name="pr_BM_PRICE" placeholder="&nbsp필수 입력 사항입니다." max="10000000">
-                  	<%-- <% } %> --%>
+                  	<% } %>
                   	
                 </div>
               </div>
                 <div class="item_info_content_section">
                   <h4 class="item_info_title">내용</h4>
                   	
-                    <%-- <% if(itemContext!=null){ %> 
+                   <% if(itemContext!=null){ %> 
                   	<textarea class="textarea" cols="119" name="pr_BM_CONTENT" rows="10" size="200" maxlength="200"><%= itemContext.get("BM_CONTENT") %></textarea>
-                  	<% } else{ %> --%>
+                  	<% } else{ %>
                   	<textarea class="textarea" cols="119" name="pr_BM_CONTENT" rows="10" size="200" maxlength="200"></textarea>
-                  <%-- 	<% } %> --%>
+                  <% } %>
                   	
                 </div>
             </form>
             </div>
             <div class="footer">
               <div class="item_submit">
+			<% if(itemContext == null) { %>
                 <button data-toggle="modal" data-target="#itemBoard" disabled="true" id="btn-submit" class="btn btn-primary">판매 등록</button>
+			<%} else {%> 
+                <button data-toggle="modal" data-target="#itemBoardEdit" disabled="true" id="btn-submit" class="btn btn-primary">게시글 수정</button>
+			<% } %> 
                 <button type="button" data-toggle="modal" data-target="#itemCancel" class="btn btn-danger">취소</button>
               </div>
             </div>

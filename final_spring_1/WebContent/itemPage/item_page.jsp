@@ -32,8 +32,8 @@
 		if(i<3){
 %>
 		<a class="position-absolute text-decoration-none ml-1" href="#">
-			<i id="top__rank" class="fas fa-crown"></i>
-			<span class="position-absolute translate-middle badge rounded-pill bg-light text-dark">인기상품 Top<%=i+1 %></span>
+			<span class="position-absolute translate-middle badge rounded-pill bg-light" style="font-size:20px; color:red; z-index:1;">
+			<i id="top__rank" class="fas fa-crown" style="font-size:20px; z-index:2;"></i>  인기상품 Top<%=i+1 %></span>
 		</a>
 <%
 		}/////////////////end of inner if
@@ -46,10 +46,10 @@
 <%
 	}/////////end of else
 %>
-		<div class="product__box" style="border-radius:10px;">
+		<div class="product__box" onclick="location.href='http://localhost:8080/item/selectItemDetail.nds?pr_bm_no=<%=itemList.get(i).get("BM_NO")%>';" style="border-radius:10px;">
 			<div class="card rounded-0 mb-2">
 				<div class="pImgBox img-fluid d-flex flex-column justify-content-center align-items-lg-stretch" style="overflow: hidden;">
-					<img id="pimg" class="card-img rounded-0 img-fluid" src="../itemPage/assets/img/board_Img/<%=itemList.get(i).get("BI_FILE")%>"
+					<img id="pimg" class="card-img rounded-0 img-fluid" src="../itemUpload/assets/img/itemupload/<%=itemList.get(i).get("BI_FILE")%>"
 					style= "width: 100%; opacity: <%=opacity%>; ">
 				</div>
 <%
@@ -77,7 +77,7 @@
 				<h3>
 					<a id="pTitle" name="pr_bm_no" href="http://localhost:8080/item/selectItemDetail.nds?pr_bm_no=<%=itemList.get(i).get("BM_NO")%>"><%=itemList.get(i).get("BM_TITLE") %></a>
 				</h3>
-				<p id="pDescrip">[[ 상품내용 ]] <%=descript %></p>
+				<p id="pDescrip"><%=descript %></p>
 				<div class="row d-flex justify-content-between align-items-center mt-3">
 					<div class="col-lg-auto d-flex align-items-baseline">
 						<h2 id="pPrice"><%=itemList.get(i).get("BM_PRICE")%></h2>

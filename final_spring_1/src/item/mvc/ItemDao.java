@@ -61,7 +61,7 @@ public class ItemDao {
 	//상품의 사진만 가져옴 - 사용자가 상품하나를 자세히 볼 때
 	public List<String> editItemImg(int pr_bm_no) {
 		logger.info("Dao : editItemImg메소드 호출");
-		List<String> list = new ArrayList();
+		List<String> list = new ArrayList(5);
 		//select문 돌림
 		list = sqlSessionTemplate.selectList("editItemImg",pr_bm_no);
 		logger.info("list ===> "+list);
@@ -148,7 +148,7 @@ public class ItemDao {
 	public String updateComment(Map<String, Object> pmap) {
 		logger.info("Dao : updateComment메소드 호출");
 		//프로시져
-		sqlSessionTemplate.selectOne("proc_comment_update",pmap);
+		sqlSessionTemplate.update("proc_comment_update",pmap);
 		logger.info("pmap ===> "+pmap);
 		return pmap.get("result").toString();		
 	}

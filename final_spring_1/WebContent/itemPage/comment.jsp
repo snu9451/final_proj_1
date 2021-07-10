@@ -33,7 +33,7 @@
 					<button class="pd__comment__btn" id="">수정</button>                                                       
 				</li>                                                                                                        
 				<li>                                                                                                         
-					<button class="pd__comment__btn" id="comment<%=comment_step %> onclick="deleteComment(this)" >삭제</button> 
+					<button class="pd__comment__btn" id="comment<%=comment_step %> onclick="deleteComment()" >삭제</button> 
 				</li>      
 <%
 	} else {
@@ -64,4 +64,5 @@
 	};                                                                                                                                         
 %>
 		</div>                                                                                                               
-	</div>                                                                                                                   
+	</div>                                                                    
+                                       
