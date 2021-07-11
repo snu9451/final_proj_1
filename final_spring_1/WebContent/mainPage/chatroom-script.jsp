@@ -30,6 +30,16 @@
 	let prevSender = "";//시간 삭제를 위한 전송자 저장 변수
 
 	$(document).ready(function(){	
+		$('.notice_wrapper1').hide();
+		$('#notice_button').click(function(){
+			$('.notice_wrapper').hide();
+			$('.notice_wrapper1').show();
+		});
+		$('#notice_button1').click(function(){
+			$('.notice_wrapper1').hide();
+			$('.notice_wrapper').show();
+		});
+		
 		$(".price").on('keyup', function(){
 			let abled = false;
 			abled = $(".price").val().length > 0 ? true : false;
@@ -51,18 +61,6 @@
 			$(".price").css({"bacground-color":"gray", "pointer-events": "auto", "opacity":"1"});
 		});
 		
-		
-		$('.owl-carousel').owlCarousel({
-			loop:true,
-			nav: true,
-			margin: 10,
-			navigationText: ["<<<<",">>>>"],
-			responsive:{
-				234:{
-					items:1
-				}
-			},
-		});
 
 		$(".roomName").text(" < "+dest);
 		$(".roomName").off("click").on("click", function(){
