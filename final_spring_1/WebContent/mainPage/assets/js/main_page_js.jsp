@@ -323,6 +323,37 @@ function insertComment(comment){
     });
 };
 
+//대댓글 달기
+function pdCommentBtn(pdComment){
+	console.log("Dfdf");
+	let pdCommentform ="";
+	pdCommentform +="					<form action=''>";
+	pdCommentform +="						<div class='input-group'>                                                                                             ";
+	pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
+	pdCommentform +="								<span class='input-group-text'>댓글 작성란</span>                                                             ";
+	pdCommentform +="							</div>                                                                                                            ";
+	pdCommentform +="							<textarea class='form-control' id='nds_comment' aria-label='댓글 작성란'></textarea>                              ";
+	pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
+	pdCommentform +="								<button type='button' class='btn btn-primary' onclick='insertComment(this)'>댓글등록</button>";
+	pdCommentform +="							</div>                                                                                                            ";
+	pdCommentform +="						</div>                                                                                                                ";
+	pdCommentform +="					</form>                                                                                                                   ";
+	pdComment.parentNode.parentNode.parentNode.parentNode.parentNode.innerHTML+=pdCommentform;
+}; 
+
+//댓글 수정
+function pdCommentupdateBtn(pdComment){
+	let history = pdComment.parentNode.parentNode.parentNode.parentNode.nextElementSibling.innerText;
+	let pdCommentform ="";
+	pdCommentform +="					<form action=''>";
+	pdCommentform +="							<textarea class='w-100' row='2' readonly>"+history+"</textarea> ";
+	pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
+	pdCommentform +="								<button type='button' class='btn btn-primary' onclick='insertComment(this)'>댓글수정</button>";
+	pdCommentform +="							</div> ";
+	pdCommentform +="					</form>  ";
+	pdComment.parentNode.parentNode.parentNode.parentNode.nextElementSibling.innerHTML=pdCommentform;
+};
+
 
 /* ==================================== KEY ======================================== */
 

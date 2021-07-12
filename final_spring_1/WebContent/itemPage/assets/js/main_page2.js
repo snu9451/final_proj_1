@@ -147,6 +147,44 @@ function insertComment(comment){
     });
 };
 
+//댓글 삭제하기
+function deleteComment(comment){	
+	let p_comment_step = comment.id; //삭제할번호
+    $.ajax({
+    	type: "POST",
+    	url: "http://localhost/item/deleteComment.nds",
+		data: {"p_comment_step":p_comment_step},
+    	success:function(data){
+    		if(data=='true') {
+				document.querySelector('.comment_num'+p_comment_step).remove();
+			}
+    		else if(data=="false") {
+				alert("삭제할 댓글이 없습니다.");				
+			}
+    	},
+    	error:function(e){
+    		alert("에러: "+e.responseText);
+    	}
+    });
+};
+
+//대댓글 달기
+function pdCommentBtn(pdComment){
+	let pdCommentform ="";
+	pdCommentform +="					<form action=''>";
+	pdCommentform +="						<div class='input-group'>                                                                                             ";
+	pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
+	pdCommentform +="								<span class='input-group-text'>댓글 작성란</span>                                                             ";
+	pdCommentform +="							</div>                                                                                                            ";
+	pdCommentform +="							<textarea class='form-control' id='nds_comment' aria-label='댓글 작성란'></textarea>                              ";
+	pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
+	pdCommentform +="								<button type='button' class='btn btn-primary' id='0-<%= BM_NO %>' onclick='insertComment(this)'>댓글등록</button>";
+	pdCommentform +="							</div>                                                                                                            ";
+	pdCommentform +="						</div>                                                                                                                ";
+	pdCommentform +="					</form>                                                                                                                   ";
+	pdComment.innerHTML=pdCommentform
+};   
+
 //function comment_make(comment){
 //			let commenttext=""
 //			commenttext +=`	<div class='w-100 mt-3  comments comment_num${comment['COMMENT_STEP']}' id='comment__box'  >`;

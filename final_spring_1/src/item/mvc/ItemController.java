@@ -41,7 +41,6 @@ public class ItemController extends MultiActionController {
 	public ModelAndView selectItemList(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : selectItemList메소드 호출");
 		//front : key는 "pr_choice" && value는 인기상품 일시 "like_rank"로, 최근상품 일시 "new_rank"
-		//             "pr_mem_email" 좋아요 한건지 안한건지 받기 위해서 
 		Map<String,Object> pmap = new HashMap<>();
 		// 메인페이지에 노출되어야 하므로 좋아요 보여주지 않음 따라서 메일 받지 않음
 //		HttpSession session = req.getSession();
@@ -64,6 +63,20 @@ public class ItemController extends MultiActionController {
 //		AjaxDataPrinter.out(res,"application/json",itemsJson);
 		return mav;
 		
+	}
+	
+	//안드로이드 : 최근상품,인기상품 클릭 시 해당하는 정렬순서로 상품목록을 JSON형식으로 가지고 온다
+	public void andSelectItemList(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("controller : andSelectItemList메소드 호출");
+		//front : key는 "pr_choice" && value는 인기상품 일시 "like_rank"로, 최근상품 일시 "new_rank"
+		Map<String,Object> pmap = new HashMap<>();
+		pmap.put("pr_choice",req.getParameter("pr_choice"));
+		//아이템 전부를 가져오는 로직
+		List<Map<String, Object>> items = itemLogic.selectItemList(pmap);
+		//Json 형태로 가져오기
+		Gson g = new Gson();
+		String itemsJson = g.toJson(items);
+		AjaxDataPrinter.out(res,"text/html;charset=utf-8",itemsJson);
 	}
 	
 	//사용자가 카테고리메뉴에서 카테고리 선택 시
@@ -121,7 +134,8 @@ public class ItemController extends MultiActionController {
 		//검색어를 가져오게 된다. + 검색 타입을(제목, 내용, 작성자) 가져온다.
 //		pmap.put("pr_MEM_EMAIL", "apple@good.com"); //여기는 원래 세션
 		hmb.bind(pmap);		
-		pmap.put("pr_search", (String)pmap.get("pr_search"));
+		System.out.println(pmap.get("pr_search"));
+		pmap.put("pr_search", pmap.get("pr_search"));
 		pmap.put("pr_search_order","제목");
 		//검색어 아이템들을 가져온다.
 		logger.info("pmap ===> "+pmap);
@@ -137,6 +151,29 @@ public class ItemController extends MultiActionController {
 		mav.addObject("itemList", items);
 		return mav;
 	}
+	
+	//안드로이드 : 검색어를 입력하여 찾기
+	public void andSelectBySearch(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("controller : andSelectBySearch메소드 호출");
+		//front : key는 "pr_search" && value는 입력한 검색어
+		//front : key는 "pr_search_order" && value는 "제목" or "내용" or "작성자"
+		//한글 처리
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		//검색어를 가져오게 된다. + 검색 타입을(제목, 내용, 작성자) 가져온다.
+		hmb.bind(pmap);		
+		pmap.put("pr_search", (String)pmap.get("pr_search"));
+		pmap.put("pr_search_order","제목");
+		//검색어 아이템들을 가져온다.
+		List<Map<String,Object>> items = itemLogic.selectBySearch(pmap);
+		logger.info(items);
+		//Json 형태로 가져오기
+		Gson g = new Gson();
+		String itemsJson = g.toJson(items);
+		AjaxDataPrinter.out(res,"application/json",itemsJson);
+	}
+	
+	
 
 	//사용자가 상품 수정 버튼 클릭 시 상품의 정보를 다 가져와야하니까 있음
 	public void editItem(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

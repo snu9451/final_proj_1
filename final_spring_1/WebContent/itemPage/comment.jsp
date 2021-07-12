@@ -23,14 +23,14 @@
 	if(comment_pos == 0){
 %>                                                                                                             
 				<li>                                                                                                         
-					<button class="pd__comment__btn" id="">답글</button>                                                       
+					<button class="pd__comment__btn" id="" onclick="pdCommentBtn(this)">답글</button>                                                       
 				</li>     
 <%
 	}
 	if(comment_me == 1){
 %>                                                                                                   
 				<li>                                                                                                         
-					<button class="pd__comment__btn" id="">수정</button>                                                       
+					<button class="pd__comment__btn" id="" onclick="pdCommentupdateBtn(this)">수정</button>                                                       
 				</li>                                                                                                        
 				<li>                                                                                                         
 					<button class="pd__comment__btn" id="comment<%=comment_step %> onclick="deleteComment(this)" >삭제</button> 

@@ -33,6 +33,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		"/mainPage/main_page.nds",
 		"/mainPage/reqJoinView.nds",
 		"/item/selectItemList.nds",
+		"/item/andselectItemList.nds",
+		"/item/andselectBySearch.nds",
 		"/item/selectBySearch.nds",
 		"/item/selectByCategory.nds"
 	};

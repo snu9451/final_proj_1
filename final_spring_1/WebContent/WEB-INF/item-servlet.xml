@@ -31,9 +31,11 @@
 		<property name="mappings">
 		
 			<props>
-				<prop key="/item/selectItemList.nds">item-controller</prop> <!--  12 -->
+				<prop key="/item/selectItemList.nds">item-controller</prop>
+				<prop key="/item/andselectItemList.nds">item-controller</prop>
 				<prop key="/item/selectByCategory.nds">item-controller</prop>           <!-- 1 UI생기면 할게 -->
-				<prop key="/item/selectBySearch.nds">item-controller</prop><!-- 12  -->
+				<prop key="/item/selectBySearch.nds">item-controller</prop>
+				<prop key="/item/andselectBySearch.nds">item-controller</prop>
 				<prop key="/item/updateItem.nds">item-controller</prop>                 <!-- 1 -->
 				<prop key="/item/selectItemDetail.nds">item-controller</prop><!--12  -->
 				<prop key="/item/editItem.nds">item-controller</prop>         <!-- 12 -->
@@ -52,8 +54,10 @@
 		<property name="mappings">
 			<props>
 				<prop key="/item/selectItemList.nds">selectItemList</prop>
+				<prop key="/item/andselectItemList.nds">andSelectItemList</prop>
 				<prop key="/item/selectByCategory.nds">selectByCategory</prop>
 				<prop key="/item/selectBySearch.nds">selectBySearch</prop>
+				<prop key="/item/andselectBySearch.nds">andSelectBySearch</prop>
 				<prop key="/item/updateItem.nds">updateItem</prop>
 				<prop key="/item/selectItemDetail.nds">selectItemDetail</prop>
 				<prop key="/item/editItem.nds">editItem</prop>
