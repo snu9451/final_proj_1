@@ -78,6 +78,11 @@ pageEncoding="UTF-8"%>
     });
   });
   
+  /* 게시물 개수 나타내기 */
+  function showCount(count){
+	  return count;
+  }
+  
   /*삭제하기 버튼 이벤트*/
   let filter;//구매내역 or 판매내역을 구분하기 위한 변수
   function deleteAction(deleteBtn, filter){
@@ -102,62 +107,55 @@ pageEncoding="UTF-8"%>
       url: "/member/selectMyTrade.nds?gubun=sel",
       success: function (data) {
         //@data-json,xml,html,text
+        //페이지에 나타나는 게시물 개수
         let count = JSON.stringify(data.length);
-        console.log(data);
+        showCount(count);
+        //상품가격
+        let bm_price;
+        
         let seller_list = "";
-        seller_list += "<span class='total_rec coin2'>" + "전체: " + count + "</span>";
-        seller_list += "<table class='like_tb' id='products'>";
-        seller_list += "<form action='' id='setRows'>";
-        seller_list += "	<input type='hidden' name='rowPerPage' value='4' id='rowPerPage'>";
-        seller_list += "</form>";
-        seller_list += "<thead>";
-        seller_list += "	<tr>";
-        seller_list += "		<th scope='cols' width='15%'></th>";
-        seller_list += "		<th scope='cols' width='25%'></th>";
-        seller_list += "		<th scope='cols' width='35%'></th>";
-        seller_list += "		<th scope='cols' width='25%'></th>";
-        seller_list += "	</tr>";
-        seller_list += "</thead>";
-        seller_list += "<tbody>";
-        for (i = 0; i < data.length; i++) {
-        	let status = data[i].BM_STATUS;
-          seller_list += "<tr>";
-          seller_list += "	<td class='divider'>글번호 <span id='bm_no'>" + data[i].BM_NO + "</span></td>";
-          seller_list += "	<td class='divider_img'><a href='http://naver.com'";
-          seller_list += "		style='color: black'><img id='item_image'";
-          seller_list += "			src=../itemPage/assets/img/board_Img/" + data[i].BI_FILE +"></a></td>";
-          seller_list += "	<td class='divider_con'><a href='http://naver.com'";
-          seller_list += "		style='color: black'>" + data[i].BM_TITLE + "</a></td>";
-          seller_list += "	<td class='divider'>등록일" + data[i].BM_DATE + "<br>" + data[i].BM_PRICE +"원<br>";
-          	//상품 거래 상태 (판매중 or 거래중 or 판매완료)
-        	if(data[i].BM_STATUS == 'N'){
-        		data[i].BM_STATUS = '';
-        		console.log('N');
-        		data[i].BM_STATUS = '판매중';
-        		seller_list += "		<button type='button' id='state' class='btn btn-warning btn-sm state' disabled>"+data[i].BM_STATUS+"</button> <br>";
-        	} else if (data[i].BM_STATUS == 'S') {
-        		data[i].BM_STATUS = '';
-        		console.log('S');
-        		data[i].BM_STATUS = '거래중';
-        		seller_list += "		<button type='button' id='state' class='btn btn-primary btn-sm state' disabled>"+data[i].BM_STATUS+"</button> <br>";
-        	} else if(data[i].BM_STATUS == 'C') {
-        		data[i].BM_STATUS = '';
-        		console.log('C');
-        		data[i].BM_STATUS = '판매완료';
-        		seller_list += "		<button type='button' id='state' class='btn btn-danger btn-sm state' disabled>"+data[i].BM_STATUS+"</button> <br>";
-        	}
-          seller_list += "		<a href='#' data-toggle='modal' data-target=''>";
-          seller_list += "			<button type='button' id='editBtn' class='btn btn-primary btn-sm'>수정하기</button>";
-          seller_list += "		</a>";          
-          seller_list += "		<a href='#' data-toggle='modal' data-target=''>";
-          seller_list += "			<button type='button' id='deleteBtn' class='btn btn-danger btn-sm deleteBtn'>삭제하기</button>";
-          seller_list += "		</a>";
-          seller_list += "	</td>";
-          seller_list += "</tr>";
-        }////////////////////// end of for
-        seller_list += "</tbody>";
-        seller_list += "</table>";
-
+        if(data.length <= 0) {
+        	seller_list += "<h3>거래내역이 존재하지 않습니다.</h3>"
+        } else{
+	        for (i = 0; i < data.length; i++) {
+	        	let status = data[i].BM_STATUS;
+	        	bm_price = data[i].BM_PRICE.toLocaleString();
+	          seller_list += "<tr>";
+	          seller_list += "	<td class='divider'>글번호 <span id='bm_no'>" + data[i].BM_NO + "</span></td>";
+	          seller_list += "	<td class='divider_img'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
+	          seller_list += "		style='color: black'><img id='item_image'";
+	          seller_list += "			src=../itemPage/assets/img/board_Img/" + data[i].BI_FILE +"></a></td>";
+	          seller_list += "	<td class='divider_con'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
+	          seller_list += "		style='color: black; font-size: 20px;'>" + data[i].BM_TITLE + "</a></td>";
+	          seller_list += "	<td class='divider'>등록일: " + data[i].BM_DATE + "<br><span class='bm_price'>" + bm_price +"</span>원<br>";
+	          	//상품 거래 상태 (판매중 or 거래중 or 판매완료)
+	        	if(status == 'N'){
+	        		status = '';
+	        		console.log('N');
+	        		status = '판매중';
+	        		seller_list += "		<button type='button' id='state' class='btn btn-warning btn-sm state' disabled>"+status+"</button> <br>";
+	        	} else if (status == 'S') {
+	        		status = '';
+	        		console.log('S');
+	        		status = '거래중';
+	        		seller_list += "		<button type='button' id='state' class='btn btn-primary btn-sm state' disabled>"+status+"</button> <br>";
+	        	} else if(status == 'C') {
+	        		status = '';
+	        		console.log('C');
+	        		status = '판매완료';
+	        		seller_list += "		<button type='button' id='state' class='btn btn-danger btn-sm state' disabled>"+status+"</button> <br>";
+	        	}
+	          seller_list += "		<a href='#' data-toggle='modal' data-target=''>";
+	          seller_list += "			<button type='button' id='editBtn' class='btn btn-primary btn-sm'>수정하기</button>";
+	          seller_list += "		</a>";          
+	          seller_list += "		<a href='#' data-toggle='modal' data-target=''>";
+	          seller_list += "			<button type='button' id='deleteBtn' class='btn btn-danger btn-sm deleteBtn'>삭제하기</button>";
+	          seller_list += "		</a>";
+	          seller_list += "	</td>";
+	          seller_list += "</tr>";
+	          console.log(bm_price);
+	        }////////////////////// end of for
+        }
         $(".trade_bottom").html(seller_list);
         //페이지구분(판매내역)
         filter = 'sel';
@@ -179,45 +177,29 @@ pageEncoding="UTF-8"%>
       url: "/member/selectMyTrade.nds?gubun=buy",
       success: function (data) {
         //@data-json,xml,html,text
-        console.log(data);
         let count = JSON.stringify(data.length);
+        let bm_price;
         let buyer_list = "";
-        buyer_list +=
-          "<span class='total_rec coin2'>" + "전체: " + count + "</span>";
-        buyer_list += "<table class='like_tb' id='products'>";
-        buyer_list += "<form action='' id='setRows'>";
-        buyer_list +=
-          "	<input type='hidden' name='rowPerPage' value='4' id='rowPerPage'>";
-        buyer_list += "</form>";
-        buyer_list += "<thead>";
-        buyer_list += "	<tr>";	
-        buyer_list += "		<th scope='cols' width='15%'></th>";
-        buyer_list += "		<th scope='cols' width='25%'></th>";
-        buyer_list += "		<th scope='cols' width='35%'></th>";
-        buyer_list += "		<th scope='cols' width='25%'></th>";
-        buyer_list += "	</tr>";
-        buyer_list += "</thead>";
-        buyer_list += "<tbody>";
-        for (i = 0; i < data.length; i++) {
-          buyer_list += "<tr>";
-          buyer_list += "	<td class='divider'>글번호 <span id='bm_no'>" + data[i].BM_NO + "</span></td>";
-          buyer_list += "	<td class='divider_img'><a href='http://naver.com'";
-          buyer_list += "		style='color: black'><img id='item_image'";
-          buyer_list +=
-            "			src=../itemPage/assets/img/board_Img/" +
-            data[i].BI_FILE +
-            "></a></td>";
-          buyer_list += "	<td class='divider_con'><a href='http://naver.com'";
-          buyer_list += "		style='color: black'>" + data[i].BM_TITLE + "</a></td>";
-          buyer_list += "	<td class='divider'>등록일" + data[i].BM_DATE + "<br>" + data[i].BM_PRICE +"원<br>";
-          buyer_list += "		<a href='#' data-toggle='modal' data-target=''>";
-          buyer_list += "			<button type='button' id='deleteBtn' class='btn btn-danger btn-sm deleteBtn'>삭제하기</button>";
-          buyer_list += "		</a>";
-          buyer_list += "	</td>";
-          buyer_list += "</tr>";
-        }////////////////////// end of for
-        buyer_list += "</tbody>";
-        buyer_list += "</table>";
+        if(data.length <= 0) {
+        	buyer_list += "<h3>거래내역이 존재하지 않습니다.</h3>"
+        } else{
+	        for (i = 0; i < data.length; i++) {
+	          bm_price = data[i].BM_PRICE.toLocaleString();
+	          buyer_list += "<tr>";
+	          buyer_list += "	<td class='divider'>글번호 <span id='bm_no'>" + data[i].BM_NO + "</span></td>";
+	          buyer_list += "	<td class='divider_img'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
+	          buyer_list += "		style='color: black'><img id='item_image'";
+	          buyer_list += "			src=../itemPage/assets/img/board_Img/" + data[i].BI_FILE + "></a></td>";
+	          buyer_list += "	<td class='divider_con'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
+	          buyer_list += "		style='color: black; font-size: 20px;'>" + data[i].BM_TITLE + "</a></td>";
+	          buyer_list += "	<td class='divider'>등록일: " + data[i].BM_DATE + "<br>" + bm_price +"원<br>";
+	          buyer_list += "		<a href='#' data-toggle='modal' data-target=''>";
+	          buyer_list += "			<button type='button' id='deleteBtn' class='btn btn-danger btn-sm deleteBtn'>삭제하기</button>";
+	          buyer_list += "		</a>";
+	          buyer_list += "	</td>";
+	          buyer_list += "</tr>";
+	        }////////////////////// end of for
+        }
 
         $(".trade_bottom").html(buyer_list);
       	//페이지구분(구매내역)
@@ -248,11 +230,13 @@ pageEncoding="UTF-8"%>
 			 console.log('click delete confirm');
 			 console.log(filter+", "+bm_no);
     			  $.ajax({
-				  url: "/member/deleteTradeRec.nds?br_sel_buy="+filter+"&pr_bm_no="+bm_no,
+    			  type:"POST",
+    			  data:{"br_sel_buy":filter, "pr_bm_no":bm_no},
+				  url: "/member/deleteTradeRec.nds",
 				  success: function(){
-					  //location.href="/member/selectMyTrade.nds?gubun=buy";
-					  console.log("filter: "+filter);
-					  console.log("no: "+bm_no);
+					  //페이지 새로고침
+					  location.reload();
+					  console.log("filter: "+filter+" no: "+bm_no);
 				  }
 			  });
 		  });
