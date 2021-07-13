@@ -34,7 +34,7 @@
 				<span></span> <span></span> <span></span><span></span>
 			</div>
 			<div>
-				<span class="total_rec coin2"> 몇개 </span>
+				<span id="itemCount" class="total_rec coin2">num</span>
 				<table class="like_tb" id="products">
 					<form action="" id="setRows">
 						<input type="hidden" name="rowPerPage" value="4" id="rowPerPage">
@@ -79,7 +79,6 @@
 $(document).ready(function () {
 	  /* ============================ 페이징처리 함수 시작 ====================================*/
 	  let setRows = $("#setRows");
-	  console.log(setRows);
 	  setRows.submit(function (e) {
 	    e.preventDefault();
 	    let rowPerPage = $("#rowPerPage").val() * 1;
@@ -141,7 +140,9 @@ $(document).ready(function () {
 
 	  setRows.submit();
 	  /* ============================ 페이징처리 함수 끝 ====================================*/
-		buyAction();
+	  
+	  //구매내역 조회
+	  buyAction();
 });
 </script>
 </body>

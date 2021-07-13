@@ -33,7 +33,7 @@
 	<!-- 삭제하기 모달 끝 -->
 	<!-- 수정하기 모달 시작 -->
 	<div>
-	  <div class="modal fade" id="modify" tabindex="-1" role="dialog" aria-labelledby="logIn" aria-hidden="true">
+	  <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="logIn" aria-hidden="true">
 	    <div class="modal-dialog modal-dialog-centered" role="document">
 	      <div class="modal-content">
 	        <div class="modal-header">
@@ -52,7 +52,7 @@
 	          </div>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" id="btn_modify" class="btn btn-primary" >확인</button>
+	          <button type="button" id="btn_edit" class="btn btn-primary" >확인</button>
 	          <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 	        </div>
 	      </div>

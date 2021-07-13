@@ -125,9 +125,41 @@ public class MemberController extends MultiActionController {
 //		return mav;
 	}
 	
-	//마이페이지 중고거래 판매내역
-	public void selectTradeSell(HttpServletRequest req, HttpServletResponse res) {
-		logger.info("selectTradeSell 호출 성공!!");
+	//중고거래 구매내역 또는 판매내역 조회
+	public void selectMyTrade(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("Controller: getMyTrade 호출");
+		HttpSession session = req.getSession();
+		HashMapBinder hmb = new HashMapBinder(req);
+		
+		//DB에서 가져오는 정보를 담아주는 List - Map;
+		List<Map<String, Object>> tradeRec = null;
+		
+		//파라미터 들어갈 map 선언
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		hmb.bindPost(pmap);
+		
+		//세션에있는 정보들을 넣어주는 map
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		
+		//mem_nickname에 세션에 들어있는 MEM_NICKNAME의 정보를 넣어줌
+		//expect mem_nickname = 포도;
+		String mem_nickname = (String)login.get("MEM_NICKNAME");
+		if("buy".equals((String)pmap.get("gubun"))) {
+			pmap.put("buyer_nickname", mem_nickname);
+		} else if ("sel".equals((String)pmap.get("gubun"))) {
+			pmap.put("seller_nickname", mem_nickname);
+		}
+		logger.info("mem_nickname: "+mem_nickname);
+		
+		//DB에서 가져오는 정보를 담아주는 List - Map;
+		tradeRec = memberLogic.getMyTrade(pmap);
+		
+		Gson gson = new Gson();
+		//DB에서 가져온 정보를 json으로 변환;
+		String jsondata = gson.toJson(tradeRec);
+		
+		//ajax요청시 json으로 변환된 data 전송;
+		AjaxDataPrinter.out(res, "aplication/json", jsondata);
 	}
 	
 	
@@ -379,12 +411,14 @@ public class MemberController extends MultiActionController {
 		logger.info("br_sel_buy: "+req.getParameter("br_sel_buy").toString());
 		logger.info("pr_bm_no: "+req.getParameter("pr_bm_no").toString());
 		
+		//구매내역
 		if("buy".equals(pmap.get("br_sel_buy"))) {
 			logger.info("which one: "+ pmap.get("br_sel_buy").toString());
 			//상품을 삭제한다.
 			memberLogic.deleteTradeRec(pmap);
 			logger.info("buy here");
 		}
+		//판매내역
 		else {
 			//상품을 삭제한다.
 			memberLogic.deleteTradeRec(pmap);
@@ -873,43 +907,6 @@ public class MemberController extends MultiActionController {
 	public ModelAndView getMyLike(HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView mav = new ModelAndView("/myPage/my_like.jsp");
 		return mav;
-	}
-	
-	//중고거래 구매내역 또는 판매내역 조회
-	public void selectMyTrade(HttpServletRequest req, HttpServletResponse res) {
-		logger.info("Controller: getMyTrade 호출");
-		HttpSession session = req.getSession();
-		HashMapBinder hmb = new HashMapBinder(req);
-		
-		//DB에서 가져오는 정보를 담아주는 List - Map;
-		List<Map<String, Object>> tradeRec = null;
-		
-		//파라미터 들어갈 map 선언
-		Map<String, Object> pmap = new HashMap<String, Object>();
-		hmb.bindPost(pmap);
-		
-		//세션에있는 정보들을 넣어주는 map
-		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
-		
-		//mem_nickname에 세션에 들어있는 MEM_NICKNAME의 정보를 넣어줌
-		//expect mem_nickname = 포도;
-		String mem_nickname = (String)login.get("MEM_NICKNAME");
-		if("buy".equals((String)pmap.get("gubun"))) {
-			pmap.put("buyer_nickname", mem_nickname);
-		} else if ("sel".equals((String)pmap.get("gubun"))) {
-			pmap.put("seller_nickname", mem_nickname);
-		}
-		logger.info("mem_nickname: "+mem_nickname);
-		
-		//DB에서 가져오는 정보를 담아주는 List - Map;
-		tradeRec = memberLogic.getMyTrade(pmap);
-		
-		Gson gson = new Gson();
-		//DB에서 가져온 정보를 json으로 변환;
-		String jsondata = gson.toJson(tradeRec);
-		
-		//ajax요청시 json으로 변환된 data 전송;
-		AjaxDataPrinter.out(res, "aplication/json", jsondata);
 	}
 	
 	//중고거래 내역 첫 페이지 로드

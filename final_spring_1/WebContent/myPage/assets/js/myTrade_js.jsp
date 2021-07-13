@@ -78,10 +78,9 @@ pageEncoding="UTF-8"%>
     });
   });
   
-  /* 게시물 개수 나타내기 */
-  function showCount(count){
-	  return count;
-  }
+  /* 게시물 개수 나타내기위한 변수 선언 */
+  let count;
+  
   
   /*삭제하기 버튼 이벤트*/
   let filter;//구매내역 or 판매내역을 구분하기 위한 변수
@@ -91,7 +90,7 @@ pageEncoding="UTF-8"%>
 			  //삭제하기 버튼
 			  let delBtn = $(this);
 			  
-			  //삭제하기 버튼을 클릭한 <tr>태그
+			  //클릭한 삭제하기 버튼의 <tr>태그
 			  let tr = delBtn.parent().parent().parent();
 			  
 			  //게시글 번호
@@ -101,6 +100,7 @@ pageEncoding="UTF-8"%>
 		  })
   }
   
+  
   /* 판매내역 불러오기 */
   function sellAction() {
     $.ajax({
@@ -108,8 +108,8 @@ pageEncoding="UTF-8"%>
       success: function (data) {
         //@data-json,xml,html,text
         //페이지에 나타나는 게시물 개수
-        let count = JSON.stringify(data.length);
-        showCount(count);
+        count = JSON.stringify(data.length);
+        
         //상품가격
         let bm_price;
         
@@ -146,14 +146,13 @@ pageEncoding="UTF-8"%>
 	        		seller_list += "		<button type='button' id='state' class='btn btn-danger btn-sm state' disabled>"+status+"</button> <br>";
 	        	}
 	          seller_list += "		<a href='#' data-toggle='modal' data-target=''>";
-	          seller_list += "			<button type='button' id='editBtn' class='btn btn-primary btn-sm'>수정하기</button>";
+	          seller_list += "			<button type='button' id='editBtn' class='editBtn btn btn-primary btn-sm'>수정하기</button>";
 	          seller_list += "		</a>";          
 	          seller_list += "		<a href='#' data-toggle='modal' data-target=''>";
-	          seller_list += "			<button type='button' id='deleteBtn' class='btn btn-danger btn-sm deleteBtn'>삭제하기</button>";
+	          seller_list += "			<button type='button' id='deleteBtn' class='deleteBtn btn btn-danger btn-sm'>삭제하기</button>";
 	          seller_list += "		</a>";
 	          seller_list += "	</td>";
 	          seller_list += "</tr>";
-	          console.log(bm_price);
 	        }////////////////////// end of for
         }
         $(".trade_bottom").html(seller_list);
@@ -164,6 +163,13 @@ pageEncoding="UTF-8"%>
   	  	let deleteBtn = $(".deleteBtn");
   	  	deleteAction(deleteBtn, filter);
   	  	
+  	  	//수정하기 버튼
+  	  	let editBtn = $(".editBtn");
+  	  	editAction(editBtn);
+  	  	
+  	  	//게시물 개수 보여주기
+  	  	$("#itemCount").text("");
+  	  	$("#itemCount").text("전체: "+count);
       },
       error: function (e) {
         //@param-XMLHttpRequest
@@ -171,13 +177,14 @@ pageEncoding="UTF-8"%>
     });
   }
   
+  
   /* 구매내역 불러오기 */
   function buyAction() {
     $.ajax({
       url: "/member/selectMyTrade.nds?gubun=buy",
       success: function (data) {
         //@data-json,xml,html,text
-        let count = JSON.stringify(data.length);
+        count = JSON.stringify(data.length);
         let bm_price;
         let buyer_list = "";
         if(data.length <= 0) {
@@ -208,6 +215,10 @@ pageEncoding="UTF-8"%>
         //삭제하기 버튼
   	  	let deleteBtn = $(".deleteBtn");
   	  	deleteAction(deleteBtn, filter);
+  	  	
+  	  	//게시물 개수 보여주기
+  	  	$("#itemCount").text("");
+  	  	$("#itemCount").text("전체: "+count);
       },
       error: function (e) {
         //@param-XMLHttpRequest
@@ -228,7 +239,7 @@ pageEncoding="UTF-8"%>
 		  //모달창에 있는 [확인]버튼 클릭 이벤트
 		  $("#btn_delete").click(function(){
 			 console.log('click delete confirm');
-			 console.log(filter+", "+bm_no);
+			 console.log("filter: "+filter+" no: "+bm_no);
     			  $.ajax({
     			  type:"POST",
     			  data:{"br_sel_buy":filter, "pr_bm_no":bm_no},
@@ -236,11 +247,38 @@ pageEncoding="UTF-8"%>
 				  success: function(){
 					  //페이지 새로고침
 					  location.reload();
-					  console.log("filter: "+filter+" no: "+bm_no);
 				  }
 			  });
 		  });
 	  });
   }
+  
+  /* 수정하기 버튼 이벤트 */
+  function editAction(editBtn){
+	  editBtn.click(function(){
+		  //수정하기 버튼
+		  let ediBtn = $(this);
+		  
+		  //클릭한 수정하기 버튼의 <tr>태그
+		  let tr = ediBtn.parent().parent().parent();
+
+		  //게시글 번호
+		  let bm_no = tr.find('#bm_no').text();
+				  
+		  //모달 show
+		  $("#edit").modal('show');
+		  
+		  //모달이 브라우저에 나타났을 때 실행되는 함수
+		  $("#edit").on('shown.bs.modal', function(){
+			  console.log('editModal shown');
+			  
+			  //모달창에 있는 [확인]버튼 클릭 이벤트
+			  $("#btn_edit").click(function(){
+				 console.log('click edit confirm');
+				 location.href = "http://localhost:9696/item/editItem.nds?pr_bm_no="+bm_no;
+				  });
+			  });
+		  });
+	  }
 
 </script>

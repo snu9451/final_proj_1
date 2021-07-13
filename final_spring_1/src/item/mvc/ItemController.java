@@ -145,12 +145,17 @@ public class ItemController extends MultiActionController {
 		int pr_bm_no = Integer.parseInt(req.getParameter("pr_bm_no").toString());
 		//상품의 내용, 상품의 사진들을 가져온다
 		Map<String,Object> item = itemLogic.editItem(pr_bm_no);
+		//List<String> itemImg = itemLogic.editItemImg(pr_bm_no);
 		List<String> itemImg = itemLogic.editItemImg(pr_bm_no);
+		String[] array = null;
+		array = itemImg.toArray(new String[5]);
 		//상품의 정보를 다 담는다.
 		//가지고 나오는 key&value => {BM_PRICE=5000, BM_NO=4, BM_CONTENT=자취 방 빼서 옷 내놔요, CATEGORY_NAME=의류, BM_TITLE=카라티 팝니다}
 		req.setAttribute("item",item);
+		logger.info("item=================" + item);
 		//가지고 나오는 list => [5.png, 6.png]
-		req.setAttribute("itemImg", itemImg);
+		req.setAttribute("array", array);
+		logger.info("itemImg=================" + itemImg);
 		System.out.println(item);
 		//페이지 전송
 		RequestDispatcher dispatcher= req.getRequestDispatcher("/itemUpload/itemUpload.jsp");
