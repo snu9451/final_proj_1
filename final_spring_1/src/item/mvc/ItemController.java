@@ -189,6 +189,7 @@ public class ItemController extends MultiActionController {
 		//return mav;
 		
 		ModelAndView mav = new ModelAndView();
+		//파라미터값 넣어주는 pmap
 		Map<String,Object> pmap = new HashMap<>();
 		pmap.put("pr_BM_TITLE","내용111" );
 		pmap.put("pr_BM_CONTENT","내용111" );
@@ -196,6 +197,8 @@ public class ItemController extends MultiActionController {
 		pmap.put("pr_SELLER_NICKNAME","바나나" );
 		pmap.put("pr_CATEGORY_NAME","기타" );
 		pmap.put("pr_bm_no",32);
+		
+		
 		List<Map<String,Object>> itemImgs = new ArrayList<Map<String,Object>>();
 		Map<String,Object> map1 = new HashMap<String, Object>();
 		map1.put("bi_file", "23.png");
