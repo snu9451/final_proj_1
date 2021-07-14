@@ -19,7 +19,7 @@ response.setDateHeader("Expires",0);
 		</a>
 	</li>
 	<li><a href=""><%=mem_nickname%></a></li>
-	<li><a href="">상품판매</a></li>
+	<li><a id="h_itemInsert" style="cursor:pointer;">상품판매</a></li>
 	<li><a data-toggle="modal" data-target="#coinCharge" style="cursor:pointer;">코인충전</a></li>
 	<li><a id="h_myPage" style="cursor:pointer;">마이페이지</a></li>
 	<li><a id="h_logout" style="cursor:pointer;">로그아웃</a></li>

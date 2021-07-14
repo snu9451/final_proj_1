@@ -20,7 +20,7 @@
          	 <label>현재 남은 코인 :&nbsp</label><label style="font-size:30px; color : #ffc37b; font-weight:bold;"><%=coin_remain %></label><label> 원</label> 
              <input type="hidden" value="<%=mem_email %>" id="mem_email"/> 
              <input type="hidden" value="<%=coin_remain %>" id="remainCoin"/> 
-            <input type="number" class="form-control" id="inputCost" placeholder="최소 충전 금액은 1,000원 입니다 : )"/>
+            <input type="number" class="form-control" id="inputCost" min="0" placeholder="최소 충전 금액은 1,000원 입니다 : )"/>
           </div>
           <div class="modal-footer">
             <button disabled="true" id="btn_coinCharge" class="btn btn-primary">충전하기</button>

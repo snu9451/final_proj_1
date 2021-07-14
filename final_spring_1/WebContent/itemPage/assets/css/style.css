@@ -102,7 +102,7 @@ h6 {
   position: fixed;
   top: calc(50% - 30px);
   left: calc(50% - 30px);
-  border: 6px solid orange;
+  border: 6px solid #111;
   border-top-color: #e2eefd;
   border-radius: 50%;
   width: 60px;
@@ -1066,6 +1066,7 @@ section {
 #pd__img__carousel {
   padding: 5px;
 }
+
 
 .owl-stage-outer {
 }

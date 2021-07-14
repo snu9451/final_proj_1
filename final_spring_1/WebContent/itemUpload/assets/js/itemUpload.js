@@ -366,27 +366,27 @@
   });
 
   $("#delPic1").click(function () {
-    $('#image_section1').attr('src', "./assets/img/itemupload/default.png");
+    $('#image_section1').attr('src', "../itemUpload/assets/img/itemupload/default.png");
     $("#imgInput1").val("");
     $('#delPic1').css("visibility", "hidden");
   });
   $("#delPic2").click(function () {
-    $('#image_section2').attr('src', "./assets/img/itemupload/default.png");
+    $('#image_section2').attr('src', "../itemUpload/assets/img/itemupload/default.png");
     $("#imgInput2").val("");
     $('#delPic2').css("visibility", "hidden");
   });
   $("#delPic3").click(function () {
-    $('#image_section3').attr('src', "./assets/img/itemupload/default.png");
+    $('#image_section3').attr('src', "../itemUpload/assets/img/itemupload/default.png");
     $("#imgInput3").val("");
     $('#delPic3').css("visibility", "hidden");
   });
   $("#delPic4").click(function () {
-    $('#image_section3').attr('src', "./assets/img/itemupload/default.png");
+    $('#image_section3').attr('src', "../itemUpload/assets/img/itemupload/default.png");
     $("#imgInput4").val("");
     $('#delPic4').css("visibility", "hidden");
   });
   $("#delPic5").click(function () {
-    $('#image_section3').attr('src', "./assets/img/itemupload/default.png");
+    $('#image_section3').attr('src', "../itemUpload/assets/img/itemupload/default.png");
     $("#imgInput5").val("");
     $('#delPic5').css("visibility", "hidden");
   });

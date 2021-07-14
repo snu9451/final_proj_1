@@ -1,12 +1,6 @@
 <%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-// 	Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
-// 	double mem_star = Double.parseDouble(String.valueOf(login.get("MEM_STAR")));
-// 	String mem_email = String.valueOf(login.get("MEM_EMAIL"));
-// 	String mem_nickname = String.valueOf(login.get("MEM_NICKNAME"));
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +13,7 @@
 <%@ include file="../myPage/source_h.jsp" %>
 <%@ include file="../myPage/assets/js/myInfo_js.jsp" %>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
+
 </head>
 <body>
 
@@ -26,24 +21,31 @@
 <%@ include file="../common/header.jsp" %>
 <%@ include file="../myPage/left_bar.jsp" %>
   <!-- =========================================== ▲ ＣＯＭＭＯＮ　ＳＥＣＴＩＯＮ ▲ ============================================= -->
-
+<%
+		Map<String, Object> memberMap = new HashMap<>();
+		memberMap = (Map<String, Object>)request.getAttribute("memberMap");
+		//out.print(memberMap);
+		mem_nickname = memberMap.get("MEM_NICKNAME").toString();
+		mem_star = Double.parseDouble(String.valueOf(memberMap.get("MEM_STAR")));
+		mem_img = String.valueOf(memberMap.get("MEM_IMG"));
+		coin_remain = Integer.parseInt(String.valueOf(memberMap.get("COIN_REMAIN")));
+%>
 
   <!-- =========================================== ▼ ＭＡＩＮ　ＳＥＣＴＩＯＮ ▼ ============================================= -->
 	<div class="col-12 col-lg-9 d-flex align-items-stretch mb-5 mb-lg-0">
 		<div class="icon-box1" data-aos="fade-in" data-aos-delay="50">
 			<div class="myinfo_top">
 				<div class="profile">
-					<form id="f_profile_picture" method="post" enctype="multipart/form-data" action="updateImg.nds">
-						<!-- <input type="image" name="change_img" id="image_section" src="../myPage/assets/img/profile/1.png"> -->
+					<form id="f_profile_picture" method="post" enctype="multipart/form-data" action="../member/updateImg.nds">
 						<input type='file' name="change_img" id="imgInput" accept="image/*" style="display: none;"/>
-	                	<label class="img_add">
+	                	<div class="img_add">
+<!-- 	                		<div style="width:200px; height: 200px; background-color:white;"></div> -->
 							<div class="img_wrapper">
-		                		<img class="img_upload" id="image_section" src="../myPage/assets/img/profile/ndschar.png"/>
+		                		<img class="img_upload" id="image_section" src="../myPage/assets/img/profile/<%=mem_img%>"/>
 							</div>
-		                	<!-- src="../myPage/assets/img/profile/1.png" -->
 							<label type="button" for="imgInput" class="btn btn-danger">사진변경</label>
 							<button onclick="addAction()" type="button" class="btn btn-danger">저장</button>
-		                </label>
+		                </div>
 					</form>
 				</div>
                

@@ -153,4 +153,14 @@
 		$("#dest_email").val(pr_dest_email);
 		$("#destForm").submit();
 	}
+	//Preloader
+	$(window).on("load", function () {
+	  if ($("#preloader").length) {
+	    $("#preloader")
+	      .delay(800)
+	      .fadeOut("slow", function () {
+	        $(this).remove();
+	      });
+	  }
+	});
 </script>

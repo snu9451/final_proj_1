@@ -38,8 +38,10 @@ response.setDateHeader("Expires",0);
 <%
 	// 로그인 중이 아닐 때
 	Map<String, Object> login = new HashMap<>();
+	//Map<String, Object> memberMap = new HashMap<>();
 	String mem_nickname = null;	// 전역에서 사용되는 정보
 	String mem_email = null;	// 전역에서 사용되는 정보
+	String mem_img = null;	// 전역에서 사용되는 정보
 	double mem_star = 0.0;		// 마이페이지에서 사용되는 정보
 	int coin_remain = 0;		// 마이페이지에서 사용되는 정보
 	if(session.getAttribute("login") == null){
@@ -49,10 +51,17 @@ response.setDateHeader("Expires",0);
 	// 로그인 중일 때
 	} else if(session.getAttribute("login") != null){
 		login = (Map<String, Object>)session.getAttribute("login");
+		//memberMap = (Map<String, Object>)request.getAttribute("memberMap");
+		//out.print(memberMap);
 		mem_nickname = login.get("MEM_NICKNAME").toString();
 		mem_email = login.get("MEM_EMAIL").toString();
 		mem_star = Double.parseDouble(String.valueOf(login.get("MEM_STAR")));
+		mem_img = String.valueOf(login.get("MEM_IMG"));
 		coin_remain = Integer.parseInt(String.valueOf(login.get("COIN_REMAIN")));
+		//mem_nickname = memberMap.get("MEM_NICKNAME").toString();
+		//mem_star = Double.parseDouble(String.valueOf(memberMap.get("MEM_STAR")));
+		//mem_img = String.valueOf(memberMap.get("MEM_IMG"));
+		//coin_remain = Integer.parseInt(String.valueOf(memberMap.get("COIN_REMAIN")));
 		
 %>
 	<!-- 회원 로그인시 나타나는 nav bar --><%@ include file="../mainPage/memNavbar.jsp" %>

@@ -14,6 +14,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 <link rel="stylesheet" href="../mainPage/chatroomList.css">
+
 <title>채팅방 목록</title>
 </head>
 <body>
@@ -23,9 +24,19 @@
 		<input type="hidden" name="dest_email" id="dest_email">
 	</form>
 	<div class="wrapper">
+		<div class="roomList">&nbsp&nbsp<i class="fas fa-comments-dollar"></i>&nbsp&nbsp채팅방 목록</div>
         <div class="col s3">
         	<ul class="collection"></ul>
         </div>
+    </div>
+    
+    
+    <div style="background-color: #536a8a; text-align:center; display:inline-block;  padding-top:15%;" id="preloader">
+      <div>
+      <img id="nds_img" style="width:30%; height:30%; border-radius: 50%;" src="../common/assets/img/mybro_logo.png" alt="mybro_favicon">		
+      	<h1 class="nds">
+			내 동생<span style="color:#ffc37b">.</span>
+		</h1></div>
     </div>
 </body>
 </html>

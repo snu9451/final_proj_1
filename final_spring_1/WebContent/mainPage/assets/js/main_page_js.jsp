@@ -181,148 +181,181 @@ function aos_init() {
 $(window).on("load", function () {
   aos_init();
 });
-
+/*==============================================================*/
+$('#addComment').click(function(){
+	console.log('sadfdsf');
+});
 
 
 
 /*==========================================[[ 여기는 지혜영역 ]]==================================================*/
+	//검색어를 입력하여 찾기
+	function itemSearch(){
+	// 	let search = {"pr_search":$('input[name=nds_search]').val()};
+	    $.ajax({
+	    	type: "GET",
+	//     	data: search,
+	    	url: "http://localhost:8080/item/selectBySearch.nds?pr_search="+$('input[name=nds_search]').val(),
+	    	success:function(data){
+	//     		alert(data);
+				viewItemList(data);
+	    	},
+	    	error:function(e){
+	    		alert("에러: "+e.responseText);
+	    	}
+	    });
+	};
 
-//최근상품,인기상품 클릭 시 해당하는 정렬순서로 상품목록을 조회한다.
-function allItemList(pr_choice){
-	let item = {"pr_choice":pr_choice.id};
-    $.ajax({
-    	type: "GET",
-    	url: "http://localhost:9000/item/selectItemList.nds",
-		data: item,
-    	success:function(data){
-			viewItemList(data);
-    	},
-    	error:function(e){
-    		alert("에러: "+e.responseText);
-    	}
-    });
-};
-
-//검색어를 입력하여 찾기
-function itemSearch(){
-// 	let search = {"pr_search":$('input[name=nds_search]').val()};
-    $.ajax({
-    	type: "GET",
-//     	data: search,
-    	url: "http://localhost:9000/item/selectBySearch.nds?pr_search="+$('input[name=nds_search]').val(),
-    	success:function(data){
-//     		alert(data);
-			viewItemList(data);
-    	},
-    	error:function(e){
-    		alert("에러: "+e.responseText);
-    	}
-    });
-};
-
-function viewItemList(items){
-	let itemAll = document.querySelector("#itemAll");
-	if(items.length>0){
-		itemAll.innerHTML = items;
-	}
-
-	else{
-		itemAll.innerHTML= "<div style='display: block; width: 100%; text-align: center;'>조회결과가 없습니다<div>";
-	}
-}
-
-
-
-
-//상품 찜하기 클릭 시
-function likeItem(itemno){	
-	let itemID = document.getElementById(itemno.id);
-	let item = {"pr_bm_no":itemno.id};
-    $.ajax({
-    	type: "POST",
-    	url: "http://localhost:9000/item/likeItem.nds",
-		data: item,
-    	success:function(data){
-    		if(data==1) {
-				//찜 ok
-				itemID.innerHTML="<i class= 'fas fa-heart'></i>";
-			}else if(data==-1){
-				//찜 no
-				itemID.innerHTML="<i class= 'far fa-heart'></i>";
-			}else{
-				alert("로그인 후 이용가능합니다!");
-			}
-    	},
-    	error:function(e){
-    		alert("에러: "+e.responseText);
-    	}
-    });
-};
-
-//댓글 삭제하기
-function deleteComment(comment){	
-	let p_comment_step = comment.id; //삭제할번호
-    $.ajax({
-    	type: "POST",
-    	url: "http://localhost:9000/item/deleteComment.nds",
-		data: {"p_comment_step":p_comment_step},
-    	success:function(data){
-    		if(data=='true') {
-				document.querySelector('.comment_num'+p_comment_step).remove();
-			}
-    		else if(data=="false") {
-				alert("삭제할 댓글이 없습니다.");				
-			}
-    	},
-    	error:function(e){
-    		alert("에러: "+e.responseText);
-    	}
-    });
-};
-//댓글 작성하기
-function insertComment(comment){
-	console.log(comment);
-	let commentType_No = comment.id.split('-');//commentType_No[0]은 댓글인지 대댓글인지 확인(0이면 댓글/1이면 대댓글), commentType_No[1]은 게시물번호
-	let commentgroup = commentType_No[0]==0 ? 0 : 1;//댓글이면 0, 대댓글이면 댓글의 그룹번호를 가져옴
-// 	let msg = document.querySelector(".form-control").value; //메세지 내용
-	let msg = $('#nds_comment').val();
+	//최근상품,인기상품 클릭 시 해당하는 정렬순서로 상품목록을 조회한다.
+	function allItemList(pr_choice){
+		let item = {"pr_choice":pr_choice.id};
+	    $.ajax({
+	    	type: "GET",
+	    	url: "http://localhost:9000/item/selectItemList.nds",
+			data: item,
+	    	success:function(data){
+				viewItemList(data);
+	    	},
+	    	error:function(e){
+	    		alert("에러: "+e.responseText);
+	    	}
+	    });
+	};
 	
-	let item = {"pr_comment_pos":commentType_No[0],"pr_comment_group":commentgroup,"pr_comment_msg":msg,"pr_bm_no":commentType_No[1]};
-    $.ajax({
-    	type: "POST",
-    	url: "http://localhost:9000/item/insertComment.nds",
-		data: item,
-    	success:function(data){
-    		$('#pd__comment__list').append(data);
-    		$('#nds_comment').val("");
-// 			console.log(data);
-//     		if(data['result']=='true') {
-// 				//댓글이라면
-// 				if(data['COMMENT_POS']==0){
-// 					document.querySelector("#pd__comment__list").innerHTML=comment_make(data)+document.querySelector("#pd__comment__list").innerHTML;
-// 				}
-// 				//대댓글이라면
-// 				else{
-// 					console.log("e대댓글");
-// 				}		
-// 				document.querySelector(".form-control").value ="";
-// 			}
-//     		else if(data['result']=="itemFalse") {
-// 				alert("해당 글이 존재하지 않습니다.");				
-// 			}
-//     		else if(data['result']=="comentFalse") {
-// 				alert("댓글이 존재하지 않습니다.");					
-// 			}
-// 			else{
-// 				alert("로그인 후 이용가능합니다!");
-// 			}
-    	},
-    	error:function(e){
-    		alert("에러: "+e.responseText);
-    	}
-    });
-};
+	function viewItemList(items){
+		let itemAll = document.querySelector("#itemAll");
+		if(items.length>0){
+			itemAll.innerHTML = items;
+		}
+	
+		else{
+			itemAll.innerHTML= "<div style='display: block; width: 100%; text-align: center;'>조회결과가 없습니다<div>";
+		}
+	}
+	
+	//대댓글 달기
+	function pdCommentBtn(pdComment){
+		console.log("Dfdf");
+		let pdCommentform ="";
+		pdCommentform +="					<form action=''>";
+		pdCommentform +="						<div class='input-group'>                                                                                             ";
+		pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
+		pdCommentform +="								<span class='input-group-text'>댓글 작성란</span>                                                             ";
+		pdCommentform +="							</div>                                                                                                            ";
+		pdCommentform +="							<textarea class='form-control' id='nds_comment' aria-label='댓글 작성란'></textarea>                              ";
+		pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
+		pdCommentform +="								<button type='button' class='btn btn-primary' onclick='insertComment(this)'>댓글등록</button>";
+		pdCommentform +="							</div>                                                                                                            ";
+		pdCommentform +="						</div>                                                                                                                ";
+		pdCommentform +="					</form>                                                                                                                   ";
+		pdComment.parentNode.parentNode.parentNode.parentNode.parentNode.innerHTML+=pdCommentform;
+	}; 
+	//댓글 수정
+	function pdCommentupdateBtn(pdComment){
+		let history = pdComment.parentNode.parentNode.parentNode.parentNode.nextElementSibling.innerText;
+		let pdCommentform ="";
+		pdCommentform +="					<form action=''>";
+		pdCommentform +="							<textarea class='w-100' row='2'>"+history+"</textarea> ";
+		pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
+		pdCommentform +="								<button type='button' class='btn btn-primary' onclick='insertComment(this)'>댓글수정</button>";
+		pdCommentform +="							</div> ";
+		pdCommentform +="					</form>  ";
+		pdComment.parentNode.parentNode.parentNode.parentNode.nextElementSibling.innerHTML=pdCommentform;
+	};
 
+	
+	
+	
+	//상품 찜하기 클릭 시
+	function likeItem(itemno){	
+		let itemID = document.getElementById(itemno.id);
+		let item = {"pr_bm_no":itemno.id};
+	    $.ajax({
+	    	type: "POST",
+	    	url: "http://localhost:9000/item/likeItem.nds",
+			data: item,
+	    	success:function(data){
+	    		if(data==1) {
+					//찜 ok
+					itemID.innerHTML="<i class= 'fas fa-heart'></i>";
+				}else if(data==-1){
+					//찜 no
+					itemID.innerHTML="<i class= 'far fa-heart' style='color:grey'></i>";
+				}else{
+					alert("로그인 후 이용가능합니다!");
+				}
+	    	},
+	    	error:function(e){
+	    		alert("에러: "+e.responseText);
+	    	}
+	    });
+	};
+	
+	//댓글 삭제하기
+	function deleteComment(comment){	
+		console.log('asdf');
+		let p_comment_step = comment.id; //삭제할번호
+	    $.ajax({
+	    	type: "POST",
+	    	url: "http://localhost:9000/item/deleteComment.nds",
+			data: {"p_comment_step":p_comment_step},
+	    	success:function(data){
+	    		if(data=='true') {
+					document.querySelector('.comment_num'+p_comment_step).remove();
+				}
+	    		else if(data=="false") {
+					alert("삭제할 댓글이 없습니다.");				
+				}
+	    	},
+	    	error:function(e){
+	    		alert("에러: "+e.responseText);
+	    	}
+	    });
+	};
+	//댓글 작성하기
+	function insertComment(comment){
+		console.log(comment);
+		let commentType_No = comment.id.split('-');//commentType_No[0]은 댓글인지 대댓글인지 확인(0이면 댓글/1이면 대댓글), commentType_No[1]은 게시물번호
+		let commentgroup = commentType_No[0]==0 ? 0 : 1;//댓글이면 0, 대댓글이면 댓글의 그룹번호를 가져옴
+	// 	let msg = document.querySelector(".form-control").value; //메세지 내용
+		let msg = $('#nds_comment').val();
+		
+		let item = {"pr_comment_pos":commentType_No[0],"pr_comment_group":commentgroup,"pr_comment_msg":msg,"pr_bm_no":commentType_No[1]};
+	    $.ajax({
+	    	type: "POST",
+	    	url: "http://localhost:9000/item/insertComment.nds",
+			data: item,
+	    	success:function(data){
+	    		$('#pd__comment__list').append(data);
+	    		$('#nds_comment').val("");
+	// 			console.log(data);
+	//     		if(data['result']=='true') {
+	// 				//댓글이라면
+	// 				if(data['COMMENT_POS']==0){
+	// 					document.querySelector("#pd__comment__list").innerHTML=comment_make(data)+document.querySelector("#pd__comment__list").innerHTML;
+	// 				}
+	// 				//대댓글이라면
+	// 				else{
+	// 					console.log("e대댓글");
+	// 				}		
+	// 				document.querySelector(".form-control").value ="";
+	// 			}
+	//     		else if(data['result']=="itemFalse") {
+	// 				alert("해당 글이 존재하지 않습니다.");				
+	// 			}
+	//     		else if(data['result']=="comentFalse") {
+	// 				alert("댓글이 존재하지 않습니다.");					
+	// 			}
+	// 			else{
+	// 				alert("로그인 후 이용가능합니다!");
+	// 			}
+	    	},
+	    	error:function(e){
+	    		alert("에러: "+e.responseText);
+	    	}
+	    });
+	   
+	};
 
 /* ==================================== KEY ======================================== */
 

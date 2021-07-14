@@ -140,7 +140,7 @@ public class AdminController extends MultiActionController {
 		pmap = adminLogic.selectMemberReportDetail(pmap);
 
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("admin/selectMemberReportDetail");
+		mav.setViewName("/admin/selectMemberReportDetail.jsp");
 		mav.addObject("selectMemberReportDetail", pmap);
 
 		return mav;
