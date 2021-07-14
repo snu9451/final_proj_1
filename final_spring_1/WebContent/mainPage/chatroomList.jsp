@@ -19,8 +19,8 @@
 <body>
 	<form id="destForm" action="chatroom.jsp" method="post">
 		<input type="hidden" name="roomKey" id="roomKey">
-		<input type="hidden" name="nickname" id="nickname">
-		<input type="hidden" name="dest" id="dest">
+		<input type="hidden" name="mem_email" id="mem_email">
+		<input type="hidden" name="dest_email" id="dest_email">
 	</form>
 	<div class="wrapper">
         <div class="col s3">

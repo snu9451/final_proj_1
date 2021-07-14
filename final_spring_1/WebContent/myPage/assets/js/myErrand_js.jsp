@@ -10,6 +10,48 @@ function reqAction() {
 		url : "myErrand_req_rec_FB.jsp",
 		success : function(data) {//@data-json,xml,html,text
 			$(".errand_FB").html(data);
+			let str;
+			let cnt = 0;
+			if($(".errand_FB").find(".errand_tb").children("tbody").text().trim()=="") {
+				str = "<tr><th colspan=\"6\">";
+				str += "조회결과가 없습니다.";
+				str += "</th>";
+				str += "</tr>";
+	        	$(".errand_FB").find(".errand_tb").children("tbody").append(str);
+			}
+			refArea.child("errand").child(mem_email).on('child_added',function(p_snapshot){
+				refArea.child(p_snapshot.val()).child("errand").child(p_snapshot.key).once('value', function(snapshot){
+					if($(".errand_FB").find(".errand_tb").children("tbody").children("tr").children("th").text().trim()!="")
+						$(".errand_FB").find(".errand_tb").children("tbody").children("tr").remove();
+					str = "<tr tr_id="+snapshot.key+">";
+					str += "<td><button type=\"button\" class=\"btn btn-outline-danger btn-smq\">X</button></td>";
+					str += "<td><span class=\"badge rounded-pill bg-danger text-white\">요청중</span></td>";
+					str += "<td>"+snapshot.val().errand_request_date.substr(11,5)+"</td>";
+					str += "<td>"+snapshot.val().errand_item+"</td>";
+					str += "<td>"+snapshot.val().errand_total_price+"</td></tr>";
+					$(".errand_FB").find(".errand_tb").children("tbody").append(str);
+					$(".errand_FB").find(".total_rec.coin2").text(" 전체 : " + ++cnt);
+					$("tr[tr_id="+snapshot.key+"]").find(".btn-outline-danger").off("click").on("click",function(){
+						makeModal(snapshot.key,"선택한 심부름 요청을 취소하시겠습니까?",1,"네","아니요","심부름 취소");
+					    $("#"+snapshot.key).find(".btn-primary").off("click").on("click",function(){
+					    	refArea.child(p_snapshot.val()).child("errand").child(p_snapshot.key).remove();
+					    	refArea.child("errand").child(mem_email).child(snapshot.key).remove();
+							$(".errand_FB").find(".total_rec.coin2").text(" 전체 : " + --cnt);
+					        makeModal("DEL"+snapshot.key,"심부름 요청이 취소되었습니다.");
+					        $("#DEL"+snapshot.key).modal("show");
+					        $("tr[tr_id="+snapshot.key+"]").remove();
+					        if($(".errand_FB").find(".errand_tb").children("tbody").text().trim()=="") {
+						        str = "<tr><th colspan=\"6\">";
+								str += "조회결과가 없습니다.";
+								str += "</th>";
+								str += "</tr>";
+					        	$(".errand_FB").find(".errand_tb").children("tbody").append(str);
+					        }
+					      });
+					    $("#"+snapshot.key).modal("show");
+					});
+				});
+			});
 		},
 		error : function(e) {//@param-XMLHttpRequest
 		}
@@ -17,7 +59,7 @@ function reqAction() {
 	console.log('req_cnt(1)='+req_cnt);
 	if($('#nds_tbody_req').children().length == 0){
 		$.ajax({
-			url : "http://localhost:9696/errand/selectErrandRecord.nds?gubun=req",
+			url : "http://localhost:9000/errand/selectErrandRecord.nds?gubun=req",
 			success : function(data) {//@data-json,xml,html,text
 				console.log(data);
 				let str = "";
@@ -107,7 +149,7 @@ function resAction() {
 	console.log('nds_cnt(1)='+nds_cnt);
 	if($('#nds_tbody_nds').children().length == 0){
 		$.ajax({
-			url : "http://localhost:9696/errand/selectErrandRecord.nds?gubun=nds",
+			url : "http://localhost:9000/errand/selectErrandRecord.nds?gubun=nds",
 			success : function(data) {//@data-json,xml,html,text
 				console.log(data);
 				let str = "";
@@ -195,7 +237,7 @@ $(document).ready(function () {
 		    	 errandKey = errandKey.substr(11,errandKey.length-1);
 		         console.log(errandKey);
 		         $.ajax({
-		             url : "http://localhost:9696/errand/errandRecordUpdate.nds?gubun=req&errandKey="+errandKey,
+		             url : "http://localhost:9000/errand/errandRecordUpdate.nds?gubun=req&errandKey="+errandKey,
 		             success : function(data) {//@data-json,xml,html,text
 		                 location.href = "my_errand.nds?req";
 		             },
@@ -212,7 +254,7 @@ $(document).ready(function () {
 		    	 errandKey = errandKey.substr(11,errandKey.length-1);
 		         console.log(errandKey);
 		         $.ajax({
-		             url : "http://localhost:9696/errand/errandRecordUpdate.nds?gubun=nds&errandKey="+errandKey,
+		             url : "http://localhost:9000/errand/errandRecordUpdate.nds?gubun=nds&errandKey="+errandKey,
 		             success : function(data) {//@data-json,xml,html,text
 		                 location.href = "my_errand.nds?res";
 		             },

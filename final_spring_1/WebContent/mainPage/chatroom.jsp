@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="wrapper">
-   		<div class="roomName">상대방</div>
+   		<div class="roomName"></div>
     	<div class="col s3">
           	<!-- insert here : 대화 공지사항 -->
           	<ul class="collection"></ul>

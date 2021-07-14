@@ -1,4 +1,4 @@
-
+//지금안쓰는코드210706
     let refErrand = "";//errand테이블 접근할 주소
     let refRider = "";//rider테이블 접근할 주소
     let refAlert = "";//alert테이블 접근할 주소

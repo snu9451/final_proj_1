@@ -50,6 +50,13 @@ public class MemberLogic {
 		rmap = memberDao.selectOneBySession(sessionValue);
 		return rmap;
 	}
+
+	public Map<String, Object> jsonSelectMember(Map<String, Object> pmap) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = memberDao.jsonSelectMember(pmap);
+		logger.info(rmap);
+		return rmap;
+	}
 /* ===========================================================================
 	아 이 디   저 장   또 는   자 동 로 그 인   구 현 - NDS_SKEY 발급 또는 만료일 갱신
 =========================================================================== */ 

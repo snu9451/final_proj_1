@@ -222,5 +222,13 @@ public class MemberDao {
 		return result;
 	}
 
+	
+	public Map<String, Object> jsonSelectMember(Map<String, Object> pmap) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = sqlSessionTemplate.selectOne("jsonSelectMember", pmap);
+		logger.info("DAO rmap ===> "+rmap);
+		return rmap;
+	}
+
 
 }

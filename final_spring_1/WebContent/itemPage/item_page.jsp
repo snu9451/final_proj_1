@@ -75,7 +75,7 @@
 			</div>
 			<div class="p-3 text-left">
 				<h3>
-					<a id="pTitle" name="pr_bm_no" href="http://localhost:9696/item/selectItemDetail.nds?pr_bm_no=<%=itemList.get(i).get("BM_NO")%>"><%=itemList.get(i).get("BM_TITLE") %></a>
+					<a id="pTitle" name="pr_bm_no" href="http://localhost:9000/item/selectItemDetail.nds?pr_bm_no=<%=itemList.get(i).get("BM_NO")%>"><%=itemList.get(i).get("BM_TITLE") %></a>
 				</h3>
 				<p id="pDescrip">[[ 상품내용 ]] <%=descript %></p>
 				<div class="row d-flex justify-content-between align-items-center mt-3">

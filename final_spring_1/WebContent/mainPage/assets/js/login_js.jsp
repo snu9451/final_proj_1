@@ -25,7 +25,7 @@ response.setDateHeader("Expires",0);
 		/* 서블릿을 타서 아이디 저장 회원인지를 조회해야 한다. */
 		let mem_sessionid = '<%=mem_sessionid%>';
 		$.ajax({
-			url: 'http://localhost:9696/member/reqLoginView.nds?mem_sessionid='+mem_sessionid,
+			url: 'http://localhost:9000/member/reqLoginView.nds?mem_sessionid='+mem_sessionid,
 			type: 'get',
 			dataType: 'json',
 			success: function(data){
@@ -89,7 +89,7 @@ $(document).ready(function(){
 				/* 입력한 이메일의 존재여부를 확인하고 임시비번 발급 */
 				let dt = "mem_email="+value.trim();
 				$.ajax({
-					url: 'http://localhost:9696/member/issueTempPw.nds',
+					url: 'http://localhost:9000/member/issueTempPw.nds',
 					data: dt,
 					type: 'post',
 					dataType: 'html',
@@ -115,7 +115,7 @@ function doLogin(){
 //		alert(mem_email+', '+mem_pw+', '+isSavedIdChecked+', '+isAutoLoginChecked);
 	let dt = "mem_email="+mem_email+"&mem_pw="+mem_pw+"&isSavedIdChecked="+isSavedIdChecked+"&isAutoLoginChecked="+isAutoLoginChecked;
 	$.ajax({
-		url: 'http://localhost:9696/member/doLogin.nds',
+		url: 'http://localhost:9000/member/doLogin.nds',
 		data: dt,
 		type: 'post',
 		dataType: 'json',
@@ -150,7 +150,7 @@ function doLogin(){
 				swal("환영합니다. "+data[1]+"님!")
 					.then(function(value){
 						/* 확인버튼 클릭 시 메인 페이지로 새로이 이동 */
-						location.href = "http://localhost:9696/mainPage/main_page.nds"
+						location.href = "http://localhost:9000/mainPage/main_page.nds"
 					});
 //					/* ============== [[ 공통코드: 폼 비워주기 ]] ============== */
 //					$('#f_login input').each(function(index){

@@ -55,6 +55,7 @@
 				<prop key="/myPage/my_trade.nds">member-controller</prop>
 				<prop key="/myPage/my_errand.nds">member-controller</prop>
 				<prop key="/mainPage/main_page.nds">member-controller</prop>
+				<prop key="/member/jsonSelectMember.nds">member-controller</prop>
 				<!-- ================== [[ 페이지 요청 url ]] ================== -->
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 				<prop key="/member/getAuth.nds">member-controller</prop>
@@ -95,6 +96,7 @@
 				<prop key="/myPage/my_trade.nds">getMyTrade</prop>
 				<prop key="/myPage/my_errand.nds">getMyErrand</prop>
 				<prop key="/mainPage/main_page.nds">getMainPage</prop>
+				<prop key="/member/jsonSelectMember.nds">jsonSelectMember</prop>
 				<!-- ================== [[ 페이지 이동 url ]] ================== -->
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 				<prop key="/member/getAuth.nds">getAuth</prop>

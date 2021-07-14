@@ -47,6 +47,14 @@
 		  WHERE mem_email= #{mem_email}
 	   ORDER BY trans_date DESC
 	</select>
+	<select id="jsonSelectMember" parameterType="map" resultType="map">
+		SELECT mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_paypw, mem_errand_mode, mem_star_num
+		  FROM member
+		 WHERE 
+		<if test='mem_email!=null'>mem_email LIKE #{mem_email} || '%'</if>
+		<if test='mem_nickname!=null'>mem_nickname LIKE #{mem_nickname} || '%'</if>
+		 	
+	</select>
 	
 <!-- ==================================== [[ ＵＰＤＡＴＥ ]] ==================================== -->
 	<select id="updatePw" statementType="CALLABLE" parameterType="map">

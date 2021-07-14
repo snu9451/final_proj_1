@@ -147,7 +147,7 @@
 									</div>
 									<div class="ml-3">
 									<% if(seller_me==0){%>
-										<a id="pd__seller__chat"> 대화하기 <i class="far fa-comments"></i>
+										<a id="pd__seller__chat" onclick="openChat('<%= SELLER_NICKNAME %>')"> 대화하기 <i class="far fa-comments"></i>
 										</a>
 									<% } %>
 									</div>
@@ -293,6 +293,23 @@
 
   <!-- =============================================== ▼ ＳＣＲＩＰＴ  ▼ ================================================= -->
 　　<%@ include file="../itemPage/source_f.jsp" %>
+	<script type="text/javascript">
+		function openChat(dest_nickname){
+			$.ajax({
+				type:'post',
+				url:'/member/jsonSelectMember.nds',
+				data:{"mem_nickname":dest_nickname},
+				dataType:'json',
+				success:function(data){
+					console.log("ajax success for "+data.MEM_NICKNAME);
+					window.open('/mainPage/chatroom.jsp?dest_email='+data.MEM_EMAIL+'','','width=550px, height=700px');
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		}
+	</script>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
 </body>
 </html>
