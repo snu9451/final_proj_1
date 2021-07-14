@@ -51,7 +51,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 			mem_email = (String)login.get("MEM_EMAIL");
 		}
 		if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
-			res.sendRedirect("http://localhost:9000/itemUpload/itemUpload.jsp");
+			res.sendRedirect("http://localhost:9696/itemUpload/itemUpload.jsp");
 			return false;
 		}
 		for(int i=0; i<excludedURIs.length; i++) {
@@ -67,7 +67,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		System.out.println("===================================="+mem_email);
 		if(login != null) {
 			if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
-				res.sendRedirect("http://localhost:9000/itemUpload/itemUpload.jsp");
+				res.sendRedirect("http://localhost:9696/itemUpload/itemUpload.jsp");
 				return false;
 			}
 			return true;			
@@ -75,8 +75,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 			// (1)비회원도 이용가능한 예외 URI(excludedURIs)도 아니면서 (2)로그인 하지도 않은 사용자의 요청이라면,
 			// 로그인 페이지를 요청하는 서블릿 태우기.
 			session.setAttribute("reqLoginView", "true");
-			res.sendRedirect("http://localhost:9000/mainPage/main_page.nds");
-//			.sendRedirect("http://localhost:9000/mainPage_JSP/main_page.jsp");
+			res.sendRedirect("http://localhost:9696/mainPage/main_page.nds");
+//			.sendRedirect("http://localhost:9696/mainPage_JSP/main_page.jsp");
 			return false;
 		}
 	}

@@ -32,7 +32,7 @@
 <script>
 function insAction(){
 	$('#f_insImg').submit();
-	/* location.href='http://localhost:9000/mainPage/main_page.jsp'; */
+	/* location.href='http://localhost:9696/mainPage/main_page.jsp'; */
 }
 </script>
 

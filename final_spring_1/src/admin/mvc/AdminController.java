@@ -93,7 +93,7 @@ public class AdminController extends MultiActionController {
 		// logger.info("result" + searchMember);
 	}
 
-	// http://localhost:9000/admin/selectBoardBySearch.nds?nick_title_type=%EC%A0%9C%EB%AA%A9&pr_search=%EB%93%9C
+	// http://localhost:9696/admin/selectBoardBySearch.nds?nick_title_type=%EC%A0%9C%EB%AA%A9&pr_search=%EB%93%9C
 	/////////////////////////////////////////★//////////////////////////////////////////////
 	// 게시글 검색
 	// 게시글 제목 또는 작성자로 검색

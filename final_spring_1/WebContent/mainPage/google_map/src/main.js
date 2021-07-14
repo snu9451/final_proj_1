@@ -163,7 +163,7 @@
           },
           map : myMap,
           zIndex : 1000,
-		  icon: "http://localhost:9000/mainPage/google_map/nds.png",
+		  icon: "http://localhost:9696/mainPage/google_map/nds.png",
         });
         const errand_regist = document.createElement("span");
         errand_regist.textContent = "심부름 등록하기";

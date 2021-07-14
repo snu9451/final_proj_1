@@ -5,10 +5,10 @@
 $(document).ready(function(){
 	
 	$('#h_myPage').on('click', function(){
-		location.href = "http://localhost:9000/myPage/my_info.nds";
+		location.href = "http://localhost:9696/myPage/my_info.nds";
 	});
 	$('#h_itemInsert').on('click', function(){
-		location.href = "http://localhost:9000/item/itemUploadPage.nds";
+		location.href = "http://localhost:9696/item/itemUploadPage.nds";
 	});
 	
 	//버튼 클릭시 모달창 show
@@ -33,7 +33,7 @@ $(document).ready(function(){
 	    //카테고리 리스트 가져오기
 	    if($("#category_item").children().length < 1){
 		    $.ajax({
-		      url: "http://localhost:9000/etc/selectCategory.nds",
+		      url: "http://localhost:9696/etc/selectCategory.nds",
 		      success: function (data) {
 //	 	    	alert(data+', '+data[0]+', '+data[0].length);
 		        for(let i=0; i<data.length; i++){
@@ -43,7 +43,7 @@ $(document).ready(function(){
 		        	$('.dropdown-item').eq(index).on('click', function(data){
 // 		        		alert($('.dropdown-item').eq(index).text());
 						let cate = $('.dropdown-item').eq(index).text();
-		        		location.href = "http://localhost:9000/item/selectByCategory.nds?pr_categori="+cate;
+		        		location.href = "http://localhost:9696/item/selectByCategory.nds?pr_categori="+cate;
 		        	});
 		          });
 		      },

@@ -12,7 +12,7 @@
 // 			$.ajax({
 // 				type: "post",
 // 				data: dt,
-// 				url: "http://localhost:9000/member/sendSMSCode.nds",
+// 				url: "http://localhost:9696/member/sendSMSCode.nds",
 // 				success: function(data) {
 // 					alert(data);
 // 				}
@@ -29,7 +29,7 @@
 			$.ajax({
 				type: 'post',
 				data: {mem_email: mem_email},
-				url: "http://localhost:9000/member/selectEmail.nds",
+				url: "http://localhost:9696/member/selectEmail.nds",
 				success: function(data){
 					if(data == '0'){
 						swal("실패ㅠ_ㅠ", "입력하신 이메일("+mem_email+")은 이미 가입되었거나 탈퇴한 회원입니다.", "warning").then(function(){
@@ -81,7 +81,7 @@
 		        $.ajax({
 		          type: "post",
 		          data: dt,
-		          url: "http://localhost:9000/member/sendSMSCode.nds",
+		          url: "http://localhost:9696/member/sendSMSCode.nds",
 		          success: function (data) {
 		            console.log(data);
 		            safetyCode = data;
