@@ -39,7 +39,7 @@
             	</small>
             </div>
             <!-- 계좌번호 입력 -->
-            <input type="text" class="form-control mb-3" id="input_withdrawCost" placeholder="계좌번호를 입력해주세요."/>
+            <input type="text" class="form-control mb-3" id="input_account" placeholder="계좌번호를 입력해주세요."/>
             <!-- 인증번호 입력 -->
             <div class="form-inline justify-content-around">
             	<input type="text" class="form-control w-75 " id="input_withdrawCost" placeholder="인증번호를 입력해주세요."/>
