@@ -1,14 +1,11 @@
 package member.mvc;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -23,7 +20,6 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.google.gson.Gson;
 
 import nds.util.AjaxDataPrinter;
-import nds.util.Converter;
 import nds.util.CookiesMap;
 import nds.util.HashMapBinder;
 import nds.util.Mail;
@@ -99,7 +95,7 @@ public class MemberController extends MultiActionController {
 	}
 	// 마이페이지 내정보를 위한 회원 정보 조회
 	public void selectMember(HttpServletRequest req, HttpServletResponse res) {
-//		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView();
 		// 세션에 담긴 회운정보(이메일) 가져오기
 		HttpSession session = req.getSession();
 		Map<String, Object> pmap = new HashMap<String, Object>();
@@ -109,7 +105,7 @@ public class MemberController extends MultiActionController {
 		pmap.put("mem_email", mem_email);
 		Map<String, Object> rmap = memberLogic.selectMemberAdmin(pmap);
 		req.setAttribute("memberMap", rmap);
-		RequestDispatcher rd = req.getRequestDispatcher("/myPage/myInfo.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("/myPage/my_info.jsp");
 		try {
 			rd.forward(req, res);
 		} catch (ServletException e) {
@@ -119,9 +115,8 @@ public class MemberController extends MultiActionController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		mav.addObject("memberMap", rmap);
-//		mav.setViewName("/myinfo/myInfo.jsp");
-//		return mav;
+		mav.addObject("memberMap", rmap);
+		mav.setViewName("/common/my_info.jsp");
 	}
 	
 	
@@ -204,15 +199,25 @@ public class MemberController extends MultiActionController {
 		logger.info(pmap);
 		int result = memberLogic.updateMember(pmap);
 		logger.info("프로필 사진 업데이트 결과 ===> "+result);
-		// 프로필 사진 변경 실패 시
-		if(result == 1) {
-//			//AjaxDataPrinter.out(res, "text/html", "[ERROR] 프로필 사진 변경에 <b style=\"color: red\">실패</b>하였습니다.");
+		try {
+			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 1초 후 redirect되도록 sleep걸어둠
+			Thread.sleep(1000);
 			res.sendRedirect("/myPage/my_info.nds");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 //		// 프로필 사진 변경 성공 시
+//		if(result == 1) {
+//			//AjaxDataPrinter.out(res, "text/html", "[ERROR] 프로필 사진 변경에 <b style=\"color: red\">실패</b>하였습니다.");
+//			logger.info("updateImg 변경 성공!");
+//			
+//		}
+//		// 프로필 사진 변경 실패 시
 //		else {
-//			// insert_here - 물리적인 위치에 저장된 파일을 삭제한다.
-//			AjaxDataPrinter.out(res, "text/html", "변경되었습니다.");
+////			// insert_here - 물리적인 위치에 저장된 파일을 삭제한다.
+//			res.sendRedirect("/myPage/my_info.nds");
+//			//AjaxDataPrinter.out(res, "text/html", "변경되었습니다.");
 //		}
 	}
 	public void updatePw(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료

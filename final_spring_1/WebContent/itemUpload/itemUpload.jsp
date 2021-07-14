@@ -55,8 +55,16 @@ function insAction(){
             <div class="middle">
               <h3 class="img_title" style="font-weight: bold; margin-left: 15px;">사진 등록</h3>
               <hr>
+<%
+			   if(itemContext != null){%>
+              	<form  id="f_insImg" method="post" enctype="multipart/form-data" action="updateItem.nds">
+              		<input type='hidden' name="pr_bm_no" value="<%= itemContext.get("BM_NO")%>" /> 
+	          <%}
+%>              
               <form  id="f_insImg" method="post" enctype="multipart/form-data" action="insertItem.nds">
               <div class="img_list">
+				
+              
               
              <%
                if(array == null){

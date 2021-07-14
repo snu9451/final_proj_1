@@ -156,7 +156,6 @@ public class ItemController extends MultiActionController {
 		//가지고 나오는 list => [5.png, 6.png]
 		req.setAttribute("array", array);
 		logger.info("itemImg=================" + itemImg);
-		System.out.println(item);
 		//페이지 전송
 		RequestDispatcher dispatcher= req.getRequestDispatcher("/itemUpload/itemUpload.jsp");
 		dispatcher.forward(req,res);
@@ -165,64 +164,85 @@ public class ItemController extends MultiActionController {
 	
 	
 	//사용자가 상품 수정 버튼의 수정 완료를 누른다면 상품이 업데이트 되야하니까
-	public ModelAndView updateItem(HttpServletRequest req, HttpServletResponse res) {
+	public void updateItem(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : updateItem메소드 호출");
 		//front : key는 "pr_BM_TITLE" / "pr_BM_CONTENT" / "pr_BM_PRICE" / "pr_bm_no" / "pr_CATEGORY_NAME"
 		//        value는  상품 제목         상품 내용            상품 가격         상품 번호        상품 카테고리
 		//        key는 "Img_1"  / "Img_2"  /  "Img_3"  /  "Img_4"  /  "Img_5"
 		//한글 처리
-		//HashMapBinder hmb = new HashMapBinder(req);
-		//Map<String,Object> pmap = new HashMap<>();
-		//hmb.multiBind(pmap);
-		//ModelAndView mav = new ModelAndView();
-		////사이즈 초과시 에러를 전송시킴
-		//if(pmap.containsKey("error")) {
-		//	System.out.println(pmap.get("error"));
-		//	//페이지 전송
-		//	mav.setViewName("itemTest");
-		//	return mav;
-		//}
-		////상품의 내용, 상품의 사진들을 저장한다.
-		//itemLogic.updateItem(pmap);
-		////페이지 전송
-		//mav.setViewName("itemTest");
-		//return mav;
-		
-		ModelAndView mav = new ModelAndView();
+		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
-		pmap.put("pr_BM_TITLE","내용111" );
-		pmap.put("pr_BM_CONTENT","내용111" );
-		pmap.put("pr_BM_PRICE",2000);
-		pmap.put("pr_SELLER_NICKNAME","바나나" );
-		pmap.put("pr_CATEGORY_NAME","기타" );
-		pmap.put("pr_bm_no",32);
-		List<Map<String,Object>> itemImgs = new ArrayList<Map<String,Object>>();
-		Map<String,Object> map1 = new HashMap<String, Object>();
-		map1.put("bi_file", "23.png");
-		map1.put("bi_size", 23);
-		itemImgs.add(map1);
-		map1 = new HashMap<String, Object>();
-		map1.put("bi_file", "24.png");
-		map1.put("bi_size", 555);
-		itemImgs.add(map1);
-		map1 = new HashMap<String, Object>();
-		map1.put("bi_file", "25.png");
-		map1.put("bi_size", 532);
-		itemImgs.add(map1);
-		pmap.put("itemImgs", itemImgs);
-		//사이즈 초과시 에러를 전송시킴
-		if(pmap.containsKey("error")) {
-			System.out.println(pmap.get("error"));
-			//페이지 전송
-			mav.setViewName("itemTest");
-			return mav;
+		hmb.multiBind(pmap);
+		logger.info(pmap);
+		int bm_no = 0;
+		bm_no = itemLogic.updateItem(pmap);
+		try {
+			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 2초 후 redirect되도록 sleep걸어둠
+			Thread.sleep(2000);
+			res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		//상품의 내용, 상품의 사진들을 저장한다.
-		itemLogic.insertItem(pmap);
-		//페이지 전송
-		mav.setViewName("itemTest");
-		return mav;
 	}
+		//사이즈 초과시 에러를 전송시킴
+//		if(pmap.containsKey("error")) {
+//			System.out.println(pmap.get("error"));
+//			//페이지 전송
+//			mav.setViewName("itemTest");
+//			return mav;
+//		}
+//		//상품의 내용, 상품의 사진들을 저장한다.
+//		//페이지 전송
+//		mav.setViewName("itemTest");
+//		return mav;
+//		
+//		
+//		int bm_hit = Integer.parseInt(pmap.get("BM_HIT").toString());
+//		logger.info(bm_hit);
+//		bm_no = itemLogic.insertItem(pmap);
+//		if(bm_hit > 0 ) {
+//			bm_no = itemLogic.updateItem(pmap);
+//		}else {
+//		}
+//		
+//		ModelAndView mav = new ModelAndView();
+//		Map<String,Object> pmap = new HashMap<>();
+//		pmap.put("pr_BM_TITLE","내용111" );
+//		pmap.put("pr_BM_CONTENT","내용111" );
+//		pmap.put("pr_BM_PRICE",2000);
+//		pmap.put("pr_SELLER_NICKNAME","바나나" );
+//		pmap.put("pr_CATEGORY_NAME","기타" );
+//		pmap.put("pr_bm_no",32);
+//		List<Map<String,Object>> itemImgs = new ArrayList<Map<String,Object>>();
+//		Map<String,Object> map1 = new HashMap<String, Object>();
+//		map1.put("bi_file", "23.png");
+//		map1.put("bi_size", 23);
+//		itemImgs.add(map1);
+//		map1 = new HashMap<String, Object>();
+//		map1.put("bi_file", "24.png");
+//		map1.put("bi_size", 555);
+//		itemImgs.add(map1);
+//		map1 = new HashMap<String, Object>();
+//		map1.put("bi_file", "25.png");
+//		map1.put("bi_size", 532);
+//		itemImgs.add(map1);
+//		pmap.put("itemImgs", itemImgs);
+//		//사이즈 초과시 에러를 전송시킴
+//		if(pmap.containsKey("error")) {
+//			System.out.println(pmap.get("error"));
+//			//페이지 전송
+//			mav.setViewName("itemTest");
+//			return mav;
+//		}
+//		//상품의 내용, 상품의 사진들을 저장한다.
+//		itemLogic.insertItem(pmap);
+//		//페이지 전송
+//		mav.setViewName("itemTest");
+
 	
 	//사용자가 하나의 제품을 클릭 시 가져 오게 되는 상품
 	public ModelAndView selectItemDetail(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -300,8 +320,10 @@ public class ItemController extends MultiActionController {
 		Map<String,Object> pmap = new HashMap<>();
 		//세션으로 이메일을 가져옴.
 		HttpSession session= req.getSession(); 
+		Map<String,Object> login = (Map<String,Object>)session.getAttribute("login");
+		String pr_MEM_EMAIL = (String)login.get("MEM_EMAIL");
 		//값들을 넣어줌
-		pmap.put("pr_MEM_EMAIL","apple@good.com"); //세션에서 원래는 아이디 가져와기
+		pmap.put("pr_MEM_EMAIL",pr_MEM_EMAIL); //세션에서 원래는 아이디 가져와기
 		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));
 		// like = 1이면 찜하기 된거고, -1이면 찜하기 취소 된 거임, 0이면 로그인 안한 사람.
 		//if(session.getAttribute("pr_MEM_EMAIL")==null) {
@@ -313,7 +335,17 @@ public class ItemController extends MultiActionController {
 	}
 
 		//}
+	public void selectComment(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		logger.info("controller : selectComment메소드 호출");
+		HttpSession session= req.getSession();
+		Map<String,Object> login = (Map<String,Object>)session.getAttribute("login");
+		String pr_MEM_NICKNAME = (String)login.get("MEM_NICKNAME");
+		int pr_bm_no = Integer.parseInt(req.getParameter("pr_bm_no").toString());
+		logger.info("controller : selectComment메소드 호출" + pr_bm_no);
+		List<Map<String, Object>> itemComments = itemLogic.selectItemDetailComment(pr_bm_no,pr_MEM_NICKNAME);
+		AjaxDataPrinter.out(res, itemComments);
 
+	}
 	//댓글 등록 - 댓글인지 대댓글인지 구분
 	public ModelAndView insertComment(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : insertComment메소드 호출");
@@ -333,9 +365,9 @@ public class ItemController extends MultiActionController {
 		////여기에는 result가 들어가는데 "true"면 댓글이 잘 등록 되었고, "itemFalse"이면 상품이 삭제 되었다는 것으로 댓글이 못 달린다. "noId" 로그인 안했을 시
 		////									            "comentFalse"면 댓글이 삭제 되었다는 것이다.(물론 이 경우는 대댓글 등록일 경우)
 		//Json 형태로 가져오기
-//		Gson g = new Gson();
-//		String itemsJson = g.toJson(comments);
-//		AjaxDataPrinter.out(res,"application/json",itemsJson);
+		//Gson g = new Gson();
+		//String itemsJson = g.toJson(comments);
+		//AjaxDataPrinter.out(res,"application/json",itemsJson);
 		ModelAndView mav = new ModelAndView("/itemPage/comment.jsp");
 		mav.addObject("comments", comments);
 		return mav;
@@ -386,7 +418,7 @@ public class ItemController extends MultiActionController {
 		return mav;
 	}
 	//사용자가 상품을 등록 시에
-	public void insertItem(HttpServletRequest req, HttpServletResponse res) {
+	public void insertItem(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		logger.info("controller : insertItem메소드 호출");
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
@@ -396,7 +428,17 @@ public class ItemController extends MultiActionController {
 		pmap.put("pr_SELLER_NICKNAME", mem_nickname);
 		hmb.multiBind(pmap);
 		logger.info("==============================" + pmap);
-		itemLogic.insertItem(pmap);
+		int bm_no = 0;
+		bm_no = itemLogic.insertItem(pmap);
+		try {
+			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 2초 후 redirect되도록 sleep걸어둠
+			Thread.sleep(2000);
+			res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 		//front : key는 pr_BM_TITLE   /   pr_BM_CONTENT  /  pr_BM_PRICE  /   pr_SELLER_NICKNAME  /  pr_CATEGORY_NAME  
 		//      value는   제목                 내용              가격                닉네임                  카테고리         
 		//        key는 "Img1" "img2" ....

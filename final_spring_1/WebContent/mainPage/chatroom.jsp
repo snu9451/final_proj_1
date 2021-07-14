@@ -40,7 +40,7 @@
 	   				<div>
 		        		<div class="notice">
 					      <div class="left">
-					          <div><i class="fas fa-arrow-circle-left prev"></i></div>
+					          <button class="btn btn-sm btnleft"><i class="fas fa-arrow-circle-left prev"></i></button>
 					      </div>
 					      <div class="center">
 				          	<div class="center_text">
@@ -54,6 +54,7 @@
 					            <div>
 					            </div>
 					            <div class="errand_price">심부름 값 : insert here</div>
+					            <div class="errand_price">&nbsp</div>
 				          	</div>
 					      </div>
 					      <span class="center1">
@@ -61,7 +62,7 @@
 					            <i id="check2" class="fas fa-check-circle iconCheck"></i>
 					      </span>
 				          <div class="right">
-					          <div><i class="fas fa-arrow-circle-right next"></i></div>
+					          <button class="btn btn-sm btnright"><i class="fas fa-arrow-circle-right next"></i></button>
 				          </div>
 			        	</div>
 	   				</div>
@@ -90,7 +91,8 @@
        		</div>
 	    <div class="wrapper_input" align="center">
 	    	<input type="file" id="input_file" accept="image/*"/>
-	    	<img src="../mainPage/insert_photo.png" id="img_insert"/>
+<!-- 	    	<img src="../mainPage/insert_photo.png" id="img_insert"/> -->
+				<i class="far fa-image" id="img_insert" style="font-size:40px; cursor:pointer;"></i>
 		    <input id="input_msg" maxlength='200' onkeyup="if (window.event.keyCode == 13) sendMsg();">
 		    <button type="button" id="btn_msg" class="btn btn-warning btn-sm">전송</button>
 	    </div>

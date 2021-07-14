@@ -1,5 +1,7 @@
 package nds.util;
 
+import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,6 +45,15 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		// 요청이 발생하면 그 요청에 대한 세션을 가져온다.
 		HttpSession session = req.getSession();
 		logger.info("요청된 URI =====> "+req.getRequestURI());
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		String mem_email = null;
+		if(login != null) {
+			mem_email = (String)login.get("MEM_EMAIL");
+		}
+		if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
+			res.sendRedirect("http://localhost:8080/itemUpload/itemUpload.jsp");
+			return false;
+		}
 		for(int i=0; i<excludedURIs.length; i++) {
 			if(excludedURIs[i].equals(req.getRequestURI())) {
 				logger.info("비회원도 이용 가능한 페이지 || 예외url 요청입니다.");
@@ -53,7 +64,12 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		logger.info("회원만 이용 가능한 페이지 요청입니다.");
 		// 사용자가 로그인 상태인지 확인한다.
 		// 세션에 저장된 "login"이 있다면 즉, 로그인 상태라면...
-		if(session.getAttribute("login") != null) {
+		System.out.println("===================================="+mem_email);
+		if(login != null) {
+			if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
+				res.sendRedirect("http://localhost:8080/itemUpload/itemUpload.jsp");
+				return false;
+			}
 			return true;			
 		} else {
 			// (1)비회원도 이용가능한 예외 URI(excludedURIs)도 아니면서 (2)로그인 하지도 않은 사용자의 요청이라면,

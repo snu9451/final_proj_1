@@ -69,6 +69,7 @@ public class MemberDao {
 	public int updateMember(Map<String, Object> pmap) {
 		int result = 0;
 		result = sqlSessionTemplate.update("updateMember", pmap);
+		logger.info(result);
 		return result;
 	}
 

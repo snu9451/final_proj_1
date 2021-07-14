@@ -49,7 +49,7 @@ public class ItemLogic {
 		return itemDao.editItemImg(pr_bm_no);
 	}
 	//사용자가 상품 수정 버튼의 수정 완료를 누른다면 상품이 업데이트 되어야함.
-	public void updateItem(Map<String, Object> pmap) {
+	public int updateItem(Map<String, Object> pmap) {
 		logger.info("Logic : updateItem메소드 호출");
 		//상품 번호를 가져온다.
 		int pr_bm_no = Integer.parseInt(pmap.get("pr_bm_no").toString());
@@ -57,6 +57,7 @@ public class ItemLogic {
 		List<Map<String,Object>> itemImgs = (List<Map<String, Object>>) pmap.get("itemImgs");
 		//상품의 정보(pmap) 와 사진(itemImgs)을 파라미터로 넣는다.
 		itemDao.updateItem(pmap,itemImgs,pr_bm_no);
+		return pr_bm_no;
 	}
 
 	//상품의 내용만 가져옴 - 사용자가 상품하나를 자세히 볼 때
@@ -125,12 +126,16 @@ public class ItemLogic {
 		return itemDao.updateComment(pmap);
 	}
 	//사용자가 상품을 등록 시에
-	public void insertItem(Map<String, Object> pmap) {
+	public int insertItem(Map<String, Object> pmap) {
+		int result = 0;
 		logger.info("Logic : insertItem메소드 호출");
 		//등록된 상품들의 사진
 		List<Map<String,Object>> itemImgs = (List<Map<String, Object>>) pmap.get("itemImgs");
 		//상품의 정보와 사진을 파라미터로 넣는다.
-		itemDao.insertItem(pmap, itemImgs);
+		result = itemDao.insertItem(pmap, itemImgs);
+		logger.info(result);
+		
+		return result;
 	}
 
 

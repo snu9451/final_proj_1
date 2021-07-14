@@ -91,7 +91,7 @@
 				<prop key="/member/insertMember.nds">insertMember</prop>
 				<prop key="/member/deleteMyLike.nds">deleteMyLike</prop>
 				<!-- ================== [[ 페이지 이동 url ]] ================== -->
-				<prop key="/myPage/my_info.nds">getMyInfo</prop>
+				<prop key="/myPage/my_info.nds">selectMember</prop>
 				<prop key="/myPage/my_wallet.nds">getMyWallet</prop>
 				<prop key="/myPage/my_like.nds">getMyLike</prop>
 				<prop key="/myPage/my_trade.nds">getMyTrade</prop>

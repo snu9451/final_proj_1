@@ -39,7 +39,7 @@ function reqAction() {
 							str += "</span></td><td>";
 							str += data[i].ERRAND_REQUEST_DATE;
 							str += "</td><td>";
-							str += data[i].ERRAND_CONTENT;
+							str += data[i].ERRAND_ITEM;
 							str += "</td><td>";
 							str += data[i].ERRAND_TOTAL_PRICE;
 							str += "원</td><td>";
@@ -62,7 +62,7 @@ function reqAction() {
 							str += "</span></td><td>";
 							str += data[i].ERRAND_REQUEST_DATE;
 							str += "</td><td>";
-							str += data[i].ERRAND_CONTENT;
+							str += data[i].ERRAND_ITEM;
 							str += "</td><td>";
 							str += data[i].ERRAND_TOTAL_PRICE;
 							str += "원</td><td>";
@@ -117,7 +117,7 @@ function resAction() {
 				if(data.length != nds_cnt){
 				
 					for(let i=0; i<data.length; i++){
-						if(data[i].ERRAND_STATUS == 'S'){
+						if(data[i].ERRAND_STATUS == 'P'){
 							console.log('s');
 							str += "<tr><td>";
 							str += "<div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck";
@@ -125,10 +125,34 @@ function resAction() {
 							str += "\"> <label class=\"custom-control-label\" for=\"customCheck";
 							str += data[i].ERRANDKEY;
 							str += "\"></label></div>";
-							str += "</td><td>";
+							str += "</td><td><span class=\"badge rounded-pill bg-warning text-dark\">";
+							str += "진행중";
+							str += "</span></td><td>";
 							str += data[i].ERRAND_REQUEST_DATE;
 							str += "</td><td>";
-							str += data[i].ERRAND_CONTENT;
+							str += data[i].ERRAND_ITEM;
+							str += "</td><td>";
+							str += data[i].ERRAND_TOTAL_PRICE;
+							str += "원</td><td>";
+							str += data[i].MEM_NICKNAME;
+							str += "</td></tr>";
+			//					document.write("<table>"+str+"</table>");
+							$('#nds_tbody_nds').append(str);
+						str = "";
+						}else if(data[i].ERRAND_STATUS == 'S'){
+							console.log('s');
+							str += "<tr><td>"
+							str += "<div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck";
+							str += data[i].ERRANDKEY;
+							str += "\"> <label class=\"custom-control-label\" for=\"customCheck";
+							str += data[i].ERRANDKEY;
+							str += "\"></label></div>";
+							str += "</td><td><span class=\"badge bg-secondary text-white\">";
+							str += "완료";
+							str += "</span></td><td>";
+							str += data[i].ERRAND_REQUEST_DATE;
+							str += "</td><td>";
+							str += data[i].ERRAND_ITEM;
 							str += "</td><td>";
 							str += data[i].ERRAND_TOTAL_PRICE;
 							str += "원</td><td>";

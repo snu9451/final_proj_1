@@ -126,4 +126,14 @@
 		$("#dest").val(dest);
 		$("#destForm").submit();
 	}
+	//Preloader
+	$(window).on("load", function () {
+	  if ($("#preloader").length) {
+	    $("#preloader")
+	      .delay(800)
+	      .fadeOut("slow", function () {
+	        $(this).remove();
+	      });
+	  }
+	});
 </script>

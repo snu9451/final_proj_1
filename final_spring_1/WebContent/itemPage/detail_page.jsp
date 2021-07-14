@@ -42,7 +42,7 @@
 			loop:true,
 			nav: true,
 			margin: 10,
-			navigationText: ["<<<<",">>>>"],
+			navText: ['<i class="fas fa-backward"></i>', '<i class="fas fa-forward"></i>'],
 			responsive:{
 				234:{
 					items:1
@@ -63,29 +63,29 @@
 					<div
 						class="col-4 col-lg-4 d-flex justify-content-center align-items-center p-0"
 						id="pd__img__box">
-						<div class="owl-carousel text-center"
-							id="pd__img__carousel">
+						<div class="owl-carousel text-center" id="pd__img__carousel" style="border : 5px solid #ffc37b; border-radius:12px; height:350px;">
 							<% if("C".equals(BM_STATUS)) { %>
 								<% for(int i=0;i<imgs.size();i++){ %>
-									<div class="items" style="position: relative;">
-									   <img style="width: 100%; height: 100%; opacity: 0.1;" src="../itemUpload/assets/img/itemupload/<%= imgs.get(i) %>" alt="" />
+									<div class="items " style="position: relative; ">
+									   <img style="width: 100%; height: 100%; opacity: 0.1; border-radius:12px;" src="../itemUpload/assets/img/itemupload/<%= imgs.get(i) %>" alt="" />
 <!-- 									    <div style='font-size: 3.5rem; width: 100%; position: absolute; top: 50%; text-align: center;'> 판매완료 </div> -->
 									</div>	
 							<% }}else if("S".equals(BM_STATUS)) { %>
 								<% for(int i=0;i<imgs.size();i++){ %>
 									<div class="items" style="position: relative;">
-									   <img style="width: 100%; height: 100%; opacity: 0.1;" src="../itemUpload/assets/img/itemupload/<%= imgs.get(i) %>" alt="" />
+									   <img style="width: 100%; height: 100%; opacity: 0.1; border-radius:12px;" src="../itemUpload/assets/img/itemupload/<%= imgs.get(i) %>" alt="" />
 									   <div style='font-size: 3.5rem; width: 100%; position: absolute; top: 50%; text-align: center;'> 거래중 </div>
 									</div>	
 							<% }}else{ %>
 								<% for(int i=0;i<imgs.size();i++){ %>
 									<div class="items" style="position: relative;">
-									   <img style="width: 100%; height: 100%" src="../itemUpload/assets/img/itemupload/<%= imgs.get(i) %>" alt="" />
+									   <img style="width: 100%; height: 100%; border-radius:12px;" src="../itemUpload/assets/img/itemupload/<%= imgs.get(i) %>" alt="" />
 <!-- 									   <img style="width: 100%; height: 100%" src="../itemUpload/assets/img/itemupload/1.png" alt="" /> -->
 <!-- 									   <img style="width: 100%; height: 100%" src="../itemUpload/assets/img/itemupload/2.png" alt="" /> -->
 									</div>	
 								<% }} %>
 						</div>
+						
 					</div>
 					<!-- End 상품 img div -->
 					<!-- 상품 설명 div -->
@@ -165,13 +165,13 @@
 									<h2>찜하기</h2>
 									<button type="button" id="<%= BM_NO %>" onclick='likeItem(this)' style="color: red" class='likeBtn'>
 									<%
-										if(I_LIKE==0){
+										if(I_LIKE==0 || I_LIKE==1){
 									%>
-										<i class="far fa-heart"></i>
+										<i class= 'fas fa-heart'></i> <!-- 꽉 찬 하트 -->
 									<%
 										} else{
 									%>
-										<i class= 'fas fa-heart'></i>
+										<i class="far fa-heart" style="color:grey"></i> <!-- 빈하트 -->
 									<%
 										}
 									%>
@@ -205,13 +205,13 @@
 								<div>
 									<ul class="d-flex align-items-end mb-0">
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_POS").toString())==0){ %>
-										<li>
-											<button class="pd__comment__btn" id="addComment">답글</button>
-										</li>
+										 <li>                                                                                                         
+             							    <button class="pd__comment__btn" id="" onclick="pdCommentBtn()">답글</button>                                                       
+            							</li> 
 									<% } %>
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_ME").toString())==1){ %>
 										<li>
-											<button class="pd__comment__btn" id="" >수정</button>
+											<button class="pd__comment__btn" id="" onclick="pdCommentupdateBtn(this)">수정</button>      
 										</li>
 										<li>
 											<button class="pd__comment__btn" id="<%= itemComments.get(i).get("COMMENT_STEP") %>" onclick='deleteComment(this)' >삭제</button>

@@ -23,7 +23,7 @@
    
    <!-- 4 사용자가 상품 수정 버튼 클릭 시 상품의 정보를 다 가져와야하니까 있음 - 정보만 -->
    <select id="editItemContext" resultType="map" parameterType="int">
-      select BM_NO, BM_TITLE, BM_PRICE, CATEGORY_NAME, BM_CONTENT  
+      select BM_NO, BM_TITLE, BM_PRICE, CATEGORY_NAME, BM_CONTENT, BM_HIT  
 	  from BOARD_MASTER 
       where bm_no=#{pr_bm_no}
    </select>
@@ -116,6 +116,7 @@
 		insert into board_img(bi_no, bm_no, bi_file, bi_size) values
 		(seq_board_img.nextval, #{bm_no}, #{bi_file}, #{bi_size})
 	</insert>
+	
 
    
 

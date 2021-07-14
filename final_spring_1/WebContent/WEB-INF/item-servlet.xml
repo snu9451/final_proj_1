@@ -40,6 +40,7 @@
 				<prop key="/item/deleteItem.nds">item-controller</prop><!-- 12  -->
 				<prop key="/item/updateItemConfirm.nds">item-controller</prop><!-- 12 -->
 				<prop key="/item/likeItem.nds">item-controller</prop><!-- 12 -->
+				<prop key="/item/selectComment.nds">item-controller</prop>   <!-- 12  -->
 				<prop key="/item/insertComment.nds">item-controller</prop>   <!-- 12  -->
 				<prop key="/item/deleteComment.nds">item-controller</prop>  <!-- 12 -->
 				<prop key="/item/updateComment.nds">item-controller</prop>            <!--  1 -->
@@ -61,6 +62,7 @@
 				<prop key="/item/deleteItem.nds">deleteItem</prop>
 				<prop key="/item/updateItemConfirm.nds">updateItemConfirm</prop>
 				<prop key="/item/likeItem.nds">likeItem</prop>
+				<prop key="/item/selectComment.nds">selectComment</prop>
 				<prop key="/item/insertComment.nds">insertComment</prop>
 				<prop key="/item/deleteComment.nds">deleteComment</prop>
 				<prop key="/item/updateComment.nds">updateComment</prop>

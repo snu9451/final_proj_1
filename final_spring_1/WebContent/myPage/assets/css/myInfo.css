@@ -619,8 +619,13 @@ input[type="checkbox"] {
 #image_section {
   width: 200px;
   height: 200px;
-  border-radius: 50;
+  border-radius: 50%;
+  border: 2px solid #ffc37b;
   margin: auto;
+}
+.img_wrapper{
+  pointer-events : none;
+	
 }
 #imgInput {
   margin-top: 15px;

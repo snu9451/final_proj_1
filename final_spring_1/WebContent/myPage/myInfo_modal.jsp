@@ -23,7 +23,7 @@
 	          </div>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+	          <button type="button" class="btn btn-primary" id="btn_imgSucces" data-dismiss="modal">확인</button>
 	        </div>
 	      </div>
 	    </div>

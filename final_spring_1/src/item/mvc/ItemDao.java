@@ -76,7 +76,7 @@ public class ItemDao {
 		logger.info("pmap ===> "+pmap);
 		//이미지들 삭제 후 저장
 		//삭제
-		sqlSessionTemplate.delete("itemImgdelete",pr_bm_no);
+		//sqlSessionTemplate.delete("itemImgdelete",pr_bm_no);
 		//저장
 		for(Map<String, Object> item: itemImgs) {
 			item.put("bm_no",pr_bm_no);
@@ -153,7 +153,7 @@ public class ItemDao {
 		return pmap.get("result").toString();		
 	}
 	//사용자가 상품을 등록 시에
-	public void insertItem(Map<String, Object> pmap , List<Map<String, Object>> itemImgs ) {
+	public int insertItem(Map<String, Object> pmap , List<Map<String, Object>> itemImgs ) {
 		logger.info("Dao : insertItem메소드 호출");
 		//프로시져 - 상품 등록 정보
 		sqlSessionTemplate.insert("proc_board_insert",pmap);
@@ -165,7 +165,8 @@ public class ItemDao {
 			//등록된 상품 번호를 이용해서 사진을 넣고 insert문 돌림
 			sqlSessionTemplate.insert("edit",item);
 		}
-		
+		logger.info(result);
+		return result;
 	}
 
 	
