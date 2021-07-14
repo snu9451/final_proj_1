@@ -217,6 +217,22 @@ public class MemberLogic {
 	}
 
 
+	public List<Map<String, Object>> getMyTrade(Map<String, Object> pmap) {
+		logger.info("Logic getMyTrade 호출성공");
+		List<Map<String,Object>> tradeRec = null;
+		tradeRec = memberDao.getMyTrade(pmap);
+		
+		return tradeRec;
+	}
+
+	/* 마이페이지 중고거래 내역 삭제 */
+	public void deleteTradeRec(Map<String, Object> pmap) {
+		logger.info("Logic deleteTradeRec 호출성공");
+		memberDao.deleteTradeRec(pmap);
+		
+	}
+
+
 
 
 	// 테스트용 메인

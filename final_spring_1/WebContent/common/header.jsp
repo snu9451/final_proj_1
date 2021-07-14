@@ -92,5 +92,6 @@ response.setDateHeader("Expires",0);
   <!-- 회원가입 모달 --><%@ include file="../common/assets/js/join_js.jsp" %>
   <!-- 회원가입 양식 모달 --><%@ include file="../common/joinForm.jsp" %>
   <!-- 코인충전 모달 --><%@ include file="../common/coinCharge.jsp" %>
+  <!-- 코인출금 모달 --><%@ include file="../common/coinWithdraw.jsp" %>
   <!-- 심부름 모달 --><%@ include file="../mainPage/errand.jsp" %>
   <!-- ====================================== ▲ HEADER에서 쓰이는 모달 ▲ ====================================== -->

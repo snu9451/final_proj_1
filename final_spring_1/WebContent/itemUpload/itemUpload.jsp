@@ -146,13 +146,13 @@ function insAction(){
               </div>
                 <div class="item_info_content_section">
                   <h4 class="item_info_title">내용</h4>
-                  	
+                     
                    <% if(itemContext!=null){ %> 
-                  	<textarea class="textarea" cols="119" name="pr_BM_CONTENT" rows="10" size="200" maxlength="200"><%= itemContext.get("BM_CONTENT") %></textarea>
-                  	<% } else{ %>
-                  	<textarea class="textarea" cols="119" name="pr_BM_CONTENT" rows="10" size="200" maxlength="200"></textarea>
+                     <textarea class="textarea" cols="100" name="pr_BM_CONTENT" rows="10" size="200" maxlength="200"><%= itemContext.get("BM_CONTENT") %></textarea>
+                     <% } else{ %>
+                     <textarea class="textarea" cols="100" name="pr_BM_CONTENT" rows="10" size="200" maxlength="200"></textarea>
                   <% } %>
-                  	
+                     
                 </div>
             </form>
             </div>

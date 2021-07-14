@@ -90,7 +90,6 @@ function likeItem(itemno){
 
 //댓글 삭제하기
 function deleteComment(comment){	
-	console.log('ttttttt');
 	let p_comment_step = comment.id; //삭제할번호
     $.ajax({
     	type: "POST",

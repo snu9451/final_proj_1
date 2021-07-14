@@ -63,6 +63,7 @@ h6 {
   font-family: "Cafe24SsurroundAir";
 }
 
+<<<<<<< HEAD:final_spring_1/WebContent/mainPage_JSP/assets/css/style.css
 /*--------------------------------------------------------------
 # 모달 관련 CSS
 --------------------------------------------------------------*/
@@ -100,6 +101,27 @@ h6 {
   font-weight: normal;
   font-style: normal;
 }
+=======
+/* /**************************** 한글 폰트 ***************************/ */
+
+/* /* 헤더 타이틀 */ */
+/* @font-face { */
+/*   font-family: "WandohopeB"; */
+/*   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/WandohopeB.woff") */
+/*     format("woff"); */
+/*   font-weight: normal; */
+/*   font-style: normal; */
+/* } */
+
+/* /* navbar 메뉴 */ */
+/* @font-face { */
+/*   font-family: "Cafe24SsurroundAir"; */
+/*   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff") */
+/*     format("woff"); */
+/*   font-weight: normal; */
+/*   font-style: normal; */
+/* } */
+>>>>>>> KEY:final_spring_1/WebContent/mainPage/assets/css/style.css
 
 /*--------------------------------------------------------------
 # Preloader
@@ -120,7 +142,7 @@ h6 {
   position: fixed;
   top: calc(50% - 30px);
   left: calc(50% - 30px);
-  border: 6px solid #111;
+  border: 6px solid orange;
   border-top-color: #e2eefd;
   border-radius: 50%;
   width: 60px;
@@ -1070,12 +1092,10 @@ section {
 .product__description {
   background-color: #8aaee2;
   width: 100%;
-  padding-top: 100px !important;
 }
 
 #pd__top {
   background-color: white;
-  border-radius: 10px;
   padding: 1rem;
 }
 
@@ -1109,10 +1129,9 @@ section {
 } */
 
 .items img {
-  max-width: 330px;
-  max-height: 330px;
+  max-width: 360px;
+  max-height: 360px;
   object-fit: contain;
-  margin: auto;
 }
 
 .pd__divider {

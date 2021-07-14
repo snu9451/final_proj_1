@@ -58,6 +58,24 @@
 	   {CALL proc_my_like(#{pr_MEM_EMAIL}
 	                  , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
 	</select>
+	<!-- 중고거래 내역 조회 -->
+	<select id="getMyTrade" parameterType="map" resultType="map">
+		select b.bm_no, b.bm_title, b.bm_date, b.bm_content, b.bm_price, b.bm_status, b.seller_nickname, b.buyer_nickname
+	       ,img.bi_file
+	    from board_master b, (select min(bi_no) bi_no, bm_no, min(bi_file) bi_file from board_img group by bm_no) img
+	<if test='buyer_nickname!=null'>
+		WHERE buyer_nickname = #{buyer_nickname}
+		and b.buyer_isshow = 'T'
+		and b.bm_no = img.bm_no
+		order by b.bm_no asc
+	</if>
+	<if test='seller_nickname!=null'>
+		WHERE seller_nickname = #{seller_nickname}
+		and b.seller_isshow = 'T'
+		and b.bm_no = img.bm_no
+		order by b.bm_no asc		
+	</if>
+	</select>
 	
 <!-- ==================================== [[ ＵＰＤＡＴＥ ]] ==================================== -->
 	<select id="updatePw" statementType="CALLABLE" parameterType="map">
@@ -95,6 +113,10 @@
      	  WHERE MEM_EMAIL = #{mem_email} 
      	    AND BM_NO = #{bm_no}
 	</delete>
+	<select id="deleteTradeRec" statementType="CALLABLE" parameterType="java.util.Map">
+		{call PROC_BOARD_MASTER_DELETE(#{br_sel_buy}, #{pr_bm_no})}
+	</select>
+
 <!-- ==================================== [[ Ｅ　Ｌ　Ｓ　Ｅ ]] ==================================== -->
 
 	<select id="uiToSession" statementType="CALLABLE" parameterType="map">
