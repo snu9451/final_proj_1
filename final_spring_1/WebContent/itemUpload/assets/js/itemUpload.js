@@ -12,14 +12,10 @@ $(document).ready(function(){
 	$("#itemBoardEdit").on('shown.bs.modal', function(){
 		let item_editBtn = $("#item_editBtn");
 		item_editBtn.click(function(){
-			console.log('click');
-			let data = $("#itemBoardEdit").serialize();
-			console.log(data); 
+			
 		})
 	})
 })
-
-
 
   // Preloader
   $(window).on("load", function () {
