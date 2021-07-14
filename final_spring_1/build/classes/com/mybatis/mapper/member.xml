@@ -107,19 +107,16 @@
      	VALUES (SEQ_COIN_TRANS.NEXTVAL, #{mem_email}, TO_CHAR (SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), #{trans_content}, #{trans_price}, #{trans_remain}, #{trans_io})
 	</insert>
 <!-- ==================================== [[ ＤＥＬＥＴＥ ]] ==================================== -->
-<<<<<<< HEAD
 	<delete id="my_like_delete" parameterType="map">
 	     DELETE 
 	       FROM MY_LIKE
      	  WHERE MEM_EMAIL = #{mem_email} 
      	    AND BM_NO = #{bm_no}
 	</delete>
-=======
 	<select id="deleteTradeRec" statementType="CALLABLE" parameterType="java.util.Map">
 		{call PROC_BOARD_MASTER_DELETE(#{br_sel_buy}, #{pr_bm_no})}
 	</select>
 
->>>>>>> YSC2
 <!-- ==================================== [[ Ｅ　Ｌ　Ｓ　Ｅ ]] ==================================== -->
 
 	<select id="uiToSession" statementType="CALLABLE" parameterType="map">

@@ -124,7 +124,7 @@ pageEncoding="UTF-8"%>
 	          seller_list += "	<td class='divider'>글번호 <span id='bm_no'>" + data[i].BM_NO + "</span></td>";
 	          seller_list += "	<td class='divider_img'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
 	          seller_list += "		style='color: black'><img id='item_image'";
-	          seller_list += "			src=../itemPage/assets/img/board_Img/" + data[i].BI_FILE +"></a></td>";
+	          seller_list += "			src=../itemUpload/assets/img/itemupload/" + data[i].BI_FILE +"></a></td>";
 	          seller_list += "	<td class='divider_con'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
 	          seller_list += "		style='color: black; font-size: 20px;'>" + data[i].BM_TITLE + "</a></td>";
 	          seller_list += "	<td class='divider'>등록일: " + data[i].BM_DATE + "<br><span class='bm_price'>" + bm_price +"</span>원<br>";
@@ -196,7 +196,7 @@ pageEncoding="UTF-8"%>
 	          buyer_list += "	<td class='divider'>글번호 <span id='bm_no'>" + data[i].BM_NO + "</span></td>";
 	          buyer_list += "	<td class='divider_img'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
 	          buyer_list += "		style='color: black'><img id='item_image'";
-	          buyer_list += "			src=../itemPage/assets/img/board_Img/" + data[i].BI_FILE + "></a></td>";
+	          buyer_list += "			src=../itemUpload/assets/img/itemupload/" + data[i].BI_FILE + "></a></td>";
 	          buyer_list += "	<td class='divider_con'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
 	          buyer_list += "		style='color: black; font-size: 20px;'>" + data[i].BM_TITLE + "</a></td>";
 	          buyer_list += "	<td class='divider'>등록일: " + data[i].BM_DATE + "<br>" + bm_price +"원<br>";
