@@ -51,7 +51,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 			mem_email = (String)login.get("MEM_EMAIL");
 		}
 		if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
-			res.sendRedirect("http://localhost:8080/itemUpload/itemUpload.jsp");
+			res.sendRedirect("http://localhost:9000/itemUpload/itemUpload.jsp");
 			return false;
 		}
 		for(int i=0; i<excludedURIs.length; i++) {
@@ -67,7 +67,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		System.out.println("===================================="+mem_email);
 		if(login != null) {
 			if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
-				res.sendRedirect("http://localhost:8080/itemUpload/itemUpload.jsp");
+				res.sendRedirect("http://localhost:9000/itemUpload/itemUpload.jsp");
 				return false;
 			}
 			return true;			

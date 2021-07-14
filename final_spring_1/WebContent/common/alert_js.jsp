@@ -424,7 +424,7 @@ $(document).ready(function() {
 									            acceptErrand(errandKey, dest_email, area_no);
 									            refAlert.child(alertKey).remove();
 // 									            refAlert.child(alertKey).update({ active : 0 });
-									            window.open('/mainPage/chatroom.jsp?dest_email='+dest_email+'','','width=550px, height=700px');
+									            window.open('/mainPage/chatroom.jsp?dest_email='+dest_email+'','','width=550px, height=900px');
 											},
 											error:function(e){
 												console.log(e);

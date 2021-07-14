@@ -1,6 +1,9 @@
 package nds.util;
 
 import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -10,7 +13,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.springframework.util.xml.DomUtils;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -29,12 +31,12 @@ public class HashMapBinder {
 	public HashMapBinder() {}
 	public HashMapBinder(HttpServletRequest request) {
 		this.request = request;
-		realFolder = "C:\\Users\\chokiseol\\Desktop\\final\\final_proj_1\\final_spring_1\\WebContent\\itemUpload\\assets\\img\\itemupload";
+		realFolder = "D:\\final_proj_1\\final_spring_1\\WebContent\\itemUpload\\assets\\img\\itemupload";
 		logger.info("itemupload용 hashmapbinder");
 	}
 	public HashMapBinder(HttpServletRequest request,int i) {
 		this.request = request;
-		realFolder = "C:\\Users\\chokiseol\\Desktop\\final\\final_proj_1\\final_spring_1\\WebContent\\myPage\\assets\\img\\profile";
+		realFolder = "D:\\final_proj_1\\final_spring_1\\WebContent\\myPage\\assets\\img\\profile";
 		logger.info("profileimg용 hashmapbinder");
 	}
 	public void profileBind(Map<String,Object> target) {

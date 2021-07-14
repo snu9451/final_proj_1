@@ -195,7 +195,7 @@ $('#addComment').click(function(){
 	    $.ajax({
 	    	type: "GET",
 	//     	data: search,
-	    	url: "http://localhost:8080/item/selectBySearch.nds?pr_search="+$('input[name=nds_search]').val(),
+	    	url: "http://localhost:9000/item/selectBySearch.nds?pr_search="+$('input[name=nds_search]').val(),
 	    	success:function(data){
 	//     		alert(data);
 				viewItemList(data);

@@ -1090,9 +1090,10 @@ section {
 } */
 
 .items img {
-  max-width: 360px;
-  max-height: 360px;
+  max-width: 330px;
+  max-height: 330px;
   object-fit: contain;
+  margin: auto;
 }
 
 .pd__divider {

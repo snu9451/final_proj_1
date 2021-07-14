@@ -64,7 +64,7 @@
 				userData.once('child_added', getUserData);
 		        let html =
 		            "<li id='"+key+"' class=\"collection-item avatar\" onclick=\"enterChatroom(this.id,'"+dest_email+"');\" >" +
-		            "<img class='profile' src=\"./"+dest_img+"\"/>" +
+		            "<img class='profile' src=\"../myPage/assets/img/profile/"+dest_img+"\"/>" +
 		            "<span class=\"dest\"><b>" + dest_nickname + "</b></span>" +
 		            "<p class='msg'>" + lastMsg + "<br>" +
 		            "</p>" +
@@ -88,7 +88,7 @@
 					dataType:'json',
 					success:function(data){
 						console.log("ajax success for "+data.MEM_NICKNAME);
-						$("#"+key).find("img.profile").attr("src",data.MEM_IMG);
+						$("#"+key).find("img.profile").attr("src","../myPage/assets/img/profile/"+data.MEM_IMG);
 						$("#"+key).find("span.dest").children("b").text(data.MEM_NICKNAME);
 					},
 					error:function(e){
@@ -118,7 +118,7 @@
 			console.log("run");
 	        let html =
 	            "<li id='"+key+"' class=\"collection-item avatar\" onclick=\"enterChatroom(this.id,'"+dest_email+"');\" >" +
-	            "<img class='profile' src=\"./profile.png\"/>" +
+	            "<img class='profile' src=\"../myPage/assets/img/profile/"+dest_img+"\"/>" +
 	            "<span class=\"dest\"><b>" + dest_nickname + "</b></span>" +
 	            "<p class='msg'>" + lastMsg + "<br>" +
 	            "</p>" +

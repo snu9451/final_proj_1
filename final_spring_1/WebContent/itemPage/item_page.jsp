@@ -46,7 +46,7 @@
 <%
 	}/////////end of else
 %>
-		<div class="product__box" onclick="location.href='http://localhost:8080/item/selectItemDetail.nds?pr_bm_no=<%=itemList.get(i).get("BM_NO")%>';" style="border-radius:10px;">
+		<div class="product__box" onclick="location.href='http://localhost:9000/item/selectItemDetail.nds?pr_bm_no=<%=itemList.get(i).get("BM_NO")%>';" style="border-radius:10px;">
 			<div class="card rounded-0 mb-2">
 				<div class="pImgBox img-fluid d-flex flex-column justify-content-center align-items-lg-stretch" style="overflow: hidden;">
 					<img id="pimg" class="card-img rounded-0 img-fluid" src="../itemUpload/assets/img/itemupload/<%=itemList.get(i).get("BI_FILE")%>"

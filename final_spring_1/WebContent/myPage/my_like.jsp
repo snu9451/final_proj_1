@@ -76,10 +76,10 @@
 					<tr id="tr_no<%=bm_no %>">
 						<td id="like<%=bm_no %>" class="divider"><i class="fas fa-heart likebutton"></i><br>No.
 							<span style="font-weight : bold; font-size:25px;"><%=bm_no %></span></td>
-						<td class="divider_img"><a href="http://localhost:8080/item/selectItemDetail.nds?pr_bm_no=<%=bm_no %>"
+						<td class="divider_img"><a href="http://localhost:9000/item/selectItemDetail.nds?pr_bm_no=<%=bm_no %>"
 							style="color: black"><img id="item_image"
 								src="../itemUpload/assets/img/itemupload/<%=bi_file %>"></a></td>
-						<td class="divider_con"><a href="http://localhost:8080/item/selectItemDetail.nds?pr_bm_no=<%=bm_no %>"
+						<td class="divider_con"><a href="http://localhost:9000/item/selectItemDetail.nds?pr_bm_no=<%=bm_no %>"
 							style="color: black"><%=bm_title %></a></td>
 						<td class="divider">등록일<br><%=bm_date %><br><span style="font-weight : bold; font-size:25px;"><%=bm_price %>
 						</span>원</td>
@@ -94,7 +94,7 @@ $("#like"+<%=bm_no %>).click(function () {
 	$.ajax({ 
      	url : "/member/deleteMyLike.nds?bm_no="+<%=bm_no %>,
   		success : function(data) {
-		     	location.href = 'http://localhost:8080/myPage/my_like.nds';
+		     	location.href = 'http://localhost:9000/myPage/my_like.nds';
 		},
 		error : function(e) {
 

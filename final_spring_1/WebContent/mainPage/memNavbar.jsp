@@ -14,7 +14,7 @@ response.setDateHeader("Expires",0);
 		</label>
 	</li>
 	<li>
-		<a class="nav-link" href="javascript:window.open('../mainPage/chatroomList.jsp','','width=550px, height=700px')" id="messagesDropdown"> 
+		<a class="nav-link" href="javascript:window.open('../mainPage/chatroomList.jsp','','width=550px, height=900px')" id="messagesDropdown"> 
 			<i class="icofont-envelope-open"></i><span class="badge badge-danger badge-counter">0</span>
 		</a>
 	</li>

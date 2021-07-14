@@ -258,7 +258,7 @@
 				html = "<div style='height:10px;'></div>"+html;
 				//상대방 프사, 이름 출력
 				if(sender==dest_email)
-					html += "<img id='profile' src='./"+dest_img+"'/><div id='destNickname'>"+dest_nickname+"</div>";
+					html += "<img id='profile' src='../myPage/assets/img/profile/"+dest_img+"'/><div id='destNickname'>"+dest_nickname+"</div>";
 			}
 	        if(mem_email==sender) //내가 보낸 메세지일 경우
 	        	html += "<div align='right' id='"+msgKey+"'><div class='read'>"+read+"</div><div class='timestamp'>"+hourStamp+"</div><div class='me' align='left'>"+msg+"</div></div>";
