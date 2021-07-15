@@ -1,12 +1,8 @@
 
-/* /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
-
-			/*기존에 만들어져있던 안쓰는 main.js의 내용을 새로만든 코드로 덮어씌움 */
-						/* 확인했으면 주석을 지우셔도 됩니다. */
-/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */
-
     let markerContainer = new Map();//마커들을 담을 Map타입의 변수(지도아님)
     let myMap;//지도
+	let rectangle;//반경(네모)
+	let circle;//반경(원)
     let timer = setInterval(createMyMap,100);//0.1초마다 createMyMap 실행
     let riderTimer;//라이더 위치 갱신용 타이머(5초마다)
     let locKey = "";
@@ -25,6 +21,7 @@
         refAreaOffAll("users");
         clearInterval(riderTimer);
         console.log("라이더");
+        insertErrandMarker(true);
         riderTimer = setInterval(insertRider, 5000);//5초마다 위치 갱신
         addErrand();//심부름 마커 추가 감시
 //        changeErrand();//심부름 마커 변경 감시
@@ -38,7 +35,7 @@
 //        refErrand.off();
         clearInterval(riderTimer);
         console.log("요청자");
-        insertErrandMarker();
+        insertErrandMarker(false);
         addRider();//라이더 마커 추가 감시
 //        changeRider();//라이더 마커 변경 감시
 //        removeRider();//라이더 마커 삭제 감시
@@ -60,6 +57,8 @@
         });
         switchRider();
         clearInterval(timer);
+		drawRectangleOnMap();
+//		drawCircleOnMap();
       }
     }
 
@@ -72,7 +71,7 @@
 //		alert(myPosition);
 	    myMap.setCenter(myPosition);
 		
-	  }5
+	  }
 
     //받아온 심부름 정보를 가진 마커 생성
     function newErrandMarker(arr) {
@@ -115,7 +114,7 @@
 			dataType:'json',
 			success:function(data){
 				console.log("ajax success for "+data.MEM_NICKNAME);
-				destModal.find("img[alt=profileImg]").attr("src",data.MEM_IMG);
+				destModal.find("img[alt=profileImg]").attr("src","/myPage/assets/img/profile/"+data.MEM_IMG);
 				destModal.find("#profileName").text(data.MEM_NICKNAME);
 				destModal.find("#errandInfo_user").text(data.MEM_NICKNAME);
 			},
@@ -151,40 +150,70 @@
         i[1].setMap(null);
       }
     }
-  
+	//반경 그리기
+	function drawCircleOnMap(){
+	    circle = new google.maps.Circle({
+	        strokeColor: '#0000FF', //원 바깥 선 색
+	        strokeOpacity: 0.8, // 바깥 선 투명도
+	        strokeWeight: 1, //바깥 선 두께
+	        fillColor: '#0000FF', //선안의 색
+	        fillOpacity: 0.1,// 토명도
+	        center: {lat: my_lat, lng: my_lng}, //위치 좌표
+	        radius: Number(500) // 반경, 단위: m
+	    });
+	    circle.setMap(myMap);// 반경을 추가할 map에 set
+	}
+	function drawRectangleOnMap(){
+		rectangle = new google.maps.Rectangle({
+		    strokeColor: "#0000FF",
+		    strokeOpacity: 0.8,
+		    strokeWeight: 1,
+		    fillColor: "#0000FF",
+		    fillOpacity: 0.1,
+		    bounds: {
+		      north: my_lat+lat_50m*10,
+		      south: my_lat-lat_50m*10,
+		      east: my_lng+lng_50m*10,
+		      west: my_lng-lng_50m*10,
+		    },
+	  	});
+	    rectangle.setMap(myMap);// 반경을 추가할 map에 set
+	}
   //////////////////////////////////////////심부름요청자
-    function insertErrandMarker() {
+    function insertErrandMarker(rider) {
       if (google != null && my_lat != "" && my_lng != "") {
         let myInfoWindow = null;
-        let myMarker = new google.maps.Marker({ 
+        let myMarker = new google.maps.Marker({
           position : {
             lat : my_lat,
             lng : my_lng
           },
           map : myMap,
-          zIndex : 1000,
+          zIndex : -1,
 		  icon: "http://localhost:9696/mainPage/google_map/nds.png",
         });
-        const errand_regist = document.createElement("span");
-        errand_regist.textContent = "심부름 등록하기";
-        errand_regist.classList.add("errand_regist");
-		let errandItemPr = $("#errand_modal").find("#errandItemPr");
-		let errandCost = $("#errand_modal").find("#errandCost");
-		errandItemPr.on('keyup', function(){
-			$("#errand_modal").find("#totalCost").text(errandItemPr.val()*1+errandCost.val()*1);
-		});
-		errandCost.on('keyup', function(){
-			$("#errand_modal").find("#totalCost").text(errandItemPr.val()*1+errandCost.val()*1);
-		});
-        errand_regist.setAttribute("onclick", "$('#errand_modal').modal('show')");
-        myInfoWindow = new google.maps.InfoWindow();
-        myMarker.addListener("click", () => {
-          myInfoWindow.setContent(errand_regist);
-          myInfoWindow.open(myMap, myMarker);
-          $("#errand_modal").modal("show");
-        });
-        myInfoWindow.setContent(errand_regist);
-        myInfoWindow.open(myMap, myMarker);
+		if(!rider) {
+	        const errand_regist = document.createElement("span");
+	        errand_regist.textContent = "심부름 등록하기";
+	        errand_regist.classList.add("errand_regist");
+			let errandItemPr = $("#errand_modal").find("#errandItemPr");
+			let errandCost = $("#errand_modal").find("#errandCost");
+			errandItemPr.on('keyup', function(){
+				$("#errand_modal").find("#totalCost").text(errandItemPr.val()*1+errandCost.val()*1);
+			});
+			errandCost.on('keyup', function(){
+				$("#errand_modal").find("#totalCost").text(errandItemPr.val()*1+errandCost.val()*1);
+			});
+	        errand_regist.setAttribute("onclick", "$('#errand_modal').modal('show')");
+	        myInfoWindow = new google.maps.InfoWindow();
+	        myMarker.addListener("click", () => {
+	          myInfoWindow.setContent(errand_regist);
+	          myInfoWindow.open(myMap, myMarker);
+	          $("#errand_modal").modal("show");
+	        });
+	        myInfoWindow.setContent(errand_regist);
+	        myInfoWindow.open(myMap, myMarker);
+		}
         markerContainer.set("insertErrand", myMarker)
       }
     }
@@ -293,11 +322,20 @@
 		  refArea.child("users").child(mem_email).once('value',function(snapshot){
 			if(snapshot.val()!=null) {
 				if(snapshot.val().area_no != myArea) {
+					console.log("area_no="+snapshot.val().area_no);
+					console.log("myArea="+myArea);
+					console.log("loc changed");
 			        removeAllMarkers();
+					refAreaOffAll("errand");
 			        markerContainer = new Map();
+        			insertErrandMarker(true);
+					rectangle.setBounds({
+				      north: my_lat+lat_50m*10,
+				      south: my_lat-lat_50m*10,
+				      east: my_lng+lng_50m*10,
+				      west: my_lng-lng_50m*10,
+					})
 			        addErrand();//심부름 마커 추가 감시
-	//		        changeErrand();//심부름 마커 변경 감시
-	//		        removeErrand();//심부름 마커 삭제 감시
 					refArea.child(snapshot.val().area_no).child("users").child(mem_email).remove();
 				    refArea.child("users").child(mem_email).update({area_no:myArea});
 				}

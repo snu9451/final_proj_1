@@ -75,36 +75,6 @@
 				console.log(e);
 			}
 		});
-		$('.notice_wrapper1').hide();
-		$('#notice_button').click(function(){
-			$('.notice_wrapper').hide();
-			$('.notice_wrapper1').show();
-		});
-		$('#notice_button1').click(function(){
-			$('.notice_wrapper1').hide();
-			$('.notice_wrapper').show();
-		});
-		
-		$(".price").on('keyup', function(){
-			let abled = false;
-			abled = $(".price").val().length > 0 ? true : false;
-			console.log(abled);
-			$("#btn_confirm").attr("disabled", !abled);
-		});
-		$('#btn_confirm').click(function(){
-			$('#check1').addClass('active');
-			$("#btn_confirm").attr("disabled", true);
-			$(".price").attr("readonly", true);
-			$(".price").css({"bacground-color":"gray", "pointer-events": "none", "opacity":"0.5"});
-		});
-		$("#check1").click(function(){
-			$("#check1").removeClass('active');
-			abled = $(".price").val().length > 0 ? true : false;
-			console.log(abled);
-			$(".price").attr("readonly", false);
-			$("#btn_confirm").attr("disabled", !abled);
-			$(".price").css({"bacground-color":"gray", "pointer-events": "auto", "opacity":"1"});
-		});
 	});
 	//ajax로 상대방 정보를 불러온 후 실행
 	function afterAjax(){
