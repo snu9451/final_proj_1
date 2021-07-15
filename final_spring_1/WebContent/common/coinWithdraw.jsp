@@ -25,7 +25,7 @@
         	<!-- 현재 남은 코인 -->
           <div class="form-group">
          	 <label>현재 남은 코인 : </label>
-         	 <label style="font-size:30px; color : #ffc37b; font-weight:bold;">
+         	 <label id="currentCoin" style="font-size:30px; color : #ffc37b; font-weight:bold;">
          	 	<%=coin_remain %>
          	 </label>
          	 <label> 원</label> 
@@ -33,7 +33,7 @@
              <input type="hidden" value="<%=coin_remain %>" id="remainCoin"/>
              <!-- 츨금할 금액 입력 --> 
             <div class="form-group">
-            	<input type="number" class="form-control" id="input_withdrawCost" placeholder="출금하실 금액을 입력해주세요."/>
+            	<input type="number" class="form-control" id="input_withdrawCost" placeholder="출금하실 금액을 입력해주세요." disabled/>
             	<small class="p-3">
             		7% 수수료를 제외한 실제 출금 금액은: <label id="getCost">insert cost</label> 
             	</small>
@@ -51,7 +51,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button disabled="true" id="btn_coinWithdraw" class="btn btn-primary">출금하기</button>
+            <button disabled="true" id="btn_coinWithdraw" class="btn btn-primary" disabled>출금하기</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">돌아가기</button>
           </div>
         </div>
