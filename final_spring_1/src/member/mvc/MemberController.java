@@ -1,14 +1,11 @@
 package member.mvc;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -23,7 +20,6 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.google.gson.Gson;
 
 import nds.util.AjaxDataPrinter;
-import nds.util.Converter;
 import nds.util.CookiesMap;
 import nds.util.HashMapBinder;
 import nds.util.Mail;
@@ -99,7 +95,7 @@ public class MemberController extends MultiActionController {
 	}
 	// 마이페이지 내정보를 위한 회원 정보 조회
 	public void selectMember(HttpServletRequest req, HttpServletResponse res) {
-//		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView();
 		// 세션에 담긴 회운정보(이메일) 가져오기
 		HttpSession session = req.getSession();
 		Map<String, Object> pmap = new HashMap<String, Object>();
@@ -109,7 +105,7 @@ public class MemberController extends MultiActionController {
 		pmap.put("mem_email", mem_email);
 		Map<String, Object> rmap = memberLogic.selectMemberAdmin(pmap);
 		req.setAttribute("memberMap", rmap);
-		RequestDispatcher rd = req.getRequestDispatcher("/myPage/myInfo.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("/myPage/my_info.jsp");
 		try {
 			rd.forward(req, res);
 		} catch (ServletException e) {
@@ -119,9 +115,61 @@ public class MemberController extends MultiActionController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		mav.addObject("memberMap", rmap);
+		mav.setViewName("/common/my_info.jsp");
+	}
+	// 회원 정보 가져와서 json 형식으로 뿌리기(파라미터로 mem_email or mem_nickname필요)
+	public void jsonSelectMember(HttpServletRequest req, HttpServletResponse res) {
+//		ModelAndView mav = new ModelAndView();
+		// 세션에 담긴 회운정보(이메일) 가져오기
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bindPost(pmap);
+		logger.info(pmap);
+		Map<String, Object> rmap = memberLogic.jsonSelectMember(pmap);
+		Gson g = new Gson();
+		String data = g.toJson(rmap);
+		AjaxDataPrinter.out(res, "application/json", data);
 //		mav.addObject("memberMap", rmap);
 //		mav.setViewName("/myinfo/myInfo.jsp");
 //		return mav;
+	}
+	
+	//중고거래 구매내역 또는 판매내역 조회
+	public void selectMyTrade(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("Controller: getMyTrade 호출");
+		HttpSession session = req.getSession();
+		HashMapBinder hmb = new HashMapBinder(req);
+		
+		//DB에서 가져오는 정보를 담아주는 List - Map;
+		List<Map<String, Object>> tradeRec = null;
+		
+		//파라미터 들어갈 map 선언
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		hmb.bindPost(pmap);
+		
+		//세션에있는 정보들을 넣어주는 map
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		
+		//mem_nickname에 세션에 들어있는 MEM_NICKNAME의 정보를 넣어줌
+		//expect mem_nickname = 포도;
+		String mem_nickname = (String)login.get("MEM_NICKNAME");
+		if("buy".equals((String)pmap.get("gubun"))) {
+			pmap.put("buyer_nickname", mem_nickname);
+		} else if ("sel".equals((String)pmap.get("gubun"))) {
+			pmap.put("seller_nickname", mem_nickname);
+		}
+		logger.info("mem_nickname: "+mem_nickname);
+		
+		//DB에서 가져오는 정보를 담아주는 List - Map;
+		tradeRec = memberLogic.getMyTrade(pmap);
+		
+		Gson gson = new Gson();
+		//DB에서 가져온 정보를 json으로 변환;
+		String jsondata = gson.toJson(tradeRec);
+		
+		//ajax요청시 json으로 변환된 data 전송;
+		AjaxDataPrinter.out(res, "aplication/json", jsondata);
 	}
 	
 	
@@ -188,29 +236,42 @@ public class MemberController extends MultiActionController {
 //		}
 	}
 	// 프로필 사진 변경 시
-	public void updateImg(HttpServletRequest req, HttpServletResponse res) {////////////////////////////////////////////
+	public void updateImg(HttpServletRequest req, HttpServletResponse res) throws IOException {////////////////////////////////////////////
 		logger.info("updateImg 메소드 호출 성공!");
 		// request객체로 받아온 정보를 map으로 옮겨 담는 작업
 		Map<String, Object> pmap = new HashMap<String, Object>();
-		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bindPost(pmap);
+		HashMapBinder hmb = new HashMapBinder(req,1);
+		hmb.profileBind(pmap);
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
 		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
 		logger.info(mvo);
 		String mem_email = (String)mvo.get("MEM_EMAIL");
 		pmap.put("mem_email", mem_email);
+		
+		logger.info(pmap);
 		int result = memberLogic.updateMember(pmap);
 		logger.info("프로필 사진 업데이트 결과 ===> "+result);
-		// 프로필 사진 변경 실패 시
-		if(result == 0) {
-			AjaxDataPrinter.out(res, "text/html", "[ERROR] 프로필 사진 변경에 <b style=\"color: red\">실패</b>하였습니다.");
+		try {
+			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 1초 후 redirect되도록 sleep걸어둠
+			Thread.sleep(1000);
+			res.sendRedirect("/myPage/my_info.nds");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		// 프로필 사진 변경 성공 시
-		else {
-			// insert_here - 물리적인 위치에 저장된 파일을 삭제한다.
-			AjaxDataPrinter.out(res, "text/html", "변경되었습니다.");
-		}
+//		// 프로필 사진 변경 성공 시
+//		if(result == 1) {
+//			//AjaxDataPrinter.out(res, "text/html", "[ERROR] 프로필 사진 변경에 <b style=\"color: red\">실패</b>하였습니다.");
+//			logger.info("updateImg 변경 성공!");
+//			
+//		}
+//		// 프로필 사진 변경 실패 시
+//		else {
+////			// insert_here - 물리적인 위치에 저장된 파일을 삭제한다.
+//			res.sendRedirect("/myPage/my_info.nds");
+//			//AjaxDataPrinter.out(res, "text/html", "변경되었습니다.");
+//		}
 	}
 	public void updatePw(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		logger.info("updatePw 메소드 호출 성공!");
@@ -355,12 +416,52 @@ public class MemberController extends MultiActionController {
 		// 인증번호
 	}
 	
-	
+	//마이페이지 찜 목록 삭제
+	public void deleteMyLike(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("controller : deleteMyLike메소드 호출");
+		Map<String,Object> pmap = new HashMap<>();
+		HttpSession session= req.getSession(); 
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		HashMapBinder hmb = new HashMapBinder(req);
+		String mem_email = (String)login.get("MEM_EMAIL");
+		pmap.put("mem_email", mem_email);
+		hmb.bindPost(pmap);
+		memberLogic.deleteMyLike(pmap);
+		logger.info("controller의 pmap : "+ pmap );
+	}
 	
 	
 	
 	// ===================================== [[ DELETE ]] =====================================
 	
+	/* 마이페이지 중고거래 내역 삭제 */
+	public void deleteTradeRec(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("deleteTradeRec 호출 성공");
+		Map<String, Object> pmap = new HashMap<>();
+		
+		//파라미터값 pmap에 넣어준다.
+		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));
+		pmap.put("br_sel_buy", req.getParameter("br_sel_buy")); 
+		
+		logger.info("br_sel_buy: "+req.getParameter("br_sel_buy").toString());
+		logger.info("pr_bm_no: "+req.getParameter("pr_bm_no").toString());
+		
+		//구매내역
+		if("buy".equals(pmap.get("br_sel_buy"))) {
+			logger.info("which one: "+ pmap.get("br_sel_buy").toString());
+			//상품을 삭제한다.
+			memberLogic.deleteTradeRec(pmap);
+			logger.info("buy here");
+		}
+		//판매내역
+		else {
+			//상품을 삭제한다.
+			memberLogic.deleteTradeRec(pmap);
+			logger.info("sel here");
+		}
+		
+		
+	}
 	
 	// ======================================= [[ 그 외 ]] =======================================
 	public void issueTempPw(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
@@ -838,14 +939,30 @@ public class MemberController extends MultiActionController {
 		//out.print(walletRec);
 		return mav;
 	}
-	public ModelAndView getMyLike(HttpServletRequest req, HttpServletResponse res) {
+	//마이페이지 찜 목록 클릭시
+	public ModelAndView getMyLike(HttpServletRequest req, HttpServletResponse res){
+		logger.info("controller : selectMyLike메소드 호출");
+		Map<String,Object> pmap = new HashMap<>();
+		HttpSession session= req.getSession(); 
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		String mem_email = (String)login.get("MEM_EMAIL");
+		pmap.put("pr_MEM_EMAIL", mem_email);
+		List<Map<String, Object>> likeList = null;
+		logger.info("controller의 mem_email : "+ mem_email );
+		likeList = memberLogic.selectMyLike(pmap);
+		logger.info("controller의 likeList : "+ likeList );
 		ModelAndView mav = new ModelAndView("/myPage/my_like.jsp");
+		mav.addObject("likeList", likeList);
 		return mav;
 	}
+	
+	//중고거래 내역 첫 페이지 로드
 	public ModelAndView getMyTrade(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("Controller: getMyTrade 호출");
 		ModelAndView mav = new ModelAndView("/myPage/my_trade.jsp");
-		return mav;
+		return mav; 
 	}
+	
 	public ModelAndView getMyErrand(HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView mav = new ModelAndView("/myPage/my_errand.jsp");
 		return mav;

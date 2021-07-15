@@ -50,6 +50,13 @@ public class MemberLogic {
 		rmap = memberDao.selectOneBySession(sessionValue);
 		return rmap;
 	}
+
+	public Map<String, Object> jsonSelectMember(Map<String, Object> pmap) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = memberDao.jsonSelectMember(pmap);
+		logger.info(rmap);
+		return rmap;
+	}
 /* ===========================================================================
 	아 이 디   저 장   또 는   자 동 로 그 인   구 현 - NDS_SKEY 발급 또는 만료일 갱신
 =========================================================================== */ 
@@ -185,6 +192,20 @@ public class MemberLogic {
 		logger.info(walletRec);
 		return walletRec;
 	}
+	
+	//마이페이지 - 찜 목록 조회
+	public List<Map<String, Object>> selectMyLike(Map<String, Object> pmap) {
+		logger.info("Logic : selectMyLike 메소드 호출");
+		logger.info(pmap);
+		return memberDao.selectMyLike(pmap);
+	}
+	//마이페이지 - 찜 목록 삭제
+	public void deleteMyLike(Map<String, Object> pmap) {
+		logger.info("Logic : deleteMyLike 메소드 호출");
+		logger.info(pmap);
+		memberDao.deleteMyLike(pmap);
+	}
+	
 
 
 	public int insertCoinTrans(Map<String, Object> pmap) {
@@ -193,6 +214,22 @@ public class MemberLogic {
 		result = memberDao.insertCoinTrans(pmap);
 		logger.info(result);
 		return result;
+	}
+
+
+	public List<Map<String, Object>> getMyTrade(Map<String, Object> pmap) {
+		logger.info("Logic getMyTrade 호출성공");
+		List<Map<String,Object>> tradeRec = null;
+		tradeRec = memberDao.getMyTrade(pmap);
+		
+		return tradeRec;
+	}
+
+	/* 마이페이지 중고거래 내역 삭제 */
+	public void deleteTradeRec(Map<String, Object> pmap) {
+		logger.info("Logic deleteTradeRec 호출성공");
+		memberDao.deleteTradeRec(pmap);
+		
 	}
 
 

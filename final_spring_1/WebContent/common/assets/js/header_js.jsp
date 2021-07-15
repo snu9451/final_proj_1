@@ -7,6 +7,9 @@ $(document).ready(function(){
 	$('#h_myPage').on('click', function(){
 		location.href = "http://localhost:9696/myPage/my_info.nds";
 	});
+	$('#h_itemInsert').on('click', function(){
+		location.href = "http://localhost:9696/item/itemUploadPage.nds";
+	});
 	
 	//버튼 클릭시 모달창 show
 	$(".btnTest").click(function () {

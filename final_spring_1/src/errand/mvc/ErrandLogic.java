@@ -25,10 +25,13 @@ public class ErrandLogic {
 		logger.info(rmap);
 		return rmap;
 	}
-	public int insertErrand(Map<String, Object> pmap) {
-		int result = 0;
-		result = errandDao.insertErrand(pmap);
-		return 0;
+	public void insertErrand(Map<String, Object> pmap) {
+		logger.info("logic : insertErrand 호출 성공");
+		errandDao.insertErrand(pmap);
+	}
+	public void insertErrandDenied(Map<String, Object> pmap) {
+		logger.info("logic : insertErrandDenied 호출 성공");
+		errandDao.insertErrandDenied(pmap);
 	}
 						/* 확인했으면 주석을 지우셔도 됩니다. */
 	/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */

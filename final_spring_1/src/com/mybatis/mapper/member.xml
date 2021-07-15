@@ -47,6 +47,35 @@
 		  WHERE mem_email= #{mem_email}
 	   ORDER BY trans_date DESC
 	</select>
+	<select id="jsonSelectMember" parameterType="map" resultType="map">
+		SELECT mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_paypw, mem_errand_mode, mem_star_num
+		  FROM member
+		 WHERE 
+		<if test='mem_email!=null'>mem_email LIKE #{mem_email} || '%'</if>
+		<if test='mem_nickname!=null'>mem_nickname LIKE #{mem_nickname} || '%'</if>
+	</select>
+	<select id="proc_my_like"  statementType="CALLABLE" parameterType="java.util.Map">
+	   {CALL proc_my_like(#{pr_MEM_EMAIL}
+	                  , #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
+	</select>
+	<!-- 중고거래 내역 조회 -->
+	<select id="getMyTrade" parameterType="map" resultType="map">
+		select b.bm_no, b.bm_title, b.bm_date, b.bm_content, b.bm_price, b.bm_status, b.seller_nickname, b.buyer_nickname
+	       ,img.bi_file
+	    from board_master b, (select min(bi_no) bi_no, bm_no, min(bi_file) bi_file from board_img group by bm_no) img
+	<if test='buyer_nickname!=null'>
+		WHERE buyer_nickname = #{buyer_nickname}
+		and b.buyer_isshow = 'T'
+		and b.bm_no = img.bm_no
+		order by b.bm_no asc
+	</if>
+	<if test='seller_nickname!=null'>
+		WHERE seller_nickname = #{seller_nickname}
+		and b.seller_isshow = 'T'
+		and b.bm_no = img.bm_no
+		order by b.bm_no asc		
+	</if>
+	</select>
 	
 <!-- ==================================== [[ ＵＰＤＡＴＥ ]] ==================================== -->
 	<select id="updatePw" statementType="CALLABLE" parameterType="map">
@@ -64,6 +93,10 @@
 		</set>
 		 WHERE mem_email = #{mem_email}
 	</update>
+	<update id="my_like_change" statementType="CALLABLE" parameterType="map">
+	   {CALL proc_my_like_change(#{pr_MEM_EMAIL}, #{pr_BM_NO}
+	                  , #{i_like, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
+	</update>
 <!-- ==================================== [[ ＩＮＳＥＲＴ ]] ==================================== -->
 	<insert id="insertMember">
 		INSERT INTO member(mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_star_num)
@@ -74,10 +107,18 @@
      	VALUES (SEQ_COIN_TRANS.NEXTVAL, #{mem_email}, TO_CHAR (SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), #{trans_content}, #{trans_price}, #{trans_remain}, #{trans_io})
 	</insert>
 <!-- ==================================== [[ ＤＥＬＥＴＥ ]] ==================================== -->
-
+	<delete id="my_like_delete" parameterType="map">
+	     DELETE 
+	       FROM MY_LIKE
+     	  WHERE MEM_EMAIL = #{mem_email} 
+     	    AND BM_NO = #{bm_no}
+	</delete>
+	<select id="deleteTradeRec" statementType="CALLABLE" parameterType="java.util.Map">
+		{call PROC_BOARD_MASTER_DELETE(#{br_sel_buy}, #{pr_bm_no})}
+	</select>
 
 <!-- ==================================== [[ Ｅ　Ｌ　Ｓ　Ｅ ]] ==================================== -->
-	
+
 	<select id="uiToSession" statementType="CALLABLE" parameterType="map">
 		{call PROC_SESSION_MGR(#{mem_email, mode=IN, jdbcType=VARCHAR},#{mem_pw, mode=IN, jdbcType=VARCHAR},#{mem_sessionid, mode=IN, jdbcType=VARCHAR},#{imsi_sessionid, mode=IN, jdbcType=VARCHAR},#{auth_range, mode=IN, jdbcType=CHAR},#{result, mode=OUT, jdbcType=NUMERIC})}
 	</select>

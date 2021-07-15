@@ -9,7 +9,6 @@
 	int comment_me = Integer.parseInt(String.valueOf(comments.get("COMMENT_ME")));
 	String comment_date = String.valueOf(comments.get("COMMENT_DATE"));
 	String comment_msg = String.valueOf(comments.get("COMMENT_MSG"));
-
 %>
 <div class="w-100 mt-3  comments comment_num<%=comment_step%>" id="comment__box" style="border-top-left-radius: 10px;">
 	<div class="d-flex justify-content-between align-items-end" style="padding-left: 10px; padding-right: 10px;" id="">                                                  
@@ -23,14 +22,14 @@
 	if(comment_pos == 0){
 %>                                                                                                             
 				<li>                                                                                                         
-					<button class="pd__comment__btn" id="">답글</button>                                                       
+					<button class="pd__comment__btn" id="" onclick="pdCommentBtn(this)">답글</button>                                                       
 				</li>     
 <%
 	}
 	if(comment_me == 1){
 %>                                                                                                   
 				<li>                                                                                                         
-					<button class="pd__comment__btn" id="">수정</button>                                                       
+					<button class="pd__comment__btn" id="" onclick="pdCommentupdateBtn(this)">수정</button>                                                       
 				</li>                                                                                                        
 				<li>                                                                                                         
 					<button class="pd__comment__btn" id="comment<%=comment_step %> onclick="deleteComment(this)" >삭제</button> 
@@ -64,4 +63,4 @@
 	};                                                                                                                                         
 %>
 		</div>                                                                                                               
-	</div>                                                                                                                   
+	</div>                                                                               

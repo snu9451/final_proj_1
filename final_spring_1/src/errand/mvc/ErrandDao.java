@@ -29,16 +29,19 @@ public class ErrandDao {
 		return rmap;
 	}
 
-	public int insertErrand(Map<String, Object> pmap) {
-		int result = 0;
+	public void insertErrand(Map<String, Object> pmap) {
 		// updatePw라는 프로시저를 실행함.
 		// 프로시저는 return이 없다. 따라서 pmap에서 직접 결과를 꺼내줘야 함.
 		// 프로시저 호출 시에는 seleceOne 쓰든 selectList 쓰든 심지어는 update, delete 쓰든 상관 없는 것 같다.. -ㅁ-;
-		sqlSessionTemplate.selectOne("insertErrand", pmap);
+		logger.info("ErrandDao : insertErrand 호출 성공");
+		sqlSessionTemplate.insert("insertErrand", pmap);
 		logger.info(pmap);
-		result = Integer.parseInt(String.valueOf(pmap.get("result")));
-		logger.info(result);
-		return result;
+	}
+
+	public void insertErrandDenied(Map<String, Object> pmap) {
+		logger.info("ErrandDao : insertErrandDenied 호출 성공");
+		sqlSessionTemplate.insert("insertErrandDenied", pmap);
+		logger.info(pmap);
 	}
 						/* 확인했으면 주석을 지우셔도 됩니다. */
 	/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */

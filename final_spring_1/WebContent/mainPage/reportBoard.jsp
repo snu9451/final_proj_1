@@ -52,7 +52,9 @@
             </div>
           </form><!-- ▲ 신고창 | form 태그 끝 ▲ -->
           <div class="modal-footer">
-            <button type="button" id="report_btn" class="btn btn-primary">신고하기</button>
+			<form action="join" method="post"  id="main__shape">
+	            <button type="button" id="report_btn" class="btn btn-primary">신고하기</button>
+			</form>
             <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
           </div>
         </div>

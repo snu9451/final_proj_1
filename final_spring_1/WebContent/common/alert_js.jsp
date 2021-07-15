@@ -3,19 +3,76 @@
     pageEncoding="UTF-8"%>
 <%	
 
+if(session.getAttribute("login") != null){
+	int indexOfDot = mem_email.indexOf(".");
+	if(indexOfDot>=0){
+		mem_email = mem_email.substring(0,indexOfDot);
+	}
+}
 %>
+<style>
+.outer-star::before, .inner-star::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font-family: "Font Awesome 5 free";
+    font-weight: 900;
+}
+.inner-star::before {
+    color: #ff9600;
+}
+.inner-star {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.outer-star {
+    position: relative;
+    display: inline-block;
+    color: #cccccc;
+}
+</style>
 <script type="text/javascript">
-
-let refErrand = "";//errand테이블 접근할 주소
-let refRider = "";//rider테이블 접근할 주소
+let roomKey = "null";
+// let refErrand = "";//errand테이블 접근할 주소
+let refArea = "";//rider테이블 접근할 주소
 let refAlert = "";//alert테이블 접근할 주소
-let my_lat = 0.0;//현재 자신의 위도
-let my_lng = 0.0;//현재 자신의 경도
+let my_lat = 1.0;//현재 자신의 위도
+let my_lng = 1.0;//현재 자신의 경도
+const lat_st = 38.45;
+const lat_en = 33.1;
+const lat_50m = 0.00045;
+const lng_st = 125.0;
+const lng_en = 132.0;
+const lng_50m = 0.00056
+const lng_rows = Math.ceil((lng_en-lng_st)/lng_50m);
 let mem_email = "<%=mem_email%>";//현재 접속자의 이메일
-mem_email = mem_email.substr(0,mem_email.length-4);
+let myArea;
+class Stack {
+	  constructor() {
+	    this._arr = [];
+	  }
+	  push(item) {
+	    this._arr.push(item);
+	  }
+	  pop() {
+	    return this._arr.pop();
+	  }
+	  peek() {
+	    return this._arr[this._arr.length - 1];
+	  }
+	  isEmpty() {
+		  if(this._arr.length == 0)
+			  return true;
+		  else
+			  return false;
+	  }
+}
+const stack = new Stack();
 $(document).ready(function() {
-  refErrand = firebase.database().ref("errand");
-  refRider = firebase.database().ref("rider");
+//   refErrand = firebase.database().ref("errand");
+  refArea = firebase.database().ref("area");
   refAlert = firebase.database().ref("alert/"+mem_email);
   initAlert();
 });
@@ -42,10 +99,11 @@ $(document).ready(function() {
 //////////////////////////////////////////위치
   //접속자의 현재 위치를 my_lat, my_lng 전역변수에 저장
   function getLoc() {
-    let watchID = navigator.geolocation.watchPosition(function(position) {
+    let watchID = navigator.geolocation.getCurrentPosition(function(position) {
       my_lat = position.coords.latitude;
       my_lng = position.coords.longitude;
       console.log(position.coords.latitude, position.coords.longitude);
+      myArea = lng_rows*Math.floor((lat_st-my_lat)/lat_50m)+Math.floor((my_lng-lng_st)/lng_50m);
     });
   }
 
@@ -63,6 +121,8 @@ $(document).ready(function() {
   //alert테이블에서 사용자의 이메일로 검색,
   //해당 사용자에 대한 테이블이 없으면(처음 사용한다면) 빈 값을 넣어 테이블을 생성 
   function initAlert() {
+	if(mem_email==null)
+		return;
     let findRefAlert = firebase.database().ref("alert").orderByKey().equalTo(mem_email);
     findRefAlert.once('value', function(snapshot) {
       if (snapshot.val() == null) {
@@ -81,7 +141,8 @@ $(document).ready(function() {
   function justOK(key, content){
     makeModal(key, content);
     $("#"+key).find(".btn-primary").click(function(){
-      refAlert.child(key).update({ active : 0 });
+      refAlert.child(key).remove();
+//       refAlert.child(key).update({ active : 0 });
     });
     $("#"+key).modal("show");
   }
@@ -110,23 +171,48 @@ $(document).ready(function() {
           justOK(snapshot.key, snapVal.content);
         }
         else if(type=="getErrand") {
-          makeModal(snapshot.key, snapVal.content, 1, "수락", "거절");
-          $("#"+snapshot.key).find(".btn-primary").click(function(){
-            acceptErrand(snapVal.errandKey, snapVal.rider);
-            refAlert.child(snapshot.key).update({ active : 0 });
+          $.ajax({
+        	 type:'post',
+        	 url:'/member/jsonSelectMember.nds',
+        	 data:{"mem_email":snapVal.rider},
+        	 success:function(data){
+	         	acceptRefuseModal(snapshot.key, snapVal.errand_item, data.MEM_NICKNAME, data.MEM_IMG, data.MEM_STAR, data.MEM_GENDER);
+	            $("#"+snapshot.key).find(".btn-primary").click(function(){
+	    			getRoomKey(snapshot.key, snapVal.errandKey, snapVal.rider, snapVal.area_no);
+	              });
+	              $("#"+snapshot.key).find(".btn-danger").removeAttr("data-dismiss");
+	              $("#"+snapshot.key).find(".btn-danger").click(function(){
+	    			  $("#"+snapshot.key).find("#refuseNotice").removeAttr("style");
+	    			  $("#"+snapshot.key).find("#refuse_detail").removeAttr("style");
+	    			  $("#"+snapshot.key).find(".btn-danger").text("제출");
+	                  $("#"+snapshot.key).find(".btn-danger").click(function(){
+	              	  	$("#"+snapshot.key).find(".btn-danger").attr("data-dismiss","modal");
+	    	            $.ajax({
+	    					type:'post',
+	    					url:'/errand/insertErrandDenied.nds',
+	    					data:{
+	    							"errandKey":snapshot.key,
+	    		                    "errand_denied_date":getTime(),
+	    		                    "errand_deny_msg":$("#"+snapshot.key).find("#refuse_detail").val()
+	    					},
+	    					success:function(data){
+	    						console.log("ajax success");
+	    			            refuseErrand(snapVal.errandKey, snapVal.rider, snapVal.area_no);
+	    			            refAlert.child(snapshot.key).remove();
+//	     			            refAlert.child(snapshot.key).update({ active : 0 });
+	    					},
+	    					error:function(e){
+	    						console.log(e);
+	    					}
+	    	            });
+	    			  });
+	              });
+	              $("#"+snapshot.key).modal("show");
+        	 },
+        	 error:function(e){
+        		 console.log(e);
+        	 }
           });
-          $("#"+snapshot.key).find(".btn-danger").removeAttr("data-dismiss");
-          $("#"+snapshot.key).find(".btn-danger").click(function(){
-			  $("#"+snapshot.key).find("#refuseNotice").removeAttr("style");
-			  $("#"+snapshot.key).find("#refuse_detail_board").removeAttr("style");
-			  $("#"+snapshot.key).find(".btn-danger").text("제출");
-            $("#"+snapshot.key).find(".btn-danger").click(function(){
-        	  	$("#"+snapshot.key).find(".btn-danger").attr("data-dismiss","modal");
-	            refuseErrand(snapVal.errandKey, snapVal.rider);
-	            refAlert.child(snapshot.key).update({ active : 0 });
-			  });
-          });
-          $("#"+snapshot.key).modal("show");
         }
         else
           console.log("nothing");
@@ -136,6 +222,7 @@ $(document).ready(function() {
   //알림 모달 창 생성하는 함수
   function makeModal(alertKey, content, hasCancel = 0, btn_ok = "확인", btn_cancel = "취소", title = "알림"){
     let html =
+    //"<form f_id=\""+alertKey+"\" method=\"post\" target=\"chatroom\" action=\"/mainPage/chatroom.jsp\" onsubmit=\"window.open('/mainPage/chatroom.jsp','chatroom','width=550px, height=700px');\">"
       "<div class=\"modal fade\" id=\""+alertKey+"\" tabindex=\"-1\" role=\"dialog\" data-backdrop=\"static\" data-keyboard=\"false\">"
         +"<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">"
           +"<div class=\"modal-content\">"
@@ -148,8 +235,8 @@ $(document).ready(function() {
               +"<div class=\"col-12 log__box d-flex flex-column justify-content-center\">"
                 +content
               +"</div>"
-				+"<div id=\"refuseNotice\"class=\"col-12 log__box d-flex flex-column justify-content-center\" style=\"display:none!important;\">거절 사유를 알려주세요.</div>"
-				+"<textarea name=\"refuse_msg\" type=\"text\" class=\"form-control\" id=\"refuse_detail_board\" placeholder=\"상세 내용을 입력해주세요.\" rows=\"5\" style=\"display:none;\"></textarea>"
+// 				+"<div id=\"refuseNotice\"class=\"col-12 log__box d-flex flex-column justify-content-center\" style=\"display:none!important;\">거절 사유를 알려주세요.</div>"
+// 				+"<textarea name=\"refuse_msg\" type=\"text\" class=\"form-control\" id=\"refuse_detail\" placeholder=\"상세 내용을 입력해주세요.\" rows=\"5\" style=\"display:none;\"></textarea>"
             +"</div>"
             +"<div class=\"modal-footer\">"
               +"<button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">"
@@ -166,13 +253,222 @@ $(document).ready(function() {
           +"</div>"
         +"</div>"
       +"</div>";
+     //"</form>";
     $("body").append(html);
   }
-
+  //심부름 배달요청 수락/거절하는 모달창
+  function acceptRefuseModal(alertKey, errand_item, dest_nickname, dest_img, dest_star, dest_gender){
+    let html =
+    //"<form f_id=\""+alertKey+"\" method=\"post\" target=\"chatroom\" action=\"/mainPage/chatroom.jsp\" onsubmit=\"window.open('/mainPage/chatroom.jsp','chatroom','width=550px, height=700px');\">"
+      "<div class=\"modal modal-center fade\" id=\""+alertKey+"\" tabindex=\"-1\" role=\"dialog\" data-backdrop=\"static\" data-keyboard=\"false\">"
+        +"<div class=\"modal-dialog modal-center\" role=\"document\">"
+          +"<div class=\"modal-content\" style=\"width: 700px;\">"
+            +"<div class=\"modal-header\">"
+              +"<h3 class=\"modal-title\" id=\"exampleModalLongTitle\">알림</h3>"
+            +"</div>"
+            +"<div class=\"modal-body pb-0\">"
+	            +"<div class=\"row justify-content-between align-items-center\">"
+	              +"<div class=\"col-lg-3 w-100 h-100 d-flex flex-column align-items-center\" id=\"profileBox\">"
+	                +"<div class=\"profileImg\" id=\"profileImg\">"
+	                  +"<img class=\"w-100\" src=\""+dest_img+"\" alt=\"profileImg\" width=150px height=150px style=\"border-radius: 25%\">"
+	                +"</div>"
+	                +"<div>"
+	                  +"<h5 class=\"mt-3\" id=\"profileName\">"
+	                  	+dest_nickname
+	                  +"</h5>"
+	                +"</div>"
+	                +"<input type=\"hidden\" id=\"destratingScore\" class=\"ratingScore\" value=\""+dest_star+"\">"
+	                +"<div id=\"destRatingStar\" class=\"RatingStar\">"
+						+"<div id=\"destRatingScore\" class=\"ratingScore\">"
+							+"<div class=\"outer-star\">"
+								+"<div class=\"inner-star\" style=\"width: 0%;\">"
+								+"</div>"
+							+"</div>"
+						+"</div>"
+					+"</div>"
+	              +"</div>"
+	              +"<div class=\"col-lg-9 d-flex flex-column\" id=\"errandInfoBox\">"
+		              +"<div class=\"mt-2 d-flex flex-column align-items-center\">"
+		                +"<div class=\"d-inline-flex\">"
+		                  +"<span class=\"ml-1\"><b>"
+		                  	+dest_nickname
+	                  	  +"</b>님이 <b>"
+	                  	  	+errand_item
+	                  	  +"</b> 심부름 배달을 요청하셨습니다.<br>수락하시겠습니까?</span>"
+		                +"</div>"
+						+"<div id=\"refuseNotice\"class=\"col-12 log__box d-flex flex-column justify-content-center\" style=\"display:none!important;\">거절 사유를 알려주세요.</div>"
+						+"<textarea name=\"refuse_msg\" type=\"text\" class=\"form-control\" id=\"refuse_detail\" placeholder=\"상세 내용을 입력해주세요.\" rows=\"5\" style=\"display:none;\"></textarea>"
+		              +"</div>"
+	              +"</div>"
+	            +"</div>"
+            +"</div>"
+            +"<div class=\"modal-footer\">"
+              +"<button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">수락</button>"
+              +"<button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">거절</button>"
+    		+"</div>"
+          +"</div>"
+        +"</div>"
+      +"</div>";
+     //"</form>";
+    $("body").append(html);
+    rateIt();
+  }
+  function rateIt() {
+	  ratings = { destRatingScore: $("#destratingScore").val()*1 }//////<-별점 inserthere
+	  totalRating = 5;
+	  table = document.querySelector('#destRatingStar');
+    for (rating in ratings) {
+      ratingPercentage = ratings[rating] / totalRating * 100;
+      ratingRounded = Math.round(ratingPercentage / 10) * 10 + '%';
+      star = table.querySelector("#"+rating+" .inner-star");
+      console.log(rating);
+      numberRating = table.querySelector("#"+rating+" .numberRating");
+      star.style.width = ratingRounded;
+    }
+    console.log("endfor");
+  }
 //////////////////////////////////////////심부름
+//현재 접속중인 유저의 채팅방 검색
+  function getRoomKey(alertKey, errandKey, dest_email, area_no){
+	  let checkRoom = firebase.database().ref("chatrooms").orderByChild("users/"+mem_email).equalTo(true);
+		let cnt = 0;
+		checkRoom.once('value', function(data){
+			if(data.val()==null) {
+				sendMsg(alertKey, errandKey, dest_email, area_no);
+			}
+		});
+		checkRoom.once('child_added', function(data){
+			cnt++;
+		});
+		let checkDest;
+		checkRoom.once('child_added', function(data){
+			if(data.val()!=null) {
+				checkDest = firebase.database().ref("chatrooms/"+data.key+"/users/"+dest_email);
+				checkDest.once('value', function(snapshot){
+					//1.이미 대화한 적 있는 상대지만 채팅리스트가 아닌 제품상세페이지에서 대화하기 버튼 or 심부름 수행 버튼을 눌러 채팅방을 열 경우
+					if(snapshot.val()!=null && roomKey=="null") {
+						//createRoom(); 메세지를 보낼 때 대화방을 생성하는걸로 변경
+						roomKey = data.key;
+						sendMsg(alertKey, errandKey, dest_email, area_no);
+						checkDest.off();
+						checkRoom.off();
+					}
+					//2.처음 대화하는 상대라 채팅방을 새로 개설할 경우
+					else if(--cnt==0) {
+						console.log("new User");
+						sendMsg(alertKey, errandKey, dest_email, area_no);
+					}
+				});
+			}
+			//채팅방이 하나도 없을 때(채팅이 처음인 유저)
+			else
+				sendMsg(alertKey, errandKey, dest_email, area_no);
+		});	
+  }
+  //심부름 시작할 때 메세지 보내는 함수
+  function sendMsg(alertKey, errandKey, dest_email, area_no) {
+	  console.log("sendMSg");
+		if(roomKey=="null")
+			createRoom(dest_email);
+		//메세지를 파이어베이스에 저장
+		let reading = firebase.database().ref("chatrooms/" + roomKey + "/comments");
+		reading.push().set({
+			message : "심부름이 시작되었습니다",
+			timestamp : getTime(),
+			uid : mem_email,
+			read : 1
+		}, function(error){
+			if (error) {
+			   console.log('Data could not be saved.' + error);
+			 } else {
+					refArea.child(area_no).child("errand").child(errandKey).once('value', function(snapshot){
+						let data = snapshot.val();
+						$.ajax({
+							type:'post',
+							url:'/member/jsonSelectMember.nds',
+							data:{"mem_email":mem_email},
+							dataType:'json',
+							success:function(data2){
+								console.log("mem_email_full="+data2.MEM_EMAIL);
+								let mem_email_full = data2.MEM_EMAIL;
+								$.ajax({
+									type:'post',
+									url:'/member/jsonSelectMember.nds',
+									data:{"mem_email":dest_email},
+									dataType:'json',
+									success:function(data3){
+										console.log("dest_email_full="+data3.MEM_EMAIL);
+										let dest_email_full = data3.MEM_EMAIL;
+							            $.ajax({
+											type:'post',
+											url:'/errand/insertErrand.nds',
+											data:{
+													"errandKey":errandKey,
+								                    "errand_item":data.errand_item,
+								                    "errand_request_date":data.errand_request_date,
+								                    "errand_start_date":getTime(),
+								                    "errand_item_price_req":data.errand_item_price_req,
+								                    "errand_price":data.errand_price,
+								                    "errand_total_price":data.errand_total_price,
+								                    "errand_content":data.errand_content,
+								                    "errand_status":"P",
+								                    "mem_email_req":mem_email_full,
+								                    "mem_email_nds":dest_email_full,
+								                    "errand_lat":data.errand_lat,
+								                    "errand_lon":data.errand_lng,
+								                    "req_isShow":"T",
+								                    "nds_isShow":"T"
+											},
+											success:function(data){
+												console.log("ajax success");
+									            acceptErrand(errandKey, dest_email, area_no);
+									            refAlert.child(alertKey).remove();
+// 									            refAlert.child(alertKey).update({ active : 0 });
+									            window.open('/mainPage/chatroom.jsp?dest_email='+dest_email+'','','width=550px, height=900px');
+											},
+											error:function(e){
+												console.log(e);
+											}
+							            });
+									},
+									error:function(e){
+										console.log(e);
+									}
+								});
+							},
+							error:function(e){
+								console.log(e);
+							}
+						});
+					});
+			   }
+		});
+		//unread를 1씩 올려주는 트랜잭션
+		let updates = {};
+		updates["chatrooms/"+roomKey+"/unread/"+dest_email] = firebase.database.ServerValue.increment(1);
+		firebase.database().ref().update(updates);
+	}
+	//채팅방 새로 개설
+	function createRoom(dest_email) {
+		let newKey = firebase.database().ref("chatrooms").push().key;
+		roomKey = newKey; //새로운 채팅방 고유 키 생성
+		//생성한 고유 키로 테이블을 만들고 그 안에 유저 정보 저장
+		let reading = firebase.database().ref("chatrooms/"+newKey);
+		reading.set({
+			users : {
+				[mem_email] : true,
+				[dest_email] : true
+			},
+			unread : {
+				[mem_email] : 0,
+				[dest_email] : 0
+			}
+		});
+//		init();
+	}
   //수락할 시 status를 1로 설정
-  function acceptErrand(errandKey, rider) {
-    refErrand.child(errandKey).once('value', function(snapshot){
+  function acceptErrand(errandKey, rider, area_no) {
+    refArea.child(area_no).child("errand").child(errandKey).once('value', function(snapshot){
       let alertData = {
           content : snapshot.val().errand_item+" 심부름 배달 요청이 수락되었습니다. 심부름을 시작하세요!",
           type : "acceptedErrand",
@@ -191,15 +487,17 @@ $(document).ready(function() {
           rider : rider
       };
       refAlert.push().update(alertData);
-      let updData = {
-        status : 1
-      };
-      refErrand.child(errandKey).update(updData);
+//       let updData = {
+//         status : 1
+//       };
+//       refErrand.child(errandKey).update(updData);
+      refArea.child(area_no).child("errand").child(errandKey).remove();
+      refArea.child("errand").child(mem_email).child(errandKey).remove();
     });
   }
   //거부할 시 rider를 ""로 설정
-  function refuseErrand(errandKey, rider) {
-    refErrand.child(errandKey).once('value', function(snapshot){
+  function refuseErrand(errandKey, rider, area_no) {
+	  refArea.child(area_no).child("errand").child(errandKey).once('value', function(snapshot){
       let alertData = {
           content : snapshot.val().errand_item+" 심부름 배달 요청이 거절되었습니다.",
           type : "refusedErrand",
@@ -217,7 +515,7 @@ $(document).ready(function() {
       let updData = {
         rider : ""
       };
-      refErrand.child(errandKey).update(updData);
+      refArea.child(area_no).child("errand").child(errandKey).update(updData);
     });
   }
 </script>

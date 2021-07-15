@@ -108,6 +108,10 @@ function deleteComment(comment){
     	}
     });
 };
+$('#addComment').click(function(){
+	console.log('adfsaf');
+});
+
 //댓글 작성하기
 function insertComment(comment){	
 	let commentType_No = comment.id.split('-');//commentType_No[0]은 댓글인지 대댓글인지 확인(0이면 댓글/1이면 대댓글), commentType_No[1]은 게시물번호
