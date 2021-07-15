@@ -851,7 +851,7 @@ public class MemberController extends MultiActionController {
 		String receiver = (String)pmap.get("mem_phone");
 		// 랜덤한 인증코드 생성
 		String randomCode = memberLogic.getRandomCode("ON", 6);
-//		randomCode = "123456";	// 테스트용 인증코드 :: 시연할 때에는 이 부분 지우고 해야함.
+		randomCode = "123456";	// 테스트용 인증코드 :: 시연할 때에는 이 부분 지우고 해야함.
 		// 메세지로 보낼 내용 설정
 		String content= "【내동생】 인증번호 [ "+randomCode+" ]를 정확히 입력해주세요.";
 		SMS sms = new SMS();
