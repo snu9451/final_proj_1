@@ -34,7 +34,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		"/mainPage/reqJoinView.nds",
 		"/item/selectItemList.nds",
 		"/item/selectBySearch.nds",
-		"/item/selectByCategory.nds"
+		"/item/selectByCategory.nds",
+		"/myPage/my_WalletAndroid.nds"
 	};
 	
 	@Override

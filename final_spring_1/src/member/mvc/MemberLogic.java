@@ -13,10 +13,6 @@ public class MemberLogic {
 	private MemberDao memberDao = null;
 	Logger logger = Logger.getLogger(MemberLogic.class);
 	
-	
-	
-	
-	
 	public void setMemberDao(MemberDao memberDao) {
 		logger.info("asdfasdfasdfdsfsfadsfs");
 		this.memberDao = memberDao;

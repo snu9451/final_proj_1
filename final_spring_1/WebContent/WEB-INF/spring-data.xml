@@ -7,13 +7,13 @@
 			<value>oracle.jdbc.driver.OracleDriver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:oracle:thin:@localhost:1521:orcl11</value>
+			<value>jdbc:oracle:thin:@36.39.47.217:1521:orcl11</value>
 		</property>
 		<property name="username">
-			<value>finalproject</value>
+			<value>finaltest</value>
 		</property>
 		<property name="password">
-			<value>tiger</value>
+			<value>cheetah</value>
 		</property>
 	</bean>
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

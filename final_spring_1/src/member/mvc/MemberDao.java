@@ -211,9 +211,6 @@ public class MemberDao {
 
 
 
-
-
-
 	public int insertCoinTrans(Map<String, Object> pmap) {
 		int result = 0;
 		logger.info(pmap);
@@ -221,6 +218,13 @@ public class MemberDao {
 		logger.info(result);
 		return result;
 	}
+
+
+
+
+
+
+
 
 
 }

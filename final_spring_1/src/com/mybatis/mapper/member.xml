@@ -42,7 +42,7 @@
        	   AND TO_DATE (sid_expired, 'YYYY-MM-DD HH24:MI:SS') - SYSDATE > 0
 	</select>
 	<select id="myWalletRecord" parameterType="map" resultType="map">
-		 SELECT TRANS_DATE, TRANS_CONTENT, TRANS_PRICE, TRANS_REMAIN, DECODE(TRANS_IO,'i','입금','출금') as TRANS_IO
+		 SELECT TRANS_NO, TRANS_DATE, TRANS_CONTENT, TRANS_PRICE, TRANS_REMAIN, DECODE(TRANS_IO,'i','입금','출금') as TRANS_IO
 		   FROM coin_trans
 		  WHERE mem_email= #{mem_email}
 	   ORDER BY trans_date DESC
