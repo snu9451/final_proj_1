@@ -939,6 +939,26 @@ public class MemberController extends MultiActionController {
 		//out.print(walletRec);
 		return mav;
 	}
+	
+	// 안드로이드용 내지갑 보기
+	public void getMyWalletAndroid(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session = req.getSession();
+		logger.info("myWalletRecord");
+
+		HashMapBinder hmb = new HashMapBinder(req);
+		List<Map<String, Object>> walletRecAnd = null;
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		hmb.bindPost(pmap);
+		logger.info(pmap);
+		walletRecAnd = memberLogic.myWalletRecord(pmap);
+		logger.info("walletRec :" + walletRecAnd);
+
+		Gson g = new Gson();
+		String data = g.toJson(walletRecAnd);
+		AjaxDataPrinter.out(res, "application/json", data);
+	}
+
+	
 	//마이페이지 찜 목록 클릭시
 	public ModelAndView getMyLike(HttpServletRequest req, HttpServletResponse res){
 		logger.info("controller : selectMyLike메소드 호출");
