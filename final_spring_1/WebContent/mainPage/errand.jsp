@@ -85,7 +85,7 @@
             <div class="row justify-content-between align-items-center">
               <div class="col-lg-3 w-100 h-100 d-flex flex-column align-items-center" id="profileBox">
                 <div class="profileImg" id="profileImg">
-                  <img class="w-100" src="./assets/img/muji.png" alt="profileImg">
+                  <img class="w-100" src="./assets/img/muji.png" alt="profileImg" width=150px height=150px style="border-radius: 25%">
                 </div>
                 <div>
                   <h5 class="mt-3" id="profileName">

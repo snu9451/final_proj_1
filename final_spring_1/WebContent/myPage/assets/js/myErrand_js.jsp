@@ -10,6 +10,48 @@ function reqAction() {
 		url : "myErrand_req_rec_FB.jsp",
 		success : function(data) {//@data-json,xml,html,text
 			$(".errand_FB").html(data);
+			let str;
+			let cnt = 0;
+			if($(".errand_FB").find(".errand_tb").children("tbody").text().trim()=="") {
+				str = "<tr><th colspan=\"6\">";
+				str += "조회결과가 없습니다.";
+				str += "</th>";
+				str += "</tr>";
+	        	$(".errand_FB").find(".errand_tb").children("tbody").append(str);
+			}
+			refArea.child("errand").child(mem_email).on('child_added',function(p_snapshot){
+				refArea.child(p_snapshot.val()).child("errand").child(p_snapshot.key).once('value', function(snapshot){
+					if($(".errand_FB").find(".errand_tb").children("tbody").children("tr").children("th").text().trim()!="")
+						$(".errand_FB").find(".errand_tb").children("tbody").children("tr").remove();
+					str = "<tr tr_id="+snapshot.key+">";
+					str += "<td><button type=\"button\" class=\"btn btn-outline-danger btn-smq\">X</button></td>";
+					str += "<td><span class=\"badge rounded-pill bg-danger text-white\">요청중</span></td>";
+					str += "<td>"+snapshot.val().errand_request_date.substr(11,5)+"</td>";
+					str += "<td>"+snapshot.val().errand_item+"</td>";
+					str += "<td>"+snapshot.val().errand_total_price+"</td></tr>";
+					$(".errand_FB").find(".errand_tb").children("tbody").append(str);
+					$(".errand_FB").find(".total_rec.coin2").text(" 전체 : " + ++cnt);
+					$("tr[tr_id="+snapshot.key+"]").find(".btn-outline-danger").off("click").on("click",function(){
+						makeModal(snapshot.key,"선택한 심부름 요청을 취소하시겠습니까?",1,"네","아니요","심부름 취소");
+					    $("#"+snapshot.key).find(".btn-primary").off("click").on("click",function(){
+					    	refArea.child(p_snapshot.val()).child("errand").child(p_snapshot.key).remove();
+					    	refArea.child("errand").child(mem_email).child(snapshot.key).remove();
+							$(".errand_FB").find(".total_rec.coin2").text(" 전체 : " + --cnt);
+					        makeModal("DEL"+snapshot.key,"심부름 요청이 취소되었습니다.");
+					        $("#DEL"+snapshot.key).modal("show");
+					        $("tr[tr_id="+snapshot.key+"]").remove();
+					        if($(".errand_FB").find(".errand_tb").children("tbody").text().trim()=="") {
+						        str = "<tr><th colspan=\"6\">";
+								str += "조회결과가 없습니다.";
+								str += "</th>";
+								str += "</tr>";
+					        	$(".errand_FB").find(".errand_tb").children("tbody").append(str);
+					        }
+					      });
+					    $("#"+snapshot.key).modal("show");
+					});
+				});
+			});
 		},
 		error : function(e) {//@param-XMLHttpRequest
 		}
@@ -39,7 +81,7 @@ function reqAction() {
 							str += "</span></td><td>";
 							str += data[i].ERRAND_REQUEST_DATE;
 							str += "</td><td>";
-							str += data[i].ERRAND_CONTENT;
+							str += data[i].ERRAND_ITEM;
 							str += "</td><td>";
 							str += data[i].ERRAND_TOTAL_PRICE;
 							str += "원</td><td>";
@@ -62,7 +104,7 @@ function reqAction() {
 							str += "</span></td><td>";
 							str += data[i].ERRAND_REQUEST_DATE;
 							str += "</td><td>";
-							str += data[i].ERRAND_CONTENT;
+							str += data[i].ERRAND_ITEM;
 							str += "</td><td>";
 							str += data[i].ERRAND_TOTAL_PRICE;
 							str += "원</td><td>";
@@ -111,12 +153,13 @@ function resAction() {
 			success : function(data) {//@data-json,xml,html,text
 				console.log(data);
 				let str = "";
+				$('#allcnt1').html(data.length);
 				console.log(data.length);
 				
 				if(data.length != nds_cnt){
 				
 					for(let i=0; i<data.length; i++){
-						if(data[i].ERRAND_STATUS == 'S'){
+						if(data[i].ERRAND_STATUS == 'P'){
 							console.log('s');
 							str += "<tr><td>";
 							str += "<div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck";
@@ -124,10 +167,34 @@ function resAction() {
 							str += "\"> <label class=\"custom-control-label\" for=\"customCheck";
 							str += data[i].ERRANDKEY;
 							str += "\"></label></div>";
-							str += "</td><td>";
+							str += "</td><td><span class=\"badge rounded-pill bg-warning text-dark\">";
+							str += "진행중";
+							str += "</span></td><td>";
 							str += data[i].ERRAND_REQUEST_DATE;
 							str += "</td><td>";
-							str += data[i].ERRAND_CONTENT;
+							str += data[i].ERRAND_ITEM;
+							str += "</td><td>";
+							str += data[i].ERRAND_TOTAL_PRICE;
+							str += "원</td><td>";
+							str += data[i].MEM_NICKNAME;
+							str += "</td></tr>";
+			//					document.write("<table>"+str+"</table>");
+							$('#nds_tbody_nds').append(str);
+						str = "";
+						}else if(data[i].ERRAND_STATUS == 'S'){
+							console.log('s');
+							str += "<tr><td>"
+							str += "<div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck";
+							str += data[i].ERRANDKEY;
+							str += "\"> <label class=\"custom-control-label\" for=\"customCheck";
+							str += data[i].ERRANDKEY;
+							str += "\"></label></div>";
+							str += "</td><td><span class=\"badge bg-secondary text-white\">";
+							str += "완료";
+							str += "</span></td><td>";
+							str += data[i].ERRAND_REQUEST_DATE;
+							str += "</td><td>";
+							str += data[i].ERRAND_ITEM;
 							str += "</td><td>";
 							str += data[i].ERRAND_TOTAL_PRICE;
 							str += "원</td><td>";

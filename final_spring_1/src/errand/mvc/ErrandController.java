@@ -86,23 +86,14 @@ public class ErrandController extends MultiActionController{
  		Map<String, Object> pmap = new HashMap<String, Object>();
  		HashMapBinder hmb = new HashMapBinder(req);
  		hmb.bindPost(pmap);
- 		HttpSession session = req.getSession();
- 		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
- 		logger.info(mvo);
- 		String mem_email = (String)mvo.get("MEM_EMAIL");
- 		pmap.put("mem_email", mem_email);
- 		// 프로시저 실행 결과를 받아줄 RESULT 항목 추가 - 반환받는 값의 타입이 NUMBER이므로 타입에 맞게  0을 넣어둔다.
- 		pmap.put("RESULT", 0);
- 		int result = errandLogic.insertErrand(pmap);
- 		logger.info("심부름 insert 결과 ===> "+result);
- 		// 심부름 insert 실패 시
- 		if(result == 0) {
- 			AjaxDataPrinter.out(res, "text/html", "[ERROR] 심부름 insert <b>실패</b>하였습니다.");
- 		}
- 		// 심부름 insert 성공 시
- 		else if(result ==1) {
- 			AjaxDataPrinter.out(res, "text/html", "성공.");
- 		}
+ 		errandLogic.insertErrand(pmap);
+ 	}
+ 	public void insertErrandDenied(HttpServletRequest req, HttpServletResponse res) {
+ 		logger.info("insertErrandDenied 메소드 호출 성공!");
+ 		Map<String, Object> pmap = new HashMap<String, Object>();
+ 		HashMapBinder hmb = new HashMapBinder(req);
+ 		hmb.bindPost(pmap);
+ 		errandLogic.insertErrandDenied(pmap);
  	}
  						/* 확인했으면 주석을 지우셔도 됩니다. */
  	/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */

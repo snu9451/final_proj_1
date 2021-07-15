@@ -67,8 +67,6 @@
 							<div class="divider"></div>
 							<a id="new_rank" href="javascript:void(0);"
 								onclick="allItemList(this)">최근상품순</a>
-							<div class="divider"></div>
-							<a href="#">연령별</a>
 						</div>
 						<!-- ▼ 검색창 시작 ▼ -->
 						<div class="product__serach__bar">

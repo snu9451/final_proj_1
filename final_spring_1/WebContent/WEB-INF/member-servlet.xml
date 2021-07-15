@@ -48,14 +48,17 @@
 				<prop key="/member/leave.nds">member-controller</prop>
 				<prop key="/member/join.nds">member-controller</prop>
 				<prop key="/member/insertMember.nds">member-controller</prop>
+				<prop key="/member/deleteMyLike.nds">member-controller</prop>
+				<prop key="/member/selectMyTrade.nds">member-controller</prop>
+				<prop key="/member/deleteTradeRec.nds">member-controller</prop>
 				<!-- ================== [[ 페이지 요청 url ]] ================== -->
 				<prop key="/myPage/my_info.nds">member-controller</prop>
 				<prop key="/myPage/my_wallet.nds">member-controller</prop>
 				<prop key="/myPage/my_like.nds">member-controller</prop>
 				<prop key="/myPage/my_trade.nds">member-controller</prop>
 				<prop key="/myPage/my_errand.nds">member-controller</prop>
-				<prop key="/myPage/my_WalletAndroid.nds">member-controller</prop>
 				<prop key="/mainPage/main_page.nds">member-controller</prop>
+				<prop key="/member/jsonSelectMember.nds">member-controller</prop>
 				<!-- ================== [[ 페이지 요청 url ]] ================== -->
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 				<prop key="/member/getAuth.nds">member-controller</prop>
@@ -89,14 +92,17 @@
 				<prop key="/member/leave.nds">leave</prop>
 				<prop key="/member/join.nds">join</prop>
 				<prop key="/member/insertMember.nds">insertMember</prop>
+				<prop key="/member/deleteMyLike.nds">deleteMyLike</prop>
+				<prop key="/member/selectMyTrade.nds">selectMyTrade</prop>
+				<prop key="/member/deleteTradeRec.nds">deleteTradeRec</prop>
 				<!-- ================== [[ 페이지 이동 url ]] ================== -->
-				<prop key="/myPage/my_info.nds">getMyInfo</prop>
+				<prop key="/myPage/my_info.nds">selectMember</prop>
 				<prop key="/myPage/my_wallet.nds">getMyWallet</prop>
-				<prop key="/myPage/my_WalletAndroid.nds">getMyWalletAndroid</prop>
 				<prop key="/myPage/my_like.nds">getMyLike</prop>
 				<prop key="/myPage/my_trade.nds">getMyTrade</prop>
 				<prop key="/myPage/my_errand.nds">getMyErrand</prop>
 				<prop key="/mainPage/main_page.nds">getMainPage</prop>
+				<prop key="/member/jsonSelectMember.nds">jsonSelectMember</prop>
 				<!-- ================== [[ 페이지 이동 url ]] ================== -->
 				<!-- ================== [[ 테스트용 url ]] ================== -->
 				<prop key="/member/getAuth.nds">getAuth</prop>

@@ -48,7 +48,7 @@ response.setDateHeader("Expires",0);
 					<h4 class="coin1" id="remainCoin"><%=coin_remain %></h4>
 					<h4 class="coin won">원</h4>
 					<button type="button" data-toggle="modal" data-target="#coinCharge" class="h_coin btn btn-outline-warning">충전</button>
-					<button type="button" class="btn btn-outline-warning">출금</button>
+					<button type="button" data-toggle="modal" data-target="#coinWithdraw" class="btn btn-outline-warning">출금</button>
 				</span>
 			</div>
 			<div class="myinfo_bottom">

@@ -109,6 +109,9 @@ function leave(){
 	});
 };
 function addAction(){
-	$('#f_profile_picture').submit();
+	$('#imgChangeSuccs').modal('show');
+	$('#btn_imgSucces').click(function(){
+		$('#f_profile_picture').submit();
+	});
 }
 </script>

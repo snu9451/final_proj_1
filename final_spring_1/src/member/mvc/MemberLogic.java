@@ -13,6 +13,10 @@ public class MemberLogic {
 	private MemberDao memberDao = null;
 	Logger logger = Logger.getLogger(MemberLogic.class);
 	
+	
+	
+	
+	
 	public void setMemberDao(MemberDao memberDao) {
 		logger.info("asdfasdfasdfdsfsfadsfs");
 		this.memberDao = memberDao;
@@ -44,6 +48,13 @@ public class MemberLogic {
 	public Map<String, Object> selectOneBySession(String sessionValue) {
 		Map<String, Object> rmap = null;
 		rmap = memberDao.selectOneBySession(sessionValue);
+		return rmap;
+	}
+
+	public Map<String, Object> jsonSelectMember(Map<String, Object> pmap) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = memberDao.jsonSelectMember(pmap);
+		logger.info(rmap);
 		return rmap;
 	}
 /* ===========================================================================
@@ -181,6 +192,20 @@ public class MemberLogic {
 		logger.info(walletRec);
 		return walletRec;
 	}
+	
+	//마이페이지 - 찜 목록 조회
+	public List<Map<String, Object>> selectMyLike(Map<String, Object> pmap) {
+		logger.info("Logic : selectMyLike 메소드 호출");
+		logger.info(pmap);
+		return memberDao.selectMyLike(pmap);
+	}
+	//마이페이지 - 찜 목록 삭제
+	public void deleteMyLike(Map<String, Object> pmap) {
+		logger.info("Logic : deleteMyLike 메소드 호출");
+		logger.info(pmap);
+		memberDao.deleteMyLike(pmap);
+	}
+	
 
 
 	public int insertCoinTrans(Map<String, Object> pmap) {
@@ -189,6 +214,22 @@ public class MemberLogic {
 		result = memberDao.insertCoinTrans(pmap);
 		logger.info(result);
 		return result;
+	}
+
+
+	public List<Map<String, Object>> getMyTrade(Map<String, Object> pmap) {
+		logger.info("Logic getMyTrade 호출성공");
+		List<Map<String,Object>> tradeRec = null;
+		tradeRec = memberDao.getMyTrade(pmap);
+		
+		return tradeRec;
+	}
+
+	/* 마이페이지 중고거래 내역 삭제 */
+	public void deleteTradeRec(Map<String, Object> pmap) {
+		logger.info("Logic deleteTradeRec 호출성공");
+		memberDao.deleteTradeRec(pmap);
+		
 	}
 
 

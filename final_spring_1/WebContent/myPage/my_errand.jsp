@@ -75,9 +75,10 @@
             <thead>
                <tr>
                   <th scope="cols" width="9%">선택</th>
+                  <th scope="cols" width="12%">구분</th>
                   <th scope="cols" width="18%">날짜</th>
-                  <th scope="cols" width="44%">제목</th>
-                  <th scope="cols" width="17%">가격</th>
+                  <th scope="cols" width="37%">제목</th>
+                  <th scope="cols" width="12%">가격</th>
                   <th scope="cols" width="12%">닉네임</th>
                </tr>
             </thead>
