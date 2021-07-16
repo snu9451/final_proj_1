@@ -373,7 +373,7 @@ $(document).ready(function() {
 		//메세지를 파이어베이스에 저장
 		let reading = firebase.database().ref("chatrooms/" + roomKey + "/comments");
 		reading.push().set({
-			message : "심부름이 시작되었습니다",
+			message : "[심부름이 시작되었습니다]",
 			timestamp : getTime(),
 			uid : mem_email,
 			read : 1

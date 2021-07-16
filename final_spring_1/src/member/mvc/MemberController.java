@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.google.gson.Gson;
 
+import errand.mvc.ErrandLogic;
 import nds.util.AjaxDataPrinter;
 import nds.util.CookiesMap;
 import nds.util.HashMapBinder;
@@ -415,6 +416,22 @@ public class MemberController extends MultiActionController {
 //		String account_num = (String)pmap.get("account_num");
 		// 인증번호
 	}
+    
+    public void insertCoinTrans(HttpServletRequest req, HttpServletResponse res) throws Exception {
+   	   logger.info("ctrl : insertCoinTrans 호출 성공");
+   	   Map<String,Object> pmap = new HashMap<>();      
+   	   HashMapBinder hmb = new HashMapBinder(req);
+   	   hmb.bindPost(pmap);
+   	   memberLogic.insertCoinTrans(pmap);
+     }
+    
+    public void updateMemberCoin(HttpServletRequest req, HttpServletResponse res) throws Exception {
+   	   logger.info("ctrl : updateMemberCoin 호출 성공");
+   	   Map<String,Object> pmap = new HashMap<>();      
+   	   HashMapBinder hmb = new HashMapBinder(req);
+   	   hmb.bindPost(pmap);
+   	   memberLogic.updateMember(pmap);
+     }
 	
 	//마이페이지 찜 목록 삭제
 	public void deleteMyLike(HttpServletRequest req, HttpServletResponse res) {

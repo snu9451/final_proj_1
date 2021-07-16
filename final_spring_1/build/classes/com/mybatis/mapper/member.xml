@@ -90,8 +90,9 @@
 			<if test='mem_nickname!=null'>mem_nickname = #{mem_nickname}</if>
 			<if test='change_img!=null'>mem_img = #{change_img}</if>
 			<if test='coin_remain!=null'>coin_remain = #{coin_remain}</if>
+			<if test='coin!=null'>coin_remain = coin_remain + #{coin}</if>
 		</set>
-		 WHERE mem_email = #{mem_email}
+		 WHERE mem_email LIKE #{mem_email} || '%'
 	</update>
 	<update id="my_like_change" statementType="CALLABLE" parameterType="map">
 	   {CALL proc_my_like_change(#{pr_MEM_EMAIL}, #{pr_BM_NO}

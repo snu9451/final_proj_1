@@ -2,7 +2,7 @@ let email_req = "";
 let email_nds = "";
 let errandArr=[];
 let errandInfoArr=[];
-let MAXINDEX;
+let MAXINDEX=-1;
 let infoIndex;
 $(document).ready(function(){
 	$.ajax({
@@ -101,49 +101,227 @@ function initNotice(){
 		$('.notice_wrapper1').hide();
 		$('.notice_wrapper').show();
 	});
-	if(errandArr[infoIndex].MEM_EMAIL_REQ.split(".")[0] != mem_email) {
-		$(".price").on('keyup', function(){
-			let abled = false;
-			abled = $(".price").val().length > 0 ? true : false;
-			console.log(abled);
-			$("#btn_confirm").attr("disabled", !abled);
-		});
-		$('#btn_confirm').click(function(){
-			$.ajax({
-				type:'post',
-				url:'/errand/updateErrandItemPriceNds.nds',
-				data:{"errand_item_price_nds":$(".price").val(),"errandKey":errandArr[infoIndex].ERRANDKEY},
-				success:function(data){
+	console.log("P=?"+errandArr[infoIndex].ERRAND_STATUS);
+	if(errandArr[infoIndex].ERRAND_STATUS=="P"){
+		if(errandArr[infoIndex].MEM_EMAIL_REQ.split(".")[0] != mem_email) {
+			$(".price").on('keyup', function(){
+				let abled = false;
+				abled = $(".price").val().length > 0 ? true : false;
+				console.log(abled);
+				$("#btn_confirm").attr("disabled", !abled);
+			});
+			$(".price").on('click', function(){
+				$(".price").val("");
+			});
+			$('#btn_confirm').click(function(){
+				$.ajax({
+					type:'post',
+					url:'/errand/updateErrandItemPriceNds.nds',
+					data:{"errand_item_price_nds":$(".price").val(),"errandKey":errandArr[infoIndex].ERRANDKEY},
+					success:function(data){
+						$.ajax({
+							type:'post',
+							url:'/errand/updateErrandInfo.nds',
+							data:{
+								"errandKey":errandArr[infoIndex].ERRANDKEY,
+								"check_type":"check_first",
+								"check_val":"T"
+								},
+							success:function(data2){
+								$('#check1').addClass('active');
+								$("#btn_confirm").attr("disabled", true);
+								$(".price").attr("readonly", true);
+								$(".price").css({"background-color":"gray", "pointer-events": "none", "opacity":"0.5"});
+								sendMsg("[물품가가 "+$(".price").val()+"원으로 측정되었습니다. 물품가를 확인하시고 상단의 체크버튼을 누르시면 거래가 성사됩니다!]", errandArr[infoIndex].ERRANDKEY)
+							},
+							error:function(e){
+								console.log(e);
+							}
+						});
+					},
+					error:function(e){
+						console.log(e);
+					}
+				});
+			});
+			$("#check1").click(function(){
+				if($("#check1").hasClass("active")) {
 					$.ajax({
 						type:'post',
 						url:'/errand/updateErrandInfo.nds',
-						data:{"errandKey":errandArr[infoIndex].ERRANDKEY},
+						data:{
+							"errandKey":errandArr[infoIndex].ERRANDKEY,
+							"check_type":"check_first",
+							"check_val":"F"
+							},
 						success:function(data2){
-							$('#check1').addClass('active');
-							$("#btn_confirm").attr("disabled", true);
-							$(".price").attr("readonly", true);
-							$(".price").css({"bacground-color":"gray", "pointer-events": "none", "opacity":"0.5"});
+							$("#check1").removeClass('active');
+							abled = $(".price").val().length > 0 ? true : false;
+							console.log(abled);
+							$(".price").attr("readonly", false);
+							$("#btn_confirm").attr("disabled", !abled);
+							$(".price").css({"background-color":"none", "pointer-events": "auto", "opacity":"1"});
+							sendMsg("[물품가 확인을 취소했습니다.]", errandArr[infoIndex].ERRANDKEY)
 						},
 						error:function(e){
 							console.log(e);
 						}
 					});
-				},
-				error:function(e){
-					console.log(e);
 				}
 			});
-		});
-		$("#check1").click(function(){
-			$("#check1").removeClass('active');
-			abled = $(".price").val().length > 0 ? true : false;
-			console.log(abled);
-			$(".price").attr("readonly", false);
-			$("#btn_confirm").attr("disabled", !abled);
-			$(".price").css({"bacground-color":"gray", "pointer-events": "auto", "opacity":"1"});
-		});
+		}
+		else {
+			$("#check2").click(function(){
+				let isChecked = $("#check1").hasClass("active") ? 'T' : 'F'
+				if(isChecked=="F")
+					alert("상대방이 먼저 확인버튼을 눌러야 합니다.");
+				else {
+					$.ajax({
+						type:'post',
+						url:'/errand/updateErrandInfo.nds',
+						data:{
+							"errandKey":errandArr[infoIndex].ERRANDKEY,
+							"check_type":"check_second",
+							"check_val":"T"
+							},
+						success:function(data){
+							$.ajax({
+								type:'post',
+								url:'/errand/updateErrandFinish.nds',
+								data:{
+									"errandKey":errandArr[infoIndex].ERRANDKEY,
+									},
+								success:function(data2){
+									$("#check2").addClass("active");
+									sendMsg("[심부름이 완료되었습니다.]", errandArr[infoIndex].ERRANDKEY);
+									$.ajax({
+										type:'post',
+										url:'/member/updateMemberCoin.nds',
+										data:{
+											"mem_email":mem_email,
+											"coin":(errandArr[infoIndex].ERRAND_ITEM_PRICE_NDS*1+errandArr[infoIndex].ERRAND_PRICE*1)*-1
+											},
+										success:function(data3){
+											$.ajax({
+												type:'post',
+												url:'/member/jsonSelectMember.nds',
+												data:{
+													"mem_email":mem_email
+													},
+												success:function(data4){
+													$.ajax({
+														type:'post',
+														url:'/member/insertCoinTrans.nds',
+														data:{
+															"mem_email":data4.MEM_EMAIL,
+															"trans_content":errandArr[infoIndex].ERRAND_ITEM+" 심부름 주문",
+															"trans_price":(errandArr[infoIndex].ERRAND_ITEM_PRICE_NDS*1+errandArr[infoIndex].ERRAND_PRICE*1)*1,
+															"trans_remain":data4.COIN_REMAIN,
+															"trans_io":"o"
+															},
+														success:function(data5){
+														    let alertData = {
+														      content: "심부름이 완료되었습니다!",
+														      type: "doneReq",
+														      timestamp : getTime(),
+														      active : 1
+														    };
+														    firebase.database().ref("alert/"+mem_email).push().update(alertData);
+														},
+														error:function(e){
+															console.log(e);
+														}
+													});
+												},
+												error:function(e){
+													console.log(e);
+												}
+											});
+										},
+										error:function(e){
+											console.log(e);
+										}
+									});
+									$.ajax({
+										type:'post',
+										url:'/member/updateMemberCoin.nds',
+										data:{
+											"mem_email":dest_email,
+											"coin":(errandArr[infoIndex].ERRAND_ITEM_PRICE_NDS*1+errandArr[infoIndex].ERRAND_PRICE*1)*1
+											},
+										success:function(data3){
+											$.ajax({
+												type:'post',
+												url:'/member/jsonSelectMember.nds',
+												data:{
+													"mem_email":dest_email
+													},
+												success:function(data4){
+													$.ajax({
+														type:'post',
+														url:'/member/insertCoinTrans.nds',
+														data:{
+															"mem_email":data4.MEM_EMAIL,
+															"trans_content":errandArr[infoIndex].ERRAND_ITEM+" 심부름 수행",
+															"trans_price":(errandArr[infoIndex].ERRAND_ITEM_PRICE_NDS*1+errandArr[infoIndex].ERRAND_PRICE*1)*1,
+															"trans_remain":data4.COIN_REMAIN,
+															"trans_io":"i"
+															},
+														success:function(data5){
+														    let alertData = {
+														      content: "심부름이 완료되었습니다!",
+														      type: "doneNds",
+														      timestamp : getTime(),
+														      active : 1
+														    };
+														    firebase.database().ref("alert/"+dest_email).push().update(alertData);
+														},
+														error:function(e){
+															console.log(e);
+														}
+													});
+												},
+												error:function(e){
+													console.log(e);
+												}
+											});
+										},
+										error:function(e){
+											console.log(e);
+										}
+									});
+								},
+								error:function(e){
+									console.log(e);
+								}
+							});
+						},
+						error:function(e){
+							console.log(e);
+						}
+					});
+				}
+			});
+		}
 	}
-	else {
-		
+	if(roomKey!="null") {
+		getChatMsg();
 	}
+}
+//현재 시간을 YYYY-MM-DD HH:mm:SS 형식으로 반환
+function getTime(){
+    let today = new Date();
+
+    let year = today.getFullYear();
+    let month = ('0' + (today.getMonth() + 1)).slice(-2);
+    let day = ('0' + today.getDate()).slice(-2);
+
+    let hours = ('0' + today.getHours()).slice(-2); 
+    let minutes = ('0' + today.getMinutes()).slice(-2);
+    let seconds = ('0' + today.getSeconds()).slice(-2); 
+
+    let dateString = year + '-' + month  + '-' + day;
+    let timeString = hours + ':' + minutes  + ':' + seconds;
+    let rstTime = dateString+" "+timeString;
+    return rstTime;
 }

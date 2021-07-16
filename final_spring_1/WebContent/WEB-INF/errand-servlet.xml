@@ -27,6 +27,7 @@
             <prop key="/errand/jsonGetErrandInfo.nds">errand-controller</prop>
             <prop key="/errand/updateErrandInfo.nds">errand-controller</prop>
             <prop key="/errand/updateErrandItemPriceNds.nds">errand-controller</prop>
+            <prop key="/errand/updateErrandFinish.nds">errand-controller</prop>
          </props>
       </property>
    </bean>
@@ -44,6 +45,7 @@
             <prop key="/errand/jsonGetErrandInfo.nds">jsonGetErrandInfo</prop>
             <prop key="/errand/updateErrandInfo.nds">updateErrandInfo</prop>
             <prop key="/errand/updateErrandItemPriceNds.nds">updateErrandItemPriceNds</prop>
+            <prop key="/errand/updateErrandFinish.nds">updateErrandFinish</prop>
          </props>
       </property>
    </bean>

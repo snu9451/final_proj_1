@@ -57,8 +57,8 @@
         });
         switchRider();
         clearInterval(timer);
-		drawRectangleOnMap();
-//		drawCircleOnMap();
+//		drawRectangleOnMap();
+		drawCircleOnMap();
       }
     }
 
@@ -329,11 +329,15 @@
 					refAreaOffAll("errand");
 			        markerContainer = new Map();
         			insertErrandMarker(true);
-					rectangle.setBounds({
-				      north: my_lat+lat_50m*10,
-				      south: my_lat-lat_50m*10,
-				      east: my_lng+lng_50m*10,
-				      west: my_lng-lng_50m*10,
+//					rectangle.setBounds({
+//				      north: my_lat+lat_50m*10,
+//				      south: my_lat-lat_50m*10,
+//				      east: my_lng+lng_50m*10,
+//				      west: my_lng-lng_50m*10,
+//					})
+					circle.setCenter({
+						lat: my_lat,
+						lng: my_lng
 					})
 			        addErrand();//심부름 마커 추가 감시
 					refArea.child(snapshot.val().area_no).child("users").child(mem_email).remove();

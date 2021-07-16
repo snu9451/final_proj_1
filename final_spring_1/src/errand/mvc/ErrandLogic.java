@@ -53,6 +53,11 @@ public class ErrandLogic {
 		logger.info("logic : updateErrandItemPriceNds 호출 성공");
 		errandDao.updateErrandItemPriceNds(pmap);
 	}
+	
+	public void updateErrandFinish(Map<String, Object> pmap) {
+		logger.info("logic : updateErrandFinish 호출 성공");
+		errandDao.updateErrandFinish(pmap);
+	}
 
 	public List<Map<String, Object>> jsonGetErrand(Map<String, Object> pmap) {
 		List<Map<String, Object>> rmap = null;

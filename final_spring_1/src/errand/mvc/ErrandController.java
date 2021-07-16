@@ -160,4 +160,12 @@ public class ErrandController extends MultiActionController{
    	   errandLogic.updateErrandItemPriceNds(pmap);
      }
     
+    public void updateErrandFinish(HttpServletRequest req, HttpServletResponse res) throws Exception {
+   	   logger.info("ctrl : updateErrandFinish 호출 성공");
+   	   Map<String,Object> pmap = new HashMap<>();      
+   	   HashMapBinder hmb = new HashMapBinder(req);
+   	   hmb.bindPost(pmap);
+   	   errandLogic.updateErrandFinish(pmap);
+     }
+    
 }
