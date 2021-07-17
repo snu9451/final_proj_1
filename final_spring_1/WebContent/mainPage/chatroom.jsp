@@ -9,6 +9,7 @@
 <%--   <%@ include file="../mainPage/source_h.jsp" %> --%>
   <script src="assets/vendor/jquery/jquery.min.js"></script>
   <%@ include file="../mainPage/chatroom-script.jsp" %>
+  <script src="chatroom_info-script.js"></script>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
 <!-- <link rel="stylesheet" -->
 <!-- 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css"> -->
@@ -36,55 +37,6 @@
    		</div>
    			<div class="col s3">
 	   			<div>
-	   				<div class="notice_wrapper">
-	   				<div>
-		        		<div class="notice">
-					      <div class="left">
-					          <button class="btn btn-sm btnleft"><i class="fas fa-arrow-circle-left prev"></i></button>
-					      </div>
-					      <div class="center">
-				          	<div class="center_text">
-					            <div class="item">심부름 물품 : insert here</div>
-					            <div class="price_list">
-						            <div class="price_name">물품가 : \
-						            	<input class="price" min="0" type="number"/>
-							            <button type="button" disabled="true" id="btn_confirm" class="btn btn-success btn-sm">확인</button>
-						            </div>
-					            </div>
-					            <div>
-					            </div>
-					            <div class="errand_price">심부름 값 : insert here</div>
-					            <div class="errand_price">&nbsp</div>
-				          	</div>
-					      </div>
-					      <span class="center1">
-					            <i id="check1" class="fas fa-check-circle iconCheck"></i>
-					            <i id="check2" class="fas fa-check-circle iconCheck"></i>
-					      </span>
-				          <div class="right">
-					          <button class="btn btn-sm btnright"><i class="fas fa-arrow-circle-right next"></i></button>
-				          </div>
-			        	</div>
-	   				</div>
-			          	 <div id="notice_button">
-			          	  	<button class="btn btn-sm" type="button">
-					   	  		<i class="fas fa-bars"></i>
-					   		</button>
-			         	  </div>
-		        	</div>
-	   				<div class="notice_wrapper1">
-	   				<div>
-		        		<div class="notice1"></div>
-	   				</div>
-			          	 <div id="notice_button1">
-			          	  	<button class="btn btn-sm" type="button">
-					   	  		<i class="fas fa-bars"></i>
-					   		</button>
-			         	  </div>
-		        	</div>
-		        	<!-- <div class="btn_collapse">
-						
-		        	</div> -->
    				</div>
           	<!-- insert here : 대화 공지사항 -->
           	<ul class="collection"></ul>

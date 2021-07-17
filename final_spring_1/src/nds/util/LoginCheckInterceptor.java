@@ -27,6 +27,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		"/page/getMainPage.nds",
 		"/member/doLogin.nds",
 		"/member/selectNickName.nds",
+		"/member/insertMember.nds",
 		"/member/selectEmail.nds",
 		"/member/sendCode.nds",
 		"/member/sendSMSCode.nds",

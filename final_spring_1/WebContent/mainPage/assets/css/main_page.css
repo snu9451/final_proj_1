@@ -101,7 +101,8 @@
 
 /* 중고상품 이미지 부분 */
 .pImgBox {
-  height: 320px;
+  height: 326px;
+  width: 326px;
 }
 
 .pImgBox > img {

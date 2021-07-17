@@ -64,23 +64,43 @@ public class ErrandController extends MultiActionController{
          
    }
    /* /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
- 	public void getErrand(HttpServletRequest req, HttpServletResponse res) {
- 		HttpSession session = req.getSession();
- 		Map<String, Object> pmap = new HashMap<String, Object>();
- 		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
- 		String mem_email = (String)mvo.get("MEM_EMAIL");
- 		pmap.put("mem_email", mem_email);
- 		Map<String, Object> rmap = errandLogic.getErrand(pmap);
- 		req.setAttribute("memberMap", rmap);
- 		RequestDispatcher rd = req.getRequestDispatcher("/myPage/chatroomNotice.jsp");
- 		try {
- 			rd.forward(req, res);
- 		} catch (ServletException e) {
- 			e.printStackTrace();
- 		} catch (IOException e) {
- 			e.printStackTrace();
- 		}
- 	}
+// 	public void getErrand(HttpServletRequest req, HttpServletResponse res) {
+// 		HttpSession session = req.getSession();
+// 		Map<String, Object> pmap = new HashMap<String, Object>();
+// 		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+// 		String mem_email = (String)mvo.get("MEM_EMAIL");
+// 		pmap.put("mem_email", mem_email);
+// 		Map<String, Object> rmap = errandLogic.getErrand(pmap);
+// 		req.setAttribute("memberMap", rmap);
+// 		RequestDispatcher rd = req.getRequestDispatcher("/myPage/chatroomNotice.jsp");
+// 		try {
+// 			rd.forward(req, res);
+// 		} catch (ServletException e) {
+// 			e.printStackTrace();
+// 		} catch (IOException e) {
+// 			e.printStackTrace();
+// 		}
+// 	}
+	public void jsonGetErrand(HttpServletRequest req, HttpServletResponse res) {
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bindPost(pmap);
+		logger.info(pmap);
+		List<Map<String, Object>> rmap = errandLogic.jsonGetErrand(pmap);
+		Gson g = new Gson();
+		String data = g.toJson(rmap);
+		AjaxDataPrinter.out(res, "application/json", data);
+	}
+	public void jsonGetErrandInfo(HttpServletRequest req, HttpServletResponse res) {
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bindPost(pmap);
+		logger.info(pmap);
+		Map<String, Object> rmap = errandLogic.jsonGetErrandInfo(pmap);
+		Gson g = new Gson();
+		String data = g.toJson(rmap);
+		AjaxDataPrinter.out(res, "application/json", data);
+	}
  	public void insertErrand(HttpServletRequest req, HttpServletResponse res) {
  		logger.info("insertErrand 메소드 호출 성공!");
  		Map<String, Object> pmap = new HashMap<String, Object>();
@@ -94,6 +114,13 @@ public class ErrandController extends MultiActionController{
  		HashMapBinder hmb = new HashMapBinder(req);
  		hmb.bindPost(pmap);
  		errandLogic.insertErrandDenied(pmap);
+ 	}
+ 	public void insertErrandInfo(HttpServletRequest req, HttpServletResponse res) {
+ 		logger.info("insertErrandInfo 메소드 호출 성공!");
+ 		Map<String, Object> pmap = new HashMap<String, Object>();
+ 		HashMapBinder hmb = new HashMapBinder(req);
+ 		hmb.bindPost(pmap);
+ 		errandLogic.insertErrandInfo(pmap);
  	}
  						/* 확인했으면 주석을 지우셔도 됩니다. */
  	/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */
@@ -116,5 +143,29 @@ public class ErrandController extends MultiActionController{
  	   }
  	   errandLogic.errandRecordUpdate(pmap);
     }
- 	
+    
+    public void updateErrandInfo(HttpServletRequest req, HttpServletResponse res) throws Exception {
+  	   logger.info("ctrl : updateErrandInfo 호출 성공");
+  	   Map<String,Object> pmap = new HashMap<>();      
+  	   HashMapBinder hmb = new HashMapBinder(req);
+  	   hmb.bindPost(pmap);
+  	   errandLogic.updateErrandInfo(pmap);
+     }
+    
+    public void updateErrandItemPriceNds(HttpServletRequest req, HttpServletResponse res) throws Exception {
+   	   logger.info("ctrl : updateErrandItemPriceNds 호출 성공");
+   	   Map<String,Object> pmap = new HashMap<>();      
+   	   HashMapBinder hmb = new HashMapBinder(req);
+   	   hmb.bindPost(pmap);
+   	   errandLogic.updateErrandItemPriceNds(pmap);
+     }
+    
+    public void updateErrandFinish(HttpServletRequest req, HttpServletResponse res) throws Exception {
+   	   logger.info("ctrl : updateErrandFinish 호출 성공");
+   	   Map<String,Object> pmap = new HashMap<>();      
+   	   HashMapBinder hmb = new HashMapBinder(req);
+   	   hmb.bindPost(pmap);
+   	   errandLogic.updateErrandFinish(pmap);
+     }
+    
 }

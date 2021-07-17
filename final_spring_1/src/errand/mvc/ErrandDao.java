@@ -22,12 +22,12 @@ public class ErrandDao {
       return errandRecord;
    }
    /* /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/작성자:신우형\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
-	public Map<String, Object> getErrand(Map<String, Object> pmap) {
-		Map<String, Object> rmap = new HashMap<String, Object>();
-		rmap = sqlSessionTemplate.selectOne("getErrand", pmap);
-		logger.info("DAO rmap ===> "+rmap);
-		return rmap;
-	}
+//	public Map<String, Object> getErrand(Map<String, Object> pmap) {
+//		Map<String, Object> rmap = new HashMap<String, Object>();
+//		rmap = sqlSessionTemplate.selectOne("getErrand", pmap);
+//		logger.info("DAO rmap ===> "+rmap);
+//		return rmap;
+//	}
 
 	public void insertErrand(Map<String, Object> pmap) {
 		// updatePw라는 프로시저를 실행함.
@@ -43,12 +43,47 @@ public class ErrandDao {
 		sqlSessionTemplate.insert("insertErrandDenied", pmap);
 		logger.info(pmap);
 	}
+
+	public void insertErrandInfo(Map<String, Object> pmap) {
+		logger.info("ErrandDao : insertErrandInfo 호출 성공");
+		sqlSessionTemplate.insert("insertErrandInfo", pmap);
+		logger.info(pmap);
+	}
 						/* 확인했으면 주석을 지우셔도 됩니다. */
 	/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */
 
 	public void errandRecordUpdate(Map<String, Object> pmap) {
 		logger.info("dao : errandRecordUpdate 호출 성공");
 		sqlSessionTemplate.update("errandRecordUpdate", pmap);
+	}
+
+	public void updateErrandInfo(Map<String, Object> pmap) {
+		logger.info("dao : updateErrandInfo 호출 성공");
+		sqlSessionTemplate.update("updateErrandInfo", pmap);
+	}
+
+	public void updateErrandItemPriceNds(Map<String, Object> pmap) {
+		logger.info("dao : updateErrandItemPriceNds 호출 성공");
+		sqlSessionTemplate.update("updateErrandItemPriceNds", pmap);
+	}
+
+	public void updateErrandFinish(Map<String, Object> pmap) {
+		logger.info("dao : updateErrandFinish 호출 성공");
+		sqlSessionTemplate.update("updateErrandFinish", pmap);
+	}
+
+	public List<Map<String, Object>> jsonGetErrand(Map<String, Object> pmap) {
+		List<Map<String, Object>> rmap = null;
+		rmap = sqlSessionTemplate.selectList("jsonGetErrand", pmap);
+		logger.info("DAO rmap ===> "+rmap);
+		return rmap;
+	}
+
+	public Map<String, Object> jsonGetErrandInfo(Map<String, Object> pmap) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap = sqlSessionTemplate.selectOne("jsonGetErrandInfo", pmap);
+		logger.info("DAO rmap ===> "+rmap);
+		return rmap;
 	}
 
 }

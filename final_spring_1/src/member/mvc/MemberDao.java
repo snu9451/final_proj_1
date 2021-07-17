@@ -234,6 +234,7 @@ public class MemberDao {
 
 
 
+
 	public int insertCoinTrans(Map<String, Object> pmap) {
 		int result = 0;
 		logger.info(pmap);
@@ -274,6 +275,44 @@ public class MemberDao {
 		sqlSessionTemplate.selectOne("deleteTradeRec",pmap);
 		logger.info("pmap ===> "+pmap);
 	}
+	
+	public void starRatingGrant(Map<String, Object> pmap) {
+		logger.info("Dao starRatingGrant 호출성공");
+		sqlSessionTemplate.update("star_rating_1",pmap);
+		sqlSessionTemplate.update("star_rating_2",pmap);
+	}
+
+
+
+
+
+
+
+
+	public List<Map<String, Object>> errandSelect(Map<String, Object> pmap) {
+		List<Map<String, Object>> pmap1 = null;
+		logger.info(pmap);
+		pmap1 = sqlSessionTemplate.selectList("selectUserErrand",pmap);
+		logger.info(pmap1);
+		return pmap1;
+	}
+
+
+
+
+
+
+
+	public List<Map<String, Object>> sellList(Map<String, Object> pmap) {
+		logger.info("Dao : sellList 메소드 호출");
+		List<Map<String, Object>> sellList = null;
+		sellList = sqlSessionTemplate.selectList("selectUserSellList", pmap);
+		logger.info("pmap ===> "+pmap);
+		//결과 값만 전송
+		return sellList;
+	}
+
+
 
 
 }
