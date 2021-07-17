@@ -110,8 +110,8 @@
    </update>
 <!-- ==================================== [[ ＩＮＳＥＲＴ ]] ==================================== -->
 	<insert id="insertMember">
-		INSERT INTO member(mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_star_num)
-		VALUES(#{mem_email}, '1.png', #{mem_nickname}, #{mem_pw}, #{mem_gender}, #{mem_age}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), #{issocial}, 'T', 0, 0, #{mem_phone}, 0)
+		INSERT INTO member(mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_errand_mode ,mem_star_num)
+		VALUES(#{mem_email}, '1.png', #{mem_nickname}, #{mem_pw}, #{mem_gender}, #{mem_age}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), 'F', 'T', 0, 0, #{mem_phone}, 'R', 0)
 	</insert>
 	<insert id="insertCoinTrans">
 		INSERT INTO coin_trans

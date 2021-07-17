@@ -181,10 +181,8 @@
 	}
 	//채팅방에 입장했을 때 UI생성
 	function init(){
-		if(MAXINDEX == -1) {
-			if(roomKey!="null") {
-				getChatMsg();
-			}
+		if(roomKey!="null") {
+			getChatMsg();
 		}
 	}
 	//채팅방 새로 개설
@@ -298,6 +296,7 @@
 			if(mem_email!=sender && read==1) {
 				reading.child(msgKey).update({read:""});
 			}
+	        console.log(msg);
 		});
 		updateRead();
 	}
