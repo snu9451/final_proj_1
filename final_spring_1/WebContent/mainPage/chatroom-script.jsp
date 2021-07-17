@@ -181,7 +181,7 @@
 	}
 	//채팅방에 입장했을 때 UI생성
 	function init(){
-		if(roomKey!="null") {
+		if(MAXINDEX==-1) {
 			getChatMsg();
 		}
 	}
