@@ -32,6 +32,37 @@ if(session.getAttribute("login") != null){
     display: inline-block;
     color: #cccccc;
 }
+
+.star-rating {
+ display: flex;
+ padding-top : 25px;
+ flex-direction: row-reverse;
+ font-size: 50px;
+ justify-content: center;
+ text-align: center;
+ width: 5em;
+}
+
+.star-rating input {
+ display: none;
+}
+
+.star-rating label {
+ -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+/*   -webkit-text-stroke-width: 0.3px; */
+/*   -webkit-text-stroke-color: #2b2a29; */
+ -webkit-text-fill-color: #cccccc;
+ cursor: pointer;
+}
+
+.star-rating :checked ~ label {
+ -webkit-text-fill-color: #ff9600;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+ -webkit-text-fill-color: #ff9600;
+}
 </style>
 <script type="text/javascript">
 let roomKey = "null";
@@ -214,6 +245,51 @@ $(document).ready(function() {
         	 }
           });
         }
+        else if(type=="doneReq") {
+        	$.ajax({
+	           	 type:'post',
+	           	 url:'/member/jsonSelectMember.nds',
+	           	 data:{"mem_email":snapVal.rider},
+	           	 success:function(data){
+	             	starRatingModal(snapshot.key, data.MEM_EMAIL, data.MEM_NICKNAME, data.MEM_IMG);
+	    			$('.star').off('click').on('click', function(){
+		  				  $('#btn_starGrant').attr('disabled', false);
+		  			});
+		  			$('#btn_starGrant').off('click').click(function(){
+		  			  let sdata =  $('#starSubmit').serialize();
+		  			  $.ajax({
+		  			     url : "/member/starRatingGrant.nds",
+		  			     type : "post",
+		  			     data: sdata,
+		  			     success : function(data) {
+		  			     	 makeModal("starRatingComplete", "별점이 반영되었습니다.");
+			  			     $("#starRatingComplete").modal("show");
+		  			     },
+		  			     error : function(e) {
+		  			
+		  			     }
+		  			  });
+		  			});
+		  		    $("#"+snapshot.key).find(".btn-primary").click(function(){
+		  		      refAlert.child(snapshot.key).remove();
+		  		    });
+		  			$("#"+snapshot.key).find("#image_section").css({
+		  			  'width': '200px',
+			  		  'height': '200px',
+			  		  'border-radius': '50%',
+			  		  'border': '2px solid #ffc37b',
+			  		  'margin': 'auto'
+		  			});
+		  			$("#"+snapshot.key).modal("show");
+	           	 },
+	           	 error:function(e){
+	           		 console.log(e);
+	           	 }
+            });
+        }
+        else if(type=="doneNds") {
+            justOK(snapshot.key, snapVal.content);
+        }
         else
           console.log("nothing");
       }
@@ -313,6 +389,58 @@ $(document).ready(function() {
     $("body").append(html);
     rateIt();
   }
+  
+  //심부름 완료 시 평점부여 모달 starRatingGrant
+function starRatingModal(alertKey, dest_email, dest_nickname, dest_img){
+	  let html = 
+			  "<div>"
+			    +"<div class=\"modal fade\" id=\""+alertKey+"\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"logIn\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">"
+			      +"<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">"
+			        +"<div class=\"modal-content\">"
+			          +"<div class=\"modal-header\">"
+			            +"<h3 class=\"modal-title\" id=\"exampleModalLongTitle\" style=\"font-size : 20px; font-weight:bold\">"
+			            +"<i class=\"fas fa-info-circle\" style=\"color : green\"></i> 내 동생의 별점을 매겨주세요! </h3>"
+			            +"</button>"
+			          +"</div>"
+			          +"<div class=\"modal-body text-center d-flex justify-content-center\">"
+			            +"<div class=\"col-12 log__box d-flex flex-column justify-content-center\">"
+			              +"<div>"
+			                 +"<div class=\"col-12 d-flex flex-column\">"
+			                    +"<div>"
+			                        +"<img class=\"img_upload\" id=\"image_section\" src=\"/myPage/assets/img/profile/"+dest_img+"\"/>"
+			                 +"</div>"
+			                    +"<div class=\"nickDiv\">"
+			                       +"<h4 class=\"con_nick\" style=\"font-size : 30px; padding-top: 15px;\">"+dest_nickname+"</h4>"
+			                 +"</div>"
+			                 +"<form id=\"starSubmit\">"
+			                        +"<div class=\"star-rating space-x-4 mx-auto\">"
+			                       +"<input type=\"hidden\" name=\"mem_email\" value=\""+dest_email+"\"/>"
+			                       +"<input type=\"radio\" id=\"5-stars\" name=\"rating\" value=\"5\" v-model=\"ratings\"/>"
+			                       +"<label for=\"5-stars\" class=\"star\"><i class=\"fas fa-star\"></i></label>"
+			                       +"<input type=\"radio\" id=\"4-stars\" name=\"rating\" value=\"4\" v-model=\"ratings\"/>"
+			                       +"<label for=\"4-stars\" class=\"star\"><i class=\"fas fa-star\"></i></label>"
+			                       +"<input type=\"radio\" id=\"3-stars\" name=\"rating\" value=\"3\" v-model=\"ratings\"/>"
+			                       +"<label for=\"3-stars\" class=\"star\"><i class=\"fas fa-star\"></i></label>"
+			                       +"<input type=\"radio\" id=\"2-stars\" name=\"rating\" value=\"2\" v-model=\"ratings\"/>"
+			                       +"<label for=\"2-stars\" class=\"star\"><i class=\"fas fa-star\"></i></label>"
+			                       +"<input type=\"radio\" id=\"1-star\" name=\"rating\" value=\"1\" v-model=\"ratings\" />"
+			                       +"<label for=\"1-star\" class=\"star\"><i class=\"fas fa-star\"></i></label>"
+			                    +"</div>"
+			                 +"</form>"
+			                 +"</div>"
+			              +"</div>"
+			            +"</div>"
+			          +"</div>"
+			          +"<div class=\"modal-footer\">"
+			            +"<button type=\"button\" class=\"btn btn-primary\" disabled=\"true\" id=\"btn_starGrant\" data-dismiss=\"modal\">확인</button>"
+			          +"</div>"
+			        +"</div>"
+			      +"</div>"
+			    +"</div>"
+			  +"</div>";
+	    $("body").append(html);
+}
+  
   function rateIt() {
 	  ratings = { destRatingScore: $("#destratingScore").val()*1 }//////<-별점 inserthere
 	  totalRating = 5;

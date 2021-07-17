@@ -231,6 +231,11 @@ public class MemberLogic {
 		memberDao.deleteTradeRec(pmap);
 		
 	}
+	
+	public void starRatingGrant(Map<String, Object> pmap) {
+	      logger.info("starRatingGrant 호출성공");
+	   memberDao.starRatingGrant(pmap);
+	}
 
 
 

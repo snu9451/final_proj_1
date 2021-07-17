@@ -274,6 +274,12 @@ public class MemberDao {
 		sqlSessionTemplate.selectOne("deleteTradeRec",pmap);
 		logger.info("pmap ===> "+pmap);
 	}
+	
+	public void starRatingGrant(Map<String, Object> pmap) {
+		logger.info("Dao starRatingGrant 호출성공");
+		sqlSessionTemplate.update("star_rating_1",pmap);
+		sqlSessionTemplate.update("star_rating_2",pmap);
+	}
 
 
 }

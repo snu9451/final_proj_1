@@ -224,6 +224,7 @@ function initNotice(){
 														      content: "심부름이 완료되었습니다!",
 														      type: "doneReq",
 														      timestamp : getTime(),
+															  rider : dest_email,
 														      active : 1
 														    };
 														    firebase.database().ref("alert/"+mem_email).push().update(alertData);

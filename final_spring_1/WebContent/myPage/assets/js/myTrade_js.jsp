@@ -115,7 +115,16 @@ pageEncoding="UTF-8"%>
         
         let seller_list = "";
         if(data.length <= 0) {
-        	seller_list += "<h3>거래내역이 존재하지 않습니다.</h3>"
+			  seller_list +="<div class='mt-3 text-center'>"
+			  seller_list +="	<span style='font-size: 100px;'>"
+			  seller_list +="		<i class='fas fa-shopping-basket' style='color: #627ea4;'></i>"
+			  seller_list +="	</span>"
+			  seller_list +="	<h3>"
+			  seller_list +="		거래내역이 존재하지 않습니다."
+			  seller_list +="	</h3>"
+			  seller_list +="</div>"
+	          $("#products").empty();
+	          $("#forNoRecord").html(seller_list);
         } else{
 	        for (i = 0; i < data.length; i++) {
 	        	let status = data[i].BM_STATUS;
@@ -188,7 +197,16 @@ pageEncoding="UTF-8"%>
         let bm_price;
         let buyer_list = "";
         if(data.length <= 0) {
-        	buyer_list += "<h3>거래내역이 존재하지 않습니다.</h3>"
+			buyer_list +="<div class='mt-3 text-center'>"
+			buyer_list +="	<span style='font-size: 100px;'>"
+			buyer_list +="		<i class='fas fa-shopping-basket' style='color: #627ea4;'></i>"
+			buyer_list +="	</span>"
+			buyer_list +="	<h3>"
+			buyer_list +="		거래내역이 존재하지 않습니다."
+			buyer_list +="	</h3>"
+			buyer_list +="</div>"
+        	$("#products").empty();
+        	$("#forNoRecord").html(buyer_list);
         } else{
 	        for (i = 0; i < data.length; i++) {
 	          bm_price = data[i].BM_PRICE.toLocaleString();

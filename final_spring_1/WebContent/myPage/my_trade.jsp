@@ -35,6 +35,8 @@
 			</div>
 			<div>
 				<span id="itemCount" class="total_rec coin2">num</span>
+				<div id="forNoRecord">
+				</div>
 				<table class="like_tb" id="products">
 					<form action="" id="setRows">
 						<input type="hidden" name="rowPerPage" value="4" id="rowPerPage">

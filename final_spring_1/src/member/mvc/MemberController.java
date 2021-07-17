@@ -54,11 +54,11 @@ public class MemberController extends MultiActionController {
 		logger.info("NickName으로 조회한 결과 ===> "+rmap);
 		// 중복이 아닌 경우: 같은 닉네임을 갖는 회원이 없는 경우
 		if(rmap == null) {
-			AjaxDataPrinter.out(res, "text/html", "<h4 style=\"font-size : 15px; color : green; font-weight:bold\">사용 가능한 닉네임입니다.</h4>");
+			AjaxDataPrinter.out(res, "text/html", "<h4 value=\"1\" style=\"font-size : 15px; color : green; font-weight:bold\">사용 가능한 닉네임입니다.</h4>");
 		}
 		// 중복인 경우: 같은 닉네임을 갖는 회원이 있는 경우
 		else {
-			AjaxDataPrinter.out(res, "text/html", "<h4 style=\"font-size : 15px; color : red; font-weight:bold\">이미 사용중인 닉네임입니다.</h4>");
+			AjaxDataPrinter.out(res, "text/html", "<h4 value=\"1\" style=\"font-size : 15px; color : red; font-weight:bold\">이미 사용중인 닉네임입니다.</h4>");
 		}
 	}
 	// 이메일 중복 검사 - 회원가입 링크 전송
@@ -178,6 +178,7 @@ public class MemberController extends MultiActionController {
 	// 회원가입 모달에서 확인 버튼 클릭 시
 	// 테스트: http://localhost:9696/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
 	public ModelAndView insertMember(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
+		logger.info("insertMember 호출성공!!");
 		// request 객체에 담긴 정보를 map으로 옮겨 담기
 		Map<String, Object> pmap = new HashMap<String, Object>();
 		HashMapBinder hmb = new HashMapBinder(req);
@@ -189,14 +190,14 @@ public class MemberController extends MultiActionController {
 			doLogin(req, res);
 			// 메인 페이지로 이동
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("mainPage");
+			mav.setViewName("/mainPage/main_page.jsp");
 			return mav;
 		}
 		// 처리 실패 시
 		else {
 			AjaxDataPrinter.out(res, "text/html", "NDS::ERROR!");
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("errorPage");
+			mav.setViewName("/mainPage/invalid.jsp");
 			return mav;
 		}
 	}
@@ -446,6 +447,20 @@ public class MemberController extends MultiActionController {
 		memberLogic.deleteMyLike(pmap);
 		logger.info("controller의 pmap : "+ pmap );
 	}
+	
+   //심부름 완료시에 별점 반영
+   public void starRatingGrant(HttpServletRequest req, HttpServletResponse res) {
+      logger.info("starRatingGrant 메소드 호출 성공!");
+      //HttpSession session = req.getSession();
+      Map<String, Object> pmap = new HashMap<>();
+      //pmap = (Map<String, Object>)session.getAttribute("login");
+      //String mem_email = (String)pmap.get("MEM_EMAIL");
+      //pmap.put("mem_email", mem_email);
+      HashMapBinder hmb = new HashMapBinder(req);
+      hmb.bindPost(pmap);
+      logger.info(pmap);
+      memberLogic.starRatingGrant(pmap);
+   }
 	
 	
 	
@@ -868,7 +883,7 @@ public class MemberController extends MultiActionController {
 		String receiver = (String)pmap.get("mem_phone");
 		// 랜덤한 인증코드 생성
 		String randomCode = memberLogic.getRandomCode("ON", 6);
-//		randomCode = "123456";	// 테스트용 인증코드 :: 시연할 때에는 이 부분 지우고 해야함.
+		randomCode = "123456";	// 테스트용 인증코드 :: 시연할 때에는 이 부분 지우고 해야함.
 		// 메세지로 보낼 내용 설정
 		String content= "【내동생】 인증번호 [ "+randomCode+" ]를 정확히 입력해주세요.";
 		SMS sms = new SMS();
