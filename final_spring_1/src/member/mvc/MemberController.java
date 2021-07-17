@@ -447,6 +447,20 @@ public class MemberController extends MultiActionController {
 		logger.info("controller의 pmap : "+ pmap );
 	}
 	
+   //심부름 완료시에 별점 반영
+   public void starRatingGrant(HttpServletRequest req, HttpServletResponse res) {
+      logger.info("starRatingGrant 메소드 호출 성공!");
+      //HttpSession session = req.getSession();
+      Map<String, Object> pmap = new HashMap<>();
+      //pmap = (Map<String, Object>)session.getAttribute("login");
+      //String mem_email = (String)pmap.get("MEM_EMAIL");
+      //pmap.put("mem_email", mem_email);
+      HashMapBinder hmb = new HashMapBinder(req);
+      hmb.bindPost(pmap);
+      logger.info(pmap);
+      memberLogic.starRatingGrant(pmap);
+   }
+	
 	
 	
 	// ===================================== [[ DELETE ]] =====================================

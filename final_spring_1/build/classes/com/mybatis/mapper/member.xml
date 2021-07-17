@@ -98,6 +98,16 @@
 	   {CALL proc_my_like_change(#{pr_MEM_EMAIL}, #{pr_BM_NO}
 	                  , #{i_like, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
 	</update>
+   <update id="star_rating_1" parameterType="map">
+        UPDATE member
+           SET mem_star_num = mem_star_num+'1'
+          WHERE mem_email = #{mem_email}
+   </update>
+   <update id="star_rating_2" parameterType="map">
+         UPDATE member
+            SET mem_star = ((mem_star * (mem_star_num -1))+ #{rating}) / mem_star_num
+        WHERE mem_email = #{mem_email}
+   </update>
 <!-- ==================================== [[ ＩＮＳＥＲＴ ]] ==================================== -->
 	<insert id="insertMember">
 		INSERT INTO member(mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_star_num)
