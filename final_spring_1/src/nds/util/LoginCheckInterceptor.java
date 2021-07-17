@@ -36,7 +36,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		"/item/andselectItemList.nds",
 		"/item/andselectBySearch.nds",
 		"/item/selectBySearch.nds",
-		"/item/selectByCategory.nds"
+		"/item/selectByCategory.nds",
+		"/item/andselectItemDetail.nds",
+		"/item/andDeleteComment.nds",
+		"/item/andInsertComment.nds",
+		"/item/andDeleteItem.nds"
 	};
 	
 	@Override

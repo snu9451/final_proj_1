@@ -294,6 +294,37 @@ public class ItemController extends MultiActionController {
 		return mav;
 
 	}
+	
+	//안드로이드 - 사용자가 하나의 제품을 클릭 시 가져 오게 되는 상품
+	public void andSelectItemDetail(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		logger.info("controller : andSelectItemDetail메소드 호출");
+		//front : key는  "pr_bm_no" ,pr_MEM_EMAIL,pr_MEM_NICKNAME / value 값은 상품 번호
+		Map<String,Object> pmap = new HashMap<>();
+		String pr_MEM_EMAIL = "grape@good.com";
+		String pr_MEM_NICKNAME = "포도";
+		//값들을 넣어줌
+		int pr_bm_no = Integer.parseInt(req.getParameter("pr_bm_no").toString());
+		//상품의 내용을 가져온다.
+		//상품의 정보를 다 담는다.
+		//결과값 {BM_PRICE=120000, BM_NO=3, BM_CONTENT=선물 받았는데 있어서 팔아요, SELLER_NICKNAME=딸기, BM_LIKE=2, BM_HIT=200, BM_DATE=2020-06-19 15:46:41, BM_STATUS=N, I_LIKE=1, BM_TITLE=샤넬 향수 새거 팔아요}
+		//seller_me = 1 이면 판매자와 내가 동일 인물임 0이면 아니고
+		Map<String,Object> items = itemLogic.selectItemDetailContext(pr_MEM_EMAIL,pr_bm_no,pr_MEM_NICKNAME);
+		//상품의 사진들을 가져온다
+		List<String> itemImgs = itemLogic.selectItemDetailImgs(pr_bm_no);
+		//상품의 댓글들을 가져온다
+		List<Map<String, Object>> itemComments = itemLogic.selectItemDetailComment(pr_bm_no,pr_MEM_NICKNAME);
+		//상품 사진 결과값[4.png]
+		items.put("itemImgs", itemImgs);
+		//댓글들 달기
+		//p_temp=[{COMMENT_STEP=1, MEM_NICKNAME=포도, COMMENT_DATE=2020-06-17 16:46:41, COMMENT_MSG=네고 가능한가요?, COMMENT_ME=0, COMMENT_POS=0, COMMENT_GROUP=1}]
+		//COMMENT_POS=0이면 댓글, 1이면 대댓글
+		//p_temp=[{COMMENT_STEP=1,, COMMENT_POS=0, COMMENT_GROUP=1}]
+		items.put("itemComments", itemComments);
+		//Json 형태로 가져오기
+		Gson g = new Gson();
+		String itemsJson = g.toJson(items);
+		AjaxDataPrinter.out(res,"text/html;charset=utf-8",itemsJson);
+	}
 
 	
 	//상품 삭제
@@ -309,6 +340,18 @@ public class ItemController extends MultiActionController {
 		itemLogic.deleteItem(pmap);
 		//페이지 전송
 		res.sendRedirect("/item/main_page.jsp");
+	}
+	//안드로이드 상품 삭제
+	public void andDeleteItem(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		logger.info("controller : andDeleteItem메소드 호출");
+		//front : key는 "br_sel_buy" && value는 구매자일 경우 "buy" , 판매자일 경우 "sel"
+		//        key는 "pr_bm_no"   && value값은 상품 번호
+		Map<String,Object> pmap = new HashMap<>();
+		//값들을 넣어줌
+		pmap.put("br_sel_buy", req.getParameter("br_sel_buy")); 
+		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));	
+		//상품을 삭제한다.
+		itemLogic.deleteItem(pmap);
 	}
 	
 	//상품 판매 완료 클릭 시
@@ -370,6 +413,23 @@ public class ItemController extends MultiActionController {
 		mav.addObject("comments", comments);
 		return mav;
 	}
+	//안드로이드: 댓글 등록 - 댓글인지 대댓글인지 구분
+	public void andInsertComment(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("controller : insertComment메소드 호출");
+		//front : key는 "pr_comment_msg"  / "pr_comment_group"                              / "pr_comment_pos"     / "pr_mem_nickname" / "pr_bm_no"
+		//      value는  메세지 내용        / 댓글이면 0이고, 대댓글이면 댓글의 pr_comment_group로 가져온다.    댓글이면 0, 대댓글이면 1    닉네임               게시판 번호
+		//한글 처리
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		HttpSession session = req.getSession();
+		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		//String mem_nickname = (String)login.get("MEM_NICKNAME");
+		//pmap.put("pr_mem_nickname", mem_nickname);
+		pmap.put("pr_mem_nickname", "사과"); //운래는 세션처리
+		hmb.bindPost(pmap);
+		////댓글 넣기
+		itemLogic.insertComment(pmap);
+	}
 	
 	//댓글 삭제 - 댓글인지 대댓글인지 구분
 	public void deleteComment(HttpServletRequest req, HttpServletResponse res){
@@ -382,6 +442,15 @@ public class ItemController extends MultiActionController {
 		//여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
 		//- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
 		AjaxDataPrinter.out(res,result);
+	}
+	//댓글 삭제 - 댓글인지 대댓글인지 구분
+	public void andDeleteComment(HttpServletRequest req, HttpServletResponse res){
+		logger.info("controller : andDeleteComment메소드 호출");
+		//front : key는 "p_comment_step" && value는 숫자를 가져오면 된다. (comment_step는 댓글의 시퀀스 번호임)
+		Map<String,Object> pmap = new HashMap<>();
+		//값을 넣어줌
+		pmap.put("pr_comment_step", req.getParameter("p_comment_step"));
+		String result = itemLogic.deleteComment(pmap);
 	}
 	
 	
