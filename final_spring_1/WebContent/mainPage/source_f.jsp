@@ -33,7 +33,7 @@
 <!--   Google Map Script -->
 <!--   Async script executes immediately and must be after any DOM elements used in callback. -->
 				<!-- 지도, 심부름 테스트를 위해 구글맵 api 주석처리를 풀어둠 -->
-<!--    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4pd9w90oFRuCZOILRd07MBwVAthwIbIA&region=kr" async></script>
-   <script defer src="./google_map/src/main.js"></script> --><!-- 김은영작업-->
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4pd9w90oFRuCZOILRd07MBwVAthwIbIA&region=kr" async></script>
+   <script defer src="./google_map/src/main.js"></script><!-- 김은영작업-->
 						<!-- 확인했으면 주석을 지우셔도 됩니다. -->
 <!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->

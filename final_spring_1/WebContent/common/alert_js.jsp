@@ -270,7 +270,7 @@ $(document).ready(function() {
 	            +"<div class=\"row justify-content-between align-items-center\">"
 	              +"<div class=\"col-lg-3 w-100 h-100 d-flex flex-column align-items-center\" id=\"profileBox\">"
 	                +"<div class=\"profileImg\" id=\"profileImg\">"
-	                  +"<img class=\"w-100\" src=\""+dest_img+"\" alt=\"profileImg\" width=150px height=150px style=\"border-radius: 25%\">"
+	                  +"<img class=\"w-100\" src=\"/myPage/assets/img/profile/"+dest_img+"\" alt=\"profileImg\" width=150px height=150px style=\"border-radius: 25%\">"
 	                +"</div>"
 	                +"<div>"
 	                  +"<h5 class=\"mt-3\" id=\"profileName\">"
@@ -373,7 +373,7 @@ $(document).ready(function() {
 		//메세지를 파이어베이스에 저장
 		let reading = firebase.database().ref("chatrooms/" + roomKey + "/comments");
 		reading.push().set({
-			message : "심부름이 시작되었습니다",
+			message : "[심부름이 시작되었습니다]",
 			timestamp : getTime(),
 			uid : mem_email,
 			read : 1
@@ -420,11 +420,21 @@ $(document).ready(function() {
 								                    "nds_isShow":"T"
 											},
 											success:function(data){
-												console.log("ajax success");
-									            acceptErrand(errandKey, dest_email, area_no);
-									            refAlert.child(alertKey).remove();
-// 									            refAlert.child(alertKey).update({ active : 0 });
-									            window.open('/mainPage/chatroom.jsp?dest_email='+dest_email+'','','width=550px, height=900px');
+												$.ajax({
+													type:'post',
+													url:'/errand/insertErrandInfo.nds',
+													data:{"errandKey":errandKey},
+													success:function(data){
+														console.log("ajax success");
+											            acceptErrand(errandKey, dest_email, area_no);
+											            refAlert.child(alertKey).remove();
+//		 									            refAlert.child(alertKey).update({ active : 0 });
+											            window.open('/mainPage/chatroom.jsp?dest_email='+dest_email+'','','width=550px, height=900px');
+													},
+													error:function(e){
+														console.log(e);
+													}
+												});
 											},
 											error:function(e){
 												console.log(e);

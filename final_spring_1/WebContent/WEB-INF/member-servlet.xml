@@ -51,6 +51,8 @@
 				<prop key="/member/deleteMyLike.nds">member-controller</prop>
 				<prop key="/member/selectMyTrade.nds">member-controller</prop>
 				<prop key="/member/deleteTradeRec.nds">member-controller</prop>
+				<prop key="/member/insertCoinTrans.nds">member-controller</prop>
+				<prop key="/member/updateMemberCoin.nds">member-controller</prop>
 				<!-- ================== [[ 페이지 요청 url ]] ================== -->
 				<prop key="/myPage/my_info.nds">member-controller</prop>
 				<prop key="/myPage/my_wallet.nds">member-controller</prop>
@@ -95,6 +97,8 @@
 				<prop key="/member/deleteMyLike.nds">deleteMyLike</prop>
 				<prop key="/member/selectMyTrade.nds">selectMyTrade</prop>
 				<prop key="/member/deleteTradeRec.nds">deleteTradeRec</prop>
+				<prop key="/member/insertCoinTrans.nds">insertCoinTrans</prop>
+				<prop key="/member/updateMemberCoin.nds">updateMemberCoin</prop>
 				<!-- ================== [[ 페이지 이동 url ]] ================== -->
 				<prop key="/myPage/my_info.nds">selectMember</prop>
 				<prop key="/myPage/my_wallet.nds">getMyWallet</prop>

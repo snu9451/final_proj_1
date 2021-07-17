@@ -90,8 +90,9 @@
 			<if test='mem_nickname!=null'>mem_nickname = #{mem_nickname}</if>
 			<if test='change_img!=null'>mem_img = #{change_img}</if>
 			<if test='coin_remain!=null'>coin_remain = #{coin_remain}</if>
+			<if test='coin!=null'>coin_remain = coin_remain + #{coin}</if>
 		</set>
-		 WHERE mem_email = #{mem_email}
+		 WHERE mem_email LIKE #{mem_email} || '%'
 	</update>
 	<update id="my_like_change" statementType="CALLABLE" parameterType="map">
 	   {CALL proc_my_like_change(#{pr_MEM_EMAIL}, #{pr_BM_NO}
@@ -99,8 +100,8 @@
 	</update>
 <!-- ==================================== [[ ＩＮＳＥＲＴ ]] ==================================== -->
 	<insert id="insertMember">
-		INSERT INTO member(mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_errand_mode ,mem_star_num)
-		VALUES(#{mem_email}, '1.png', #{mem_nickname}, #{mem_pw}, #{mem_gender}, #{mem_age}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), 'F', 'T', 0, 0, #{mem_phone}, 'R', 0)
+		INSERT INTO member(mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_star_num)
+		VALUES(#{mem_email}, '1.png', #{mem_nickname}, #{mem_pw}, #{mem_gender}, #{mem_age}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), #{issocial}, 'T', 0, 0, #{mem_phone}, 0)
 	</insert>
 	<insert id="insertCoinTrans">
 		INSERT INTO coin_trans

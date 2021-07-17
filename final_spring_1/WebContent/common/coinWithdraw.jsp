@@ -25,7 +25,7 @@
         	<!-- 현재 남은 코인 -->
           <div class="form-group">
          	 <label>현재 남은 코인 : </label>
-         	 <label id="currentCoin" style="font-size:30px; color : #ffc37b; font-weight:bold;">
+         	 <label style="font-size:30px; color : #ffc37b; font-weight:bold;">
          	 	<%=coin_remain %>
          	 </label>
          	 <label> 원</label> 
@@ -33,61 +33,25 @@
              <input type="hidden" value="<%=coin_remain %>" id="remainCoin"/>
              <!-- 츨금할 금액 입력 --> 
             <div class="form-group">
-            	<input type="number" class="form-control" id="input_withdrawCost" min="0" placeholder="출금하실 금액을 입력해주세요." disabled/>
+            	<input type="number" class="form-control" id="input_withdrawCost" placeholder="출금하실 금액을 입력해주세요."/>
             	<small class="p-3">
-            		7% 수수료를 제외한 실제 출금 금액은: <label id="showCost" style="color: #ffc37b"></label> 
+            		7% 수수료를 제외한 실제 출금 금액은: <label id="getCost">insert cost</label> 
             	</small>
             </div>
             <!-- 계좌번호 입력 -->
-            <div class="form-group">
-	            <input type="text" class="form-control" id="input_account" placeholder="계좌번호를 입력해주세요."/>
-	            <div id="account_digits_box">
-	            	<small id="account_digits" class="p-3">"계좌번호 16자리를 입력해주세요."</small>
-	            </div>
-            </div>
-            
+            <input type="text" class="form-control mb-3" id="input_withdrawCost" placeholder="계좌번호를 입력해주세요."/>
             <!-- 인증번호 입력 -->
-<!--             <div class="form-inline justify-content-around">
-            	<input type="text" class="form-control w-75 " id="input_SecurityCode" placeholder="인증번호를 입력해주세요."/>
+            <div class="form-inline justify-content-around">
+            	<input type="text" class="form-control w-75 " id="input_withdrawCost" placeholder="인증번호를 입력해주세요."/>
             	<button type="button" class="btn btn-primary ml-2">확인</button>
             	<div>
             		<small id="safetyCodeChck"></small>
             	</div>
-            	<small><a id="withdraw_safetyCode" href="#">[인증번호 발송]</a>을 클릭하시면 이메일로 인증번호를 보내드려요 : )</small>
-            </div> -->
-             <div class="form-row align-items-center">
-              <div class="form-group col-md-12">
-                <label for="withdraw_inputCellPhone">핸드폰 번호</label>
-                <div class="form-row align-items-center justify-content-between">
-                  <div class="form-group col-md-8 mb-0">
-                    <input type="text" class="form-control" id="withdraw_inputCellPhone" placeholder="(-) 없이 번호를 입력해주세요." required minlength="11">
-                  </div>
-                  <div class="form-group col-md-4 mb-0 text-right">
-                    <button type="button" id="btn_withdraw_getCode" class="btn btn-primary">인증번호 받기</button>
-                  </div>
-                </div>
-                <div class="invalid-feedback">핸드폰번호 11자리를 입력해주세요.</div>
-              </div>
-            </div>
-            <div class="form-row align-items-center justify-content-between">
-              <div class="form-group col-md-12">
-                <label for="withdraw_inputSafetyCode">인증번호 입력</label>
-                <div class="form-row align-items-center justify-content-between">
-                  	<div class="form-group col-md-9 mb-0">
-                    	<input type="text" class="form-control" id="withdraw_inputSafetyCode" placeholder="인증번호를 입력해주세요." required minlength="6">
-                    </div>
-                    <div class="form-group col-md-3 mb-0 text-right">
-                      <button type="button" id="btn_withdraw_codeChck" class="btn btn-primary">확인</button>
-                    </div>
-                </div>
-                <div id="safetyCodeChck__box" class="doEmpty">
-                  <small id="safetyCodeChck" class="form-text"></small>
-                </div>
-              </div>
+            	<small><a href="#">[인증번호 발송]</a>을 클릭하시면 이메일로 인증번호를 보내드려요 : )</small>
             </div>
           </div>
           <div class="modal-footer">
-            <button disabled="true" id="btn_coinWithdraw" class="btn btn-primary" disabled>출금하기</button>
+            <button disabled="true" id="btn_coinWithdraw" class="btn btn-primary">출금하기</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">돌아가기</button>
           </div>
         </div>
@@ -95,5 +59,5 @@
     </div>
   </div>
   <!-- =============================================== ▲ 코인 출금 모달 ▲ ================================================= -->
-
+  
   <%@ include file="../common/assets/js/coinWithdraw_js.jsp" %>

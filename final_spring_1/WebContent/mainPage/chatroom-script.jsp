@@ -75,36 +75,6 @@
 				console.log(e);
 			}
 		});
-		$('.notice_wrapper1').hide();
-		$('#notice_button').click(function(){
-			$('.notice_wrapper').hide();
-			$('.notice_wrapper1').show();
-		});
-		$('#notice_button1').click(function(){
-			$('.notice_wrapper1').hide();
-			$('.notice_wrapper').show();
-		});
-		
-		$(".price").on('keyup', function(){
-			let abled = false;
-			abled = $(".price").val().length > 0 ? true : false;
-			console.log(abled);
-			$("#btn_confirm").attr("disabled", !abled);
-		});
-		$('#btn_confirm').click(function(){
-			$('#check1').addClass('active');
-			$("#btn_confirm").attr("disabled", true);
-			$(".price").attr("readonly", true);
-			$(".price").css({"bacground-color":"gray", "pointer-events": "none", "opacity":"0.5"});
-		});
-		$("#check1").click(function(){
-			$("#check1").removeClass('active');
-			abled = $(".price").val().length > 0 ? true : false;
-			console.log(abled);
-			$(".price").attr("readonly", false);
-			$("#btn_confirm").attr("disabled", !abled);
-			$(".price").css({"bacground-color":"gray", "pointer-events": "auto", "opacity":"1"});
-		});
 	});
 	//ajax로 상대방 정보를 불러온 후 실행
 	function afterAjax(){
@@ -211,9 +181,11 @@
 	}
 	//채팅방에 입장했을 때 UI생성
 	function init(){
-		console.log("init roomKey="+roomKey);
-		if(roomKey!="null")
-			getChatMsg();
+		if(MAXINDEX == -1) {
+			if(roomKey!="null") {
+				getChatMsg();
+			}
+		}
 	}
 	//채팅방 새로 개설
 	function createRoom() {
@@ -239,6 +211,7 @@
 		reading.on('child_added', function(comments){
 			let msgKey = comments.key;//메세지 고유 키
 			let msg = comments.val().message;//메세지 내용
+			let msgErrandKey = comments.val().errandKey;
 			let timestamp = comments.val().timestamp;//메세지 보낸 시각
 			let dayStamp = timestamp.substr(0,10);//YYYY-MM-DD
 			let hourStamp = timestamp.substr(11,5);//HH:mm
@@ -272,6 +245,50 @@
 				insertImg(msgKey, msg, sender);
 		        $("#"+msgKey).css("margin-bottom","400px")
 			}
+			if(msgErrandKey != null && errandArr[infoIndex].ERRANDKEY == msgErrandKey){
+				if(errandArr[infoIndex].ERRAND_STATUS != "S"){
+					if(msg.indexOf("물품가를 확인하시고 상단의 체크버튼을 누르시면 거래가 성사됩니다!]")>-1) {
+						$.ajax({
+							type:'post',
+							url:'/errand/jsonGetErrand.nds',
+							async: false,
+							data:{"errandKey":errandArr[infoIndex].ERRANDKEY},
+							dataType:'json',
+							success:function(data){
+								errandArr[infoIndex] = data[0];
+								console.log("ajax 물품가 라이더 확인");
+								$(".price").val(data[0].ERRAND_ITEM_PRICE_NDS);
+								$('#check1').addClass('active');
+								$("#btn_confirm").attr("disabled", true);
+								$(".price").attr("readonly", true);
+								$(".price").css({"background-color":"gray", "pointer-events": "none", "opacity":"0.5"});
+							},
+							error:function(e){
+								console.log(e);
+							}
+						});
+					}
+					else if(msg.indexOf("[물품가 확인을 취소했습니다.]")>-1) {
+						console.log("ajax 물품가 라이더 취소");
+						$("#check1").removeClass("active");
+						$(".price").css({"background-color":"", "pointer-events": "auto", "opacity":"1"});
+						if(errandArr[infoIndex].MEM_EMAIL_NDS.split(".")[0] == mem_email) {
+							$(".price").attr("readonly", false);
+						}
+					}
+				}
+				if(msg.indexOf("[심부름이 완료되었습니다.]")>-1) {
+					$(".price").off("keyup");
+					$('#btn_confirm').off("click");
+					$("#check1").off("click");
+					$("#check2").off("click");
+					$('#check1').addClass('active');
+					$('#check2').addClass('active');
+					$("#btn_confirm").attr("disabled", true);
+					$(".price").attr("readonly", true);
+					$(".price").css({"background-color":"gray", "pointer-events": "none", "opacity":"0.5"});
+				}
+			}
 	        //스크롤을 맨 아래로 내려줌
 			$('.col').scrollTop(document.querySelector(".col").scrollHeight);
 			prevTime = hourStamp;
@@ -281,7 +298,6 @@
 			if(mem_email!=sender && read==1) {
 				reading.child(msgKey).update({read:""});
 			}
-	        console.log(msg);
 		});
 		updateRead();
 	}
@@ -307,23 +323,37 @@
 		});
 	}
 	//메세지 보내는 함수
-	function sendMsg() {
+	function sendMsg(pr_msg="", errandKey="") {
 		if(roomKey=="null")
 			createRoom();
-		let msg_input = $("#input_msg").val();
-		//입력한 메세지가 공백일 경우(trim()은 문자열의 앞뒤 공백을 없애주는 함수)
-		if(msg_input.trim()=="")
-			return;
-		//메세지를 입력하고 나면 입력창 내용 지우기
-		$("#input_msg").val("");
+		if(pr_msg==""){
+			let msg_input = $("#input_msg").val();
+			//입력한 메세지가 공백일 경우(trim()은 문자열의 앞뒤 공백을 없애주는 함수)
+			if(msg_input.trim()=="")
+				return;
+			//메세지를 입력하고 나면 입력창 내용 지우기
+			$("#input_msg").val("");
+			pr_msg = msg_input.substr(0,200);
+		}
 		//메세지를 파이어베이스에 저장
 		let reading = firebase.database().ref("chatrooms/" + roomKey + "/comments");
-		reading.push().set({
-			message : msg_input.substr(0,200),
-			timestamp : getTime(),
-			uid : mem_email,
-			read : 1
-		});
+		if(errandKey==""){
+			reading.push().set({
+				message : pr_msg,
+				timestamp : getTime(),
+				uid : mem_email,
+				read : 1
+			});
+		}
+		else {
+			reading.push().set({
+				message : pr_msg,
+				timestamp : getTime(),
+				uid : mem_email,
+				read : 1,
+				errandKey : errandKey
+			});
+		}
 		//unread를 1씩 올려주는 트랜잭션
 		let updates = {};
 		updates["chatrooms/"+roomKey+"/unread/"+dest_email] = firebase.database.ServerValue.increment(1);
