@@ -305,9 +305,7 @@ function initNotice(){
 			});
 		}
 	}
-	if(roomKey!="null") {
-		getChatMsg();
-	}
+	getChatMsg();
 }
 //현재 시간을 YYYY-MM-DD HH:mm:SS 형식으로 반환
 function getTime(){
