@@ -14,7 +14,7 @@
           <form class="needs-validation" id="signUpForm"><!-- ▼ 회원가입 양식 | form 태그 시작 ▼ -->
             <div class="form-group">
               <label for="inputEmail">E-mail</label>
-              <input type="email" class="form-control" id="inputEmail" name="mem_email" placeholder="email 자동으로 가져올예정">
+              <input type="email" class="form-contro w-100" id="inputEmail" name="mem_email" placeholder="email 자동으로 가져올예정" readOnly>
             </div>
             <div class="form-row align-items-center">
               <div class="form-group col-md-12">

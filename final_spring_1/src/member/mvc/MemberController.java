@@ -189,14 +189,14 @@ public class MemberController extends MultiActionController {
 			doLogin(req, res);
 			// 메인 페이지로 이동
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("mainPage");
+			mav.setViewName("/mainPage/main_page.jsp");
 			return mav;
 		}
 		// 처리 실패 시
 		else {
 			AjaxDataPrinter.out(res, "text/html", "NDS::ERROR!");
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("errorPage");
+			mav.setViewName("/mainPage/invalid.jsp");
 			return mav;
 		}
 	}
