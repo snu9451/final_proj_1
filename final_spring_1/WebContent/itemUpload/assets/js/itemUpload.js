@@ -6,16 +6,7 @@
  */
 !(function ($) {
 
-/* 게시물 수정 후 확인 */
-$(document).ready(function(){
-	console.log('edit page');
-	$("#itemBoardEdit").on('shown.bs.modal', function(){
-		let item_editBtn = $("#item_editBtn");
-		item_editBtn.click(function(){
-			
-		})
-	})
-})
+
 
   // Preloader
   $(window).on("load", function () {
@@ -192,17 +183,34 @@ $(document).ready(function(){
   /////////////////상세정보페이지 버튼 활성화//////////////
 
   $(function () {
+//  	let val = $("#essential1").val();
+//  	let val2 = $("#essential2").val();
+//  	let val3 = $("#essential3").val();
+//  	if(val != null || val2 != null || val3 != null){
+//  		console.log(val);
+//  		console.log(val2);
+//  		console.log(val3);
+//  		$("#btn-submit").attr("disabled", false);
+//  	} else{
+//  		$("#btn-submit").attr("disabled", true);
+//  	}
+	
     var flag1 = false;
     var flag2 = false;
     var flag3 = false;
-    $("#essential3").on("click", function () {
-      flag3 = $("#essential3").val() != "카테고리 선택" ? true : false;
-      $("#btn-submit").attr("disabled", !(flag1 && flag2 && flag3));
+    
+   $("#essential3").on("click", function () {
+     	flag3 = $("#essential3").val() != "카테고리 선택" ? true : false;
+  		console.log(flag3);
     });
-    $("#essential1, #essential2").on("keyup", function () {
-      flag1 = $("#essential1").val().length > 0 ? true : false;
-      flag2 = $("#essential2").val().length > 0 ? true : false;
-      $("#btn-submit").attr("disabled", !(flag1 && flag2 && flag3));
+    $("#essential1, #essential2").on("propertychange change keyup paste input", function () {
+        flag1 = $("#essential1").val().length > 0 ? true : false;
+  		console.log(flag1);
+        flag2 = $("#essential2").val().length > 0 ? true : false;
+  		console.log(flag2);
+     	flag3 = $("#essential3").val() != "카테고리 선택" ? true : false;
+  		console.log(flag3);
+	    $("#btn-submit").attr("disabled", !(flag1 && flag2 && flag3));
     });
   });
 

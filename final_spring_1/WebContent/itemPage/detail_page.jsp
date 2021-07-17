@@ -152,7 +152,7 @@
 								<div class="d-flex justify-content-around align-items-baseline">
 									<h3>판매자</h3>
 									<div class="ml-3">
-										<a class="" id="pd__seller"><%= SELLER_NICKNAME %></a>
+										<a class="" id="pd__seller" href="/member/selectUser.nds?mem_nickname=<%= SELLER_NICKNAME %>"><%= SELLER_NICKNAME %></a>
 									</div>
 									<div class="ml-3">
 									<% if(seller_me==0){%>

@@ -118,6 +118,38 @@ public class MemberController extends MultiActionController {
 		mav.addObject("memberMap", rmap);
 		mav.setViewName("/common/my_info.jsp");
 	}
+	public void selectUser(HttpServletRequest req, HttpServletResponse res) {
+		// 세션에 담긴 회운정보(이메일) 가져오기
+		HttpSession session = req.getSession();
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		String mem_nickname = req.getParameter("mem_nickname").toString();
+		pmap.put("mem_nickname", mem_nickname);
+		Map<String, Object> rmap = memberLogic.selectNickName(pmap);
+		Map<String, Object> pmap1 = new HashMap<String, Object>();
+		List<Map<String, Object>> sellList = memberLogic.sellList(pmap);
+		List<Map<String, Object>> rmap1 = null;
+		String mem_email = (String)rmap.get("MEM_EMAIL");
+		pmap1.put("mem_email", mem_email);
+		rmap1 = memberLogic.errandSelect(pmap1);
+		rmap1.add(pmap1);
+		logger.info(rmap1);
+		logger.info(sellList);
+		
+		
+		req.setAttribute("memberMap", rmap);
+		req.setAttribute("sellList", sellList);
+		req.setAttribute("errandSize", rmap1);
+		RequestDispatcher rd = req.getRequestDispatcher("/mainPage/user_page.jsp");
+		try {
+			rd.forward(req, res);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	// 회원 정보 가져와서 json 형식으로 뿌리기(파라미터로 mem_email or mem_nickname필요)
 	public void jsonSelectMember(HttpServletRequest req, HttpServletResponse res) {
 //		ModelAndView mav = new ModelAndView();
@@ -409,13 +441,12 @@ public class MemberController extends MultiActionController {
 		else {
 			AjaxDataPrinter.out(res, "인증코드가 일치하지 않습니다.");
 		}
-		// 출금하고자 하는 금액
-//		int io_money = (Integer)pmap.get("io_money");
-		// 계좌번호
-//		String account_num = (String)pmap.get("account_num");
-		// 인증번호
 	}
 	
+	
+	
+	
+	// ===================================== [[ DELETE ]] =====================================
 	//마이페이지 찜 목록 삭제
 	public void deleteMyLike(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : deleteMyLike메소드 호출");
@@ -429,10 +460,6 @@ public class MemberController extends MultiActionController {
 		memberLogic.deleteMyLike(pmap);
 		logger.info("controller의 pmap : "+ pmap );
 	}
-	
-	
-	
-	// ===================================== [[ DELETE ]] =====================================
 	
 	/* 마이페이지 중고거래 내역 삭제 */
 	public void deleteTradeRec(HttpServletRequest req, HttpServletResponse res) {
