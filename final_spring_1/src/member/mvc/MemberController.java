@@ -172,6 +172,37 @@ public class MemberController extends MultiActionController {
 		AjaxDataPrinter.out(res, "aplication/json", jsondata);
 	}
 	
+ // 안드로이드용 중고거래 구매, 판매내역
+	public void selectMyTradeAndroid(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("Controller: getMyTrade 호출");
+		HttpSession session = req.getSession();
+		HashMapBinder hmb = new HashMapBinder(req);
+		
+		//DB에서 가져오는 정보를 담아주는 List - Map;
+		List<Map<String, Object>> tradeRecAnd = null;
+		
+		//파라미터 들어갈 map 선언
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		hmb.bindPost(pmap);;
+		
+		//mem_nickname에 세션에 들어있는 MEM_NICKNAME의 정보를 넣어줌
+		//expect mem_nickname = 포도;
+		String mem_nickname = (String)pmap.get("MEM_NICKNAME");
+		if("buy".equals((String)pmap.get("gubun"))) {
+			pmap.put("buyer_nickname", mem_nickname);
+		} else if ("sel".equals((String)pmap.get("gubun"))) {
+			pmap.put("seller_nickname", mem_nickname);
+		}
+		logger.info("mem_nickname: "+mem_nickname);
+		
+		//DB에서 가져오는 정보를 담아주는 List - Map;
+		tradeRecAnd = memberLogic.getMyTrade(pmap);
+		
+		Gson g = new Gson();
+		String data = g.toJson(tradeRecAnd);
+		AjaxDataPrinter.out(res, "application/json", data);
+	}
+	
 	
 	// ===================================== [[ INSERT ]] =====================================
 	// 회원가입 모달에서 확인 버튼 클릭 시
@@ -962,18 +993,43 @@ public class MemberController extends MultiActionController {
 	//마이페이지 찜 목록 클릭시
 	public ModelAndView getMyLike(HttpServletRequest req, HttpServletResponse res){
 		logger.info("controller : selectMyLike메소드 호출");
+		
 		Map<String,Object> pmap = new HashMap<>();
 		HttpSession session= req.getSession(); 
 		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
+		
 		String mem_email = (String)login.get("MEM_EMAIL");
 		pmap.put("pr_MEM_EMAIL", mem_email);
+		
 		List<Map<String, Object>> likeList = null;
 		logger.info("controller의 mem_email : "+ mem_email );
+		
 		likeList = memberLogic.selectMyLike(pmap);
 		logger.info("controller의 likeList : "+ likeList );
+		
 		ModelAndView mav = new ModelAndView("/myPage/my_like.jsp");
 		mav.addObject("likeList", likeList);
 		return mav;
+	}
+	
+ // 안드로이드용 내 찜 목록보기
+	public void getMyLikeAndroid(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("getMyLikeAndroid 메소드 호출");
+
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String, Object> pmap = new HashMap<>();
+		hmb.bindPost(pmap); 
+
+		String mem_email = (String)pmap.get("mem_email");
+		pmap.put("pr_MEM_EMAIL", mem_email);
+		logger.info("pmap ===> " + pmap);
+
+		List<Map<String, Object>> selectMyLikeAnd = new ArrayList<Map<String, Object>>(); 
+		selectMyLikeAnd = memberLogic.selectMyLike(pmap);
+	 
+		Gson g = new Gson();
+		String data = g.toJson(selectMyLikeAnd);
+		AjaxDataPrinter.out(res, "application/json", data);
 	}
 	
 	//중고거래 내역 첫 페이지 로드
