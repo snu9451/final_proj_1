@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script>
+$(document).ready(function(){
+    $("#errandItem, #errandItemPr, #errandCost").on("propertychange change keyup paste input", function () {
+        flag1 = $("#errandItem").val().length > 0 ? true : false;
+  		console.log(flag1);
+        flag2 = $("#errandItemPr").val().length > 0 ? true : false;
+  		console.log(flag2);
+        flag3 = $("#errandCost").val().length > 3 ? true : false;
+  		console.log(flag2);
+	    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3));
+    });
+});
+</script>
   <!-- =============================================== ▼ 심부름 모달 ▼ ================================================= -->
   <div class="modal modal-center fade" id="errand_modal" tabindex="-1" role="dialog" aria-labelledby="errand_modal"
     aria-hidden="true">
@@ -59,7 +72,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" id="errandBtn" class="btn btn-primary" data-dismiss="modal">심부름 등록하기</button>
+              <button type="submit" disabled="true" id="errandBtn" class="btn btn-primary" data-dismiss="modal">심부름 등록하기</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
             </div>
         </div>

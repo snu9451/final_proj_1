@@ -199,6 +199,11 @@ public class MemberLogic {
 		logger.info(pmap);
 		return memberDao.selectMyLike(pmap);
 	}
+	public List<Map<String, Object>> sellList(Map<String, Object> pmap) {
+		logger.info("Logic : sellList 메소드 호출");
+		logger.info(pmap);
+		return memberDao.sellList(pmap);
+	}
 	//마이페이지 - 찜 목록 삭제
 	public void deleteMyLike(Map<String, Object> pmap) {
 		logger.info("Logic : deleteMyLike 메소드 호출");
@@ -235,6 +240,14 @@ public class MemberLogic {
 	public void starRatingGrant(Map<String, Object> pmap) {
 	      logger.info("starRatingGrant 호출성공");
 	   memberDao.starRatingGrant(pmap);
+
+
+
+
+	public List<Map<String, Object>> errandSelect(Map<String, Object> pmap) {
+		List<Map<String, Object>> pmap1 = null;
+		pmap1 = memberDao.errandSelect(pmap);
+		return pmap1;
 	}
 
 

@@ -76,6 +76,24 @@
 		order by b.bm_no asc		
 	</if>
 	</select>
+	<select id="selectUserErrand" parameterType="map" resultType="map">
+		SELECT COUNT(errand_status) FROM errand
+		WHERE mem_email_req = #{mem_email}
+		  AND errand_status = 'S'
+		UNION ALL
+	   SELECT COUNT(errand_status) FROM errand
+		WHERE mem_email_nds = #{mem_email}
+		  AND errand_status = 'S'
+	</select>
+	<select id="selectUserSellList" parameterType="map" resultType="map">
+       SELECT b.bm_no, b.bm_title, b.bm_date, b.bm_content, b.bm_price, b.bm_status, b.seller_nickname, b.buyer_nickname
+           ,img.bi_file
+        FROM board_master b, (select min(bi_no) bi_no, bm_no, min(bi_file) bi_file from board_img group by bm_no) img
+       WHERE seller_nickname = #{mem_nickname}
+         AND b.seller_isshow = 'T'
+         AND b.bm_no = img.bm_no
+    ORDER BY b.bm_date DESC        
+	</select>
 	
 <!-- ==================================== [[ ＵＰＤＡＴＥ ]] ==================================== -->
 	<select id="updatePw" statementType="CALLABLE" parameterType="map">
