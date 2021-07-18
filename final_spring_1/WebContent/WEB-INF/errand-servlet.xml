@@ -19,6 +19,7 @@
       <property name="mappings">
          <props>
             <prop key="/errand/selectErrandRecord.nds">errand-controller</prop>
+            <prop key="/errand/selectErrandRecordAndroid.nds">errand-controller</prop>
             <prop key="/errand/errandRecordUpdate.nds">errand-controller</prop>
             <prop key="/errand/insertErrand.nds">errand-controller</prop>
             <prop key="/errand/insertErrandDenied.nds">errand-controller</prop>
@@ -31,6 +32,7 @@
       <property name="mappings">
          <props>
             <prop key="/errand/selectErrandRecord.nds">selectErrandRecord</prop>
+            <prop key="/errand/selectErrandRecordAndroid.nds">selectErrandRecordAndroid</prop>
             <prop key="/errand/errandRecordUpdate.nds">errandRecordUpdate</prop>
             <prop key="/errand/insertErrand.nds">insertErrand</prop>
             <prop key="/errand/insertErrandDenied.nds">insertErrandDenied</prop>
