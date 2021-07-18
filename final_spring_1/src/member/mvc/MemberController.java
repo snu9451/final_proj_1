@@ -351,8 +351,6 @@ public class MemberController extends MultiActionController {
 //		pmap.put("mem_email", "snu9451@naver.com");
 //		pmap.put("trans_price", 3333);
 		
-		
-		
 		logger.info("Front에서 넘어온 값 확인  ===> "+pmap);
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
@@ -383,9 +381,10 @@ public class MemberController extends MultiActionController {
 		// 충전 후 잔액 Front로 내보내기
 		AjaxDataPrinter.out(res, "text/plain", coin_remain);
 	}
+	
 	// (2) 계좌로 출금
 	// 입력받는 정보: 출금 금액, 계좌번호, 인증번호
-	public void withdraw(HttpServletRequest req, HttpServletResponse res) {
+	public void withdrawCoin(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("withdraw 메소드 호출 성공!");
 		// request 객체에 담긴 정보를 map으로 옮겨 담기
 		Map<String, Object> pmap = new HashMap<String, Object>();
@@ -395,22 +394,23 @@ public class MemberController extends MultiActionController {
 		HttpSession session = req.getSession();
 		int input_code = (Integer)pmap.get("input_code");
 		int withdraw_code = (Integer)session.getAttribute("withdraw_code");
+		logger.info(withdraw_code);
 		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치한다면
-		if(input_code == withdraw_code) {
-			// 출금(O)이므로 map에 담아준다.
-			pmap.put("trans_io","O");
-			// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
-			Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
-			logger.info(mvo);
-			String mem_email = (String)mvo.get("MEM_EMAIL");
-			pmap.put("mem_email", mem_email);
-			// [DB]에 update 및 insert 처리
-			int result = memberLogic.withdraw(pmap);
-		}
-		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치하지 않는다면
-		else {
-			AjaxDataPrinter.out(res, "인증코드가 일치하지 않습니다.");
-		}
+//		if(input_code == withdraw_code) {
+//			// 출금(O)이므로 map에 담아준다.
+//			pmap.put("trans_io","O");
+//			// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
+//			Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+//			logger.info(mvo);
+//			String mem_email = (String)mvo.get("MEM_EMAIL");
+//			pmap.put("mem_email", mem_email);
+//			// [DB]에 update 및 insert 처리
+//			int result = memberLogic.withdraw(pmap);
+//		}
+//		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치하지 않는다면
+//		else {
+//			AjaxDataPrinter.out(res, "인증코드가 일치하지 않습니다.");
+//		}
 		// 출금하고자 하는 금액
 //		int io_money = (Integer)pmap.get("io_money");
 		// 계좌번호

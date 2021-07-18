@@ -123,20 +123,20 @@ pageEncoding="UTF-8"%>
 			  seller_list +="		거래내역이 존재하지 않습니다."
 			  seller_list +="	</h3>"
 			  seller_list +="</div>"
-	          $("#products").empty();
+	          $(".trade_bottom").empty();
 	          $("#forNoRecord").html(seller_list);
         } else{
 	        for (i = 0; i < data.length; i++) {
 	        	let status = data[i].BM_STATUS;
 	        	bm_price = data[i].BM_PRICE.toLocaleString();
-	          seller_list += "<tr>";
-	          seller_list += "	<td class='divider'>글번호 <span id='bm_no'>" + data[i].BM_NO + "</span></td>";
-	          seller_list += "	<td class='divider_img'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
-	          seller_list += "		style='color: black'><img id='item_image'";
-	          seller_list += "			src=../itemUpload/assets/img/itemupload/" + data[i].BI_FILE +"></a></td>";
-	          seller_list += "	<td class='divider_con'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
-	          seller_list += "		style='color: black; font-size: 20px;'>" + data[i].BM_TITLE + "</a></td>";
-	          seller_list += "	<td class='divider'>등록일: " + data[i].BM_DATE + "<br><span class='bm_price'>" + bm_price +"</span>원<br>";
+		          seller_list += "<tr>";
+		          seller_list += "	<td class='divider'>글번호 <span id='bm_no'>" + data[i].BM_NO + "</span></td>";
+		          seller_list += "	<td class='divider_img'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
+		          seller_list += "		style='color: black'><img id='item_image'";
+		          seller_list += "			src=../itemUpload/assets/img/itemupload/" + data[i].BI_FILE +"></a></td>";
+		          seller_list += "	<td class='divider_con'><a href='http://localhost:9696/item/selectItemDetail.nds?pr_bm_no="+data[i].BM_NO+"'";
+		          seller_list += "		style='color: black; font-size: 20px;'>" + data[i].BM_TITLE + "</a></td>";
+		          seller_list += "	<td class='divider'>등록일: " + data[i].BM_DATE + "<br><span class='bm_price'>" + bm_price +"</span>원<br>";
 	          	//상품 거래 상태 (판매중 or 거래중 or 판매완료)
 	        	if(status == 'N'){
 	        		status = '';
@@ -163,8 +163,9 @@ pageEncoding="UTF-8"%>
 	          seller_list += "	</td>";
 	          seller_list += "</tr>";
 	        }////////////////////// end of for
-        }
+        $("#forNoRecord").empty();
         $(".trade_bottom").html(seller_list);
+        }
         //페이지구분(판매내역)
         filter = 'sel';
         
@@ -194,7 +195,9 @@ pageEncoding="UTF-8"%>
       success: function (data) {
         //@data-json,xml,html,text
         count = JSON.stringify(data.length);
+        //상품가격
         let bm_price;
+        
         let buyer_list = "";
         if(data.length <= 0) {
 			buyer_list +="<div class='mt-3 text-center'>"
@@ -205,7 +208,7 @@ pageEncoding="UTF-8"%>
 			buyer_list +="		거래내역이 존재하지 않습니다."
 			buyer_list +="	</h3>"
 			buyer_list +="</div>"
-        	$("#products").empty();
+        	$(".trade_bottom").empty();
         	$("#forNoRecord").html(buyer_list);
         } else{
 	        for (i = 0; i < data.length; i++) {
@@ -224,9 +227,9 @@ pageEncoding="UTF-8"%>
 	          buyer_list += "	</td>";
 	          buyer_list += "</tr>";
 	        }////////////////////// end of for
-        }
-
+        $("#forNoRecord").empty();
         $(".trade_bottom").html(buyer_list);
+        }
       	//페이지구분(구매내역)
         filter = 'buy';
       	
