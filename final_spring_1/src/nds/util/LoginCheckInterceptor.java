@@ -41,7 +41,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		"/myPage/my_errand.nds",
 		"/myPage/my_trade.nds",
 		"/myPage/my_likeAndroid.nds",
-		"/member/selectMyTradeAndroid.nds"
+		"/member/selectMyTradeAndroid.nds",
+		"/member/jsonSelectMember.nds"
 	};
 	
 	@Override
