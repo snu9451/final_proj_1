@@ -214,13 +214,13 @@ function open(rpt_msg) {
 </script>
 
 
-        </script>
         <!-- 팝업창 닫기 함수 -->
         <script>
             function btn_close(){
             	console.log("이게 왜 안눌러짐?");
             	console.log("눌러지는데 안꺼지네 ㅡㅡ");
                 window.close();
+            	console.log("닫고 출력해라");
             }
             getPagination('#products');
         </script>

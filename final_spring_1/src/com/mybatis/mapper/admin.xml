@@ -59,37 +59,38 @@ SELECT mem.mem_create_date,
                  NVL (me.mem_count, 0) report_count
             FROM    MEMBER mem
                  LEFT OUTER JOIN
-                    (  SELECT mem_email_to, COUNT (*) mem_count
+                    (  SELECT mem_email_from, COUNT (*) mem_count
                          FROM report_mem
-                     GROUP BY mem_email_to) me
-                 ON mem.mem_email = me.mem_email_to
-        ORDER BY mem.mem_email DESC) mem
+                     GROUP BY mem_email_from) me
+                 ON mem.mem_email = me.mem_email_from
+           WHERE mem.mem_active = 'T'
+        ORDER BY mem.mem_create_date DESC) mem
  </select>
  
  <!--전체게시글목록조회  -->
 
   <select id="board_select" resultType="map">
 	SELECT bm.bm_no,
-	       bm.bm_title,
-	       bm.seller_nickname,
-	       bm.bm_date,
-	       bm.bm_hit,
-	       NVL (me.board_count, 0) report_count
-	  FROM    board_master bm
-	       LEFT OUTER JOIN
-	          (  SELECT bm_no, COUNT (*) board_count
-	               FROM report_board
-	           GROUP BY bm_no) me
-	       ON bm.bm_no = me.bm_no
-	 ORDER BY report_count desc
+           bm.bm_title,
+           bm.seller_nickname,
+           bm.bm_date,
+           bm.bm_hit,
+           NVL (me.board_count, 0) report_count
+      FROM    board_master bm
+           LEFT OUTER JOIN
+              (  SELECT bm_no, COUNT (*) board_count
+                   FROM report_board
+               GROUP BY bm_no) me
+           ON bm.bm_no = me.bm_no
+     ORDER BY bm_no desc
  </select> 
  
  <!-- 신고된 회원 -->
   <select id="report_member" parameterType="java.util.Map" resultType="map">
 	SELECT rm.report_no,
            rm.report_type,
-           rm.mem_email_to,
            rm.mem_email_from,
+           rm.mem_email_to,
            rm.report_msg,
            rm.report_date
   	FROM report_mem rm
@@ -111,7 +112,7 @@ SELECT mem.mem_create_date,
  
  
 <!-- 회원 탈퇴하기(mem_active를 T에서 F로) -->
- <update id="outMem" parameterType="map">
+ <update id="outMember" parameterType="map">
   update member
   set mem_active = 'F'
   where mem_email=#{mem_email}

@@ -52,7 +52,7 @@ public class AdminDao {
 	public int outMember(Map<String, Object> pmap) {
 		logger.info("outMember 메소드 호출");
 		
-		int result = sqlSessionTemplate.delete("outMem", pmap);
+		int result = sqlSessionTemplate.update("outMember", pmap);
 		
 		return result;
 	}

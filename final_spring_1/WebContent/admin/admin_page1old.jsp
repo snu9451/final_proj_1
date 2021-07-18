@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>   
+<%
+	List<Map<String,Object>> adminPage1 = null;
+	adminPage1 = (List<Map<String,Object>>)request.getAttribute("adminPage1");
+	String mem_create_date = null;
+	String mem_email = null;
+	String mem_nickname = null;
+	String mem_gender = null;
+	String mem_age = null;
+	String report_count    = null;
+	
+
+	
+	//out.print(adminPage);
+%>
 
 
   
@@ -41,12 +55,7 @@
         <!-- <script src="modalpaging.js"></script> -->
 		<script src="https://kit.fontawesome.com/ce3585cab0.js" crossorigin="anonymous"></script>
     </head>
-<style>
-.active{
-	color: #337ab7;
-	opacity: 1;
-}
-</style>
+
     <body>
         <!-- WRAPPER -->
         <div id="wrapper">
@@ -147,7 +156,7 @@
                                 <!-- BASIC TABLE -->
                                 <div class="panel">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title"><label><i id="reportOnly" class="far fa-check-circle"></i></label> &nbsp신고된 회원만 보기</h3>
+                                        <h3 class="panel-title"><label><i class="far fa-check-circle"></i></label> &nbsp신고된 회원만 보기</h3>
                                     </div>
                                     <div class="panel-body">
                                         <table class="table" id="products">
@@ -165,8 +174,43 @@
                                                     <th style="text-align: center;" width="10%">신고횟수</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="reportTable" style="text-align: center;">
+                                            <tbody style="text-align: center;">
+          	<%for(int i=0; i<adminPage1.size() ; i++){
+          		mem_create_date = adminPage1.get(i).get("MEM_CREATE_DATE").toString();
+          		mem_create_date = mem_create_date.substring(0, 10);
+          		mem_create_date = mem_create_date.replace("-", ".");
+          		mem_nickname = adminPage1.get(i).get("MEM_NICKNAME").toString();
+          		mem_gender = adminPage1.get(i).get("MEM_GENDER").toString();
+          		mem_age = adminPage1.get(i).get("MEM_AGE").toString();
+          		mem_email = adminPage1.get(i).get("MEM_EMAIL").toString();
+          		report_count = adminPage1.get(i).get("REPORT_COUNT").toString();
           	
+	%>
+	
+		<tr>
+			<td>
+			<label><input id="ckBox" type="checkbox"></label>
+			</td>
+			<td> <%=mem_create_date %></td>
+			<td>
+	         <a href="" onClick="window.open('admin_modal1.nds', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')"> <%=mem_email%></a>
+	        
+	         </td>
+			<td> <%=mem_nickname %></td>
+	
+			
+			<%if(mem_gender.equals("M")){%>
+			<td>남</td>
+			<%} else{%>
+			<td>여</td>
+			<%}%>
+			<td> <%=mem_age %>대</td>
+			<td> <%=report_count %></td>
+		</tr>
+	<%
+	}
+	%> 
+                                                
                                      
                                             </tbody>
                                         </table>
@@ -196,7 +240,7 @@
                                         </nav>
                                     </div>
                                     <div>
-                                      <button  class="my-buttons" onclick="outMember()">선택회원 탈퇴</button>
+                                      <button  class="my-buttons" onclick="outtest()">선택회원 탈퇴</button>
                                       <button class="my-buttons"  onclick="">신고횟수 초기화</button>
                                     </div>
                                   </div>
@@ -245,124 +289,19 @@
         <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
         <script src="assets/scripts/klorofil-common.js"></script>
         <script>
-//             getPagination('#products');
+            getPagination('#products');
         </script>
         <script>
-        $(document).ready(function(){
-        	getReportBoard();
-        	$("#reportOnly").off("click").on("click", checkFunc);
-        });
-        function checkFunc(){
-        	if($("#reportOnly").hasClass("active")) {
-				getReportBoard();
-				$("#reportOnly").removeClass("active");        		
-        	}
-        	else {
-				getReportOnly();
-				$("#reportOnly").addClass("active");        		
-        	}
-        }
-        	function outMember(){
+        	function outtest(){
         		console.log("탈퇴버튼눌렸다~~");
-        		$.ajax({
-        			url: '/admin/outMember.nds',
-         			dataType:'json',
-        			success:function(){
-        				
-//         				let i = 0; 
-						$('#ckBox').prop('checked',true);
-       					 $('#ckBox').is(':checked');
-        				console.log("ll");
-        				
-        				
-        			},
-        			error:function(e){
-						console.log(e);
-					}
-        		});
+        	<%-- 	<%if(){
+        			
+        		} --%>
         	}	
        
-        function getReportBoard(){
-        	console.log("getReportBoard");
-	        $.ajax({
-	        	url: '/admin/admin_page1.nds',
-	        	dataType:'json',
-				success:function(data){
-					document.querySelector("#reportTable").innerHTML="";
-					for(let i=0; i<data.length;i++) {
-						data[i].MEM_CREATE_DATE = data[i].MEM_CREATE_DATE.substring(0, 10);
-						data[i].MEM_CREATE_DATE = data[i].MEM_CREATE_DATE.replaceAll("-", ".");
-						let html = 
-							"<tr>"
-								+"<td>"
-								+"<label><input id=\"ckBox"+i+"\" type=\"checkbox\"></label>"
-								+"</td>"
-								+"<td>"+data[i].MEM_CREATE_DATE+"</td>"
-								+"<td>"
-						         +"<a href=\"\" onClick=\"window.open('admin_modal1.nds', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].MEM_EMAIL+"</a>"
-						         +"</td>"
-								+"<td>"+data[i].MEM_NICKNAME+"</td>";
-						if(data[i].MEM_GENDER=="M")
-							html += "<td>남</td>";
-						else
-							html += "<td>여</td>";
-						html +=
-								"<td>"+data[i].MEM_AGE+"대</td>"
-								+"<td>"+data[i].REPORT_COUNT+"</td>"
-							+"</tr>";
-						document.querySelector("#reportTable").innerHTML+=html;
-					}
-					getPagination('#products');
-					
-				},
-				error:function(e){
-					console.log(e);
-				}
-	        });
-        }
         
-        function getReportOnly(){
-        	console.log("getReportOnly");
-			$.ajax({
-	        	url: '/admin/admin_page1.nds',
-	        	dataType:'json',
-				success:function(data){
-					document.querySelector("#reportTable").innerHTML="";
-					for(let i=0; i<data.length;i++) {
-						if(data[i].REPORT_COUNT == 0)
-							continue;
-						data[i].MEM_CREATE_DATE = data[i].MEM_CREATE_DATE.substring(0, 10);
-						data[i].MEM_CREATE_DATE = data[i].MEM_CREATE_DATE.replaceAll("-", ".");
-						let html = 
-							"<tr>"
-								+"<td>"
-								+"<label><input id=\"ckBox"+i+"\" type=\"checkbox\"></label>"
-								+"</td>"
-								+"<td>"+data[i].MEM_CREATE_DATE+"</td>"
-								+"<td>"
-						         +"<a href=\"\" onClick=\"window.open('admin_modal1.nds', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].MEM_EMAIL+"</a>"
-						         +"</td>"
-								+"<td>"+data[i].MEM_NICKNAME+"</td>";
-						if(data[i].MEM_GENDER=="M")
-							html += "<td>남</td>";
-						else
-							html += "<td>여</td>";
-						html +=
-								"<td>"+data[i].MEM_AGE+"대</td>"
-								+"<td>"+data[i].REPORT_COUNT+"</td>"
-							+"</tr>";
-						document.querySelector("#reportTable").innerHTML+=html;
-					}
-					getPagination('#products');
-					
-					
-				},
-				error:function(e){
-					console.log(e);
-				}
-	        });
-        }
-        
+        $('#ckBox').prop('checked',true);
+        $('#ckBox').is(':checked');
         
         </script>
     </body>

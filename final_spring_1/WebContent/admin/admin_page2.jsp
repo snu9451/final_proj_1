@@ -103,7 +103,7 @@
 					<ul class="nav">
 							<h3 style="color: whitesmoke; margin-left: 1vw;">관리자페이지</h3> 
 				
-						<li><a href="admin_page1.nds" class=""> <span>회원관리</span></a></li>
+						<li><a href="admin_page1.jsp" class=""> <span>회원관리</span></a></li>
 						<li><a href="admin_page2.nds" class="active"> <span>게시글관리</span></a></li>
 					</ul>
 				</nav>

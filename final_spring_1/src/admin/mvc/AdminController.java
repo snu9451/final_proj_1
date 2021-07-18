@@ -49,14 +49,19 @@ public class AdminController extends MultiActionController {
 //		
 //	}
 	//-------------------------------------------
-	public ModelAndView getAdminPage1(HttpServletRequest req, HttpServletResponse res) {
+	public void getAdminPage1(HttpServletRequest req, HttpServletResponse res) {
+//	public ModelAndView getAdminPage1(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("getAdminPage1 호출 성공");
 		List<Map<String,Object>> adminPage1 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
 		adminPage1=adminLogic.getAdminPage1();
-		ModelAndView mav = new ModelAndView("/admin/admin_page1.jsp");
-		mav.addObject("adminPage1", adminPage1);
-		logger.info("getAdminPage1:"+adminPage1);
-		return mav;	
+//		ModelAndView mav = new ModelAndView("/admin/admin_page1.jsp");
+//		mav.addObject("adminPage1", adminPage1);
+//		logger.info("getAdminPage1:"+adminPage1);
+//		return mav;	
+
+		Gson g = new Gson();
+		String jsondata = g.toJson(adminPage1);
+		AjaxDataPrinter.out(res, "application/json", jsondata);
 	}
 	public ModelAndView getAdminPage2(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("getAdminPage2 호출 성공");
