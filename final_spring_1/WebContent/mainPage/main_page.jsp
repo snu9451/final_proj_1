@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.util.*"%>
 <%
 	String join_email = (String)request.getAttribute("join_email");
+
+	List<Map<String, Object>> rankList = (List<Map<String, Object>>)request.getAttribute("rankList");
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,14 +45,36 @@
   <!-- ============================================== ▼ 중고거래 상품 ▼ ================================================ -->
 		<section id="product" class="product">
 			<!-- ▼ 검색순위 플로팅 시작 ▼ -->
-<!-- 			<div id="search__rank" -->
-<!-- 				class="serach__rank position-absolute position-fixed"> -->
-<!-- 				<h3 class="mt-1">현재 검색 순위</h3> -->
-<!-- 				<div class="d-flex justify-content-sm-center align-items-center"> -->
-<!-- 					<span>1</span> -->
-<!-- 					<h4 class="mb-0">나이키 샌달</h4> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
+			<div id="search__rank" style="opacity: 0;"
+				class="position-absolute position-fixed">
+					<h3 class="rankTitle">현재 검색 순위</h3>
+				<div class="list">
+					<div class="rankNumberList">
+						<div><span class="rankNumber">1</span></div>
+						<div><span class="rankNumber">2</span></div>
+						<div><span class="rankNumber">3</span></div>
+						<div><span class="rankNumber">4</span></div>	
+						<div><span class="rankNumber">5</span></div>	
+						<div><span class="rankNumber">6</span></div>	
+						<div><span class="rankNumber">7</span></div>	
+						<div><span class="rankNumber">8</span></div>	
+						<div><span class="rankNumber">9</span></div>	
+						<div><span class="rankNumber">10</span></div>
+					</div>
+					<div class="rankKeywordList">
+						<div><span onClick="searchRank(this);"><%=rankList.get(0).get("KEYWORD") %></span></div>
+						<div><span onClick="searchRank(this);"><%=rankList.get(1).get("KEYWORD") %></span></div>
+						<div><span onClick="searchRank(this);"><%=rankList.get(2).get("KEYWORD") %></span></div>
+						<div><span onClick="searchRank(this);"><%=rankList.get(3).get("KEYWORD") %></span></div>
+						<div><span onClick="searchRank(this);"><%=rankList.get(4).get("KEYWORD") %></span></div>
+						<div><span onClick="searchRank(this);"><%=rankList.get(5).get("KEYWORD") %></span></div>
+						<div><span onClick="searchRank(this);"><%=rankList.get(6).get("KEYWORD") %></span></div>
+						<div><span onClick="searchRank(this);"><%=rankList.get(7).get("KEYWORD") %></span></div>
+						<div><span onClick="searchRank(this);"><%=rankList.get(8).get("KEYWORD") %></span></div>
+						<div><span onClick="searchRank(this);"><%=rankList.get(9).get("KEYWORD") %></span></div>
+					</div>
+				</div>
+			</div>
 			<!-- ▲ 검색순위 플로팅 끝 ▲ -->
 			<div class="container" data-aos="fade-up">
 				<!-- ▼ 메인 타이틀 시작 ▼ -->
@@ -98,6 +124,46 @@
 				</section>
 				<!-- ============================================== ▲ 중고거래 상품 ▲ ================================================ -->
 	</main>
+<style>
+.list{
+    width: 100%;
+    display:flex;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.rankNumberList{
+	width: 15%;
+    text-align: center;
+    margin-left: 10px;
+    font-weight: bold;
+    font-style: italic;
+    background-color: linen;
+    border-radius: 5px;
+}
+.rankKeywordList{
+	width: 85%;
+	cursor : pointer;
+}
+.rankTitle{
+	font-family: "WandohopeB";
+	margin: 15px;
+    text-align: center;
+    background: #ffc37b;
+    color: white;
+    border-radius: 40px;
+}
+#search__rank {
+	background-color: white;
+    color: black;
+    width: 300px;
+    border-radius: 40px;
+    border: 3px solid #627ea4;
+    top: 300px;
+    right: 3%;
+    text-align: left;
+    font-size: 23px;
+}
+</style>
   <!-- =========================================== ▲ ＭＡＩＮ　ＳＥＣＴＩＯＮ ▲ ============================================= -->
   <!-- =============================================== ▼ ＦＯＯＴＥＲ ▼ ================================================= -->
   <!-- <footer id="footer"></footer> -->
@@ -124,6 +190,10 @@
 			$('#signUpModal').modal('show');
 		});
 <% } %>
+function searchRank(item){
+ 	$('input[name=nds_search]').val(item.innerText);
+ 	itemSearch();
+}
 </script>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
 </body>

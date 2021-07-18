@@ -94,6 +94,10 @@
          AND b.bm_no = img.bm_no
     ORDER BY b.bm_date DESC        
 	</select>
+	<select id="searchRank" statementType="CALLABLE" parameterType="java.util.Map">
+      {call PROC_SEARCH_WORDS_RANK(#{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
+   </select>
+	
 	
 <!-- ==================================== [[ ＵＰＤＡＴＥ ]] ==================================== -->
 	<select id="updatePw" statementType="CALLABLE" parameterType="map">

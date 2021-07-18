@@ -973,12 +973,13 @@ public class MemberController extends MultiActionController {
 	
 	// =================================================== [[ 페이지 요청 url ]] ===================================================
 	public ModelAndView getMainPage(HttpServletRequest req, HttpServletResponse res) {
-
+		Map<String,Object> pmap = new HashMap<>();
+		List<Map<String, Object>> rankList = memberLogic.rankList(pmap);
 		ModelAndView mav = new ModelAndView("/mainPage/main_page.jsp");
+		mav.addObject("rankList", rankList);
 		return mav;
 	}
 	public ModelAndView getMyInfo(HttpServletRequest req, HttpServletResponse res) {
-		
 		ModelAndView mav = new ModelAndView("/myPage/my_info.jsp");
 		return mav;
 	}

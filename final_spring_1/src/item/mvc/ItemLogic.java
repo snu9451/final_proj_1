@@ -32,6 +32,11 @@ public class ItemLogic {
 		//카테고리메뉴는 String으로 변환
 		return itemDao.selectByCategory(pmap);
 	}
+	public List<Map<String, Object>> rankList(Map<String, Object> pmap){
+		logger.info("Logic : rankList메소드 호출");
+		List<Map<String, Object>> rankList = itemDao.rankList(pmap);
+		return rankList;
+	}
 	//검색어를 입력하여 찾기
 	public List<Map<String, Object>> selectBySearch(Map<String, Object> pmap) {
 		logger.info("Logic : selectBySearch메소드 호출");
