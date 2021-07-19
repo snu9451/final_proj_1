@@ -126,7 +126,7 @@ public class MemberController extends MultiActionController {
 		String mem_nickname = req.getParameter("mem_nickname").toString();
 		pmap.put("mem_nickname", mem_nickname);
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bindPost(pmap);
+		hmb.bind(pmap);
 		Map<String, Object> rmap = memberLogic.selectNickName(pmap);
 		Map<String, Object> pmap1 = new HashMap<String, Object>();
 		List<Map<String, Object>> sellList = memberLogic.sellList(pmap);
@@ -210,7 +210,7 @@ public class MemberController extends MultiActionController {
 	
 	// ===================================== [[ INSERT ]] =====================================
 	// 회원가입 모달에서 확인 버튼 클릭 시
-	// 테스트: http://localhost:4444/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
+	// 테스트: http://localhost:9696/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
 	public ModelAndView insertMember(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		logger.info("insertMember 호출성공!!");
 		// request 객체에 담긴 정보를 map으로 옮겨 담기
@@ -223,7 +223,9 @@ public class MemberController extends MultiActionController {
 			// 로그인 처리 후
 			doLogin(req, res);
 			// 메인 페이지로 이동
+			List<Map<String, Object>> rankList = memberLogic.rankList(pmap);
 			ModelAndView mav = new ModelAndView();
+			mav.addObject("rankList", rankList);
 			mav.setViewName("/mainPage/main_page.jsp");
 			return mav;
 		}
@@ -433,21 +435,21 @@ public class MemberController extends MultiActionController {
 		logger.info(input_code);
 		//int withdraw_code = (Integer)session.getAttribute("withdraw_code");
 		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치한다면
-		if(input_code == withdraw_code) {
-			// 출금(O)이므로 map에 담아준다.
-			pmap.put("trans_io","O");
-			// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
-			Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
-			logger.info(mvo);
-			String mem_email = (String)mvo.get("MEM_EMAIL");
-			pmap.put("mem_email", mem_email);
-			// [DB]에 update 및 insert 처리
-			int result = memberLogic.withdraw(pmap);
-		}
-		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치하지 않는다면
-		else {
-			AjaxDataPrinter.out(res, "인증코드가 일치하지 않습니다.");
-		}
+//		if(input_code == withdraw_code) {
+//			// 출금(O)이므로 map에 담아준다.
+//			pmap.put("trans_io","O");
+//			// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
+//			Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+//			logger.info(mvo);
+//			String mem_email = (String)mvo.get("MEM_EMAIL");
+//			pmap.put("mem_email", mem_email);
+//			// [DB]에 update 및 insert 처리
+//			int result = memberLogic.withdraw(pmap);
+//		}
+//		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치하지 않는다면
+//		else {
+//			AjaxDataPrinter.out(res, "인증코드가 일치하지 않습니다.");
+//		}
 	}
     
     public void insertCoinTrans(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -625,9 +627,9 @@ public class MemberController extends MultiActionController {
 	}
 	
 	// 테스트용 url
-	// 잘못된 아이디 http://localhost:4444/member/doLogin.nds?mem_email=grsdfpe@good.com&mem_pw=123&isAutoLoginChecked=true
-	// [아이디 저장] http://localhost:4444/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isSavedIdChecked=true
-	// [자동 로그인] http://localhost:4444/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isAutoLoginChecked=true
+	// 잘못된 아이디 http://localhost:9696/member/doLogin.nds?mem_email=grsdfpe@good.com&mem_pw=123&isAutoLoginChecked=true
+	// [아이디 저장] http://localhost:9696/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isSavedIdChecked=true
+	// [자동 로그인] http://localhost:9696/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isAutoLoginChecked=true
 	// 로그인 버튼이 클릭되었을 때 실행되는 메소드
 	public void doLogin(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		// 사용자가 자동로그인 체크박스와 아이디저장 체크박스에 체크 했는지 여부를 담을 변수 선언
@@ -958,6 +960,9 @@ public class MemberController extends MultiActionController {
 		String req_sessionid = cookies.getValue("JSESSIONID");
 		String join_email = (String)session.getAttribute("join_email");
 		logger.info(session_sessionid + " :: "+ req_sessionid + " :: " + join_email);
+		Map<String,Object> pmap = new HashMap<>();
+		List<Map<String, Object>> rankList = memberLogic.rankList(pmap);
+		mav.addObject("rankList", rankList);
 		if(session_sessionid != null && session_sessionid.equals(req_sessionid) && join_email != null ) {
 			// 세션에 담겨 있는 회원의 이메일을 가져옴
 			// 회원가입 양식 띄워줘 - join_email 속성이 있는 경우 모달띄워줌
