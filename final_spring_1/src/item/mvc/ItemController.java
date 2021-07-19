@@ -90,14 +90,16 @@ public class ItemController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		//카테고리 메뉴 이름이 여기에 들어가게 된다.
-		hmb.bind(pmap);
+		hmb.bindPost(pmap);
 //		pmap.put("pr_categori","디지털기기");
 		//관련 카테고리 아이템들을 가져온다.
 		List<Map<String,Object>> items = itemLogic.selectByCategory(pmap);
+		List<Map<String, Object>> rankList = itemLogic.rankList(pmap);
 		logger.info(pmap);
 		logger.info(items);
 		ModelAndView mav = new ModelAndView("/itemPage/item_list.jsp");
 		mav.addObject("itemList", items);
+		mav.addObject("rankList", rankList);
 		return mav;
 		//Json 형태로 가져오기
 //		Gson g = new Gson();
@@ -120,7 +122,7 @@ public class ItemController extends MultiActionController {
 		Map<String,Object> pmap = new HashMap<>();
 		//검색어를 가져오게 된다. + 검색 타입을(제목, 내용, 작성자) 가져온다.
 //		pmap.put("pr_MEM_EMAIL", "apple@good.com"); //여기는 원래 세션
-		hmb.bind(pmap);		
+		hmb.bindPost(pmap);		
 		pmap.put("pr_search", (String)pmap.get("pr_search"));
 		pmap.put("pr_search_order","제목");
 		//검색어 아이템들을 가져온다.
@@ -474,10 +476,6 @@ public class ItemController extends MultiActionController {
 		//페이지 전송
 		mav.setViewName("itemTest");*/
 	}
-	
-	
-	
-	
 	
 	
 	

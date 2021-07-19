@@ -250,7 +250,11 @@ public class MemberLogic {
 		return pmap1;
 	}
 
-
+	public List<Map<String, Object>> rankList(Map<String, Object> pmap){
+		logger.info("Logic : rankList메소드 호출");
+		List<Map<String, Object>> rankList = memberDao.rankList(pmap);
+		return rankList;
+	}
 
 
 	// 테스트용 메인
