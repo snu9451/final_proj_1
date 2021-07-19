@@ -49,7 +49,7 @@ function insAction(){
           <div class="icon-box1" data-aos="fade-in" data-aos-delay="50">
             <div class="top">
               <span class="title_section">
-                <h2 class="title" style="font-weight: bold;">물품 상세 페이지</h2>
+                <h2 class="title" style="font-weight: bold;">물품 등록 페이지</h2>
               </span>
             </div>
             <div class="middle">
