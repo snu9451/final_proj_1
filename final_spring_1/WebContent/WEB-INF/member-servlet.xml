@@ -23,14 +23,14 @@
 	<!-- Url의 mapping이 이루어짐 -->
 	<bean id="member-url-mapping"
 		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="interceptors">
-			<list>
-				<ref bean="auth-check-interceptor"/>
-				<ref bean="login-check-interceptor"/>
-			</list>
-		</property>
+<!-- 		<property name="interceptors"> -->
+<!-- 			<list> -->
+<!-- 				<ref bean="auth-check-interceptor"/> -->
+<!-- 				<ref bean="login-check-interceptor"/> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
 		<property name="mappings">
-			<props>
+			<props>			
 				<prop key="/member/reqLoginView.nds">member-controller</prop>
 				<prop key="/mainPage/reqJoinView.nds">member-controller</prop>
 				<prop key="/member/selectNickName.nds">member-controller</prop>

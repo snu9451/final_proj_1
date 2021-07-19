@@ -59,7 +59,7 @@ function reqAction() {
 	console.log('req_cnt(1)='+req_cnt);
 	if($('#nds_tbody_req').children().length == 0){
 		$.ajax({
-			url : "http://localhost:9696/errand/selectErrandRecord.nds?gubun=req",
+			url : "http://localhost:4444/errand/selectErrandRecord.nds?gubun=req",
 			success : function(data) {//@data-json,xml,html,text
 				console.log(data);
 				let str = "";
@@ -149,7 +149,7 @@ function resAction() {
 	console.log('nds_cnt(1)='+nds_cnt);
 	if($('#nds_tbody_nds').children().length == 0){
 		$.ajax({
-			url : "http://localhost:9696/errand/selectErrandRecord.nds?gubun=nds",
+			url : "http://localhost:4444/errand/selectErrandRecord.nds?gubun=nds",
 			success : function(data) {//@data-json,xml,html,text
 				console.log(data);
 				let str = "";
@@ -262,7 +262,7 @@ $(document).ready(function () {
 		    	 errandKey = errandKey.substr(11,errandKey.length-1);
 		         console.log(errandKey);
 		         $.ajax({
-		             url : "http://localhost:9696/errand/errandRecordUpdate.nds?gubun=req&errandKey="+errandKey,
+		             url : "http://localhost:4444/errand/errandRecordUpdate.nds?gubun=req&errandKey="+errandKey,
 		             success : function(data) {//@data-json,xml,html,text
 		                 location.href = "my_errand.nds?req";
 		             },
@@ -279,7 +279,7 @@ $(document).ready(function () {
 		    	 errandKey = errandKey.substr(11,errandKey.length-1);
 		         console.log(errandKey);
 		         $.ajax({
-		             url : "http://localhost:9696/errand/errandRecordUpdate.nds?gubun=nds&errandKey="+errandKey,
+		             url : "http://localhost:4444/errand/errandRecordUpdate.nds?gubun=nds&errandKey="+errandKey,
 		             success : function(data) {//@data-json,xml,html,text
 		                 location.href = "my_errand.nds?res";
 		             },

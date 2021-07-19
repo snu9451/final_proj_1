@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import errand.mvc.ErrandLogic;
 import item.mvc.ItemLogic;
 import member.mvc.MemberLogic;
 import nds.util.HashMapBinder;

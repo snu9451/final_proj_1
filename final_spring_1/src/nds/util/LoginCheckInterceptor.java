@@ -37,7 +37,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		"/mainPage/reqJoinView.nds",
 		"/item/selectItemList.nds",
 		"/item/selectBySearch.nds",
-		"/item/selectByCategory.nds"
+		"/item/selectByCategory.nds",
 	};
 	
 	@Override
@@ -76,8 +76,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 			// (1)비회원도 이용가능한 예외 URI(excludedURIs)도 아니면서 (2)로그인 하지도 않은 사용자의 요청이라면,
 			// 로그인 페이지를 요청하는 서블릿 태우기.
 			session.setAttribute("reqLoginView", "true");
-			res.sendRedirect("http://localhost:9696/mainPage/main_page.nds");
-//			.sendRedirect("http://localhost:9696/mainPage_JSP/main_page.jsp");
+			res.sendRedirect("http://localhost:4444/mainPage/main_page.nds");
+//			.sendRedirect("http://localhost:4444/mainPage_JSP/main_page.jsp");
 			return false;
 		}
 	}

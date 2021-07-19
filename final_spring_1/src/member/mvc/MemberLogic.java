@@ -164,7 +164,8 @@ public class MemberLogic {
 		return rmap;
 	}
 	public Map<String, Object> selectNickName(Map<String, Object> pmap) {
-		Map<String, Object> rmap = null;
+		//{mem_nickname=재훈재훈}
+		Map<String, Object> rmap = null; //돌려받을 맵 선언
 		rmap = memberDao.selectNickName(pmap);
 		return rmap;
 	}
