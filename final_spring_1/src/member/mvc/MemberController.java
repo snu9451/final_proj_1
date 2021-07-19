@@ -47,9 +47,9 @@ public class MemberController extends MultiActionController {
 		// request객체로 받아온 정보를 map으로 옮겨 담는 작업
 		Map<String, Object> pmap = new HashMap<String, Object>();
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bindPost(pmap);
-		Map<String, Object> rmap = null;
-		logger.info(pmap);
+		hmb.bindPost(pmap);//pmap에 우리가 원하는 정보가 담기게 됨. (사용자가 입력한 닉네임)
+		Map<String, Object> rmap = null; //돌려받을 맵 선언
+		logger.info(pmap); //{mem_nickname=재훈재훈}
 		rmap = memberLogic.selectNickName(pmap);
 		logger.info("NickName으로 조회한 결과 ===> "+rmap);
 		// 중복이 아닌 경우: 같은 닉네임을 갖는 회원이 없는 경우
@@ -119,6 +119,40 @@ public class MemberController extends MultiActionController {
 		mav.addObject("memberMap", rmap);
 		mav.setViewName("/common/my_info.jsp");
 	}
+	public void selectUser(HttpServletRequest req, HttpServletResponse res) {
+		// 세션에 담긴 회운정보(이메일) 가져오기
+		HttpSession session = req.getSession();
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		String mem_nickname = req.getParameter("mem_nickname").toString();
+		pmap.put("mem_nickname", mem_nickname);
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bindPost(pmap);
+		Map<String, Object> rmap = memberLogic.selectNickName(pmap);
+		Map<String, Object> pmap1 = new HashMap<String, Object>();
+		List<Map<String, Object>> sellList = memberLogic.sellList(pmap);
+		List<Map<String, Object>> rmap1 = null;
+		String mem_email = (String)rmap.get("MEM_EMAIL");
+		pmap1.put("mem_email", mem_email);
+		rmap1 = memberLogic.errandSelect(pmap1);
+		rmap1.add(pmap1);
+		logger.info(rmap1);
+		logger.info(sellList);
+		
+		
+		req.setAttribute("memberMap", rmap);
+		req.setAttribute("sellList", sellList);
+		req.setAttribute("errandSize", rmap1);
+		RequestDispatcher rd = req.getRequestDispatcher("/mainPage/user_page.jsp");
+		try {
+			rd.forward(req, res);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	// 회원 정보 가져와서 json 형식으로 뿌리기(파라미터로 mem_email or mem_nickname필요)
 	public void jsonSelectMember(HttpServletRequest req, HttpServletResponse res) {
 //		ModelAndView mav = new ModelAndView();
@@ -176,7 +210,7 @@ public class MemberController extends MultiActionController {
 	
 	// ===================================== [[ INSERT ]] =====================================
 	// 회원가입 모달에서 확인 버튼 클릭 시
-	// 테스트: http://localhost:9696/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
+	// 테스트: http://localhost:4444/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
 	public ModelAndView insertMember(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		logger.info("insertMember 호출성공!!");
 		// request 객체에 담긴 정보를 map으로 옮겨 담기
@@ -347,7 +381,7 @@ public class MemberController extends MultiActionController {
 		hmb.bindPost(pmap);
 		
 		// 단위 테스트
-//		pmap.put("coin_remain", 96969);
+//		pmap.put("coin_remain", 44449);
 //		pmap.put("mem_email", "snu9451@naver.com");
 //		pmap.put("trans_price", 3333);
 		
@@ -399,26 +433,21 @@ public class MemberController extends MultiActionController {
 		logger.info(input_code);
 		//int withdraw_code = (Integer)session.getAttribute("withdraw_code");
 		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치한다면
-//		if(input_code == withdraw_code) {
-//			// 출금(O)이므로 map에 담아준다.
-//			pmap.put("trans_io","O");
-//			// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
-//			Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
-//			logger.info(mvo);
-//			String mem_email = (String)mvo.get("MEM_EMAIL");
-//			pmap.put("mem_email", mem_email);
-//			// [DB]에 update 및 insert 처리
-//			int result = memberLogic.withdraw(pmap);
-//		}
-//		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치하지 않는다면
-//		else {
-//			AjaxDataPrinter.out(res, "인증코드가 일치하지 않습니다.");
-//		}
-		// 출금하고자 하는 금액
-//		int io_money = (Integer)pmap.get("io_money");
-		// 계좌번호
-//		String account_num = (String)pmap.get("account_num");
-		// 인증번호
+		if(input_code == withdraw_code) {
+			// 출금(O)이므로 map에 담아준다.
+			pmap.put("trans_io","O");
+			// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
+			Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+			logger.info(mvo);
+			String mem_email = (String)mvo.get("MEM_EMAIL");
+			pmap.put("mem_email", mem_email);
+			// [DB]에 update 및 insert 처리
+			int result = memberLogic.withdraw(pmap);
+		}
+		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치하지 않는다면
+		else {
+			AjaxDataPrinter.out(res, "인증코드가 일치하지 않습니다.");
+		}
 	}
     
     public void insertCoinTrans(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -437,6 +466,10 @@ public class MemberController extends MultiActionController {
    	   memberLogic.updateMember(pmap);
      }
 	
+	
+	
+	
+	// ===================================== [[ DELETE ]] =====================================
 	//마이페이지 찜 목록 삭제
 	public void deleteMyLike(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : deleteMyLike메소드 호출");
@@ -592,9 +625,9 @@ public class MemberController extends MultiActionController {
 	}
 	
 	// 테스트용 url
-	// 잘못된 아이디 http://localhost:9696/member/doLogin.nds?mem_email=grsdfpe@good.com&mem_pw=123&isAutoLoginChecked=true
-	// [아이디 저장] http://localhost:9696/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isSavedIdChecked=true
-	// [자동 로그인] http://localhost:9696/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isAutoLoginChecked=true
+	// 잘못된 아이디 http://localhost:4444/member/doLogin.nds?mem_email=grsdfpe@good.com&mem_pw=123&isAutoLoginChecked=true
+	// [아이디 저장] http://localhost:4444/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isSavedIdChecked=true
+	// [자동 로그인] http://localhost:4444/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isAutoLoginChecked=true
 	// 로그인 버튼이 클릭되었을 때 실행되는 메소드
 	public void doLogin(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		// 사용자가 자동로그인 체크박스와 아이디저장 체크박스에 체크 했는지 여부를 담을 변수 선언
@@ -945,12 +978,13 @@ public class MemberController extends MultiActionController {
 	
 	// =================================================== [[ 페이지 요청 url ]] ===================================================
 	public ModelAndView getMainPage(HttpServletRequest req, HttpServletResponse res) {
-
+		Map<String,Object> pmap = new HashMap<>();
+		List<Map<String, Object>> rankList = memberLogic.rankList(pmap);
 		ModelAndView mav = new ModelAndView("/mainPage/main_page.jsp");
+		mav.addObject("rankList", rankList);
 		return mav;
 	}
 	public ModelAndView getMyInfo(HttpServletRequest req, HttpServletResponse res) {
-		
 		ModelAndView mav = new ModelAndView("/myPage/my_info.jsp");
 		return mav;
 	}

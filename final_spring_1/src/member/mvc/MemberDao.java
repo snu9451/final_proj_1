@@ -210,16 +210,6 @@ public class MemberDao {
 	}
 
 
-	//마이페이지 - 찜 목록 조회
-	public List<Map<String, Object>> selectMyLike(Map<String, Object> pmap) {
-		logger.info("Dao : sselectMyLike 메소드 호출");
-		//프로시져 돌리기
-		sqlSessionTemplate.selectList("proc_my_like", pmap);
-		
-		logger.info("pmap ===> "+pmap);
-		//결과 값만 전송
-		return (List<Map<String, Object>>)pmap.get("p_temp");
-	}
 	
 	
 	//마이페이지 - 찜 목록 삭제
@@ -229,6 +219,7 @@ public class MemberDao {
 		logger.info("pmap ===> "+pmap);
 		logger.info("pmap ===> "+pmap);
 	}
+
 
 
 
@@ -280,6 +271,55 @@ public class MemberDao {
 		sqlSessionTemplate.update("star_rating_1",pmap);
 		sqlSessionTemplate.update("star_rating_2",pmap);
 	}
+
+
+
+
+
+
+
+
+	public List<Map<String, Object>> errandSelect(Map<String, Object> pmap) {
+		List<Map<String, Object>> pmap1 = null;
+		logger.info(pmap);
+		pmap1 = sqlSessionTemplate.selectList("selectUserErrand",pmap);
+		logger.info(pmap1);
+		return pmap1;
+	}
+
+
+
+
+
+
+
+	public List<Map<String, Object>> sellList(Map<String, Object> pmap) {
+		logger.info("Dao : sellList 메소드 호출");
+		List<Map<String, Object>> sellList = null;
+		sellList = sqlSessionTemplate.selectList("selectUserSellList", pmap);
+		logger.info("pmap ===> "+pmap);
+		//결과 값만 전송
+		return sellList;
+	}
+
+	public List<Map<String, Object>> rankList(Map<String, Object> pmap) {
+		logger.info("Dao :rankList메소드 호출");
+		sqlSessionTemplate.selectList("searchRank", pmap);
+		logger.info("rankList ===> "+pmap);
+		return (List<Map<String, Object>>)pmap.get("p_temp");
+	}
+	
+	//마이페이지 - 찜 목록 조회
+	public List<Map<String, Object>> selectMyLike(Map<String, Object> pmap) {
+		logger.info("Dao : sselectMyLike 메소드 호출");
+		//프로시져 돌리기
+		sqlSessionTemplate.selectList("proc_my_like", pmap);
+		
+		logger.info("pmap ===> "+pmap);
+		//결과 값만 전송
+		return (List<Map<String, Object>>)pmap.get("p_temp");
+	}
+
 
 
 }

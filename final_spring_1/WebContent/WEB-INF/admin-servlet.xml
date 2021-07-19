@@ -16,6 +16,10 @@
 	<bean id="admin-url-mapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<props>
+				<prop key="/admin/admin_page1.nds">admin-controller</prop>
+				<prop key="/admin/admin_page2.nds">admin-controller</prop>
+				<prop key="/admin/admin_modal1.nds">admin-controller</prop>
+				<prop key="/admin/admin_modal2.nds">admin-controller</prop>
 				<prop key="/admin/outMember.nds">admin-controller</prop>
 				<prop key="/admin/initReportNumber.nds">admin-controller</prop>
 				<prop key="/admin/selectMemberBySearch.nds">admin-controller</prop>
@@ -29,6 +33,10 @@
 	<bean id="admin-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
 		<property name="mappings">
 			<props>
+				<prop key="/admin/admin_page1.nds">getAdminPage1</prop>
+				<prop key="/admin/admin_page2.nds">getAdminPage2</prop>
+				<prop key="/admin/admin_modal1.nds">getAdminModal1</prop>
+				<prop key="/admin/admin_modal2.nds">getAdminModal2</prop>
 				<prop key="/admin/outMember.nds">outMember</prop>
 				<prop key="/admin/initReportNumber.nds">initReportNumber</prop>
 				<prop key="/admin/selectMemberBySearch.nds">selectMemberBySearch</prop>

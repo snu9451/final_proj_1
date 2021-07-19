@@ -200,7 +200,7 @@ public class Mail {
 			"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:'Montserrat',sans-serif;\" align=\"left\">\r\n" + 
 			"        \r\n" + 
 			"  <div class=\"v-text-align\" style=\"color: #ffffff; line-height: 140%; text-align: left; word-wrap: break-word;\">\r\n" + 
-			"    <p style=\"font-size: 14px; line-height: 140%; text-align: center;\"><span style=\"font-size: 24px; line-height: 33.6px; color: #34495e;\"><strong><span><a href=\"http://localhost:9696/mainPage/reqJoinView.nds\" style=\"line-height: 33.6px; font-size: 24px; color: #5e4121; text-decoration: none\">클릭하여 회원가입하기</a></span></strong></span></p>\r\n" + 
+			"    <p style=\"font-size: 14px; line-height: 140%; text-align: center;\"><span style=\"font-size: 24px; line-height: 33.6px; color: #34495e;\"><strong><span><a href=\"http://localhost:4444/mainPage/reqJoinView.nds\" style=\"line-height: 33.6px; font-size: 24px; color: #5e4121; text-decoration: none\">클릭하여 회원가입하기</a></span></strong></span></p>\r\n" + 
 			"  </div>\r\n" + 
 			"\r\n" + 
 			"      </td>\r\n" + 

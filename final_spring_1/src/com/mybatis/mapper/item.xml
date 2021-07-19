@@ -117,6 +117,10 @@
 		(seq_board_img.nextval, #{bm_no}, #{bi_file}, #{bi_size})
 	</insert>
 	
+	<select id="rankList" statementType="CALLABLE" parameterType="java.util.Map">
+      {call PROC_SEARCH_WORDS_RANK(#{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=itemVO})}
+   </select>
+	
 
    
 

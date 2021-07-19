@@ -91,7 +91,9 @@
 		});
 		
 		//엔터키를 누르면 메세지 전송
-		$("#btn_msg").click(sendMsg);
+		$("#btn_msg").off('click').on('click', function(){
+			sendMsg();
+		});
 		
 		//이미지 전송
 		document.querySelector('#input_file').addEventListener('change', e => {
@@ -181,9 +183,7 @@
 	}
 	//채팅방에 입장했을 때 UI생성
 	function init(){
-		if(MAXINDEX==-1) {
-			getChatMsg();
-		}
+		getChatMsg();
 	}
 	//채팅방 새로 개설
 	function createRoom() {
@@ -243,7 +243,7 @@
 				insertImg(msgKey, msg, sender);
 		        $("#"+msgKey).css("margin-bottom","400px")
 			}
-			if(msgErrandKey != null && errandArr[infoIndex].ERRANDKEY == msgErrandKey){
+			if(MAXINDEX != -1 && msgErrandKey != null && errandArr[infoIndex].ERRANDKEY == msgErrandKey){
 				if(errandArr[infoIndex].ERRAND_STATUS != "S"){
 					if(msg.indexOf("물품가를 확인하시고 상단의 체크버튼을 누르시면 거래가 성사됩니다!]")>-1) {
 						$.ajax({

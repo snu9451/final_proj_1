@@ -25,7 +25,7 @@
 	<div class="d-flex align-items-center">
 		<img class="myBro__logo mr-2" src="../common/assets/img/mybro_logo.png" alt="mybro_favicon">
 		<h1 class="logo mr-auto main__title">
-			<a href="http://localhost:9696/mainPage/main_page.nds">내 동생<span>.</span></a>
+			<a href="http://localhost:4444/mainPage/main_page.nds">내 동생<span>.</span></a>
 		</h1>
 		<nav class="nav-menu d-none d-lg-block">
 		<ul>

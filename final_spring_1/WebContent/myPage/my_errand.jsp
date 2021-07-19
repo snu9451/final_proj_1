@@ -87,7 +87,7 @@
             </tbody>
          </table>
          <div class="delete">
-            <a href="#" data-toggle="modal" data-target="#selDelete1">
+            <a href="#" data-toggle="modal" data-target="#selDelete">
                <button type="button" class="btn btn-danger">삭제</button>
             </a>
          </div>

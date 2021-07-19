@@ -106,7 +106,7 @@ html, body {
   content: "";
   color:white;
   position: fixed;
-  top: calc(50% - 30px);
+  top: calc(50% + 30px);
   left: calc(50% - 30px);
   border: 10px solid #ffc37b;
   border-top-color: #e2eefd;

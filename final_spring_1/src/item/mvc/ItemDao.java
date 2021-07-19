@@ -38,6 +38,12 @@ public class ItemDao {
 		//결과 값만 전송
 		return (List<Map<String, Object>>)pmap.get("p_temp");
 	}
+	public List<Map<String, Object>> rankList(Map<String, Object> pmap) {
+		logger.info("Dao :rankList메소드 호출");
+		sqlSessionTemplate.selectList("rankList", pmap);
+		logger.info("rankList ===> "+pmap);
+		return (List<Map<String, Object>>)pmap.get("p_temp");
+	}
 	//검색어를 입력하여 찾기
 	public List<Map<String, Object>> selectBySearch(Map<String, Object> pmap) {
 		logger.info("Dao : selectBySearch메소드 호출");

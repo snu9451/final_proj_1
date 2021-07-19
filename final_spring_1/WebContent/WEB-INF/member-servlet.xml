@@ -23,14 +23,14 @@
 	<!-- Url의 mapping이 이루어짐 -->
 	<bean id="member-url-mapping"
 		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="interceptors">
-			<list>
-				<ref bean="auth-check-interceptor"/>
-				<ref bean="login-check-interceptor"/>
-			</list>
-		</property>
+<!-- 		<property name="interceptors"> -->
+<!-- 			<list> -->
+<!-- 				<ref bean="auth-check-interceptor"/> -->
+<!-- 				<ref bean="login-check-interceptor"/> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
 		<property name="mappings">
-			<props>
+			<props>			
 				<prop key="/member/reqLoginView.nds">member-controller</prop>
 				<prop key="/mainPage/reqJoinView.nds">member-controller</prop>
 				<prop key="/member/selectNickName.nds">member-controller</prop>
@@ -56,6 +56,7 @@
 				<prop key="/member/starRatingGrant.nds">member-controller</prop>
 				<!-- ================== [[ 페이지 요청 url ]] ================== -->
 				<prop key="/myPage/my_info.nds">member-controller</prop>
+				<prop key="/member/selectUser.nds">member-controller</prop>
 				<prop key="/myPage/my_wallet.nds">member-controller</prop>
 				<prop key="/myPage/my_like.nds">member-controller</prop>
 				<prop key="/myPage/my_trade.nds">member-controller</prop>
@@ -103,6 +104,7 @@
 				<prop key="/member/starRatingGrant.nds">starRatingGrant</prop>
 				<!-- ================== [[ 페이지 이동 url ]] ================== -->
 				<prop key="/myPage/my_info.nds">selectMember</prop>
+				<prop key="/member/selectUser.nds">selectUser</prop>
 				<prop key="/myPage/my_wallet.nds">getMyWallet</prop>
 				<prop key="/myPage/my_like.nds">getMyLike</prop>
 				<prop key="/myPage/my_trade.nds">getMyTrade</prop>

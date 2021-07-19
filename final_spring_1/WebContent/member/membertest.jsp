@@ -29,8 +29,8 @@
 		$('#in').blur(function(){
 			console.log('안ㄴ녕ㅇ');
 			$.ajax({
-// 				url: '${pageContext.request.contextPath}http://localhost:9696/member/issueTempPw.nds?mem_email=snu9451',
-				url: '${pageContext.request.contextPath}http://localhost:9696/member/ajaxTest.nds',
+// 				url: '${pageContext.request.contextPath}http://localhost:4444/member/issueTempPw.nds?mem_email=snu9451',
+				url: '${pageContext.request.contextPath}http://localhost:4444/member/ajaxTest.nds',
 				type: 'get',
 				success: function(data){
 					console.log(data);

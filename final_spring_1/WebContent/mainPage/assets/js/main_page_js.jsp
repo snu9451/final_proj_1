@@ -346,7 +346,7 @@ $(document).ready(function(){
 		let item = {"pr_choice":"like_rank"};
 		$.ajax({
 	    	type: "GET",
-	    	url: "http://localhost:9696/item/selectItemList.nds",
+	    	url: "http://localhost:4444/item/selectItemList.nds",
 			data: item,
 	    	success:function(data){
 				viewItemList(data);

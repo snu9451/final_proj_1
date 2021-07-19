@@ -29,14 +29,15 @@ public class HashMapBinder {
 	int maxSize = 5*1024*1024;//5MB
 	HttpServletRequest request = null;
 	public HashMapBinder() {}
+	//생성자 오버로딩
 	public HashMapBinder(HttpServletRequest request) {
 		this.request = request;
-		realFolder = "D:\\final_proj_1\\final_spring_1\\WebContent\\itemUpload\\assets\\img\\itemupload";
+		realFolder = "C:\\Users\\chokiseol\\Desktop\\final\\final_proj_1\\final_spring_1\\WebContent\\itemUpload\\assets\\img\\itemupload";
 		logger.info("itemupload용 hashmapbinder");
 	}
 	public HashMapBinder(HttpServletRequest request,int i) {
 		this.request = request;
-		realFolder = "D:\\final_proj_1\\final_spring_1\\WebContent\\myPage\\assets\\img\\profile";
+		realFolder = "C:\\Users\\chokiseol\\Desktop\\final\\final_proj_1\\final_spring_1\\WebContent\\myPage\\assets\\img\\profile";
 		logger.info("profileimg용 hashmapbinder");
 	}
 	public void profileBind(Map<String,Object> target) {
@@ -86,7 +87,6 @@ public class HashMapBinder {
 		List<Map<String,Object>> imgs = new ArrayList();
 		//첨부파일에 대한 정보를 받아오기
 		Enumeration files = multi.getFileNames(); //파일명정보를 배열로 만들다(files에 name들이 담겨있다)
-		System.out.println("dfsfsd    "+files);
 		while(files.hasMoreElements()){
 		    String name = (String)files.nextElement(); //각각의 파일 name을 String name에 담는다.
 		    logger.info(name);
@@ -112,13 +112,14 @@ public class HashMapBinder {
 	}////////end of bind
 			
 	public void bindPost(Map<String,Object> target) {
-		Enumeration en = request.getParameterNames();//배열 구조체 묶음
+		//mem_nickName = 재훈재훈
+		Enumeration en = request.getParameterNames();//배열 구조체 묶음 //mem_nickNmae, 재훈재훈 뭐가 들어감?? 
 		//<input type="text" name="mem_id"
-		while(en.hasMoreElements()) {
-			String key = (String)en.nextElement();
-			logger.info("value:"+request.getParameter(key));
-			target.put(key, HangulConversion.toUTF(request.getParameter(key)));
-			logger.info("value:"+target);
+		while(en.hasMoreElements()) { //요소가 더 있냐? 
+			String key = (String)en.nextElement(); //mem_nickName이 들어가나 보다...
+			logger.info("value:"+request.getParameter(key)); //value:재훈재훈
+			target.put(key, HangulConversion.toUTF(request.getParameter(key))); //타겟에 mem_nickName=재훈재훈 넣음.
+			logger.info("value:"+target); //mem_nickName=재훈재훈 출력.
 		}
 	}////////end of bind
 	public void bind(Map<String,Object> target) {

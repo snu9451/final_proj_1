@@ -164,7 +164,8 @@ public class MemberLogic {
 		return rmap;
 	}
 	public Map<String, Object> selectNickName(Map<String, Object> pmap) {
-		Map<String, Object> rmap = null;
+		//{mem_nickname=재훈재훈}
+		Map<String, Object> rmap = null; //돌려받을 맵 선언
 		rmap = memberDao.selectNickName(pmap);
 		return rmap;
 	}
@@ -198,6 +199,11 @@ public class MemberLogic {
 		logger.info("Logic : selectMyLike 메소드 호출");
 		logger.info(pmap);
 		return memberDao.selectMyLike(pmap);
+	}
+	public List<Map<String, Object>> sellList(Map<String, Object> pmap) {
+		logger.info("Logic : sellList 메소드 호출");
+		logger.info(pmap);
+		return memberDao.sellList(pmap);
 	}
 	//마이페이지 - 찜 목록 삭제
 	public void deleteMyLike(Map<String, Object> pmap) {
@@ -238,6 +244,18 @@ public class MemberLogic {
 	}
 
 
+
+	public List<Map<String, Object>> errandSelect(Map<String, Object> pmap) {
+		List<Map<String, Object>> pmap1 = null;
+		pmap1 = memberDao.errandSelect(pmap);
+		return pmap1;
+	}
+
+	public List<Map<String, Object>> rankList(Map<String, Object> pmap){
+		logger.info("Logic : rankList메소드 호출");
+		List<Map<String, Object>> rankList = memberDao.rankList(pmap);
+		return rankList;
+	}
 
 
 	// 테스트용 메인

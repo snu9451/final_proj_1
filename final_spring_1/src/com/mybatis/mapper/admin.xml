@@ -3,11 +3,11 @@
 <mapper namespace="com.mybatis.mapper.AdminMapper">
 <!-- 회원VO -->
  <resultMap type="map" id="memberVO">
-<!--   <result column="MEM_CREATE_DATE" property="MEM_CREATE_DATE"/>  -->
-<!--   <result column="MEM_EMAIL" property="MEM_EMAIL"/>  -->
-<!--   <result column="MEM_NICKNAME" property="MEM_NICKNAME"/>  -->
-<!--   <result column="MEM_GENDER" property="MEM_GENDER"/>  -->
-<!--   <result column="MEM_AGE" property="MEM_AGE"/>  -->
+  <result column="MEM_CREATE_DATE" property="MEM_CREATE_DATE"/> 
+  <result column="MEM_EMAIL" property="MEM_EMAIL"/> 
+  <result column="MEM_NICKNAME" property="MEM_NICKNAME"/> 
+  <result column="MEM_GENDER" property="MEM_GENDER"/> 
+  <result column="MEM_AGE" property="MEM_AGE"/> 
  </resultMap>
  
 <!-- 신고된 회원VO -->
@@ -43,9 +43,76 @@
 <!--   <collection property="board_masterVO" resultMap="board_masterVO"/> -->
 <!--   <collection property="report_boardVO" resultMap="report_boardVO"/> -->
  </resultMap>
+ <!--전체회원목록조회  -->
+  <select id="member_select" parameterType="java.util.Map" resultType="map">
+SELECT mem.mem_create_date,
+       mem.mem_email,
+       mem.mem_nickname,
+       mem.mem_gender,
+       mem.mem_age,
+       mem.report_count
+  FROM (  SELECT mem.mem_create_date,
+                 mem.mem_email,
+                 mem.mem_nickname,
+                 mem.mem_gender,
+                 mem.mem_age,
+                 NVL (me.mem_count, 0) report_count
+            FROM    MEMBER mem
+                 LEFT OUTER JOIN
+                    (  SELECT mem_email_from, COUNT (*) mem_count
+                         FROM report_mem
+                     GROUP BY mem_email_from) me
+                 ON mem.mem_email = me.mem_email_from
+           WHERE mem.mem_active = 'T'
+        ORDER BY mem.mem_create_date DESC) mem
+ </select>
+ 
+ <!--전체게시글목록조회  -->
+
+  <select id="board_select" resultType="map">
+	SELECT bm.bm_no,
+           bm.bm_title,
+           bm.seller_nickname,
+           bm.bm_date,
+           bm.bm_hit,
+           NVL (me.board_count, 0) report_count
+      FROM    board_master bm
+           LEFT OUTER JOIN
+              (  SELECT bm_no, COUNT (*) board_count
+                   FROM report_board
+               GROUP BY bm_no) me
+           ON bm.bm_no = me.bm_no
+     ORDER BY bm_no desc
+ </select> 
+ 
+ <!-- 신고된 회원 -->
+  <select id="report_member" parameterType="java.util.Map" resultType="map">
+	SELECT rm.report_no,
+           rm.report_type,
+           rm.mem_email_from,
+           rm.mem_email_to,
+           rm.report_msg,
+           rm.report_date
+  	FROM report_mem rm
+ </select> 
+ <!-- 신고된 게시글-->
+  <select id="report_board" parameterType="java.util.Map" resultType="map">
+	SELECT rb.report_no,
+     	   rb.report_type,
+       	   bm.bm_title,
+       	   rb.mem_email,
+       	   rb.report_msg,
+       	   rb.report_date    
+      FROM report_board rb 
+    LEFT OUTER JOIN board_master bm 
+    ON rb.bm_no = bm.bm_no
+    ORDER BY rb.bm_no    
+ </select> 
+ 
+ 
  
 <!-- 회원 탈퇴하기(mem_active를 T에서 F로) -->
- <update id="outMem" parameterType="map">
+ <update id="outMember" parameterType="map">
   update member
   set mem_active = 'F'
   where mem_email=#{mem_email}
@@ -67,11 +134,18 @@
  </update>
  
 <!-- 회원 검색 --> 
- <select id="proc_member_all_select" statementType="CALLABLE" parameterType="java.util.Map">
-  {CALL proc_member_all_select(#{nick_email_type}, #{pr_search},
+ <select id="proc_member_all_select" parameterType="java.util.Map">
+  select mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, mem.mem_age, mem.report_count
+  from (select  mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, mem.mem_age ,NVL(me.mem_count,0)  report_count
+        from member mem LEFT OUTER JOIN (select mem_email_to, count(*) mem_count from report_mem group by mem_email_to) me 
+        on mem.mem_email=me.mem_email_to order by mem.mem_email desc)mem
+  
+  <!-- {CALL proc_member_all_select(#{nick_email_type}, #{pr_search},
+  
   							   #{p_temp, mode=OUT, jdbcType=CURSOR, resultMap=report_mem_memberVO})
-  }
+  } -->
  </select>
+
  
 <!-- 게시글 검색 -->
  <select id="proc_board_all_select" statementType="CALLABLE" parameterType="java.util.Map">

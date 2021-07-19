@@ -16,11 +16,43 @@ public class AdminDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
+//	public List<Map<String, Object>> getAdminPage(Map<String, Object> pmap) {
+//		List<Map<String, Object>> adminPage = null;
+//		adminPage = sqlSessionTemplate.selectList("member_select",pmap); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+//		
+//		return adminPage;
+//	}
+	//------------------------------
+	public List<Map<String, Object>> getAdminPage1() {
+		List<Map<String, Object>> adminPage1 = null;
+		adminPage1 = sqlSessionTemplate.selectList("member_select"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		return adminPage1;
+	}
+	public List<Map<String, Object>> getAdminPage2() {
+		List<Map<String, Object>> adminPage2 = null;
+		adminPage2 = sqlSessionTemplate.selectList("board_select"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		return adminPage2;
+	}
+	public List<Map<String, Object>> getAdminModal1() {
+		List<Map<String, Object>> adminModal1 = null;
+		adminModal1 = sqlSessionTemplate.selectList("report_member"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		return adminModal1;
+	}
+	public List<Map<String, Object>> getAdminModal2() {
+		List<Map<String, Object>> adminModal2 = null;
+		adminModal2 = sqlSessionTemplate.selectList("report_board"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		return adminModal2;
+	}
+	
+	
+	
+	
+	
  // 회원 탈퇴하기(mem_active를 T에서 F로)
 	public int outMember(Map<String, Object> pmap) {
 		logger.info("outMember 메소드 호출");
 		
-		int result = sqlSessionTemplate.delete("outMem", pmap);
+		int result = sqlSessionTemplate.update("outMember", pmap);
 		
 		return result;
 	}

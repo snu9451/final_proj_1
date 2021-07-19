@@ -298,7 +298,7 @@ $(document).ready(function() {
   //알림 모달 창 생성하는 함수
   function makeModal(alertKey, content, hasCancel = 0, btn_ok = "확인", btn_cancel = "취소", title = "알림"){
     let html =
-    //"<form f_id=\""+alertKey+"\" method=\"post\" target=\"chatroom\" action=\"/mainPage/chatroom.jsp\" onsubmit=\"window.open('/mainPage/chatroom.jsp','chatroom','width=550px, height=700px');\">"
+    //"<form f_id=\""+alertKey+"\" method=\"post\" target=\"chatroom\" action=\"/mainPage/chatroom.jsp\" onsubmit=\"window.open('/mainPage/chatroom.jsp','chatroom','width=550px, height=701px');\">"
       "<div class=\"modal fade\" id=\""+alertKey+"\" tabindex=\"-1\" role=\"dialog\" data-backdrop=\"static\" data-keyboard=\"false\">"
         +"<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">"
           +"<div class=\"modal-content\">"
@@ -335,7 +335,7 @@ $(document).ready(function() {
   //심부름 배달요청 수락/거절하는 모달창
   function acceptRefuseModal(alertKey, errand_item, dest_nickname, dest_img, dest_star, dest_gender){
     let html =
-    //"<form f_id=\""+alertKey+"\" method=\"post\" target=\"chatroom\" action=\"/mainPage/chatroom.jsp\" onsubmit=\"window.open('/mainPage/chatroom.jsp','chatroom','width=550px, height=700px');\">"
+    //"<form f_id=\""+alertKey+"\" method=\"post\" target=\"chatroom\" action=\"/mainPage/chatroom.jsp\" onsubmit=\"window.open('/mainPage/chatroom.jsp','chatroom','width=550px, height=701px');\">"
       "<div class=\"modal modal-center fade\" id=\""+alertKey+"\" tabindex=\"-1\" role=\"dialog\" data-backdrop=\"static\" data-keyboard=\"false\">"
         +"<div class=\"modal-dialog modal-center\" role=\"document\">"
           +"<div class=\"modal-content\" style=\"width: 700px;\">"
@@ -557,7 +557,7 @@ function starRatingModal(alertKey, dest_email, dest_nickname, dest_img){
 											            acceptErrand(errandKey, dest_email, area_no);
 											            refAlert.child(alertKey).remove();
 //		 									            refAlert.child(alertKey).update({ active : 0 });
-											            window.open('/mainPage/chatroom.jsp?dest_email='+dest_email+'','','width=550px, height=900px');
+											            window.open('/mainPage/chatroom.jsp?dest_email='+dest_email+'','','width=550px, height=701px');
 													},
 													error:function(e){
 														console.log(e);
