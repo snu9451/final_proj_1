@@ -390,11 +390,14 @@ public class MemberController extends MultiActionController {
 		Map<String, Object> pmap = new HashMap<String, Object>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bindPost(pmap);
-		// 인증코드 일치여부 판단
+		logger.info(pmap.get("getCost").getClass()+", "+
+							pmap.get("input_code").getClass()+", "+
+							pmap.get("account").getClass());// 인증코드 일치여부 판단
 		HttpSession session = req.getSession();
-		int input_code = (Integer)pmap.get("input_code");
-		int withdraw_code = (Integer)session.getAttribute("withdraw_code");
-		logger.info(withdraw_code);
+		logger.info("session: "+session);
+		int input_code = Integer.parseInt((String) pmap.get("input_code"));
+		logger.info(input_code);
+		//int withdraw_code = (Integer)session.getAttribute("withdraw_code");
 		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치한다면
 //		if(input_code == withdraw_code) {
 //			// 출금(O)이므로 map에 담아준다.

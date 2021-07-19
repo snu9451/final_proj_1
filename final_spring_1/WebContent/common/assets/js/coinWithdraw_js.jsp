@@ -67,7 +67,7 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 						inputCoin = false;
 					}
 				}
-			})/////////////////////// end of keyup function
+			});/////////////////////// end of keyup function
 						
 		}
 		//현재 소지 코인이 0보다 작을때
@@ -77,7 +77,7 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 			btn_coinWithdraw.attr("disabled", true);
 		}
 		
-		//계좌번호가 입력됐을 때
+		/********* 계좌번호가 입력됐을 때 ***********/
 		$("#input_account").on('keyup change', function(){
 		//계좌번호
 		input_account = $("#input_account").val();
@@ -107,11 +107,12 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 	      }
 	      //핸드폰 번호가 입력된경우
 	      else {
-	        let dt = "mem_phone=" + inputCellPhone;
+	        let phoneNum = "mem_phone=" + inputCellPhone;
 	        console.log(inputCellPhone);
+	        //핸드폰 번호를 Controller로 보냄
 	        $.ajax({
 	          type: "post",
-	          data: dt,
+	          data: phoneNum,
 	          url: "http://localhost:9696/member/sendSMSCode.nds",
 	          success: function (data) {
 	        	console.log(data);
@@ -123,7 +124,7 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 	    });		
 		
 	    //유효성 검사 function
-	    function chck(){
+	    function validChck(){
 			//모든 <input> 태그에 값이 있을 때, [출금하기] 버튼 활성화
 			if(inputCoin && inputAccount && inputSecurityCode) {
 				console.log('disabled');
@@ -143,50 +144,60 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 		      let withdraw_inputSafetyCode = $("#withdraw_inputSafetyCode").val();
 		      if (withdraw_inputSafetyCode.length > 0) {
 		        if (withdraw_inputSafetyCode === safetyCode) {
+		        	//sweetAlert API사용
 		        	swal("인증번호 일치", "", "success").then(()=>{
 		        		inputSecurityCode = true;
 		        		$("#btn_withdraw_codeChck").attr("disabled", "true");
-			        	chck();
-
-		        	})
+		        		validChck();
+		        	});
 		        } else {
 		        	swal("인증번호 불일치", "", "warning").then(()=>{
 			        	inputSecurityCode = false;
-		        	})
+		        	});
 		        }
 		      } else {
 		        swal("인증번호를 입력해주세요!!", "", "warning");
 		        inputSecurityCode = false;
 		      }
 		    });
-	
- 		$("#coinWithdraw").on("change", chck);
+		
+		//출금모달에 변화가 있을때 마다 동작하는 함수
+ 		$("#coinWithdraw").on("change", validChck);
  		
  		//[출금하기] 눌렀을 때 이벤트
  		btn_coinWithdraw.click(function(){
-			let data = "getCost="+getCost.text()+"account="+input_account+"input_code="+$("#withdraw_inputSafetyCode").val();
+ 			let cost = getCost.text();
+ 			let account = input_account;
+ 			let input_code = Number($("#withdraw_inputSafetyCode").val());
+			let data = "getCost="+cost+"&account="+input_account+"&input_code="+input_code;
 			swal("출금하시겠습니까??","", "info",{
 				  buttons: {
+					  	//확인버튼
 					    confirm: {
-							text: "confirm",
+							text: "확인",
 							value:"confirm",
 					    },
-					    cancel: true,
+					    //취소버튼
+					    cancel: "취소",
 					  },
 					}).then((value) => {
 						switch(value) {
 						
 						case "confirm":
 							console.log('confirm');
-/* 							$.ajax({
-								
-								
-								
-							}) */
+ 							$.ajax({
+								type:"post",
+								data: data,
+								url:"/member/withdrawCoin.nds",
+								success: function(){
+									location.reload();
+								}
+							});
 							break;
 						default:
 							console.log('cancel');
 						$("#coinWithdraw").modal('hide');
+							break;
 						}
 					});
  		});

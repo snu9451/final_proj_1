@@ -12,9 +12,9 @@
             	코인출금
             </h3>
             <label>
-            <i class="fas fa-dollar-sign" style="color: #167326"></i>
-            	보유하신 코인을 내 계좌로 
-            <i class="fas fa-dollar-sign" style="color: #167326"></i>
+	            <i class="fas fa-dollar-sign" style="color: #167326"></i>
+	            	보유하신 코인을 내 계좌로 
+	            <i class="fas fa-dollar-sign" style="color: #167326"></i>
             </label>
           </div>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
