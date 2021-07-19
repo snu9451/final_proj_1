@@ -33,7 +33,7 @@
 				<a class="total_trade sell" href="javascript:sellAction()"> <span><h4 class="all_rec">판매내역</h4></span></a> 
 				<span></span> <span></span> <span></span><span></span>
 			</div>
-			<div>
+			<div class="d-flex flex-column align-content-center">
 				<span id="itemCount" class="total_rec coin2">num</span>
 				<div id="forNoRecord">
 				</div>

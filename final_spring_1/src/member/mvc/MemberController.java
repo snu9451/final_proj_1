@@ -385,8 +385,6 @@ public class MemberController extends MultiActionController {
 //		pmap.put("mem_email", "snu9451@naver.com");
 //		pmap.put("trans_price", 3333);
 		
-		
-		
 		logger.info("Front에서 넘어온 값 확인  ===> "+pmap);
 		// 사용자의 이메일을 담아주기
 		HttpSession session = req.getSession();
@@ -417,18 +415,23 @@ public class MemberController extends MultiActionController {
 		// 충전 후 잔액 Front로 내보내기
 		AjaxDataPrinter.out(res, "text/plain", coin_remain);
 	}
+	
 	// (2) 계좌로 출금
 	// 입력받는 정보: 출금 금액, 계좌번호, 인증번호
-	public void withdraw(HttpServletRequest req, HttpServletResponse res) {
+	public void withdrawCoin(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("withdraw 메소드 호출 성공!");
 		// request 객체에 담긴 정보를 map으로 옮겨 담기
 		Map<String, Object> pmap = new HashMap<String, Object>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bindPost(pmap);
-		// 인증코드 일치여부 판단
+		logger.info(pmap.get("getCost").getClass()+", "+
+							pmap.get("input_code").getClass()+", "+
+							pmap.get("account").getClass());// 인증코드 일치여부 판단
 		HttpSession session = req.getSession();
-		int input_code = (Integer)pmap.get("input_code");
-		int withdraw_code = (Integer)session.getAttribute("withdraw_code");
+		logger.info("session: "+session);
+		int input_code = Integer.parseInt((String) pmap.get("input_code"));
+		logger.info(input_code);
+		//int withdraw_code = (Integer)session.getAttribute("withdraw_code");
 		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치한다면
 		if(input_code == withdraw_code) {
 			// 출금(O)이므로 map에 담아준다.
