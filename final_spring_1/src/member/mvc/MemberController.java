@@ -125,6 +125,8 @@ public class MemberController extends MultiActionController {
 		Map<String, Object> pmap = new HashMap<String, Object>();
 		String mem_nickname = req.getParameter("mem_nickname").toString();
 		pmap.put("mem_nickname", mem_nickname);
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bindPost(pmap);
 		Map<String, Object> rmap = memberLogic.selectNickName(pmap);
 		Map<String, Object> pmap1 = new HashMap<String, Object>();
 		List<Map<String, Object>> sellList = memberLogic.sellList(pmap);

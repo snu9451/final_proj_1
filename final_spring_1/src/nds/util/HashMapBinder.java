@@ -86,7 +86,6 @@ public class HashMapBinder {
 		List<Map<String,Object>> imgs = new ArrayList();
 		//첨부파일에 대한 정보를 받아오기
 		Enumeration files = multi.getFileNames(); //파일명정보를 배열로 만들다(files에 name들이 담겨있다)
-		System.out.println("dfsfsd    "+files);
 		while(files.hasMoreElements()){
 		    String name = (String)files.nextElement(); //각각의 파일 name을 String name에 담는다.
 		    logger.info(name);

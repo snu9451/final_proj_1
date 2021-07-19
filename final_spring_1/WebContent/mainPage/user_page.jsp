@@ -123,7 +123,7 @@ if(sellList != null){
 				dataType:'json',
 				success:function(data){
 					console.log("ajax success for "+data.MEM_NICKNAME);
-					window.open('/mainPage/chatroom.jsp?dest_email='+data.MEM_EMAIL+'','','width=550px, height=900px');
+					window.open('/mainPage/chatroom.jsp?dest_email='+data.MEM_EMAIL+'','','width=550px, height=701px');
 				},
 				error:function(e){
 					console.log(e);

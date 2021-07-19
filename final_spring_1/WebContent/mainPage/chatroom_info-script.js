@@ -3,7 +3,7 @@ let email_nds = "";
 let errandArr=[];
 let errandInfoArr=[];
 let MAXINDEX=-1;
-let infoIndex;
+let infoIndex=-1;
 $(document).ready(function(){
 	$.ajax({
 		type:'post',
@@ -13,21 +13,21 @@ $(document).ready(function(){
 		success:function(data){
 			console.log("ajax success for jsonGetErrand");
 			console.log(data.length);
-			MAXINDEX = data.length-1;
-			infoIndex = MAXINDEX;
 			for(let i=0; i<data.length; i++) {
-				errandArr[i] = data[i];
-				console.log(errandArr[i]);
+				if(data[i].ERRAND_STATUS=="S")
+					continue;
+				errandArr[++infoIndex] = data[i];
+				console.log(data[i]);
 				$.ajax({
 					type:'post',
 					url:'/errand/jsonGetErrandInfo.nds',
 					data:{"errandKey":data[i].ERRANDKEY},
 					dataType:'json',
 					success:function(data2){
-						errandInfoArr[i] = data2;
-						if(i==data.length-1) {
-							initNotice();
-						}
+						console.log(data2);
+						errandInfoArr[infoIndex] = data2;
+						initNotice();
+						MAXINDEX = infoIndex;
 					},
 					error:function(e){
 						console.log(e);
@@ -41,6 +41,8 @@ $(document).ready(function(){
 	});
 });
 function initNotice(){
+	if(MAXINDEX!=-1)
+		return;
 	let html = 
 	   				"<div class=\"notice_wrapper\">"
 	   				+"<div>"
@@ -92,6 +94,18 @@ function initNotice(){
 			         	  +"</div>"
 		        	+"</div>";
 	$(".col.s3").children("div").html(html);
+	
+	$('.right').css('visibility','hidden');
+	if(infoIndex==0)
+		$('.left').css('visibility','hidden');
+		
+	$('.btnleft').off('click').on('click', function(){
+		changeNotice("left");
+	});
+	$('.btnright').off('click').on('click', function(){
+		changeNotice("right");
+	});
+		
 	$('.notice_wrapper1').hide();
 	$('#notice_button').click(function(){
 		$('.notice_wrapper').hide();
@@ -101,19 +115,24 @@ function initNotice(){
 		$('.notice_wrapper1').hide();
 		$('.notice_wrapper').show();
 	});
+	applyNotice();
+}
+
+function applyNotice(){
 	console.log("P=?"+errandArr[infoIndex].ERRAND_STATUS);
 	if(errandArr[infoIndex].ERRAND_STATUS=="P"){
 		if(errandArr[infoIndex].MEM_EMAIL_REQ.split(".")[0] != mem_email) {
-			$(".price").on('keyup', function(){
+			$(".price").off('keyup').on('keyup', function(){
 				let abled = false;
 				abled = $(".price").val().length > 0 ? true : false;
 				console.log(abled);
 				$("#btn_confirm").attr("disabled", !abled);
 			});
-			$(".price").on('click', function(){
+			$(".price").off('click').on('click', function(){
 				$(".price").val("");
+				$("#btn_confirm").attr("disabled",true);
 			});
-			$('#btn_confirm').click(function(){
+			$('#btn_confirm').off('click').on('click', function(){
 				$.ajax({
 					type:'post',
 					url:'/errand/updateErrandItemPriceNds.nds',
@@ -144,7 +163,7 @@ function initNotice(){
 					}
 				});
 			});
-			$("#check1").click(function(){
+			$("#check1").off('click').on('click', function(){
 				if($("#check1").hasClass("active")) {
 					$.ajax({
 						type:'post',
@@ -171,7 +190,7 @@ function initNotice(){
 			});
 		}
 		else {
-			$("#check2").click(function(){
+			$("#check2").off('click').on('click', function(){
 				let isChecked = $("#check1").hasClass("active") ? 'T' : 'F'
 				if(isChecked=="F")
 					alert("상대방이 먼저 확인버튼을 눌러야 합니다.");
@@ -305,8 +324,67 @@ function initNotice(){
 			});
 		}
 	}
-	getChatMsg();
 }
+
+function loadNotice(){
+	if(errandInfoArr[infoIndex].CHECK_FIRST=="T") {
+		$('#check1').addClass('active');
+		$("#btn_confirm").attr("disabled", true);
+		$(".price").attr("readonly", true);
+		$(".price").css({"background-color":"gray", "pointer-events": "none", "opacity":"0.5"});
+	}
+	else {
+		$('#check1').removeClass('active');
+		$('#check2').removeClass('active');
+		$(".price").css({"background-color":"", "pointer-events": "", "opacity":"1"});
+	}
+}
+
+function changeNotice(gubun){
+	console.log("gubun="+gubun);
+	if(gubun=="left") {
+		if(infoIndex==0) {
+			console.log("infoIndex is 0");
+			return;
+		}
+		else if(infoIndex==1) {
+			console.log("infoIndex is 1");
+			$('.left').css('visibility','hidden');
+		}
+		else {
+			$('.right').css('visibility','');
+		}
+		infoIndex--;
+	}
+	else if(gubun=="right") {
+		if(infoIndex==MAXINDEX) {
+			console.log("infoIndex is MAXINDEX");
+			return;
+		}
+		else if(infoIndex==MAXINDEX-1) {
+			console.log("infoIndex is MAXINDEX-1");
+			$('.right').css('visibility','hidden');
+		}
+		else {
+			$('.left').css('visibility','');
+		}
+		infoIndex++;
+	}
+	
+	$(".item").text("심부름 물품 : "+errandArr[infoIndex].ERRAND_ITEM);
+	$(".price").val(errandArr[infoIndex].ERRAND_ITEM_PRICE_NDS);
+	$("#btn_confirm").attr("disabled", true);
+	loadNotice();
+	if(errandArr[infoIndex].MEM_EMAIL_REQ.split('.')[0] == mem_email) {
+		$(".price").attr('readonly',true);
+	}
+	else{
+		$(".price").attr('readonly',false);
+	}
+	$(".errand_price").val("심부름 값 : "+errandArr[infoIndex].ERRAND_PRICE);
+	applyNotice();
+}
+
 //현재 시간을 YYYY-MM-DD HH:mm:SS 형식으로 반환
 function getTime(){
     let today = new Date();
