@@ -12,7 +12,7 @@ $(document).ready(function(){
 	/* 로그인 모달에서 로그인 버튼이 클릭되었을 때 */
 	$('#h_logout').on('click',function(){
 		console.log("로그아웃 버튼 클릭!");
-		location.href="http://localhost:4444/member/doLogout.nds";
+		location.href="http://localhost:9696/member/doLogout.nds";
 	});
 });
 

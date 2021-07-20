@@ -46,7 +46,7 @@ $(document).ready(function(){
 	        	$('#coinCharge').modal('hide');
 		        $.ajax({
 		        	 type: "POST",
-		             url : "http://localhost:4444/member/chargeCoin.nds",
+		             url : "http://localhost:9696/member/chargeCoin.nds",
 		             data: {coin_remain: remainCoin, trans_price: amount},
 		             success : function(data) {
 		            	 console.log("충전 성공");
