@@ -112,11 +112,12 @@ public class MemberDao {
 
 
 
-	public int withdraw(Map<String, Object> pmap) {
+	public int withdrawCoin(Map<String, Object> pmap) {
 		int result = 0;
 		// 프로시저는 return이 없다. 따라서 pmap에서 직접 결과를 꺼내줘야 함.
-		sqlSessionTemplate.update("withdraw", pmap);
-		result = Integer.parseInt(String.valueOf(pmap.get("result")));
+		sqlSessionTemplate.selectOne("withdrawCoin", pmap);
+		logger.info("withdraw dao 호출");
+		//result = Integer.parseInt(String.valueOf(pmap.get("result")));
 		return result;
 	}
 

@@ -210,7 +210,7 @@ public class MemberController extends MultiActionController {
 	
 	// ===================================== [[ INSERT ]] =====================================
 	// 회원가입 모달에서 확인 버튼 클릭 시
-	// 테스트: http://localhost:4444/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
+	// 테스트: http://localhost:9696/member/insertMember.nds?mem_email=fan@good.com&mem_nickname=%ED%98%B8%EB%9E%91%EC%9D%B4&mem_pw=1111&mem_gender=F&mem_age=20&issocial=F&mem_phone=01056636363
 	public ModelAndView insertMember(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		logger.info("insertMember 호출성공!!");
 		// request 객체에 담긴 정보를 map으로 옮겨 담기
@@ -418,36 +418,26 @@ public class MemberController extends MultiActionController {
 	
 	// (2) 계좌로 출금
 	// 입력받는 정보: 출금 금액, 계좌번호, 인증번호
+	// execute proc_withdrawCoin('weed@good.com', '0203-0804-124124','출금', 11480, 'O');
 	public void withdrawCoin(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("withdraw 메소드 호출 성공!");
 		// request 객체에 담긴 정보를 map으로 옮겨 담기
 		Map<String, Object> pmap = new HashMap<String, Object>();
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bindPost(pmap);
-		logger.info(pmap.get("getCost").getClass()+", "+
-							pmap.get("input_code").getClass()+", "+
-							pmap.get("account").getClass());// 인증코드 일치여부 판단
 		HttpSession session = req.getSession();
-		logger.info("session: "+session);
-		int input_code = Integer.parseInt((String) pmap.get("input_code"));
-		logger.info(input_code);
-		//int withdraw_code = (Integer)session.getAttribute("withdraw_code");
-		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치한다면
-		if(input_code == withdraw_code) {
-			// 출금(O)이므로 map에 담아준다.
-			pmap.put("trans_io","O");
-			// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
-			Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
-			logger.info(mvo);
-			String mem_email = (String)mvo.get("MEM_EMAIL");
-			pmap.put("mem_email", mem_email);
-			// [DB]에 update 및 insert 처리
-			int result = memberLogic.withdraw(pmap);
-		}
-		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치하지 않는다면
-		else {
-			AjaxDataPrinter.out(res, "인증코드가 일치하지 않습니다.");
-		}
+		//Integer.parseInt((String) pmap.get("pr_trans_price"));
+		// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+		logger.info(mvo);
+		String mem_email = (String)mvo.get("MEM_EMAIL");
+		hmb.bindPost(pmap);
+		pmap.put("pr_mem_email", mem_email);
+		pmap.put("pr_trans_content","출금");
+		pmap.put("pr_trans_io","O");
+		logger.info(pmap.get("pr_trans_price")+", "+
+				pmap.get("pr_account_num"));
+		// [DB]에 update 및 insert 처리
+		memberLogic.withdrawCoin(pmap);
 	}
     
     public void insertCoinTrans(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -625,9 +615,9 @@ public class MemberController extends MultiActionController {
 	}
 	
 	// 테스트용 url
-	// 잘못된 아이디 http://localhost:4444/member/doLogin.nds?mem_email=grsdfpe@good.com&mem_pw=123&isAutoLoginChecked=true
-	// [아이디 저장] http://localhost:4444/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isSavedIdChecked=true
-	// [자동 로그인] http://localhost:4444/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isAutoLoginChecked=true
+	// 잘못된 아이디 http://localhost:9696/member/doLogin.nds?mem_email=grsdfpe@good.com&mem_pw=123&isAutoLoginChecked=true
+	// [아이디 저장] http://localhost:9696/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isSavedIdChecked=true
+	// [자동 로그인] http://localhost:9696/member/doLogin.nds?mem_email=grape@good.com&mem_pw=123&isAutoLoginChecked=true
 	// 로그인 버튼이 클릭되었을 때 실행되는 메소드
 	public void doLogin(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
 		// 사용자가 자동로그인 체크박스와 아이디저장 체크박스에 체크 했는지 여부를 담을 변수 선언
@@ -981,6 +971,7 @@ public class MemberController extends MultiActionController {
 		Map<String,Object> pmap = new HashMap<>();
 		List<Map<String, Object>> rankList = memberLogic.rankList(pmap);
 		ModelAndView mav = new ModelAndView("/mainPage/main_page.jsp");
+		logger.info(rankList);
 		mav.addObject("rankList", rankList);
 		return mav;
 	}

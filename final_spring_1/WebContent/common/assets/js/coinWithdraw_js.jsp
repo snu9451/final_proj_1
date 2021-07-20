@@ -63,7 +63,6 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 						console.log('exist');
 						inputCoin = true;
 					} else {
-						consoel.log('none');
 						inputCoin = false;
 					}
 				}
@@ -169,7 +168,7 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
  			let cost = getCost.text();
  			let account = input_account;
  			let input_code = Number($("#withdraw_inputSafetyCode").val());
-			let data = "getCost="+cost+"&account="+input_account+"&input_code="+input_code;
+			let data = "pr_trans_price="+cost+"&pr_account_num="+input_account;
 			swal("출금하시겠습니까??","", "info",{
 				  buttons: {
 					  	//확인버튼
@@ -190,7 +189,7 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 								data: data,
 								url:"/member/withdrawCoin.nds",
 								success: function(){
-									location.reload();
+									location.href = "http://localhost:9696/myPage/my_wallet.nds";
 								}
 							});
 							break;
