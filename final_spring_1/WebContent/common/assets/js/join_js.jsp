@@ -18,7 +18,7 @@
 // 		});
 		
 		function reload(){
-			location.href = "http://localhost:9696/mainPage/main_page.jsp";
+			location.href = "http://localhost:9696/mainPage/main_page.nds";
 		}
 		
 		
@@ -283,7 +283,7 @@
              success: function () {
  				swal("회원가입이 완료되었습니다.", "", "success").then(()=> {
 					//페이지 새로고침
-					location.reload();
+					location.href = "/mainPage/main_page.nds";
 				})
             },
             error: function (data) {

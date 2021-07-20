@@ -126,7 +126,7 @@ public class MemberController extends MultiActionController {
 		String mem_nickname = req.getParameter("mem_nickname").toString();
 		pmap.put("mem_nickname", mem_nickname);
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bindPost(pmap);
+		hmb.bind(pmap);
 		Map<String, Object> rmap = memberLogic.selectNickName(pmap);
 		Map<String, Object> pmap1 = new HashMap<String, Object>();
 		List<Map<String, Object>> sellList = memberLogic.sellList(pmap);
@@ -223,7 +223,9 @@ public class MemberController extends MultiActionController {
 			// 로그인 처리 후
 			doLogin(req, res);
 			// 메인 페이지로 이동
+			List<Map<String, Object>> rankList = memberLogic.rankList(pmap);
 			ModelAndView mav = new ModelAndView();
+			mav.addObject("rankList", rankList);
 			mav.setViewName("/mainPage/main_page.jsp");
 			return mav;
 		}
@@ -958,6 +960,9 @@ public class MemberController extends MultiActionController {
 		String req_sessionid = cookies.getValue("JSESSIONID");
 		String join_email = (String)session.getAttribute("join_email");
 		logger.info(session_sessionid + " :: "+ req_sessionid + " :: " + join_email);
+		Map<String,Object> pmap = new HashMap<>();
+		List<Map<String, Object>> rankList = memberLogic.rankList(pmap);
+		mav.addObject("rankList", rankList);
 		if(session_sessionid != null && session_sessionid.equals(req_sessionid) && join_email != null ) {
 			// 세션에 담겨 있는 회원의 이메일을 가져옴
 			// 회원가입 양식 띄워줘 - join_email 속성이 있는 경우 모달띄워줌
