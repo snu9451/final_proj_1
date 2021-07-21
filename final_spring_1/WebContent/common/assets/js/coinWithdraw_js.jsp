@@ -5,14 +5,6 @@
 //출금 모달창이 나타났을때 실행되는 함수
 $("#coinWithdraw").on('shown.bs.modal', function() {
 	console.log('shown modal');
-	//input 값 리셋
-	$(".doEmpty").each(function(){
-		console.log($(this));
-		$(this).val("");
-		$(this).text("");
-	});
-	//계좌 유효성 검사 결과 부분
-	$("#account_digits_box").empty();
 	
 	//유효성 검사를 위한 변수 선언
 	let inputCoin = false;
@@ -25,14 +17,11 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 	//[출금하기] 버튼 
 	let btn_coinWithdraw = $("#btn_coinWithdraw");
 	
-	//출금 가능 금액 나타내주는 <label>
-	let getCost = $("#showCost");
-	
-	//계좌번호
-	let input_account;
-	
 	//출금하기 버튼 비활성화
 	btn_coinWithdraw.attr("disabled", true);
+	
+	//출금 가능 금액 나타내주는 <label>
+	let getCost = $("#showCost");
 	
 		//현재 소지 코인이 0보다 클 때
 		if (currentCoin > 0){
@@ -76,6 +65,8 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 			btn_coinWithdraw.attr("disabled", true);
 		}
 		
+		//계좌번호
+		let input_account;
 		/********* 계좌번호가 입력됐을 때 ***********/
 		$("#input_account").on('keyup change', function(){
 		//계좌번호
@@ -100,12 +91,14 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 	      //핸드폰번호 입력값
 	      let inputCellPhone = $("#withdraw_inputCellPhone").val();
 	      //핸드폰 번호가 입력되지 않은 경우
-	      if (inputCellPhone.length < 0 || inputCellPhone.length == 0) {
-	        swal("핸드폰 번호를 입력해주세요!", "", "info");
-	        return;
+	      if (inputCellPhone.length == 0) {
+	         swal("핸드폰 번호를 입력해주세요!", "", "info");
+	      } 
+	      else if(inputCellPhone.length < 11){
+	    	  swal("핸드폰 번호를 11자리를 입력해주세요!", "", "info"); 
 	      }
 	      //핸드폰 번호가 입력된경우
-	      else {
+	      else if (inputCellPhone.length >= 11){
 	        let phoneNum = "mem_phone=" + inputCellPhone;
 	        console.log(inputCellPhone);
 	        //핸드폰 번호를 Controller로 보냄
@@ -121,32 +114,20 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 	        });
 	      }
 	    });		
-		
-	    //유효성 검사 function
-	    function validChck(){
-			//모든 <input> 태그에 값이 있을 때, [출금하기] 버튼 활성화
-			if(inputCoin && inputAccount && inputSecurityCode) {
-				console.log('disabled');
-				console.log(inputCoin+","+inputAccount+","+inputSecurityCode);
-				btn_coinWithdraw.attr("disabled", false);
-			}
-			else {
-				console.log('abled');
-				console.log(inputCoin+","+inputAccount+","+inputSecurityCode);
-				btn_coinWithdraw.attr("disabled", true);
-			}
-	    }
 	    
 		//인증번호 확인
 		$("#btn_withdraw_codeChck").on('click', function(){
-		      let safetyCodeChck__box = $("#safetyCodeChck__box");
+			  //인증번호 입력하는 input 태그
 		      let withdraw_inputSafetyCode = $("#withdraw_inputSafetyCode").val();
+			  
 		      if (withdraw_inputSafetyCode.length > 0) {
 		        if (withdraw_inputSafetyCode === safetyCode) {
 		        	//sweetAlert API사용
 		        	swal("인증번호 일치", "", "success").then(()=>{
+		        		console.log('here');
 		        		inputSecurityCode = true;
 		        		$("#btn_withdraw_codeChck").attr("disabled", "true");
+		        		$("#withdraw_inputSafetyCode").attr("readonly", "true");
 		        		validChck();
 		        	});
 		        } else {
@@ -162,24 +143,38 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 		
 		//출금모달에 변화가 있을때 마다 동작하는 함수
  		$("#coinWithdraw").on("change", validChck);
+		
+	    //유효성 검사 function
+	    function validChck(){
+			//모든 <input> 태그에 값이 있을 때, [출금하기] 버튼 활성화
+			if(inputCoin && inputAccount && inputSecurityCode) {
+				console.log('disabled');
+				console.log(inputCoin+","+inputAccount+","+inputSecurityCode);
+				btn_coinWithdraw.attr("disabled", false);
+			}
+			else {
+				console.log('abled');
+				console.log(inputCoin+","+inputAccount+","+inputSecurityCode);
+				btn_coinWithdraw.attr("disabled", true);
+			}
+	    }
  		
  		//[출금하기] 눌렀을 때 이벤트
  		btn_coinWithdraw.click(function(){
  			let cost = getCost.text();
  			let account = input_account;
- 			let input_code = Number($("#withdraw_inputSafetyCode").val());
 			let data = "pr_trans_price="+cost+"&pr_account_num="+input_account;
 			swal("출금하시겠습니까??","", "info",{
 				  buttons: {
-					  	//확인버튼
+					  	//[확인]버튼
 					    confirm: {
 							text: "확인",
 							value:"confirm",
 					    },
-					    //취소버튼
+					    //[취소]버튼
 					    cancel: "취소",
 					  },
-					}).then((value) => {
+					}).then((value) => {//[확인]버튼 클릭시
 						switch(value) {
 						
 						case "confirm":
@@ -206,7 +201,6 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
  	    //회원가입 모달창이 사라졌을 때 이벤트
 	    $("#coinWithdraw").on("hidden.bs.modal", function () {
 	      console.log("modal hidden");
-	      //$("#btn_withdraw_codeChck").attr("disabled", "false");
 	      location.reload();
 	    });
 </script>	

@@ -66,7 +66,6 @@
                     <button type="button" id="btn_withdraw_getCode" class="btn btn-primary">인증번호 받기</button>
                   </div>
                 </div>
-                <div class="invalid-feedback">핸드폰번호 11자리를 입력해주세요.</div>
               </div>
             </div>
             <div class="form-row align-items-center justify-content-between">
