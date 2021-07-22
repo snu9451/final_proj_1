@@ -73,13 +73,19 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 		input_account = $("#input_account").val();
 			//계좌번호 입력칸
 			console.log(input_account.length);
-			if(input_account.length === 16){
+			if(input_account.length === 14){
 				$("#account_digits_box").empty();
 				$("#account_digits_box").html(
-				"<small id='account_digits' class='p-3 doEmpty' style='color: green; font-weight: bold;'>16자리 확인되었습니다.</small>"		
+				"<small id='account_digits' class='p-3 doEmpty'" 
+				+"style='color: green; font-weight: bold;'>14자리 확인되었습니다.</small>"		
 				);
 				inputAccount = true;
-			} else {
+			} else if(input_account.length < 14 || input_account.length > 14){
+				$("#account_digits_box").empty();
+				$("#account_digits_box").html(
+						"<small id='account_digits' class='p-3 doEmpty'" 
+						+"style='color: red; font-weight: bold;'>정확한 계좌번호를 입력해주세요.</small>"		
+						);
 				inputAccount = false;
 			}
 		});////////////////////// end of #input_account function
