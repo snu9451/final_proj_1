@@ -14,6 +14,9 @@
 	String BM_STATUS       = itemContext.get("BM_STATUS")!= null ? itemContext.get("BM_STATUS").toString():"";     //팔린건지 상품의 상태
 	int I_LIKE             = itemContext.get("I_LIKE")!= null ? Integer.parseInt(itemContext.get("I_LIKE").toString()):0;         //좋아요한상태인지 아닌지
 	int seller_me 		   = itemContext.get("seller_me")!= null ? Integer.parseInt(itemContext.get("seller_me").toString()):0;         //1 이면 판매자와 내가 동일 인물임 0이면 아니고 
+	
+	//신고날짜 받아오기
+	String report_date       = itemContext.get("TO_CHAR(SYSDATE,'YYYY/MM/DDHH24:MI:SS')")!= null ? itemContext.get("TO_CHAR(SYSDATE,'YYYY/MM/DDHH24:MI:SS')").toString():"";     //팔린건지 상품의 상태
 	//결과값[4.png] 사진
 	List<String> imgs = (List<String>) request.getAttribute("itemImgs");
 	//결과값 댓글 itemComments
@@ -37,7 +40,7 @@
   <!-- ========================================= ▼ ＨＥＡＤＥＲ　ＳＥＣＴＩＯＮ ▼ ========================================= -->
   <%@ include file="../common/header.jsp" %>
 <script type="text/javascript">
-	$(document).ready(function(){
+$(document).ready(function(){
 		$('.owl-carousel').owlCarousel({
 			loop:true,
 			nav: true,
@@ -51,7 +54,7 @@
 			autoplay: true,
 			autoplayTimeout: 3000,
 		});
-	})
+})
 </script>
   <!-- ========================================= ▲ ＨＥＡＤＥＲ　ＳＥＣＴＩＯＮ ▲ ========================================= -->
 	<!-- ============================= Detail Section ========================= -->

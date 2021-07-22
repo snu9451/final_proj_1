@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
@@ -231,5 +232,18 @@ public class AdminController extends MultiActionController {
 		mav.addObject("selectBoardReportDetail", pmap);
 
 		return mav;
+	}
+	
+	public void boardReport(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("boardReport 호출 성공");
+		HashMapBinder hmb = new HashMapBinder(req, "j");
+		Map<String, Object> pmap = new HashMap<>();
+		hmb.adminBind(pmap); // 신고된 게시글 번호 담음
+		HttpSession session = req.getSession();
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+		String mem_email = (String)mvo.get("MEM_EMAIL");
+		pmap.put("pr_mem_email", mem_email);
+		logger.info(pmap);
+		adminLogic.boardReport(pmap);
 	}
 }

@@ -55,7 +55,7 @@ SELECT mem.mem_create_date,
                  mem.mem_email,
                  mem.mem_nickname,
                  mem.mem_gender,
-                 mem.mem_age,
+                 mem.mem_age,`
                  NVL (me.mem_count, 0) report_count
             FROM    MEMBER mem
                  LEFT OUTER JOIN
@@ -168,5 +168,14 @@ SELECT mem.mem_create_date,
   select report_no, mem_email, report_msg, report_date, report_type, bm_no, report_ishandle
   from report_board
   where report_msg=#{report_msg}
+ </select>
+ 
+  <select id="proc_report_board" statementType="CALLABLE" parameterType="java.util.Map">
+  {CALL proc_report_board(#{pr_mem_email, mode=IN, jdbcType=VARCHAR}, #{pr_report_msg, mode=IN, jdbcType=VARCHAR},
+  							  #{pr_bm_no, mode=IN, jdbcType=INTEGER}, #{pr_report_type, mode=IN, jdbcType=VARCHAR},
+  							  #{pr_img_sys_name, mode=IN, jdbcType=VARCHAR}, #{pr_img_real_name, mode=IN, jdbcType=VARCHAR}, 
+  							  #{pr_file_size, mode=IN, jdbcType=INTEGER})}
+
+  
  </select>
 </mapper>

@@ -262,6 +262,7 @@ public class ItemController extends MultiActionController {
 		int pr_bm_no = Integer.parseInt(req.getParameter("pr_bm_no").toString());
 		//상품의 내용을 가져온다.
 		Map<String,Object> itemContext = itemLogic.selectItemDetailContext(pr_MEM_EMAIL,pr_bm_no,pr_MEM_NICKNAME);
+		logger.info(itemContext);
 		//상품의 사진들을 가져온다
 		List<String> itemImgs = itemLogic.selectItemDetailImgs(pr_bm_no);
 		//상품의 댓글들을 가져온다

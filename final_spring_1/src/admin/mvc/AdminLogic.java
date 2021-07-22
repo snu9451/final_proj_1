@@ -117,4 +117,9 @@ public class AdminLogic {
 	
 		return adminDao.selectBoardReportDetail(report_msg);
 	}
+	//게시물신고
+	public void boardReport(Map<String, Object> pmap) {
+		logger.info("boardReport 메소드 호출");
+		adminDao.boardReport(pmap);
+	}
 }
