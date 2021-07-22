@@ -178,7 +178,7 @@ public class ItemController extends MultiActionController {
 		logger.info(pmap);
 		int bm_no = 0;
 		bm_no = itemLogic.updateItem(pmap);
-		res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
+		AjaxDataPrinter.out(res,bm_no);
 	}
 		//사이즈 초과시 에러를 전송시킴
 //		if(pmap.containsKey("error")) {
@@ -289,7 +289,7 @@ public class ItemController extends MultiActionController {
 		//상품을 삭제한다.
 		itemLogic.deleteItem(pmap);
 		//페이지 전송
-		res.sendRedirect("/mainPage/main_page.jsp");
+		res.sendRedirect("/mainPage/main_page.nds");
 	}
 	
 	//상품 판매 완료 클릭 시
@@ -424,7 +424,6 @@ public class ItemController extends MultiActionController {
 		int bm_no = 0;
 		bm_no = itemLogic.insertItem(pmap);
 		AjaxDataPrinter.out(res,bm_no);
-		//res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
 
 	
 		//front : key는 pr_BM_TITLE   /   pr_BM_CONTENT  /  pr_BM_PRICE  /   pr_SELLER_NICKNAME  /  pr_CATEGORY_NAME  

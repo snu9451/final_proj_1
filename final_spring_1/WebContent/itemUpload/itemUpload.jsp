@@ -33,16 +33,20 @@
 function insAction(){
 	let form = $('#f_insImg')[0]; 
 	let formData = new FormData(form); 
+	let url = $("#f_insImg").attr("action");
+
+
 	$.ajax({ 
-		//url: '/item/updateItem.nds',
-		url: '/item/insertItem.nds',
+		url: url,
+		//url: '/item/insertItem.nds',
 		type: 'POST', 
 		data: formData, 
 		success: function (data) {
 			location.href = "/item/selectItemDetail.nds?pr_bm_no="+data;	
+			console.log("성공")
 		}, 
 		error: function (data) {
-			alert("프로필 사진 변경에 실패하였습니다."); 
+			alert("필수 입력 사항을 확인해주세요."); 
 		}, 
 		cache: false, 
 		contentType: false, 
@@ -73,11 +77,11 @@ function insAction(){
               <hr>
 <%
 			   if(itemContext != null){%>
-              	<form  id="f_insImg" method="post" enctype="multipart/form-data">
+              	<form  id="f_insImg" method="post" enctype="multipart/form-data" action="/item/updateItem.nds">
               		<input type='hidden' name="pr_bm_no" value="<%= itemContext.get("BM_NO")%>" /> 
 	          <%}
 %>              
-              <form  id="f_insImg" method="post" enctype="multipart/form-data">
+              <form  id="f_insImg" method="post" enctype="multipart/form-data" action="/item/insertItem.nds">
               <div class="img_list">
 				
               
@@ -152,7 +156,7 @@ function insAction(){
                   <h4 class="item_info_title">&nbsp&nbsp&nbsp가격</h4>
                   
                   	<% if(itemContext!=null){ %> 
-                  		<input class="textbox_com" id="essential2" type="number" min="0" placeholder="&nbsp필수 입력 사항입니다." 
+                  		<input class="textbox_com" id="essential2" type="number" style="width : 200px;" min="0" placeholder="&nbsp필수 입력 사항입니다." 
                   		value = "<%=Integer.parseInt(itemContext.get("BM_PRICE").toString())%>" name="pr_BM_PRICE" max="10000000">
                   	<% } else{ %>
 	                  <input class="textbox_com" id="essential2" type="number" min="0" name="pr_BM_PRICE" placeholder="&nbsp필수 입력 사항입니다." max="10000000">

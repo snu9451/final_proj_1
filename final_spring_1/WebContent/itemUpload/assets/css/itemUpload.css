@@ -17,6 +17,11 @@ body {
   color: #444444;
   overflow-y: scroll;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 a {
   color: #fff;
