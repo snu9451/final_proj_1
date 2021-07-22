@@ -36,7 +36,7 @@
 		<div class="icon-box1" data-aos="fade-in" data-aos-delay="50">
 			<div class="myinfo_top">
 				<div class="profile">
-					<form id="f_profile_picture" method="post" enctype="multipart/form-data" action="../member/updateImg.nds">
+					<form id="f_profile_picture" method="post" enctype="multipart/form-data">
 						<input type='file' name="change_img" id="imgInput" accept="image/*" style="display: none;"/>
 	                	<div class="img_add">
 <!-- 	                		<div style="width:200px; height: 200px; background-color:white;"></div> -->

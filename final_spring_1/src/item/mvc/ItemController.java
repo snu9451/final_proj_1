@@ -166,7 +166,7 @@ public class ItemController extends MultiActionController {
 	
 	
 	//사용자가 상품 수정 버튼의 수정 완료를 누른다면 상품이 업데이트 되야하니까
-	public void updateItem(HttpServletRequest req, HttpServletResponse res) {
+	public void updateItem(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		logger.info("controller : updateItem메소드 호출");
 		//front : key는 "pr_BM_TITLE" / "pr_BM_CONTENT" / "pr_BM_PRICE" / "pr_bm_no" / "pr_CATEGORY_NAME"
 		//        value는  상품 제목         상품 내용            상품 가격         상품 번호        상품 카테고리
@@ -178,17 +178,7 @@ public class ItemController extends MultiActionController {
 		logger.info(pmap);
 		int bm_no = 0;
 		bm_no = itemLogic.updateItem(pmap);
-		try {
-			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 2초 후 redirect되도록 sleep걸어둠
-			Thread.sleep(2000);
-			res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
 	}
 		//사이즈 초과시 에러를 전송시킴
 //		if(pmap.containsKey("error")) {
@@ -433,14 +423,9 @@ public class ItemController extends MultiActionController {
 		logger.info("==============================" + pmap);
 		int bm_no = 0;
 		bm_no = itemLogic.insertItem(pmap);
-		try {
-			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 2초 후 redirect되도록 sleep걸어둠
-			Thread.sleep(2000);
-			res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		AjaxDataPrinter.out(res,bm_no);
+		//res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
+
 	
 		//front : key는 pr_BM_TITLE   /   pr_BM_CONTENT  /  pr_BM_PRICE  /   pr_SELLER_NICKNAME  /  pr_CATEGORY_NAME  
 		//      value는   제목                 내용              가격                닉네임                  카테고리         

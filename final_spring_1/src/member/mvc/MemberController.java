@@ -290,14 +290,14 @@ public class MemberController extends MultiActionController {
 		logger.info(pmap);
 		int result = memberLogic.updateMember(pmap);
 		logger.info("프로필 사진 업데이트 결과 ===> "+result);
-		try {
-			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 1초 후 redirect되도록 sleep걸어둠
-			Thread.sleep(1000);
-			res.sendRedirect("/myPage/my_info.nds");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 1초 후 redirect되도록 sleep걸어둠
+//			Thread.sleep(1000);
+//			res.sendRedirect("/myPage/my_info.nds");
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //		// 프로필 사진 변경 성공 시
 //		if(result == 1) {
 //			//AjaxDataPrinter.out(res, "text/html", "[ERROR] 프로필 사진 변경에 <b style=\"color: red\">실패</b>하였습니다.");

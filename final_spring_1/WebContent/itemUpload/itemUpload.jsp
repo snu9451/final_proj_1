@@ -31,8 +31,24 @@
 <body>
 <script>
 function insAction(){
-	$('#f_insImg').submit();
-	/* location.href='http://localhost:9696/mainPage/main_page.jsp'; */
+	let form = $('#f_insImg')[0]; 
+	let formData = new FormData(form); 
+	$.ajax({ 
+		//url: '/item/updateItem.nds',
+		url: '/item/insertItem.nds',
+		type: 'POST', 
+		data: formData, 
+		success: function (data) {
+			location.href = "/item/selectItemDetail.nds?pr_bm_no="+data;	
+		}, 
+		error: function (data) {
+			alert("프로필 사진 변경에 실패하였습니다."); 
+		}, 
+		cache: false, 
+		contentType: false, 
+		processData: false 
+	});
+
 }
 </script>
 
@@ -57,11 +73,11 @@ function insAction(){
               <hr>
 <%
 			   if(itemContext != null){%>
-              	<form  id="f_insImg" method="post" enctype="multipart/form-data" action="updateItem.nds">
+              	<form  id="f_insImg" method="post" enctype="multipart/form-data">
               		<input type='hidden' name="pr_bm_no" value="<%= itemContext.get("BM_NO")%>" /> 
 	          <%}
 %>              
-              <form  id="f_insImg" method="post" enctype="multipart/form-data" action="insertItem.nds">
+              <form  id="f_insImg" method="post" enctype="multipart/form-data">
               <div class="img_list">
 				
               
