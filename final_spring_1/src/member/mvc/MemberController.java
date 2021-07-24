@@ -119,6 +119,22 @@ public class MemberController extends MultiActionController {
 		mav.addObject("memberMap", rmap);
 		mav.setViewName("/common/my_info.jsp");
 	}
+	public void selectMyCoin(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("selectMyCoin 성공");
+		//ModelAndView mav = new ModelAndView();
+		// 세션에 담긴 회운정보(이메일) 가져오기
+		HttpSession session = req.getSession();
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+		String mem_email = (String)mvo.get("MEM_EMAIL");
+		pmap.put("mem_email", mem_email);
+		int result = 0;
+		result = memberLogic.selectMyCoin(pmap);
+		//mav.setViewName("/common/coinCharge.jsp");
+		//mav.addObject("coin", result);
+		//req.setAttribute("coin", result);
+		AjaxDataPrinter.out(res, "text/html", result);
+	}
 	public void selectUser(HttpServletRequest req, HttpServletResponse res) {
 		// 세션에 담긴 회운정보(이메일) 가져오기
 		HttpSession session = req.getSession();
@@ -435,6 +451,7 @@ public class MemberController extends MultiActionController {
 		pmap.put("pr_mem_email", mem_email);
 		pmap.put("pr_trans_content","출금");
 		pmap.put("pr_trans_io","O");
+		logger.info(pmap);
 		
 		// [DB]에 update 및 insert 처리
 		memberLogic.withdrawCoin(pmap);
@@ -982,6 +999,7 @@ public class MemberController extends MultiActionController {
 		ModelAndView mav = new ModelAndView("/myPage/my_info.jsp");
 		return mav;
 	}
+
 	public ModelAndView getMyWallet(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 		logger.info("myWalletRecord");

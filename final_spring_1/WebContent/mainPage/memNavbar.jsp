@@ -30,9 +30,11 @@ $(document).ready(function(){
     $('.label__on-off').click(function(){
     	$( '[data-toggle="popover"]' ).popover('hide');
     });
-	
+	if("<%=mem_email%>" == "admin@good.com"){
+		let html = "<li><a href=\"/admin/admin_page1.jsp\" target=\"blank\" id=\"h_admin\" style=\"cursor:pointer;\">관리자페이지</a></li>";
+		$("#header").find("nav").find("div").append(html);
+	}
 });
-
 </script>
 			<!-- 언제나 채팅이 오는 것을 인지할 수 있게 navbar에 채팅방알림 코드 include함 -->
 	<%@ include file="../common/chatAlert.jsp" %>

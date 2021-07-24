@@ -51,11 +51,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		if(login != null) {
 			mem_email = (String)login.get("MEM_EMAIL");
 		}
-		if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
-			res.sendRedirect("http://localhost:9696/admin/admin_page1.jsp");
-			logger.info("관리자페이지 요청111111111111111");
-			return false;
-		}
+//		if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
+//			res.sendRedirect("http://localhost:9696/admin/admin_page1.jsp");
+//			logger.info("관리자페이지 요청111111111111111");
+//			return false;
+//		}
 		for(int i=0; i<excludedURIs.length; i++) {
 			if(excludedURIs[i].equals(req.getRequestURI())) {
 				logger.info("비회원도 이용 가능한 페이지 || 예외url 요청입니다.");
@@ -68,11 +68,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		// 세션에 저장된 "login"이 있다면 즉, 로그인 상태라면...
 		System.out.println("===================================="+mem_email);
 		if(login != null) {
-			if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
-				logger.info("관리자페이지 요청22222222222");
-				res.sendRedirect("http://localhost:9696/admin/admin_page1.jsp");
-				return false;
-			}
+//			if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
+//				logger.info("관리자페이지 요청22222222222");
+//				res.sendRedirect("http://localhost:9696/admin/admin_page1.jsp");
+//				return false;
+//			}
 			return true;			
 		} else {
 			// (1)비회원도 이용가능한 예외 URI(excludedURIs)도 아니면서 (2)로그인 하지도 않은 사용자의 요청이라면,

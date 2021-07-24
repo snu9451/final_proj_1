@@ -16,7 +16,7 @@
 	int seller_me 		   = itemContext.get("seller_me")!= null ? Integer.parseInt(itemContext.get("seller_me").toString()):0;         //1 이면 판매자와 내가 동일 인물임 0이면 아니고 
 	
 	//신고날짜 받아오기
-	String report_date       = itemContext.get("TO_CHAR(SYSDATE,'YYYY/MM/DDHH24:MI:SS')")!= null ? itemContext.get("TO_CHAR(SYSDATE,'YYYY/MM/DDHH24:MI:SS')").toString():"";     //팔린건지 상품의 상태
+	String report_date       = itemContext.get("TO_CHAR(SYSDATE,'YYYY-MM-DDHH24:MI:SS')")!= null ? itemContext.get("TO_CHAR(SYSDATE,'YYYY-MM-DDHH24:MI:SS')").toString():"";     //팔린건지 상품의 상태
 	//결과값[4.png] 사진
 	List<String> imgs = (List<String>) request.getAttribute("itemImgs");
 	//결과값 댓글 itemComments
@@ -102,41 +102,40 @@ $(document).ready(function(){
 									
 								</div>
 								<div>
-									<ul class="d-flex align-items-end mb-0">
-									<% if(seller_me==1){%>
-										<% if("N".equals(BM_STATUS)){%>
-											<li>
-												<form action="/item/updateItemConfirm.nds" method="post"  id="main__shape">
-													<input type="hidden" name="pr_bm_no" value=<%= BM_NO %> />
-													<button>판매처리하기</button>
-												</form>
-											</li>
-										<% } %>
-										<li>
-											<form action="/item/editItem.nds" method="post"  id="main__shape">
-												<input type="hidden" name="pr_bm_no" value=<%= BM_NO %> />
-												<button>수정</button>
-											</form>
-										</li>
-										<li>
-											<button data-toggle="modal" data-target="#boardDelete">삭제</button>
-										</li>
-									<%}else{%>
-										<li>
-											<button data-toggle="modal" data-target="#report_board">
-												게시물 신고 <i class="fas fa-exclamation warn"
-													style="color: red; font-size: 20px; font-weight: bold;"></i>
-											</button>
-										</li>
-									<% }%>
-									<div>
-										<span>조회수</span><span><%= BM_HIT %></span><span>회</span>
-										<input id="i_bm_no" type="hidden" value=<%= BM_NO %> />
-									</div>
-									</ul>
 								</div>
 							</div>
 							<div class="pd__divider"></div>
+							<div class="" style="display:flex; justify-content: flex-end;">
+								<% if(seller_me==1){%>
+									<% if("N".equals(BM_STATUS)){%>
+									<div>
+										<form action="/item/updateItemConfirm.nds" method="post"  id="main__shape">
+											<input type="hidden" name="pr_bm_no" value=<%= BM_NO %> />
+											<button>판매처리하기</button>
+										</form>
+									</div>
+									<% } %>
+									<div>
+										<form action="/item/editItem.nds" method="post"  id="main__shape">
+											<input type="hidden" name="pr_bm_no" value=<%= BM_NO %> />
+											&nbsp<button>수정</button>
+										</form>
+									</div>
+									<div>
+										<button data-toggle="modal" data-target="#boardDelete">삭제</button>
+									</div>
+								<%}else{%>
+									<div>
+										&nbsp&nbsp<button data-toggle="modal" data-target="#report_board">
+											게시물 신고 <i class="fas fa-exclamation warn"></i>
+										</button>
+									</div>
+								<% }%>
+								<div>
+									&nbsp&nbsp<span>조회수&nbsp</span><span><%= BM_HIT %></span><span>회</span>
+									<input id="i_bm_no" type="hidden" value=<%= BM_NO %> />
+								</div>
+							</div>
 						</div>
 						<div class="mt-3" id="pd__middle">
 							<p><%= BM_CONTENT %></p>

@@ -157,6 +157,12 @@ public class MemberLogic {
 		logger.info("withdraw 로직 호출");
 		return result;
 	}
+	public int selectMyCoin(Map<String, Object> pmap) {
+		int result = 0;
+		result = memberDao.selectMyCoin(pmap);
+		logger.info("selectMyCoin 로직 호출");
+		return result;
+	}
 
 
 	public Map<String, Object> selectEmail(Map<String, Object> pmap) {

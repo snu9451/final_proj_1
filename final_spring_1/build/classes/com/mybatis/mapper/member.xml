@@ -19,6 +19,11 @@
 		 WHERE mem_email = #{mem_email}
 		   AND mem_pw = #{mem_pw}
 	</select>
+	<select id="selectMyCoin" parameterType="map" resultType="int">
+		SELECT coin_remain 
+		  FROM member
+		 WHERE mem_email = #{mem_email}
+	</select>
 	<select id="selectMemberAdmin" parameterType="map" resultType="map">
 		SELECT mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_paypw, mem_errand_mode, mem_star_num
 		  FROM member

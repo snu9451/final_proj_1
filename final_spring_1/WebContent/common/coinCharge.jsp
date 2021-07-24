@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.*"%>    
+<%    
+
+//  	String coin = "";
+
+//  	coin = request.getAttribute("coin");
+// 	int coin_remainser = Integer.parseInt(String.valueOf(coin.get("COIN_REMAIN")));
+		
+%>
 
   <!-- =============================================== ▼ 코인 충전 모달  ▼ ================================================= -->
   <div class="modal fade" id="coinCharge" tabindex="-1" role="dialog" aria-labelledby="coinCharge"
@@ -17,7 +26,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-         	 <label>현재 남은 코인 :&nbsp</label><label style="font-size:30px; color : #ffc37b; font-weight:bold;"><%=coin_remain %></label><label> 원</label> 
+         	 <label>현재 남은 코인 :&nbsp</label><label id="curCoin" style="font-size:30px; color : #ffc37b; font-weight:bold;"></label><label> 원</label> 
              <input type="hidden" value="<%=mem_email %>" id="mem_email"/> 
              <input type="hidden" value="<%=coin_remain %>" id="remainCoin"/> 
             <input type="number" class="form-control" id="inputCost" min="0" placeholder="최소 충전 금액은 1,000원 입니다 : )"/>
@@ -56,6 +65,18 @@
       </div>
     </div>
   </div>
+<script>
+$(document).ready(function(){
+	$.ajax({ 
+	 	url : "/member/selectMyCoin.nds",
+		success : function(data) {
+			$('#curCoin').text(data);
+		},
+		error : function(e){
+		}
+	});
+});
+</script>
 <!-- =============================================== ▲ 코인 충전 완료 모달 ▲ ================================================= -->
   
   
