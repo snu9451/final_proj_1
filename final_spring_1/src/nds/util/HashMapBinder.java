@@ -32,12 +32,12 @@ public class HashMapBinder {
 	//생성자 오버로딩
 	public HashMapBinder(HttpServletRequest request) {
 		this.request = request;
-		realFolder = "C:\\Users\\chokiseol\\Desktop\\final\\final_proj_1\\final_spring_1\\WebContent\\itemUpload\\assets\\img\\itemupload";
+		realFolder = "D:\\workspace_final\\final_spring_1\\WebContent\\itemUpload\\assets\\img\\itemupload";
 		logger.info("itemupload용 hashmapbinder");
 	}
 	public HashMapBinder(HttpServletRequest request,int i) {
 		this.request = request;
-		realFolder = "C:\\Users\\chokiseol\\Desktop\\final\\final_proj_1\\final_spring_1\\WebContent\\myPage\\assets\\img\\profile";
+		realFolder = "D:\\workspace_final\\final_spring_1\\WebContent\\myPage\\assets\\img\\profile";
 		logger.info("profileimg용 hashmapbinder");
 	}
 	public void profileBind(Map<String,Object> target) {

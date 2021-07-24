@@ -428,14 +428,12 @@ public class MemberController extends MultiActionController {
 		//Integer.parseInt((String) pmap.get("pr_trans_price"));
 		// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
 		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
-		logger.info(mvo);
 		String mem_email = (String)mvo.get("MEM_EMAIL");
 		hmb.bindPost(pmap);
 		pmap.put("pr_mem_email", mem_email);
 		pmap.put("pr_trans_content","출금");
 		pmap.put("pr_trans_io","O");
-		logger.info(pmap.get("pr_trans_price")+", "+
-				pmap.get("pr_account_num"));
+		
 		// [DB]에 update 및 insert 처리
 		memberLogic.withdrawCoin(pmap);
 	}
