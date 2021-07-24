@@ -261,6 +261,18 @@
 								console.log(e);
 							}
 						});
+						$.ajax({
+							type:'post',
+							url:'/errand/jsonGetErrandInfo.nds',
+							data:{"errandKey":errandArr[infoIndex].ERRANDKEY},
+							dataType:'json',
+							success:function(data){
+								errandInfoArr[infoIndex] = data;
+							},
+							error:function(e){
+								console.log(e);
+							}
+						});
 					}
 					else if(msg.indexOf("[물품가 확인을 취소했습니다.]")>-1) {
 						console.log("ajax 물품가 라이더 취소");
@@ -269,6 +281,18 @@
 						if(errandArr[infoIndex].MEM_EMAIL_NDS.split(".")[0] == mem_email) {
 							$(".price").attr("readonly", false);
 						}
+						$.ajax({
+							type:'post',
+							url:'/errand/jsonGetErrandInfo.nds',
+							data:{"errandKey":errandArr[infoIndex].ERRANDKEY},
+							dataType:'json',
+							success:function(data){
+								errandInfoArr[infoIndex] = data;
+							},
+							error:function(e){
+								console.log(e);
+							}
+						});
 					}
 				}
 				if(msg.indexOf("[심부름이 완료되었습니다.]")>-1) {
@@ -281,6 +305,32 @@
 					$("#btn_confirm").attr("disabled", true);
 					$(".price").attr("readonly", true);
 					$(".price").css({"background-color":"gray", "pointer-events": "none", "opacity":"0.5"});
+					$.ajax({
+						type:'post',
+						url:'/errand/jsonGetErrand.nds',
+						async: false,
+						data:{"errandKey":errandArr[infoIndex].ERRANDKEY},
+						dataType:'json',
+						success:function(data){
+							errandArr[infoIndex] = data[0];
+							console.log("ajax 심부름 완료");
+						},
+						error:function(e){
+							console.log(e);
+						}
+					});
+					$.ajax({
+						type:'post',
+						url:'/errand/jsonGetErrandInfo.nds',
+						data:{"errandKey":errandArr[infoIndex].ERRANDKEY},
+						dataType:'json',
+						success:function(data){
+							errandInfoArr[infoIndex] = data;
+						},
+						error:function(e){
+							console.log(e);
+						}
+					});
 				}
 			}
 	        //스크롤을 맨 아래로 내려줌

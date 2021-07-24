@@ -457,6 +457,7 @@ function starRatingModal(alertKey, dest_email, dest_nickname, dest_img){
 		checkRoom.once('value', function(data){
 			if(data.val()==null) {
 				sendMsg(alertKey, errandKey, dest_email, area_no);
+				return;
 			}
 		});
 		checkRoom.once('child_added', function(data){

@@ -6,6 +6,11 @@ body {
   min-width: 550px;
   min-height: 700px;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 /* 전체를 감싸는 div */
 .wrapper {

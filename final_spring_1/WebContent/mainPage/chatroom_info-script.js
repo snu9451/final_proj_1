@@ -6,6 +6,7 @@ $(document).ready(function(){
 	$.ajax({
 		type:'post',
 		url:'/errand/jsonGetErrand.nds',
+		async: false,
 		data:{"mem_email":mem_email,"dest_email":dest_email},
 		dataType:'json',
 		success:function(data){
@@ -14,17 +15,18 @@ $(document).ready(function(){
 			for(let i=0; i<data.length; i++) {
 				if(data[i].ERRAND_STATUS=="S")
 					continue;
-				errandArr[++infoIndex] = data[i];
-				console.log(data[i]);
 				$.ajax({
 					type:'post',
 					url:'/errand/jsonGetErrandInfo.nds',
+					async:false,
 					data:{"errandKey":data[i].ERRANDKEY},
 					dataType:'json',
 					success:function(data2){
-						console.log(data2);
+						errandArr[++infoIndex] = data[i];
+						console.log(infoIndex);
+						console.log(data[i]);
+						console.log(infoIndex+data2);
 						errandInfoArr[infoIndex] = data2;
-						initNotice();
 						MAXINDEX = infoIndex;
 					},
 					error:function(e){
@@ -37,9 +39,11 @@ $(document).ready(function(){
 			console.log(e);
 		}
 	});
+	initNotice();
 });
 function initNotice(){
-	if(MAXINDEX!=-1)
+	console.log("A");
+	if(MAXINDEX==-1)
 		return;
 	let html = 
 	   				"<div class=\"notice_wrapper\">"
@@ -119,7 +123,13 @@ function initNotice(){
 function applyNotice(){
 	console.log("P=?"+errandArr[infoIndex].ERRAND_STATUS);
 	if(errandArr[infoIndex].ERRAND_STATUS=="P"){
+		$(".price").off('keyup');
+		$(".price").off('click');
+		$('#btn_confirm').off('click');
+		$("#check1").off('click');
+		$("#check2").off('click');
 		if(errandArr[infoIndex].MEM_EMAIL_REQ.split(".")[0] != mem_email) {
+			$(".price").attr('readonly',false);
 			$(".price").off('keyup').on('keyup', function(){
 				let abled = false;
 				abled = $(".price").val().length > 0 ? true : false;
@@ -188,6 +198,7 @@ function applyNotice(){
 			});
 		}
 		else {
+			$(".price").attr('readonly',true);
 			$("#check2").off('click').on('click', function(){
 				let isChecked = $("#check1").hasClass("active") ? 'T' : 'F'
 				if(isChecked=="F")
@@ -330,6 +341,16 @@ function loadNotice(){
 		$("#btn_confirm").attr("disabled", true);
 		$(".price").attr("readonly", true);
 		$(".price").css({"background-color":"gray", "pointer-events": "none", "opacity":"0.5"});
+		if(errandInfoArr[infoIndex].CHECK_SECOND=="T") {
+			$('#check2').addClass('active');
+			$(".price").off('keyup');
+			$(".price").off('click');
+			$('#btn_confirm').off('click');
+			$("#check1").off('click');
+			$("#check2").off('click');
+		}
+		else
+			$('#check2').removeClass('active');
 	}
 	else {
 		$('#check1').removeClass('active');
@@ -348,6 +369,7 @@ function changeNotice(gubun){
 		else if(infoIndex==1) {
 			console.log("infoIndex is 1");
 			$('.left').css('visibility','hidden');
+			$('.right').css('visibility','');
 		}
 		else {
 			$('.right').css('visibility','');
@@ -362,6 +384,7 @@ function changeNotice(gubun){
 		else if(infoIndex==MAXINDEX-1) {
 			console.log("infoIndex is MAXINDEX-1");
 			$('.right').css('visibility','hidden');
+			$('.left').css('visibility','');
 		}
 		else {
 			$('.left').css('visibility','');
@@ -372,15 +395,9 @@ function changeNotice(gubun){
 	$(".item").text("심부름 물품 : "+errandArr[infoIndex].ERRAND_ITEM);
 	$(".price").val(errandArr[infoIndex].ERRAND_ITEM_PRICE_NDS);
 	$("#btn_confirm").attr("disabled", true);
-	loadNotice();
-	if(errandArr[infoIndex].MEM_EMAIL_REQ.split('.')[0] == mem_email) {
-		$(".price").attr('readonly',true);
-	}
-	else{
-		$(".price").attr('readonly',false);
-	}
-	$(".errand_price").val("심부름 값 : "+errandArr[infoIndex].ERRAND_PRICE);
 	applyNotice();
+	loadNotice();
+	$(".errand_price").val("심부름 값 : "+errandArr[infoIndex].ERRAND_PRICE);
 }
 
 //현재 시간을 YYYY-MM-DD HH:mm:SS 형식으로 반환
