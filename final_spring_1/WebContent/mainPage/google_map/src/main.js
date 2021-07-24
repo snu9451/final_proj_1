@@ -57,7 +57,6 @@
         });
         switchRider();
         clearInterval(timer);
-//		drawRectangleOnMap();
 		drawCircleOnMap();
       }
     }
@@ -68,12 +67,10 @@
 	      my_lat,
 	      my_lng
 	    );
-//		alert(myPosition);
 	    myMap.setCenter(myPosition);
-		
-	  }
+	}
 
-    //받아온 심부름 정보를 가진 마커 생성
+    //받아온 심부름 정보를 가진 마커 표시
     function newErrandMarker(arr) {
       let errand_registed = document.createElement("span");
       errand_registed.innerHTML = 
@@ -246,8 +243,7 @@
       refAlert.push().update(alertData);
       // closeErrForm();
     }
-    //심부름이 새로 추가되면 html에 심부름 정보를 적고 새로운 마커를 생성
-    //페이지가 로드되면서 파이어베이스의 데이터를 처음 읽어올 때 child_added로 적용된다.
+    //심부름이 새로 추가되면 해당 심부름 정보가 포함된 새로운 마커를 생성
     function addErrand() {
 		let mfLat = Math.floor((lat_st-my_lat)/lat_50m);
 		let mfLng = Math.floor((my_lng-lng_st)/lng_50m);
@@ -434,7 +430,7 @@
 	        refAlert.push().update(alertData);
 	        //심부름 요청자의 알림 추가
 	        alertData = {
-//	            content : snapshot.val().errand_item+" 심부름을 희망하는 라이더가 있습니다.",
+	            content : snapshot.val().errand_item+" 심부름을 희망하는 라이더가 있습니다.",
 	            type : "getErrand",
 	            timestamp : getTime(),
 	            active : 1,

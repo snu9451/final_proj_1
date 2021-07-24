@@ -100,8 +100,6 @@
 			let reading = firebase.database().ref("chatrooms/" + roomKey + "/comments");
 			let readingKey = reading.push().key;
 		    selectedFile = e.target.files[0];
-		    console.log("fiels"+e.target.files[0]);
-		    console.log("res"+e.target.result);
 			let storageRef = firebase.storage().ref("chatrooms/"+roomKey+"/comments/"+readingKey+"/"+selectedFile.name).put(selectedFile);
 		    storageRef.on('state_changed', function(snapshot){
 		    	  let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -137,9 +135,7 @@
 		    	});
 			
 		});
-		console.log("roomKey="+roomKey);
 		if(roomKey=="null") { //채팅방 고유 키를 받아오지 못하는 2가지 경우
-			console.log("enter");
 			let checkRoom = firebase.database().ref("chatrooms").orderByChild("users/"+mem_email).equalTo(true);
 			let cnt = 0;
 			checkRoom.once('value', function(data){
@@ -151,10 +147,6 @@
 			});
 			let checkDest;
 			checkRoom.once('child_added', function(data){
-				console.log("cnt"+cnt);
-				console.log("data"+data);
-				console.log("datakey"+data.key);
-				console.log("dataval"+data.val());
 				if(data.val()!=null) {
 					checkDest = firebase.database().ref("chatrooms/"+data.key+"/users/"+dest_email);
 					checkDest.once('value', function(snapshot){
@@ -168,7 +160,6 @@
 						}
 						//2.처음 대화하는 상대라 채팅방을 새로 개설할 경우
 						else if(--cnt==0) {
-							console.log("new User");
 							init();
 						}
 					});
@@ -229,12 +220,17 @@
 				html = "<div style='height:10px;'></div>"+html;
 				//상대방 프사, 이름 출력
 				if(sender==dest_email)
-					html += "<img id='profile' src='../myPage/assets/img/profile/"+dest_img+"'/><div id='destNickname'>"+dest_nickname+"</div>";
+					html += "<img id='profile' src='../myPage/assets/img/profile/"
+					+dest_img+"'/><div id='destNickname'>"+dest_nickname+"</div>";
 			}
 	        if(mem_email==sender) //내가 보낸 메세지일 경우
-	        	html += "<div align='right' id='"+msgKey+"'><div class='read'>"+read+"</div><div class='timestamp'>"+hourStamp+"</div><div class='me' align='left'>"+msg+"</div></div>";
+	        	html += "<div align='right' id='"+msgKey+"'><div class='read'>"+read
+	        	+"</div><div class='timestamp'>"+hourStamp+"</div><div class='me' align='left'>"
+	        	+msg+"</div></div>";
 	        else { //상대가 보낸 메세지일 경우
-	        	html += "<div align='left' id='"+msgKey+"'><div class='dest' align='left'>"+msg+"</div><div class='timestamp'>"+hourStamp+"</div><div class='read'>"+read+"</div></div>";
+	        	html += "<div align='left' id='"+msgKey+"'><div class='dest' align='left'>"
+	        	+msg+"</div><div class='timestamp'>"+hourStamp+"</div><div class='read'>"
+	        	+read+"</div></div>";
 	        }
 	        //가져온 정보들로 구성된 메세지박스<div>를 화면에 출력
 	       	$(".collection").append(html);
@@ -296,7 +292,6 @@
 			if(mem_email!=sender && read==1) {
 				reading.child(msgKey).update({read:""});
 			}
-	        console.log(msg);
 		});
 		updateRead();
 	}

@@ -173,7 +173,6 @@ $(document).ready(function() {
     makeModal(key, content);
     $("#"+key).find(".btn-primary").click(function(){
       refAlert.child(key).remove();
-//       refAlert.child(key).update({ active : 0 });
     });
     $("#"+key).modal("show");
   }
@@ -230,7 +229,6 @@ $(document).ready(function() {
 	    						console.log("ajax success");
 	    			            refuseErrand(snapVal.errandKey, snapVal.rider, snapVal.area_no);
 	    			            refAlert.child(snapshot.key).remove();
-//	     			            refAlert.child(snapshot.key).update({ active : 0 });
 	    					},
 	    					error:function(e){
 	    						console.log(e);
@@ -266,7 +264,7 @@ $(document).ready(function() {
 			  			     $("#starRatingComplete").modal("show");
 		  			     },
 		  			     error : function(e) {
-		  			
+			           		 console.log(e);
 		  			     }
 		  			  });
 		  			});
@@ -298,7 +296,6 @@ $(document).ready(function() {
   //알림 모달 창 생성하는 함수
   function makeModal(alertKey, content, hasCancel = 0, btn_ok = "확인", btn_cancel = "취소", title = "알림"){
     let html =
-    //"<form f_id=\""+alertKey+"\" method=\"post\" target=\"chatroom\" action=\"/mainPage/chatroom.jsp\" onsubmit=\"window.open('/mainPage/chatroom.jsp','chatroom','width=550px, height=701px');\">"
       "<div class=\"modal fade\" id=\""+alertKey+"\" tabindex=\"-1\" role=\"dialog\" data-backdrop=\"static\" data-keyboard=\"false\">"
         +"<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">"
           +"<div class=\"modal-content\">"
@@ -311,8 +308,6 @@ $(document).ready(function() {
               +"<div class=\"col-12 log__box d-flex flex-column justify-content-center\">"
                 +content
               +"</div>"
-// 				+"<div id=\"refuseNotice\"class=\"col-12 log__box d-flex flex-column justify-content-center\" style=\"display:none!important;\">거절 사유를 알려주세요.</div>"
-// 				+"<textarea name=\"refuse_msg\" type=\"text\" class=\"form-control\" id=\"refuse_detail\" placeholder=\"상세 내용을 입력해주세요.\" rows=\"5\" style=\"display:none;\"></textarea>"
             +"</div>"
             +"<div class=\"modal-footer\">"
               +"<button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">"
@@ -329,7 +324,6 @@ $(document).ready(function() {
           +"</div>"
         +"</div>"
       +"</div>";
-     //"</form>";
     $("body").append(html);
   }
   //심부름 배달요청 수락/거절하는 모달창

@@ -6,11 +6,9 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	Map<String, Object> login = new HashMap<>();
-	//String mem_nickname = null;	// 전역에서 사용되는 정보
 	String mem_email = null;	// 전역에서 사용되는 정보
 	login = (Map<String, Object>)session.getAttribute("login");
 	if(session.getAttribute("login") != null){
-		//mem_nickname = login.get("MEM_NICKNAME").toString();
 		mem_email = login.get("MEM_EMAIL").toString();
 		int indexOfDot = mem_email.indexOf(".");
 		if(indexOfDot>=0){
@@ -49,16 +47,12 @@
 	});
 	//채팅방 목록 불러와서 화면에 보여주기 & 새로운 채팅방이 추가되는지 감시
 	function test_child_added(data) {
-		console.log("addeddataval="+data.key);
-		console.log("ADD");
 		let key = data.key;
 		let userData = firebase.database().ref("chatrooms/"+key).child("users");
 		let msgData = firebase.database().ref("chatrooms/"+key).child("comments").limitToLast(1);
 		let readData = firebase.database().ref("chatrooms/"+key+"/unread/"+mem_email);
 		//collection에 대화방 추가
 		msgData.once('value', function(data){
-			console.log("datakey"+data.key);
-			console.log("dataval"+data.val());
 			if(!(data.val()==null || data.val()=="null")) {
 				msgData.once('child_added', getMsgData);
 				userData.once('child_added', getUserData);
@@ -75,7 +69,6 @@
 		        $(".collection").html(html+$(".collection").html());
 				//안읽은 메세지 수 표시
 				readData.get().then(function(snapshot){
-			        console.log("A"+snapshot.val());
 					if(snapshot.val()!=0)
 						$("#"+key).children("a").children("i").text(snapshot.val());
 					else
@@ -87,7 +80,6 @@
 					data:{"mem_email":dest_email},
 					dataType:'json',
 					success:function(data){
-						console.log("ajax success for "+data.MEM_NICKNAME);
 						$("#"+key).find("img.profile").attr("src","../myPage/assets/img/profile/"+data.MEM_IMG);
 						$("#"+key).find("span.dest").children("b").text(data.MEM_NICKNAME);
 					},

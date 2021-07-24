@@ -1,5 +1,3 @@
-let email_req = ""; 
-let email_nds = "";
 let errandArr=[];
 let errandInfoArr=[];
 let MAXINDEX=-1;
