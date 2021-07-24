@@ -22,9 +22,6 @@ class MyInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMyInfoBinding.inflate(layoutInflater)
 
-
-
-
         var retrofit = Retrofit.Builder()
             .baseUrl("http://172.30.1.36:9696")
             .addConverterFactory(GsonConverterFactory.create())
@@ -50,9 +47,8 @@ class MyInfoActivity : AppCompatActivity() {
                     if(myInfo != null){
                         bind(myInfo!!)
                     } else {
-                        Log.e(ConstraintLayoutStates.TAG, "null입니당")
+                        Log.e(ConstraintLayoutStates.TAG, "null 입니당")
                     }
-
                 }
 
                 override fun onFailure(call: Call<MyInfo>, t: Throwable) {
@@ -63,6 +59,7 @@ class MyInfoActivity : AppCompatActivity() {
             })
         setContentView(binding.root)
     }
+
     fun bind(myInfoModel: MyInfo) {
         Log.e(ConstraintLayoutStates.TAG, "bind 호출 성공...")
         binding.memStarRatingBar.rating = myInfoModel.memStar.toFloat()

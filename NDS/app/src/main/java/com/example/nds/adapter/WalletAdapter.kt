@@ -1,5 +1,6 @@
 package com.example.nds.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -17,6 +18,12 @@ class WalletAdapter: ListAdapter<CoinTrans, WalletAdapter.CoinViewHolder>(diffUt
             binding.transRemainTextView.text = coinModel.transRemain
             binding.transIoTextView.text = coinModel.transIo
 
+            if(coinModel.transIo == "입금") {
+                binding.transIoTextView.setTextColor(Color.parseColor("#FF0000"))
+            }
+            else {
+                binding.transIoTextView.setTextColor(Color.parseColor("#0000FF"))
+            }
         }
     }
 

@@ -2,13 +2,17 @@ package com.example.nds
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayoutStates
 import androidx.constraintlayout.widget.ConstraintLayoutStates.TAG
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.nds.adapter.WalletAdapter
 import com.example.nds.service.CoinTransService
 import com.example.nds.databinding.ActivityMyWalletBinding
 import com.example.nds.model.CoinTrans
+import com.example.nds.model.MyInfo
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -27,12 +31,12 @@ class MyWalletActivity : AppCompatActivity() {
         binding.coinTransRecyclerView.adapter = adapter
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://172.30.1.36:9696")
+            .baseUrl("http://192.168.0.24:9696")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         coinTransService = retrofit.create(CoinTransService::class.java)
-         
+
         // 내 지갑 보기 불러오기
         coinTransService.getcoinTrans("banana@good.com")
             .enqueue(object: Callback<List<CoinTrans>>{
@@ -55,5 +59,9 @@ class MyWalletActivity : AppCompatActivity() {
                     Log.e(TAG, t.toString())
                 }
             })
+    }
+
+    fun bind(coinModel: CoinTrans) {
+        binding.getCoinTextView.text = coinModel.transRemain // 잔액 가져오기
     }
 }
