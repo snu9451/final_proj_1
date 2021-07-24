@@ -38,6 +38,11 @@ h6 {
   font-family: "Cafe24SsurroundAir";
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 /**************************** 한글 폰트 ***************************/
 
 /* 헤더 타이틀 */

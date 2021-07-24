@@ -18,10 +18,12 @@
 						<div class="form-group">
 							<div class="form-row">
 								<div class="col-5">
-									<label class="mr-2">신고자:</label><span id="report_user">라이언</span>
+									<label class="mr-2">신고자: </label>
+									<span id="report_user" style="font-size: 20px;font-weight: bold;"><%=mem_nickname%></span>
 								</div>
 								<div class="col-5">
-									<label class="mr-2">신고 대상:</label><span id="report_bad_user">무지</span>
+									<label class="mr-2">신고 대상:</label>
+									<span id="report_bad_user" style="font-size: 20px;font-weight: bold;"></span>
 								</div>
 							</div>
 							<div class="dropdown-divider"></div>
@@ -39,8 +41,8 @@
 							<div class="form-group">
 								<h4 style="font-weight: bold;">신고내용 상세 입력</h4>
 								<div class="form-row">
-									<div class="col-5">
-										<label class="mr-2">신고날짜:</label><span id="report_date_user">2021-06-25</span>
+									<div class="col-auto">
+										<label class="mr-2">신고날짜:</label><span id="report_date_user"><%=report_date %></span>
 									</div>
 								</div>
 								<textarea type="text" class="form-control" id="report_detail_user" placeholder="상세 내용을 입력해주세요." rows="5"></textarea>

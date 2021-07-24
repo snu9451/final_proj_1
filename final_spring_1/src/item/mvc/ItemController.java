@@ -352,7 +352,7 @@ public class ItemController extends MultiActionController {
 		String mem_nickname = (String)login.get("MEM_NICKNAME");
 		pmap.put("pr_mem_nickname", mem_nickname);
 //		pmap.put("pr_mem_nickname", "사과"); //운래는 세션처리
-		hmb.bind(pmap);
+		hmb.bindPost(pmap);
 		
 		logger.info(pmap);
 		////댓글 또는 대댓글의 정보 가지고 오기, 특히 댓글의 경우 0이 아닌 pr_comment_group을 가져와야한다!+ p_comment_step , result
