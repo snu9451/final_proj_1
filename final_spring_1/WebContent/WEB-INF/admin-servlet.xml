@@ -26,6 +26,7 @@
 				<prop key="/admin/selectBoardBySearch.nds">admin-controller</prop>
 				<prop key="/admin/selectMemberReportDetail.nds">admin-controller</prop>
 				<prop key="/admin/selectBoardReportDetail.nds">admin-controller</prop>
+				<prop key="/admin/boardReport.nds">admin-controller</prop>
 			</props>
 		</property>
 	</bean>
@@ -43,6 +44,7 @@
 				<prop key="/admin/selectBoardBySearch.nds">selectBoardBySearch</prop>
 				<prop key="/admin/selectMemberReportDetail.nds">selectMemberReportDetail</prop>
 				<prop key="/admin/selectBoardReportDetail.nds">selectBoardReportDetail</prop>
+				<prop key="/admin/boardReport.nds">boardReport</prop>
 			</props>
 		</property>
 	</bean>	

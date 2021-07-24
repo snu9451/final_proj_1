@@ -116,4 +116,9 @@ public class AdminDao {
 		
 		return pmap;
 	}
+	//게시물 신고
+	public void boardReport(Map<String, Object> pmap) {
+		logger.info("boardReport 메소드 호출");
+		sqlSessionTemplate.selectOne("proc_report_board", pmap);
+	}
 }

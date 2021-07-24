@@ -130,6 +130,9 @@
             SET mem_star = ((mem_star * (mem_star_num -1))+ #{rating}) / mem_star_num
         WHERE mem_email = #{mem_email}
    </update>
+   	<select id="withdrawCoin" statementType="CALLABLE" parameterType="java.util.Map">
+		{call proc_withdrawCoin(#{pr_mem_email, mode=IN, jdbcType=VARCHAR}, #{pr_account_num, mode=IN, jdbcType=VARCHAR}, #{pr_trans_content, mode=IN, jdbcType=VARCHAR}, #{pr_trans_price, mode=IN, jdbcType=INTEGER}, #{pr_trans_io, mode=IN, jdbcType=VARCHAR})}
+	</select>
 <!-- ==================================== [[ ＩＮＳＥＲＴ ]] ==================================== -->
 	<insert id="insertMember">
 		INSERT INTO member(mem_email, mem_img, mem_nickname, mem_pw, mem_gender, mem_age, mem_create_date, issocial, mem_active, mem_star, coin_remain, mem_phone, mem_errand_mode ,mem_star_num)
@@ -139,6 +142,7 @@
 		INSERT INTO coin_trans
      	VALUES (SEQ_COIN_TRANS.NEXTVAL, #{mem_email}, TO_CHAR (SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), #{trans_content}, #{trans_price}, #{trans_remain}, #{trans_io})
 	</insert>
+	
 <!-- ==================================== [[ ＤＥＬＥＴＥ ]] ==================================== -->
 	<delete id="my_like_delete" parameterType="map">
 	     DELETE 

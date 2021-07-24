@@ -40,21 +40,13 @@
             </div>
             <!-- 계좌번호 입력 -->
             <div class="form-group withdrawData">
-	            <input type="text" class="form-control doEmpty" id="input_account" placeholder="계좌번호 16자리를 입력해주세요."/>
+	            <input type="text" class="form-control doEmpty" id="input_account" placeholder="(-)를 제외한 계좌번호 14자리를 입력해주세요."/>
 	            <div id="account_digits_box">
 	            	<small id="account_digits" class="p-3 doEmpty"></small>
 	            </div>
             </div>
             
             <!-- 인증번호 입력 -->
-<!--             <div class="form-inline justify-content-around">
-            	<input type="text" class="form-control w-75 " id="input_SecurityCode" placeholder="인증번호를 입력해주세요."/>
-            	<button type="button" class="btn btn-primary ml-2">확인</button>
-            	<div>
-            		<small id="safetyCodeChck"></small>
-            	</div>
-            	<small><a id="withdraw_safetyCode" href="#">[인증번호 발송]</a>을 클릭하시면 이메일로 인증번호를 보내드려요 : )</small>
-            </div> -->
              <div class="form-row align-items-center">
               <div class="form-group col-md-12">
                 <label for="withdraw_inputCellPhone">핸드폰 번호</label>
@@ -66,7 +58,6 @@
                     <button type="button" id="btn_withdraw_getCode" class="btn btn-primary">인증번호 받기</button>
                   </div>
                 </div>
-                <div class="invalid-feedback">핸드폰번호 11자리를 입력해주세요.</div>
               </div>
             </div>
             <div class="form-row align-items-center justify-content-between">

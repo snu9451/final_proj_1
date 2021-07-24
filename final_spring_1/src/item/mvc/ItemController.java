@@ -90,7 +90,7 @@ public class ItemController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		//카테고리 메뉴 이름이 여기에 들어가게 된다.
-		hmb.bind(pmap);
+		hmb.bindPost(pmap);
 //		pmap.put("pr_categori","디지털기기");
 		//관련 카테고리 아이템들을 가져온다.
 		List<Map<String,Object>> items = itemLogic.selectByCategory(pmap);
@@ -166,7 +166,7 @@ public class ItemController extends MultiActionController {
 	
 	
 	//사용자가 상품 수정 버튼의 수정 완료를 누른다면 상품이 업데이트 되야하니까
-	public void updateItem(HttpServletRequest req, HttpServletResponse res) {
+	public void updateItem(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		logger.info("controller : updateItem메소드 호출");
 		//front : key는 "pr_BM_TITLE" / "pr_BM_CONTENT" / "pr_BM_PRICE" / "pr_bm_no" / "pr_CATEGORY_NAME"
 		//        value는  상품 제목         상품 내용            상품 가격         상품 번호        상품 카테고리
@@ -178,17 +178,7 @@ public class ItemController extends MultiActionController {
 		logger.info(pmap);
 		int bm_no = 0;
 		bm_no = itemLogic.updateItem(pmap);
-		try {
-			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 2초 후 redirect되도록 sleep걸어둠
-			Thread.sleep(2000);
-			res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		AjaxDataPrinter.out(res,bm_no);
 	}
 		//사이즈 초과시 에러를 전송시킴
 //		if(pmap.containsKey("error")) {
@@ -262,6 +252,7 @@ public class ItemController extends MultiActionController {
 		int pr_bm_no = Integer.parseInt(req.getParameter("pr_bm_no").toString());
 		//상품의 내용을 가져온다.
 		Map<String,Object> itemContext = itemLogic.selectItemDetailContext(pr_MEM_EMAIL,pr_bm_no,pr_MEM_NICKNAME);
+		logger.info(itemContext);
 		//상품의 사진들을 가져온다
 		List<String> itemImgs = itemLogic.selectItemDetailImgs(pr_bm_no);
 		//상품의 댓글들을 가져온다
@@ -298,7 +289,7 @@ public class ItemController extends MultiActionController {
 		//상품을 삭제한다.
 		itemLogic.deleteItem(pmap);
 		//페이지 전송
-		res.sendRedirect("/mainPage/main_page.jsp");
+		res.sendRedirect("/mainPage/main_page.nds");
 	}
 	
 	//상품 판매 완료 클릭 시
@@ -361,7 +352,9 @@ public class ItemController extends MultiActionController {
 		String mem_nickname = (String)login.get("MEM_NICKNAME");
 		pmap.put("pr_mem_nickname", mem_nickname);
 //		pmap.put("pr_mem_nickname", "사과"); //운래는 세션처리
-		hmb.bindPost(pmap);
+		hmb.bind(pmap);
+		
+		logger.info(pmap);
 		////댓글 또는 대댓글의 정보 가지고 오기, 특히 댓글의 경우 0이 아닌 pr_comment_group을 가져와야한다!+ p_comment_step , result
 		Map<String,Object> comments = itemLogic.insertComment(pmap);
 		////여기에는 result가 들어가는데 "true"면 댓글이 잘 등록 되었고, "itemFalse"이면 상품이 삭제 되었다는 것으로 댓글이 못 달린다. "noId" 로그인 안했을 시
@@ -432,14 +425,8 @@ public class ItemController extends MultiActionController {
 		logger.info("==============================" + pmap);
 		int bm_no = 0;
 		bm_no = itemLogic.insertItem(pmap);
-		try {
-			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 2초 후 redirect되도록 sleep걸어둠
-			Thread.sleep(2000);
-			res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		AjaxDataPrinter.out(res,bm_no);
+
 	
 		//front : key는 pr_BM_TITLE   /   pr_BM_CONTENT  /  pr_BM_PRICE  /   pr_SELLER_NICKNAME  /  pr_CATEGORY_NAME  
 		//      value는   제목                 내용              가격                닉네임                  카테고리         

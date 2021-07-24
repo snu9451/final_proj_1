@@ -151,9 +151,10 @@ public class MemberLogic {
 	}
 
 
-	public int withdraw(Map<String, Object> pmap) {
+	public int withdrawCoin(Map<String, Object> pmap) {
 		int result = 0;
-		result = memberDao.withdraw(pmap);
+		result = memberDao.withdrawCoin(pmap);
+		logger.info("withdraw 로직 호출");
 		return result;
 	}
 

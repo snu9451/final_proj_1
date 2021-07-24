@@ -52,7 +52,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 			mem_email = (String)login.get("MEM_EMAIL");
 		}
 		if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
-			res.sendRedirect("http://localhost:9696/itemUpload/itemUpload.jsp");
+			res.sendRedirect("http://localhost:9696/admin/admin_page1.jsp");
+			logger.info("관리자페이지 요청111111111111111");
 			return false;
 		}
 		for(int i=0; i<excludedURIs.length; i++) {
@@ -68,7 +69,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		System.out.println("===================================="+mem_email);
 		if(login != null) {
 			if("admin@good.com".equals(mem_email) && !"/member/doLogout.nds".equals(req.getRequestURI())) {
-				res.sendRedirect("http://localhost:9696/itemUpload/itemUpload.jsp");
+				logger.info("관리자페이지 요청22222222222");
+				res.sendRedirect("http://localhost:9696/admin/admin_page1.jsp");
 				return false;
 			}
 			return true;			
@@ -77,6 +79,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 			// 로그인 페이지를 요청하는 서블릿 태우기.
 			session.setAttribute("reqLoginView", "true");
 			res.sendRedirect("http://localhost:9696/mainPage/main_page.nds");
+			logger.info("관리자페이지 요청333333333333333");
 //			.sendRedirect("http://localhost:9696/mainPage_JSP/main_page.jsp");
 			return false;
 		}

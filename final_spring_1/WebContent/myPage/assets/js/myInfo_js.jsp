@@ -109,9 +109,22 @@ function leave(){
 	});
 };
 function addAction(){
-	$('#imgChangeSuccs').modal('show');
-	$('#btn_imgSucces').click(function(){
-		$('#f_profile_picture').submit();
+	let form = $('#f_profile_picture')[0]; 
+	let formData = new FormData(form); 
+	$.ajax({ 
+		url: '/member/updateImg.nds',
+		type: 'POST', 
+		data: formData, 
+		success: function (data) {
+		$('#imgChangeSuccs').modal('show');
+		}, 
+	error: function (data) {
+		alert("프로필 사진 변경에 실패하였습니다."); 
+	}, 
+	cache: false, 
+	contentType: false, 
+	processData: false 
 	});
+
 }
 </script>

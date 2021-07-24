@@ -126,7 +126,7 @@ public class MemberController extends MultiActionController {
 		String mem_nickname = req.getParameter("mem_nickname").toString();
 		pmap.put("mem_nickname", mem_nickname);
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bind(pmap);
+		hmb.bindPost(pmap);
 		Map<String, Object> rmap = memberLogic.selectNickName(pmap);
 		Map<String, Object> pmap1 = new HashMap<String, Object>();
 		List<Map<String, Object>> sellList = memberLogic.sellList(pmap);
@@ -290,14 +290,14 @@ public class MemberController extends MultiActionController {
 		logger.info(pmap);
 		int result = memberLogic.updateMember(pmap);
 		logger.info("프로필 사진 업데이트 결과 ===> "+result);
-		try {
-			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 1초 후 redirect되도록 sleep걸어둠
-			Thread.sleep(1000);
-			res.sendRedirect("/myPage/my_info.nds");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 1초 후 redirect되도록 sleep걸어둠
+//			Thread.sleep(1000);
+//			res.sendRedirect("/myPage/my_info.nds");
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //		// 프로필 사진 변경 성공 시
 //		if(result == 1) {
 //			//AjaxDataPrinter.out(res, "text/html", "[ERROR] 프로필 사진 변경에 <b style=\"color: red\">실패</b>하였습니다.");
@@ -420,36 +420,24 @@ public class MemberController extends MultiActionController {
 	
 	// (2) 계좌로 출금
 	// 입력받는 정보: 출금 금액, 계좌번호, 인증번호
+	// execute proc_withdrawCoin('weed@good.com', '0203-0804-124124','출금', 11480, 'O');
 	public void withdrawCoin(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("withdraw 메소드 호출 성공!");
 		// request 객체에 담긴 정보를 map으로 옮겨 담기
 		Map<String, Object> pmap = new HashMap<String, Object>();
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bindPost(pmap);
-		logger.info(pmap.get("getCost").getClass()+", "+
-							pmap.get("input_code").getClass()+", "+
-							pmap.get("account").getClass());// 인증코드 일치여부 판단
 		HttpSession session = req.getSession();
-		logger.info("session: "+session);
-		int input_code = Integer.parseInt((String) pmap.get("input_code"));
-		logger.info(input_code);
-		//int withdraw_code = (Integer)session.getAttribute("withdraw_code");
-		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치한다면
-//		if(input_code == withdraw_code) {
-//			// 출금(O)이므로 map에 담아준다.
-//			pmap.put("trans_io","O");
-//			// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
-//			Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
-//			logger.info(mvo);
-//			String mem_email = (String)mvo.get("MEM_EMAIL");
-//			pmap.put("mem_email", mem_email);
-//			// [DB]에 update 및 insert 처리
-//			int result = memberLogic.withdraw(pmap);
-//		}
-//		// 입력받은 인증코드와 세션에 저장되어 있는 인증코드가 일치하지 않는다면
-//		else {
-//			AjaxDataPrinter.out(res, "인증코드가 일치하지 않습니다.");
-//		}
+		//Integer.parseInt((String) pmap.get("pr_trans_price"));
+		// 세션에 저장되어 있는 사용자의 이메일을 담아준다.
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+		String mem_email = (String)mvo.get("MEM_EMAIL");
+		hmb.bindPost(pmap);
+		pmap.put("pr_mem_email", mem_email);
+		pmap.put("pr_trans_content","출금");
+		pmap.put("pr_trans_io","O");
+		
+		// [DB]에 update 및 insert 처리
+		memberLogic.withdrawCoin(pmap);
 	}
     
     public void insertCoinTrans(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -986,6 +974,7 @@ public class MemberController extends MultiActionController {
 		Map<String,Object> pmap = new HashMap<>();
 		List<Map<String, Object>> rankList = memberLogic.rankList(pmap);
 		ModelAndView mav = new ModelAndView("/mainPage/main_page.jsp");
+		logger.info(rankList);
 		mav.addObject("rankList", rankList);
 		return mav;
 	}
