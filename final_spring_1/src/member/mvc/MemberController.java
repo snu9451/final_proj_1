@@ -187,7 +187,7 @@ public class MemberController extends MultiActionController {
 		
 		//mem_nickname에 세션에 들어있는 MEM_NICKNAME의 정보를 넣어줌
 		//expect mem_nickname = 포도;
-		String mem_nickname = (String)pmap.get("MEM_NICKNAME");
+		String mem_nickname = (String)pmap.get("mem_nickname");
 		if("buy".equals((String)pmap.get("gubun"))) {
 			pmap.put("buyer_nickname", mem_nickname);
 		} else if ("sel".equals((String)pmap.get("gubun"))) {

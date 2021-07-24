@@ -20,6 +20,7 @@ class MyWalletActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyWalletBinding
     private lateinit var adapter: WalletAdapter
     private lateinit var coinTransService: CoinTransService
+    private lateinit var coinRemain: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,18 +40,20 @@ class MyWalletActivity : AppCompatActivity() {
 
         // 내 지갑 보기 불러오기
         coinTransService.getcoinTrans("banana@good.com")
-            .enqueue(object: Callback<List<CoinTrans>>{
+            .enqueue(object: Callback<List<CoinTrans>> {
                 override fun onResponse(
                     call: Call<List<CoinTrans>>,
                     response: Response<List<CoinTrans>>
                 ) {
-                    if(response.isSuccessful.not()){
+                    if(response.isSuccessful.not()) {
                         Log.e(TAG, "NOT!!! SUCCESS")
                         return;
                     }
                     Log.e(TAG, "성공!")
                     Log.e(TAG, "${response.body()}")
                     adapter.submitList(response.body()?.orEmpty())
+                    coinRemain = response.body()?.get(0)?.transRemain.toString()
+                    binding.getCoinTextView.text = coinRemain
                 }
 
                 override fun onFailure(call: Call<List<CoinTrans>>, t: Throwable) {
@@ -59,9 +62,5 @@ class MyWalletActivity : AppCompatActivity() {
                     Log.e(TAG, t.toString())
                 }
             })
-    }
-
-    fun bind(coinModel: CoinTrans) {
-        binding.getCoinTextView.text = coinModel.transRemain // 잔액 가져오기
     }
 }

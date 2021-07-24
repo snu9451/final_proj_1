@@ -35,7 +35,7 @@ class MyTradeBuyFragment : Fragment(R.layout.fragment_my_trade_buy) {
         binding.tradeBuyRecyclerView.adapter = adapter
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://172.30.1.36:9696")
+            .baseUrl("http://192.168.0.24:9696")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -44,7 +44,7 @@ class MyTradeBuyFragment : Fragment(R.layout.fragment_my_trade_buy) {
         val view = binding.root
 
         // 구매내역 불러오기
-        tradeBuyService.getTradeBuy("바나나")
+        tradeBuyService.getTradeBuy("포도", "buy")
             .enqueue(object: Callback<List<TradeBuy>> {
                 override fun onResponse(
                     call: Call<List<TradeBuy>>,
@@ -57,6 +57,7 @@ class MyTradeBuyFragment : Fragment(R.layout.fragment_my_trade_buy) {
                     Log.e(ConstraintLayoutStates.TAG, "성공!")
                     Log.e(ConstraintLayoutStates.TAG, "${response.body()}")
                     adapter.submitList(response.body()?.orEmpty())
+                    binding.tradeBuyTextView.text = response.body()?.size.toString()
                 }
 
                 override fun onFailure(call: Call<List<TradeBuy>>, t: Throwable) {
@@ -67,5 +68,14 @@ class MyTradeBuyFragment : Fragment(R.layout.fragment_my_trade_buy) {
             })
 
         return view
+    }
+
+    fun deleteBuy(view: View) {
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://192.168.0.24:9696")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        tradeBuyService.deleteTradeBuy("포도", "pr_bm_no")
     }
 }

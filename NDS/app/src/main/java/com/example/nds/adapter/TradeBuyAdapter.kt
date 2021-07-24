@@ -21,7 +21,7 @@ class TradeBuyAdapter: ListAdapter<TradeBuy, TradeBuyAdapter.TradeBuyViewHolder>
 
             Glide
                 .with(binding.biFileImageView.context)
-                .load("http://172.30.1.36:9696/itemUpload/assets/img/itemupload/" + tradeBuyModel.biFile)
+                .load("http://192.168.0.24:9696/itemUpload/assets/img/itemupload/" + tradeBuyModel.biFile)
                 .into(binding.biFileImageView)
         }
     }

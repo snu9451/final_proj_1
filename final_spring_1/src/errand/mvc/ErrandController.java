@@ -73,7 +73,7 @@ public class ErrandController extends MultiActionController{
 	      HashMapBinder hmb = new HashMapBinder(req);
 	      
 	      hmb.bindPost(pmap);
-	      String mem_email = (String) pmap.get("MEM_EMAIL");
+	      String mem_email = (String) pmap.get("mem_email");
 	      if("req".equals((String)pmap.get("gubun"))) {
 	    	  pmap.put("mem_email_req", mem_email);
 	      } else if ("nds".equals((String)pmap.get("gubun"))) {

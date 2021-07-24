@@ -20,7 +20,7 @@ class TradeSellAdapter: ListAdapter<TradeSell, TradeSellAdapter.TradeSellViewHol
 
             Glide
                 .with(binding.biFileImageView.context)
-                .load("http://172.30.1.36:9696/itemUpload/assets/img/itemupload/" + tradeSellModel.biFile)
+                .load("http://192.168.0.24:9696/itemUpload/assets/img/itemupload/" + tradeSellModel.biFile)
                 .into(binding.biFileImageView)
 
             if(tradeSellModel.bmStatus == "N") {

@@ -8,6 +8,7 @@ import retrofit2.http.Query
 interface TradeSellService {
     @GET("member/selectMyTradeAndroid.nds")
     fun getTradeSell(
-        @Query("mem_nickname") mem_nickname: String
+        @Query("mem_nickname") mem_nickname: String,
+        @Query("gubun") gubun: String
     ): Call<List<TradeSell>>
 }

@@ -33,7 +33,7 @@ class MyErrandReqFragment : Fragment(R.layout.fragment_my_errand_req) {
         binding.errandReqRecyclerView.adapter = adapter
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://172.30.1.36:9696")
+            .baseUrl("http://192.168.0.24:9696")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -42,7 +42,7 @@ class MyErrandReqFragment : Fragment(R.layout.fragment_my_errand_req) {
         val view = binding.root
 
         // 내가 요청한 심부름 목록 불러오기
-        errandReqService.getErrandReq("banana@good.com")
+        errandReqService.getErrandReq("banana@good.com", "req")
             .enqueue(object: Callback<List<ErrandReq>>{
                 override fun onResponse(
                     call: Call<List<ErrandReq>>,
@@ -55,6 +55,7 @@ class MyErrandReqFragment : Fragment(R.layout.fragment_my_errand_req) {
                     Log.e(TAG, "성공!")
                     Log.e(TAG, "${response.body()}")
                     adapter.submitList(response.body()?.orEmpty())
+                    binding.errandReqTextView.text = response.body()?.size.toString()
                 }
 
                 override fun onFailure(call: Call<List<ErrandReq>>, t: Throwable) {

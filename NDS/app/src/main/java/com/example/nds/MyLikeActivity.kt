@@ -47,6 +47,7 @@ class MyLikeActivity : AppCompatActivity() {
                     Log.e(TAG, "성공!")
                     Log.e(TAG, "${response.body()}")
                     adapter.submitList(response.body()?.orEmpty())
+                    binding.likeTextView.text = response.body()?.size.toString()
                 }
 
                 override fun onFailure(call: Call<List<Mylike>>, t: Throwable) {

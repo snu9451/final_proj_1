@@ -13,15 +13,16 @@
         android:theme="@style/Theme.NDS">
         <activity android:name=".InsertCoinActivity"></activity>
         <activity android:name=".MyLikeActivity" />
-        <activity android:name=".MyWalletActivity">
+        <activity android:name=".MyWalletActivity"/>
+        <activity android:name=".MyTradeActivity" >
+        </activity>
+        <activity android:name=".MyErrandActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyTradeActivity" />
-        <activity android:name=".MyErrandActivity" />
         <activity android:name=".UpdateNicknameActivity" />
         <activity android:name=".MyInfoActivity" />
         <activity android:name=".MainActivity"></activity>
