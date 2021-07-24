@@ -55,7 +55,7 @@ SELECT mem.mem_create_date,
                  mem.mem_email,
                  mem.mem_nickname,
                  mem.mem_gender,
-                 mem.mem_age,`
+                 mem.mem_age,
                  NVL (me.mem_count, 0) report_count
             FROM    MEMBER mem
                  LEFT OUTER JOIN

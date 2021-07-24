@@ -90,7 +90,7 @@ public class ItemController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		//카테고리 메뉴 이름이 여기에 들어가게 된다.
-		hmb.bind(pmap);
+		hmb.bindPost(pmap);
 //		pmap.put("pr_categori","디지털기기");
 		//관련 카테고리 아이템들을 가져온다.
 		List<Map<String,Object>> items = itemLogic.selectByCategory(pmap);
@@ -352,7 +352,9 @@ public class ItemController extends MultiActionController {
 		String mem_nickname = (String)login.get("MEM_NICKNAME");
 		pmap.put("pr_mem_nickname", mem_nickname);
 //		pmap.put("pr_mem_nickname", "사과"); //운래는 세션처리
-		hmb.bindPost(pmap);
+		hmb.bind(pmap);
+		
+		logger.info(pmap);
 		////댓글 또는 대댓글의 정보 가지고 오기, 특히 댓글의 경우 0이 아닌 pr_comment_group을 가져와야한다!+ p_comment_step , result
 		Map<String,Object> comments = itemLogic.insertComment(pmap);
 		////여기에는 result가 들어가는데 "true"면 댓글이 잘 등록 되었고, "itemFalse"이면 상품이 삭제 되었다는 것으로 댓글이 못 달린다. "noId" 로그인 안했을 시

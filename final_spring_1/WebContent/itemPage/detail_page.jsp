@@ -131,6 +131,7 @@ $(document).ready(function(){
 									<% }%>
 									<div>
 										<span>조회수</span><span><%= BM_HIT %></span><span>회</span>
+										<input id="i_bm_no" type="hidden" value=<%= BM_NO %> />
 									</div>
 									</ul>
 								</div>
@@ -209,7 +210,7 @@ $(document).ready(function(){
 									<ul class="d-flex align-items-end mb-0">
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_POS").toString())==0){ %>
 										 <li>                                                                                                         
-             							    <button class="pd__comment__btn" id="" onclick="pdCommentBtn()">답글</button>                                                       
+             							    <button class="pd__comment__btn" id="" onclick="pdCommentBtn(this)">답글</button>                                                       
             							</li> 
 									<% } %>
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_ME").toString())==1){ %>

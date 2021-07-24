@@ -159,7 +159,7 @@ function insAction(){
                   		<input class="textbox_com" id="essential2" type="number" style="width : 200px;" min="0" placeholder="&nbsp필수 입력 사항입니다." 
                   		value = "<%=Integer.parseInt(itemContext.get("BM_PRICE").toString())%>" name="pr_BM_PRICE" max="10000000">
                   	<% } else{ %>
-	                  <input class="textbox_com" id="essential2" type="number" min="0" name="pr_BM_PRICE" placeholder="&nbsp필수 입력 사항입니다." max="10000000">
+	                  <input class="textbox_com" id="essential2" type="number" style="width : 200px;" min="0" name="pr_BM_PRICE" placeholder="&nbsp필수 입력 사항입니다." max="10000000">
                   	<% } %>
                   	
                 </div>

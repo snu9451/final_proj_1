@@ -127,7 +127,7 @@
  			$("#reportSuccess").modal('show');
  		}, 
 		error: function (data) {
-			alert("신고에 실패하였습니다"); 
+			alert("내용을 기입해주세요."); 
 		}, 
 		cache: false, 
 		contentType: false, 

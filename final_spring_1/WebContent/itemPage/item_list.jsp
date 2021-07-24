@@ -152,7 +152,7 @@ function searchRank(item){
   <!-- 회원가입 양식 모달 있던 자리 --><%@ include file="../common/joinForm.jsp" %>
   <!-- 코인충전 모달 있던 자리 --><%@ include file="../common/coinCharge.jsp" %>
   <!-- 심부름 모달 있던 자리 --><%@ include file="../mainPage/errand.jsp" %>
-  <!-- 게시글 신고 모달 --><%@ include file="../mainPage/reportBoard.jsp" %>
+<%--   <!-- 게시글 신고 모달 --><%@ include file="../mainPage/reportBoard.jsp" %> --%>
   <!-- 회원 신고 모달 --><%@ include file="../mainPage/reportMem.jsp" %>
   <!-- \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ ▼ ＭＯＤＡＬ　ＰＡＲＴ ▼ \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ -->
   <!-- =============================================== ▼ ＳＣＲＩＰＴ  ▼ ================================================= -->

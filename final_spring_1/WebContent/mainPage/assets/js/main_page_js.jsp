@@ -300,8 +300,13 @@ $('#addComment').click(function(){
 		let commentgroup = commentType_No[0]==0 ? 0 : 1;//댓글이면 0, 대댓글이면 댓글의 그룹번호를 가져옴
 	// 	let msg = document.querySelector(".form-control").value; //메세지 내용
 		let msg = $('#nds_comment').val();
-		
-		let item = {"pr_comment_pos":commentType_No[0],"pr_comment_group":commentgroup,"pr_comment_msg":msg,"pr_bm_no":commentType_No[1]};
+		let pr_bm_no = $('#i_bm_no').val();
+		//commentType_No[0]
+		let item = {"pr_comment_pos":commentType_No,
+					"pr_comment_group":commentgroup,
+					"pr_comment_msg":msg,
+					"pr_bm_no":pr_bm_no};
+		console.log(item);
 	    $.ajax({
 	    	type: "POST",
 	    	url: "http://localhost:9696/item/insertComment.nds",
@@ -309,18 +314,18 @@ $('#addComment').click(function(){
 	    	success:function(data){
 	    		$('#pd__comment__list').append(data);
 	    		$('#nds_comment').val("");
-	// 			console.log(data);
-	//     		if(data['result']=='true') {
-	// 				//댓글이라면
-	// 				if(data['COMMENT_POS']==0){
-	// 					document.querySelector("#pd__comment__list").innerHTML=comment_make(data)+document.querySelector("#pd__comment__list").innerHTML;
-	// 				}
+				console.log(data);
+// 	    		if(data['result']=='true') {
+					//댓글이라면
+// 					if(data['COMMENT_POS']==0){
+// 						document.querySelector("#pd__comment__list").innerHTML=comment_make(data)+document.querySelector("#pd__comment__list").innerHTML;
+// 					}
 	// 				//대댓글이라면
 	// 				else{
 	// 					console.log("e대댓글");
 	// 				}		
 	// 				document.querySelector(".form-control").value ="";
-	// 			}
+// 	 			}
 	//     		else if(data['result']=="itemFalse") {
 	// 				alert("해당 글이 존재하지 않습니다.");				
 	// 			}
