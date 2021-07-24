@@ -43,7 +43,7 @@
 							</div>
 						</form>
 						<a id="issueTempPw" href="#" data-toggle="modal"
-							data-target="#tempPW" class="col-12 mb-2">비밀번호를 잊으셨나요??</a>
+							data-target="#tempPW" class="mb-2">비밀번호를 잊으셨나요??</a>
 						<button class="btn btn-info p-2">네이버로그인</button>
 					</div>
 				</div>
