@@ -7,6 +7,8 @@
 	int comment_step = Integer.parseInt(String.valueOf(comments.get("COMMENT_STEP")));
 	int comment_pos = Integer.parseInt(String.valueOf(comments.get("COMMENT_POS")));
 	int comment_me = Integer.parseInt(String.valueOf(comments.get("COMMENT_ME")));
+	int bm_no  = Integer.parseInt(String.valueOf(comments.get("pr_bm_no")));
+	int comment_group  = Integer.parseInt(String.valueOf(comments.get("COMMENT_GROUP")));
 	String comment_date = String.valueOf(comments.get("COMMENT_DATE"));
 	String comment_msg = String.valueOf(comments.get("COMMENT_MSG"));
 %>
@@ -22,17 +24,17 @@
 	if(comment_pos == 0){
 %>                                                                                                             
 				<li>                                                                                                         
-					<button class="pd__comment__btn" id="" onclick="pdCommentBtn(this)">답글</button>                                                       
+					<button class="pd__comment__btn"  onclick="pdCommentBtn(this)" id="<%=comment_step %>-<%= bm_no %>">답글</button>                                                       
 				</li>     
 <%
 	}
 	if(comment_me == 1){
 %>                                                                                                   
-				<li>                                                                                                         
-					<button class="pd__comment__btn" id="" onclick="pdCommentupdateBtn(this)">수정</button>                                                       
+				<li>                                                                                                              
+					<button class="pd__comment__btn" id="<%=comment_group %>-<%=comment_pos %>" onclick="pdCommentupdateBtn(this)">수정</button>                                            
 				</li>                                                                                                        
 				<li>                                                                                                         
-					<button class="pd__comment__btn" id="comment<%=comment_step %> onclick="deleteComment(this)" >삭제</button> 
+					<button class="pd__comment__btn" id="<%=comment_step %>" onclick="deleteComment(this)" >삭제</button> 
 				</li>      
 <%
 	} else {
@@ -53,7 +55,7 @@
 	if(comment_pos == 1){                                                                                                             
 %>
 				<p class="w-100" row="2" readonly>                                                                           
-					<i class="fas fa-angle-double-right"></i><%=comment_msg %>                                     
+					&nbsp&nbsp&nbsp&nbsp&nbsp<i class="fas fa-level-up-alt" style="transform:rotate(90deg);"></i>&nbsp&nbsp<%=comment_msg %>                                     
 				</p>
 <%
 	} else {                                                                                                                                   
@@ -63,4 +65,4 @@
 	};                                                                                                                                         
 %>
 		</div>                                                                                                               
-	</div>                                                                               
+	</div>                           

@@ -95,8 +95,8 @@ response.setDateHeader("Expires",0);
 							<td><%=trans_price %>원</td>
 							<td><%=trans_remain %>원</td>
 							<td
-<% if("입금".equals(trans_io)){ %> style="color: blue; font-weight: bold;"
-<% } else if("출금".equals(trans_io)){ %> style="color: red; font-weight: bold;"
+<% if("입금".equals(trans_io)){ %> style="color: red; font-weight: bold;"
+<% } else if("출금".equals(trans_io)){ %> style="color: blue; font-weight: bold;"
 <% } %>
 							><%=trans_io %></td>
 						</tr>
