@@ -9,6 +9,6 @@
 <body>
 	<h1>유효하지 않은 접근입니다.</h1>
 	<h3>메인페이지로 이동하기</h3>
-	<a href="http://localhost:4444/mainPage/main_page.nds">클릭하여 이동</a>
+	<a href="http://localhost:9696/mainPage/main_page.nds">클릭하여 이동</a>
 </body>
 </html>

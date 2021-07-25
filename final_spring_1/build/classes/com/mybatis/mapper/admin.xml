@@ -59,10 +59,10 @@ SELECT mem.mem_create_date,
                  NVL (me.mem_count, 0) report_count
             FROM    MEMBER mem
                  LEFT OUTER JOIN
-                    (  SELECT mem_email_from, COUNT (*) mem_count
+                    (  SELECT mem_email_to, COUNT (*) mem_count
                          FROM report_mem
-                     GROUP BY mem_email_from) me
-                 ON mem.mem_email = me.mem_email_from
+                     GROUP BY mem_email_to) me
+                 ON mem.mem_email = me.mem_email_to
            WHERE mem.mem_active = 'T'
         ORDER BY mem.mem_create_date DESC) mem
  </select>
@@ -89,24 +89,28 @@ SELECT mem.mem_create_date,
   <select id="report_member" parameterType="java.util.Map" resultType="map">
 	SELECT rm.report_no,
            rm.report_type,
-           rm.mem_email_from,
            rm.mem_email_to,
+           rm.mem_email_from,
            rm.report_msg,
            rm.report_date
   	FROM report_mem rm
+  	WHERE rm.mem_email_to = #{mem_email}
  </select> 
  <!-- 신고된 게시글-->
   <select id="report_board" parameterType="java.util.Map" resultType="map">
-	SELECT rb.report_no,
+	SELECT report_no, report_type, bm_title, mem_email, report_msg, report_date
+	FROM (SELECT rb.report_no,
      	   rb.report_type,
        	   bm.bm_title,
        	   rb.mem_email,
        	   rb.report_msg,
-       	   rb.report_date    
+       	   rb.report_date,
+       	   bm.bm_no    
       FROM report_board rb 
     LEFT OUTER JOIN board_master bm 
     ON rb.bm_no = bm.bm_no
-    ORDER BY rb.bm_no    
+    ORDER BY rb.bm_no)
+    WHERE bm_no = #{bm_no}
  </select> 
  
  

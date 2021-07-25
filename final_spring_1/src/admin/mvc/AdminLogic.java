@@ -45,14 +45,16 @@ public class AdminLogic {
 		adminPage2 = adminDao.getAdminPage2();
 		return adminPage2;
 	}
-	public List<Map<String,Object>> getAdminModal1() {
+	public List<Map<String,Object>> getAdminModal1(Map<String, Object> pmap) {
 		List<Map<String,Object>> adminModal1 = null;
-		adminModal1 = adminDao.getAdminModal1();
+		adminModal1 = adminDao.getAdminModal1(pmap);
+		logger.info("adminModal1 ===> "+adminModal1);
 		return adminModal1;
 	}
-	public List<Map<String,Object>> getAdminModal2() {
+	public List<Map<String,Object>> getAdminModal2(Map<String, Object> pmap) {
 		List<Map<String,Object>> adminModal2 = null;
-		adminModal2 = adminDao.getAdminModal2();
+		adminModal2 = adminDao.getAdminModal2(pmap);
+		logger.info("adminModal2 ===> "+adminModal2);
 		return adminModal2;
 	}
 	

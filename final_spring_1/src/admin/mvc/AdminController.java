@@ -63,20 +63,28 @@ public class AdminController extends MultiActionController {
 		String jsondata = g.toJson(adminPage1);
 		AjaxDataPrinter.out(res, "application/json", jsondata);
 	}
-	public ModelAndView getAdminPage2(HttpServletRequest req, HttpServletResponse res) {
+	public void getAdminPage2(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("getAdminPage2 호출 성공");
 		List<Map<String,Object>> adminPage2 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
 		adminPage2=adminLogic.getAdminPage2();
-		ModelAndView mav = new ModelAndView("/admin/admin_page2.jsp");
-		mav.addObject("adminPage2", adminPage2);
-		logger.info("getAdminPage2:"+adminPage2);
-		return mav;
+//		ModelAndView mav = new ModelAndView("/admin/admin_page2.jsp");
+//		mav.addObject("adminPage2", adminPage2);
+//		logger.info("getAdminPage2:"+adminPage2);
+//		return mav;
+		Gson g = new Gson();
+		String jsondata = g.toJson(adminPage2);
+		AjaxDataPrinter.out(res, "application/json", jsondata);
 	}
 	
 	public ModelAndView getAdminModal1(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("getAdminModal1 호출 성공");
 		List<Map<String,Object>> adminModal1 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
-		adminModal1=adminLogic.getAdminModal1();
+		Map<String, Object> pmap = new HashMap<String, Object>(); //request 객체에 담긴 정보(키-값쌍)를 map으로 옮겨담자.
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pmap);
+		logger.info("mem_email ===> "+pmap.get("mem_email"));
+		adminModal1=adminLogic.getAdminModal1(pmap);
+		logger.info("adminModal1 ===> "+adminModal1);
 		ModelAndView mav = new ModelAndView("/admin/admin_modal1.jsp");
 		mav.addObject("adminModal1", adminModal1);
 		logger.info("getAdminModal1:"+adminModal1);
@@ -85,7 +93,12 @@ public class AdminController extends MultiActionController {
 	public ModelAndView getAdminModal2(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("getAdminModal2 호출 성공");
 		List<Map<String,Object>> adminModal2 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
-		adminModal2=adminLogic.getAdminModal2();
+		Map<String, Object> pmap = new HashMap<String, Object>(); //request 객체에 담긴 정보(키-값쌍)를 map으로 옮겨담자.
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pmap);
+		logger.info("bm_no ===> "+pmap.get("bm_no"));
+		adminModal2=adminLogic.getAdminModal2(pmap);
+		logger.info("adminModal2 ===> "+adminModal2);
 		ModelAndView mav = new ModelAndView("/admin/admin_modal2.jsp");
 		mav.addObject("adminModal2", adminModal2);
 		logger.info("getAdminModal2:"+adminModal2);
@@ -156,7 +169,7 @@ public class AdminController extends MultiActionController {
 		// logger.info("result" + searchMember);
 	}
 
-	// http://localhost:4444/admin/selectBoardBySearch.nds?nick_title_type=%EC%A0%9C%EB%AA%A9&pr_search=%EB%93%9C
+	// http://localhost:9696/admin/selectBoardBySearch.nds?nick_title_type=%EC%A0%9C%EB%AA%A9&pr_search=%EB%93%9C
 	/////////////////////////////////////////★//////////////////////////////////////////////
 	// 게시글 검색
 	// 게시글 제목 또는 작성자로 검색

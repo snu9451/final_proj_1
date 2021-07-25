@@ -8,7 +8,7 @@ $(document).ready(function(){
 		alert(mem_email+', '+mem_pw+', '+isSavedIdChecked+', '+isAutoLoginChecked);
 		let dt = "mem_email="+mem_email+"&mem_pw="+mem_pw+"&isSavedIdChecked="+isSavedIdChecked+"&isAutoLoginChecked="+isAutoLoginChecked;
 		$.ajax({
-			url: 'http://localhost:4444/member/doLogin.nds',
+			url: 'http://localhost:9696/member/doLogin.nds',
 			data: dt,
 			type: 'post',
 			dataType: 'html',
