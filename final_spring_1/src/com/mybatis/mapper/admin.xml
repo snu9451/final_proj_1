@@ -181,10 +181,10 @@ SELECT mem.mem_create_date,
  </select>
  
  <!-- 회원 신고 -->
-<!--  <select id="proc_mem_board" statementType="CALLABLE" parameterType="java.util.Map">
-  {CALL proc_report_board(#{pr_mem_email, mode=IN, jdbcType=VARCHAR}, #{pr_report_msg, mode=IN, jdbcType=VARCHAR},
+  <select id="proc_mem_board" statementType="CALLABLE" parameterType="java.util.Map">
+  {CALL proc_mem_board(#{pr_mem_email, mode=IN, jdbcType=VARCHAR}, #{pr_report_msg, mode=IN, jdbcType=VARCHAR},
   							  #{pr_mem_nickname_to, mode=IN, jdbcType=VARCHAR}, #{pr_report_type, mode=IN, jdbcType=VARCHAR},
   							  #{pr_img_sys_name, mode=IN, jdbcType=VARCHAR}, #{pr_img_real_name, mode=IN, jdbcType=VARCHAR}, 
   							  #{pr_file_size, mode=IN, jdbcType=INTEGER})}
- </select> -->
+ </select>
 </mapper>
