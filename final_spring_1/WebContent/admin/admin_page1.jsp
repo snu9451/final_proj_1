@@ -83,7 +83,7 @@
                             request has been approved</a> </li> <li> <a href="#" class="more">See all
                             notifications</a> </li> </ul> </li> -->
                             <div>
-                            <button class="admin-logout"> 
+                            <button class="admin-logout" onclick="window.close()"> 
                             <li class="dropdown">
                                     <span style="font-size:20px;color:rgb(131, 122, 111);"><b>관리자&nbsp&nbsp</b></span>
                             </li>
