@@ -22,7 +22,7 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 
 public class NaverLoginApi extends DefaultApi20 {
     private String clientId = "Bq6WFEqxFxsRZeihgw9u";//애플리케이션 클라이언트 아이디값";
-    private String clientSecret = "y_K8JBlN_3";//애플리케이션 클라이언트 시크릿값";
+    private String clientSecret = "6pcd8XqANs";//애플리케이션 클라이언트 시크릿값";
     String redirectURI = null;
 
    private static class InstanceHolder{

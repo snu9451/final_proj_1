@@ -40,10 +40,10 @@
 										class="custom-control-input" id="autoLogin"> <label
 										class="custom-control-label" for="autoLogin">자동로그인</label>
 								</div>
-							</div>;
+							</div>
 						</form>
 						<a id="issueTempPw" href="#" data-toggle="modal"
-							data-target="#tempPW" class="col-12 mb-2">비밀번호를 잊으셨나요??</a>
+							data-target="#tempPW" class="mb-2">비밀번호를 잊으셨나요??</a>
 							     
 	      					<div id="naverIdLogin" align="center">
 							    <a href="http://localhost:9696/member/NaverLogin.nds">

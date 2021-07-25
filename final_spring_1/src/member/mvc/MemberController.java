@@ -747,6 +747,7 @@ public class MemberController extends MultiActionController {
 			}
 			////////////////////////////////////////////////////////////////////////////////
 		}
+	}
 
   	// 네이버로 로그인 시
 	private NaverLoginApi naverloginapi = null;
@@ -765,7 +766,7 @@ public class MemberController extends MultiActionController {
 	 
 
 
-	}
+	
 	// 로그아웃
 	public void doLogout(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
@@ -872,9 +873,9 @@ public class MemberController extends MultiActionController {
 	
 	
 	// =================================================== [[ 페이지 요청 url ]] ===================================================
-	public ModelAndView getMainPage(HttpServletRequest req, HttpServletResponse res) {
-		Map<String,Object> pmap = new HashMap<>();
-		List<Map<String, Object>> rankList = memberLogic.rankList(pmap);
+	public ModelAndView getMainPage(HttpServletRequest req, HttpServletResponse res) throws IOException, ParseException {
+		Map<String,Object> pmap1 = new HashMap<>();
+		List<Map<String, Object>> rankList = memberLogic.rankList(pmap1);
     if(req.getSession().getAttribute("state")!=null&&req.getSession().getAttribute("login")==null) {
 			logger.info("네이버 로그인 시 값 받아오기 시작");
 			//타입을 json으로 바꿔줘야됨

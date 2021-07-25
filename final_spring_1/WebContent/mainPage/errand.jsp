@@ -12,6 +12,16 @@ $(document).ready(function(){
 	    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3));
     });
 });
+function goPopup() {
+	 console.log('sdsddd');
+	 var pop = window.open("../mainPage/jusopopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+}
+function jusoCallBack(roadAddrPart1,addrDetail,roadAddrPart2) {
+	 document.form.roadAddrPart1.value = roadAddrPart1 +" "+addrDetail; // 도로명주소
+// 	 document.form.addrDetail.value = addrDetail; // 고객입력 상세주소
+//  	 document.form.roadAddrPart2.value = roadAddrPart2; // 참고주소
+}
+
 </script>
   <!-- =============================================== ▼ 심부름 모달 ▼ ================================================= -->
   <div class="modal modal-center fade" id="errand_modal" tabindex="-1" role="dialog" aria-labelledby="errand_modal"
@@ -47,14 +57,16 @@ $(document).ready(function(){
               <label for="">심부름 상세 내용 입력</label>
               <textarea type="text" class="form-control" id="errandDetail" placeholder="상세 내용을 입력해주세요."></textarea>
             </div>
+              <form name="form" id="form" method="post">
             <div class="form-inline justify-content-between align-items-center mb-2">
               <label class="col-auto text-center">
                 <i class="fas fa-map-marker-alt mr-1" style="color: rgb(0, 89, 255); font-size: 20px;"></i>
                 현재 나의 위치:
               </label>
-              <input type="text" class="col-6 form-control" id="errandAddr" placeholder="주소를 입력해주세요.">
-              <button type="button" id="searchAddr" class="col-3 btn btn-primary">주소검색</button>
+              	<input type="text" class="col-6 form-control" id="roadAddrPart1" placeholder="주소를 검색해주세요." disabled>
+              <button type="button" id="searchAddr" onclick="javascript:goPopup();" class="col-3 btn btn-primary">주소검색</button>
             </div>
+              </form>
             <div class="form-row justify-content-center mb-1">
               <span class="mr-1"><i class="fas fa-exclamation warn"
                   style="color: red; font-size: 20px; font-weight: bold;"></i></span>

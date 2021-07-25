@@ -1,0 +1,94 @@
+@charset "UTF-8";
+a {
+	color:white;
+}
+strong{
+	color:white;
+}
+/***************************************************/
+/* 이미지 */
+/***************************************************/
+/* 바탕 배경 이미지 최적의 이미지 크기는 468 * 251px */
+.pop-address-search {
+	background-image: url(이용기관사이트 이미지 url);
+/* 	background-image: url('/common/assets/img/mybro_logo.png') no-repeat; */
+}
+/* 회사 로고 이미지 이미지 크기는 149 * 14px */
+.pop-address-search .logo {
+/* 	background: url('/common/assets/img/mybro_logo.png') no-repeat; */
+/* 	background-position: center; */
+	background: none;
+/* 	background-color : #627ea4; */
+}
+.paginate strong {
+    color: #fff;
+    border: 1px solid #FFFFFF;
+    background: burlywood;
+}
+
+/***************************************************/
+/* 배경색상 */
+/***************************************************/
+/* 바탕 배경색상 */
+.pop-address-search {
+	background-color: #627ea4;
+}
+
+/* 검색창 색상 */
+.pop-address-search .pop-address-search-inner .wrap input {
+	background-color: #FFFFFF;
+}
+
+/* 검색버튼 색상 */
+.pop-address-search .pop-address-search-inner .wrap {
+	background-color: #FFFFFF;
+}
+.pop-address-search .pop-address-search-inner .search-wrap {
+	background-color: moccasin;
+}
+/* 본문 배경색(홀수) */
+.pop-address-search .pop-address-search-inner .result table.data-col tbody tr:nth-child(odd) td
+	{
+	background: #FFFFFF
+}
+.pop-address-search .pop-address-search-inner .result .text-guide strong {
+    color: #FFFFFF;
+}
+.pop-address-search .pop-address-search-inner .result .text-guide {
+    text-align: left;
+    color: #FFFFFF;
+}
+.pop-address-search .pop-address-search-inner .result_select {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+}
+/* 본문 배경색(짝수) */
+.pop-address-search .pop-address-search-inner .result table.data-col tbody tr:nth-child(even) td
+	{
+	background: antiquewhite;
+}
+
+/***************************************************/
+/* 글자색상 */
+/***************************************************/
+/* 검색 결과  글자색상 */
+table.data-col {
+	color: #FFFFFF;
+}
+
+table.data-col tbody tr td.subj {
+	color: #333333;
+}
+
+/* 검색창 글자 색상 */
+.pop-address-search .pop-address-search-inner .wrap input {
+	color: #222222;
+}
+.btn-bl {
+    color: #fff;
+    border: 1px solid #FFFFFF;
+    background: burlywood;
+    font-weight:bold;
+}
