@@ -70,7 +70,7 @@
          <span class="total_rec coin2" > 전체 : <span id="allcnt1"></span> </span>
          <table class="errand_tb" id="products">
          <form action="" id="setRows">
-            <input type="hidden" name="rowPerPage" value="8" id="rowPerPage">
+            <input type="hidden" name="rowPerPage" value="6" id="rowPerPage">
          </form>
             <thead>
                <tr>

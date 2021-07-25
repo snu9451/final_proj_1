@@ -120,6 +120,12 @@ public class MemberDao {
 		//result = Integer.parseInt(String.valueOf(pmap.get("result")));
 		return result;
 	}
+	public int selectMyCoin(Map<String, Object> pmap) {
+		int result = 0;
+		result = sqlSessionTemplate.selectOne("selectMyCoin", pmap);
+		logger.info("selectMyCoin dao 호출");
+		return result;
+	}
 
 
 

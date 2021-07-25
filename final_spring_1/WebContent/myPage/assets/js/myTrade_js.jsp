@@ -2,68 +2,71 @@
 pageEncoding="UTF-8"%>
 <script type="text/javascript">
   /* ============================ 페이징처리 함수 시작 ====================================*/
-  var $setRows = $("#setRows");
+  function setPage(){
+		var $setRows = $("#setRows");
 
-  $setRows.submit(function (e) {
-    e.preventDefault();
-    var rowPerPage = $("#rowPerPage").val() * 1;
-    // 1 을  곱하여 문자열을 숫자형로 변환
+  	  $setRows.submit(function (e) {
+  	    e.preventDefault();
+  	    var rowPerPage = $("#rowPerPage").val() * 1;
+  	    // 1 을  곱하여 문자열을 숫자형로 변환
 
-    $("#nav").remove();
-    var $products = $("#products");
+  	    $("#nav").remove();
+  	    var $products = $("#products");
 
-    $products.after('<div id="nav">');
+  	    $products.after('<div id="nav">');
 
-    var $tr = $($products).find("tbody tr");
-    var rowTotals = $tr.length;
+  	    var $tr = $($products).find("tbody tr");
+  	    var rowTotals = $tr.length;
 
-    var pageTotal = Math.ceil(rowTotals / rowPerPage);
-    var i = 0;
+  	    var pageTotal = Math.ceil(rowTotals / rowPerPage);
+  	    var i = 0;
 
-    for (; i < pageTotal; i++) {
-      $('<a href="#"></a>')
-        .attr("rel", i)
-        .html(i + 1)
-        .appendTo("#nav");
-    }
-    $tr.addClass("off-screen").slice(0, rowPerPage).removeClass("off-screen");
+  	    for (; i < pageTotal; i++) {
+  	      $('<a href="#"></a>')
+  	        .attr("rel", i)
+  	        .html(i + 1)
+  	        .appendTo("#nav");
+  	    }
+  	    $tr.addClass("off-screen").slice(0, rowPerPage).removeClass("off-screen");
 
-    var $pagingLink = $("#nav a");
-    $pagingLink.on("click", function (evt) {
-      evt.preventDefault();
-      var $this = $(this);
-      if ($this.hasClass("active")) {
-        return;
-      }
-      $pagingLink.removeClass("active");
-      $this.addClass("active");
-      // 0 => 0(0*4), 4(0*4+4)
-      // 1 => 4(1*4), 8(1*4+4)
-      // 2 => 8(2*4), 12(2*4+4)
-      // 시작 행 = 페이지 번호 * 페이지당 행수
-      // 끝 행 = 시작 행 + 페이지당 행수
+  	    var $pagingLink = $("#nav a");
+  	    $pagingLink.on("click", function (evt) {
+  	      evt.preventDefault();
+  	      var $this = $(this);
+  	      if ($this.hasClass("active")) {
+  	        return;
+  	      }
+  	      $pagingLink.removeClass("active");
+  	      $this.addClass("active");
+  	      // 0 => 0(0*4), 4(0*4+4)
+  	      // 1 => 4(1*4), 8(1*4+4)
+  	      // 2 => 8(2*4), 12(2*4+4)
+  	      // 시작 행 = 페이지 번호 * 페이지당 행수
+  	      // 끝 행 = 시작 행 + 페이지당 행수
 
-      var currPage = $this.attr("rel");
-      var startItem = currPage * rowPerPage;
-      var endItem = startItem + rowPerPage;
-      $tr
-        .css("opacity", "0.0")
-        .addClass("off-screen")
-        .slice(startItem, endItem)
-        .removeClass("off-screen")
-        .animate(
-          {
-            opacity: 1,
-          },
-          300
-        );
-      console.log("5");
-    });
+  	      var currPage = $this.attr("rel");
+  	      var startItem = currPage * rowPerPage;
+  	      var endItem = startItem + rowPerPage;
+  	      $tr
+  	        .css("opacity", "0.0")
+  	        .addClass("off-screen")
+  	        .slice(startItem, endItem)
+  	        .removeClass("off-screen")
+  	        .animate(
+  	          {
+  	            opacity: 1,
+  	          },
+  	          300
+  	        );
+  	      console.log("5");
+  	    });
 
-    $pagingLink.filter(":first").addClass("active");
-  });
+  	    $pagingLink.filter(":first").addClass("active");
+  	  });
 
-  $setRows.submit();
+  	  $setRows.submit();
+	  
+  };
   /* ============================ 페이징처리 함수 끝 ====================================*/
   
   $(document).on('ready',function () {
@@ -123,9 +126,11 @@ pageEncoding="UTF-8"%>
 			  seller_list +="		거래내역이 존재하지 않습니다."
 			  seller_list +="	</h3>"
 			  seller_list +="</div>"
+			  $('.del_thead').hide();
 	          $(".trade_bottom").empty();
 	          $("#forNoRecord").html(seller_list);
         } else{
+        	$('.del_thead').show();
 	        for (i = 0; i < data.length; i++) {
 	        	let status = data[i].BM_STATUS;
 	        	bm_price = data[i].BM_PRICE.toLocaleString();
@@ -165,6 +170,7 @@ pageEncoding="UTF-8"%>
 	        }////////////////////// end of for
         $("#forNoRecord").empty();
         $(".trade_bottom").html(seller_list);
+        
         }
         //페이지구분(판매내역)
         filter = 'sel';
@@ -180,6 +186,10 @@ pageEncoding="UTF-8"%>
   	  	//게시물 개수 보여주기
   	  	$("#itemCount").text("");
   	  	$("#itemCount").text("전체: "+count);
+  	  	
+  	  	
+  	  	
+  	  setPage();
       },
       error: function (e) {
         //@param-XMLHttpRequest
@@ -208,9 +218,12 @@ pageEncoding="UTF-8"%>
 			buyer_list +="		거래내역이 존재하지 않습니다."
 			buyer_list +="	</h3>"
 			buyer_list +="</div>"
+			$('.del_thead').hide();
+			//$("thead").remove( '.del_thead' );
         	$(".trade_bottom").empty();
         	$("#forNoRecord").html(buyer_list);
         } else{
+        	$('.del_thead').show();
 	        for (i = 0; i < data.length; i++) {
 	          bm_price = data[i].BM_PRICE.toLocaleString();
 	          buyer_list += "<tr>";
@@ -240,6 +253,12 @@ pageEncoding="UTF-8"%>
   	  	//게시물 개수 보여주기
   	  	$("#itemCount").text("");
   	  	$("#itemCount").text("전체: "+count);
+  	  	
+  	  	
+  	  	
+  	  	
+  	  setPage();
+  	  	
       },
       error: function (e) {
         //@param-XMLHttpRequest

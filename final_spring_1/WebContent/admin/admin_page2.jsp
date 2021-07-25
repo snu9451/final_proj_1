@@ -82,12 +82,17 @@
 						href="#" class="notification-item"> <span class="dot bg-success"></span>Your
 						request has been approved</a> </li> <li> <a href="#" class="more">See all
 						notifications</a> </li> </ul> </li> -->
-						<li class="dropdown">
-								<span style="font-size:20px;color:rgb(131, 122, 111);"><b>관리자&nbsp&nbsp</b></span>
-						</li>
-						<li class="dropdown">
-							<span style="font-size:20px;color:rgb(131, 122, 111);"><b>로그아웃&nbsp</b></span><i style="font-size:20px;color:rgb(131, 122, 111);" class="fas fa-sign-out-alt"></i>
-						</li>
+                            <div>
+                            <button class="admin-logout" onclick="window.close()" style="background-color: #e9e8d4; border: solid 2px rgb(131, 122, 111); border-radius: 7px;"> 
+                            <li class="dropdown">
+                                    <span style="font-size:20px;color:rgb(131, 122, 111);"><b>관리자&nbsp&nbsp</b></span>
+                            </li>
+                            <li class="dropdown">
+								<span style="font-size:20px;color:rgb(131, 122, 111);"><b>로그아웃&nbsp</b></span><i style="font-size:20px;color:rgb(131, 122, 111);" class="fas fa-sign-out-alt"></i>
+                            </li>
+                            </button>
+                           
+                            </div>
 						<!-- <li> <a class="update-pro"
 						href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro"
 						title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i>

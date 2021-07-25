@@ -12,7 +12,8 @@ response.setDateHeader("Expires",0);
 		String trans_date 		= null;
 		String trans_content 	= null;
 		String trans_price 		= null;
-		String trans_remain 	= null;
+ 		String trans_remain 	= walletRec.get(0).get("TRANS_REMAIN").toString();
+//		int trans_remain 	= Integer.parseInt(walletRec.get("TRANS_REMAIN").toString());
 		String trans_io			= null;
 %>
 <!DOCTYPE html>
@@ -45,7 +46,7 @@ response.setDateHeader("Expires",0);
 			<div class="myinfo_top">
 				<span class="cur_coin">
 					<h4 class="coin">보유 코인 :</h4>
-					<h4 class="coin1" id="remainCoin"><%=coin_remain %></h4>
+					<h4 class="coin1" id="remainCoin"><%=trans_remain %></h4>
 					<h4 class="coin won">원</h4>
 					<button type="button" data-toggle="modal" data-target="#coinCharge" class="h_coin btn btn-outline-warning">충전</button>
 					<button type="button" data-toggle="modal" data-target="#coinWithdraw" class="btn btn-outline-warning">출금</button>
@@ -94,8 +95,8 @@ response.setDateHeader("Expires",0);
 							<td><%=trans_price %>원</td>
 							<td><%=trans_remain %>원</td>
 							<td
-<% if("입금".equals(trans_io)){ %> style="color: blue; font-weight: bold;"
-<% } else if("출금".equals(trans_io)){ %> style="color: red; font-weight: bold;"
+<% if("입금".equals(trans_io)){ %> style="color: red; font-weight: bold;"
+<% } else if("출금".equals(trans_io)){ %> style="color: blue; font-weight: bold;"
 <% } %>
 							><%=trans_io %></td>
 						</tr>
