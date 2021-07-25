@@ -112,6 +112,7 @@ public class ItemLogic {
 		Map<String, Object> remap = (Map<String, Object>) ((List<Map<String, Object>>) map.get("p_temp")).get(0);
 		remap.put("result",map.get("result"));
 		remap.put("COMMENT_ME", 1);
+		remap.put("pr_bm_no", map.get("pr_bm_no"));
 		return remap;
 	}
 	//댓글 or 대댓글 삭제

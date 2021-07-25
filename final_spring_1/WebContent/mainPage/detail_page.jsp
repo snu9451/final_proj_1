@@ -199,12 +199,12 @@
 									<ul class="d-flex align-items-end mb-0">
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_POS").toString())==0){ %>
 										<li>
-											<button class="pd__comment__btn" id="">답글</button>
+											<button class="pd__comment__btn" >답글</button>
 										</li>
 									<% } %>
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_ME").toString())==1){ %>
 										<li>
-											<button class="pd__comment__btn" id="">수정</button>
+											<button class="pd__comment__btn">수정</button>
 										</li>
 										<li>
 											<button class="pd__comment__btn" id="<%= itemComments.get(i).get("COMMENT_STEP") %>" onclick='deleteComment(this)' >삭제</button>
@@ -233,39 +233,6 @@
 							</div>
 						</div>
 								<% } %>
-						<div class="w-100 mt-3" id="comment__box">
-							<div class="d-flex justify-content-between align-items-end" id="">
-								<div>
-									<span id="comment__user__origin">우아한남매들</span> <span
-										id="comment__date">2021-06-26</span> <span id="comment__time">17:25:55</span>
-								</div>
-								<div>
-									<ul class="d-flex align-items-end mb-0">
-										<li>
-											<button class="pd__comment__btn" id="">답글</button>
-										</li>
-										<li>
-											<button class="pd__comment__btn" id="">수정</button>
-										</li>
-										<li>
-											<button class="pd__comment__btn" id="">삭제</button>
-										</li>
-										<li>
-											<button class="pd__comment__btn" id="">
-												유저신고 <i class="fas fa-exclamation warn"
-													style="color: red; font-size: 20px; font-weight: bold;"></i>
-											</button>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div id="comment_txt">
-								<p class="w-100" row="2" readonly>
-								
-								"여기 댓글 내용 들어간당"
-								</p>
-							</div>
-						</div>
 					</div>
 					<div class="mt-3">
 						<form action="">

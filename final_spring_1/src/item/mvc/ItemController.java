@@ -42,25 +42,13 @@ public class ItemController extends MultiActionController {
 		logger.info("controller : selectItemList메소드 호출");
 		//front : key는 "pr_choice" && value는 인기상품 일시 "like_rank"로, 최근상품 일시 "new_rank"
 		Map<String,Object> pmap = new HashMap<>();
-		// 메인페이지에 노출되어야 하므로 좋아요 보여주지 않음 따라서 메일 받지 않음
-//		HttpSession session = req.getSession();
-//		Map<String, Object> login = (Map<String, Object>)session.getAttribute("login");
-//		String mem_email = (String)login.get("MEM_EMAIL");
-//		String mem_email = "pine@good.com"; 	// KEY 테스트
-//		pmap.put("pr_MEM_EMAIL", mem_email);
+		//가져와야하는 아이템 넣기
 		pmap.put("pr_choice",req.getParameter("pr_choice"));
-//		pmap.put("pr_choice","like_rank");	// KEY 테스트
 		//아이템 전부를 가져오는 로직
 		List<Map<String, Object>> items = itemLogic.selectItemList(pmap);
 		ModelAndView mav = new ModelAndView("/itemPage/item_page.jsp");
 		mav.addObject("itemList", items);
 		mav.addObject("pr_choice", req.getParameter("pr_choice"));
-		//Json 형태로 가져오기
-//		Gson g = new Gson();	// KEY
-//		String itemsJson = g.toJson(items);	// KEY
-		//가지고 나가는 key&value => "BM_PRICE": 80000,"BM_NO": 13,"BM_LIKE": 0,"BM_DATE": "2020-06-27 17:46:41","BM_STATUS": "N","BI_FILE": "16.png",BM_TITLE": "책팔요"
-		//                    => "BM_CONTENT": 내용,"CATEGORY_NAME": 기타, "I_LIKE" 1은 좋아요한거, 0은 안한거
-//		AjaxDataPrinter.out(res,"application/json",itemsJson);
 		return mav;
 		
 	}
@@ -84,27 +72,10 @@ public class ItemController extends MultiActionController {
 		logger.info("controller : selectByCategory메소드 호출");
 		//front : key는 "pr_categori" && value는 카테고리이름을 가져오겠지!
 		//한글 처리
-		//HashMapBinder hmb = new HashMapBinder(req);
-		//Map<String,Object> pmap = new HashMap<>();
-		//카테고리 메뉴가 여기에 들어가게 된다.
-		//hmb.bind(pmap);
-		//관련 카테고리 아이템들을 가져온다.
-		//List<Map<String,Object>> items = itemLogic.selectByCategory(pmap);
-		//Json 형태로 가져오기
-		//Gson g = new Gson();
-		//String itemsJson = g.toJson(items);
-		//ModelAndView mav = new ModelAndView();
-		//가지고 나가는 key&value => {BM_PRICE=200000, BM_NO=11, BM_LIKE=0, BM_DATE=2020-06-27 15:46:41, BM_STATUS=N, BI_FILE=14.png, BM_TITLE=의자팝니다}
-		//mav.addObject("items", items);
-		//mav.setViewName("itemTest");
-		//return mav;
-		
-		//한글 처리
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		//카테고리 메뉴 이름이 여기에 들어가게 된다.
 		hmb.bind(pmap);
-//		pmap.put("pr_categori","디지털기기");
 		//관련 카테고리 아이템들을 가져온다.
 		List<Map<String,Object>> items = itemLogic.selectByCategory(pmap);
 		logger.info(pmap);
@@ -112,15 +83,6 @@ public class ItemController extends MultiActionController {
 		ModelAndView mav = new ModelAndView("/itemPage/item_list.jsp");
 		mav.addObject("itemList", items);
 		return mav;
-		//Json 형태로 가져오기
-//		Gson g = new Gson();
-//		String itemsJson = g.toJson(items);
-//		ModelAndView mav = new ModelAndView();
-//		mav.addObject("items", items);
-//		mav.setViewName("/itemTest");
-//		AjaxDataPrinter.out(res, "application/json", itemsJson);
-//		System.out.println(items);
-//		return mav;
 	}
 	
 	//검색어를 입력하여 찾기
@@ -132,18 +94,13 @@ public class ItemController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		//검색어를 가져오게 된다. + 검색 타입을(제목, 내용, 작성자) 가져온다.
-//		pmap.put("pr_MEM_EMAIL", "apple@good.com"); //여기는 원래 세션
 		hmb.bind(pmap);		
-		System.out.println(pmap.get("pr_search"));
 		pmap.put("pr_search", pmap.get("pr_search"));
 		pmap.put("pr_search_order","제목");
 		//검색어 아이템들을 가져온다.
 		logger.info("pmap ===> "+pmap);
 		List<Map<String,Object>> items = itemLogic.selectBySearch(pmap);
 		logger.info(items);
-		//Json 형태로 가져오기
-//		Gson g = new Gson();
-//		String itemsJson = g.toJson(items);
 		//가지고 나가는 key&value => "BM_PRICE": 80000,"BM_NO": 13,"BM_LIKE": 0,"BM_DATE": "2020-06-27 17:46:41","BM_STATUS": "N","BI_FILE": "16.png",BM_TITLE": "책팔요"
 		//                    => "BM_CONTENT": 내용,"CATEGORY_NAME": 기타, "I_LIKE" 1은 좋아요한거, 0은 안한거
 //		AjaxDataPrinter.out(res,"application/json",itemsJson);
@@ -197,63 +154,25 @@ public class ItemController extends MultiActionController {
 	
 	
 	//사용자가 상품 수정 버튼의 수정 완료를 누른다면 상품이 업데이트 되야하니까
-	public ModelAndView updateItem(HttpServletRequest req, HttpServletResponse res) {
+	public void updateItem(HttpServletRequest req, HttpServletResponse res) throws InterruptedException, IOException {
 		logger.info("controller : updateItem메소드 호출");
 		//front : key는 "pr_BM_TITLE" / "pr_BM_CONTENT" / "pr_BM_PRICE" / "pr_bm_no" / "pr_CATEGORY_NAME"
 		//        value는  상품 제목         상품 내용            상품 가격         상품 번호        상품 카테고리
 		//        key는 "Img_1"  / "Img_2"  /  "Img_3"  /  "Img_4"  /  "Img_5"
 		//한글 처리
-		//HashMapBinder hmb = new HashMapBinder(req);
-		//Map<String,Object> pmap = new HashMap<>();
-		//hmb.multiBind(pmap);
-		//ModelAndView mav = new ModelAndView();
-		////사이즈 초과시 에러를 전송시킴
-		//if(pmap.containsKey("error")) {
-		//	System.out.println(pmap.get("error"));
-		//	//페이지 전송
-		//	mav.setViewName("itemTest");
-		//	return mav;
-		//}
-		////상품의 내용, 상품의 사진들을 저장한다.
-		//itemLogic.updateItem(pmap);
-		////페이지 전송
-		//mav.setViewName("itemTest");
-		//return mav;
-		
-		ModelAndView mav = new ModelAndView();
+		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
-		pmap.put("pr_BM_TITLE","내용111" );
-		pmap.put("pr_BM_CONTENT","내용111" );
-		pmap.put("pr_BM_PRICE",2000);
-		pmap.put("pr_SELLER_NICKNAME","바나나" );
-		pmap.put("pr_CATEGORY_NAME","기타" );
-		pmap.put("pr_bm_no",32);
-		List<Map<String,Object>> itemImgs = new ArrayList<Map<String,Object>>();
-		Map<String,Object> map1 = new HashMap<String, Object>();
-		map1.put("bi_file", "23.png");
-		map1.put("bi_size", 23);
-		itemImgs.add(map1);
-		map1 = new HashMap<String, Object>();
-		map1.put("bi_file", "24.png");
-		map1.put("bi_size", 555);
-		itemImgs.add(map1);
-		map1 = new HashMap<String, Object>();
-		map1.put("bi_file", "25.png");
-		map1.put("bi_size", 532);
-		itemImgs.add(map1);
-		pmap.put("itemImgs", itemImgs);
-		//사이즈 초과시 에러를 전송시킴
-		if(pmap.containsKey("error")) {
-			System.out.println(pmap.get("error"));
-			//페이지 전송
-			mav.setViewName("itemTest");
-			return mav;
-		}
+		hmb.multiBind(pmap);
+		ModelAndView mav = new ModelAndView();
+		int bm_no = 0;
+		bm_no = Integer.parseInt(pmap.get("pr_bm_no").toString());
 		//상품의 내용, 상품의 사진들을 저장한다.
-		itemLogic.insertItem(pmap);
-		//페이지 전송
-		mav.setViewName("itemTest");
-		return mav;
+		itemLogic.updateItem(pmap);
+		//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 2초 후 redirect되도록 sleep걸어둠
+		////사이즈 초과시 에러를 전송시킴
+		Thread.sleep(2000);
+		res.sendRedirect("/item/selectItemDetail.nds?pr_bm_no="+bm_no);
+		
 	}
 	
 	//사용자가 하나의 제품을 클릭 시 가져 오게 되는 상품
@@ -379,12 +298,8 @@ public class ItemController extends MultiActionController {
 		pmap.put("pr_MEM_EMAIL","apple@good.com"); //세션에서 원래는 아이디 가져와기
 		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));
 		// like = 1이면 찜하기 된거고, -1이면 찜하기 취소 된 거임, 0이면 로그인 안한 사람.
-		//if(session.getAttribute("pr_MEM_EMAIL")==null) {
-		//	AjaxDataPrinter.out(res, 0);
-		//}else {
-			int like = itemLogic.likeItem(pmap);
-			AjaxDataPrinter.out(res, like);
-		//}
+		int like = itemLogic.likeItem(pmap);
+		AjaxDataPrinter.out(res, like);
 	}
 
 	//댓글 등록 - 댓글인지 대댓글인지 구분
@@ -405,14 +320,87 @@ public class ItemController extends MultiActionController {
 		Map<String,Object> comments = itemLogic.insertComment(pmap);
 		////여기에는 result가 들어가는데 "true"면 댓글이 잘 등록 되었고, "itemFalse"이면 상품이 삭제 되었다는 것으로 댓글이 못 달린다. "noId" 로그인 안했을 시
 		////									            "comentFalse"면 댓글이 삭제 되었다는 것이다.(물론 이 경우는 대댓글 등록일 경우)
-		//Json 형태로 가져오기
-//		Gson g = new Gson();
-//		String itemsJson = g.toJson(comments);
-//		AjaxDataPrinter.out(res,"application/json",itemsJson);
+		System.out.println(comments);
 		ModelAndView mav = new ModelAndView("/itemPage/comment.jsp");
 		mav.addObject("comments", comments);
 		return mav;
 	}
+	
+	//댓글 삭제 - 댓글인지 대댓글인지 구분
+	public void deleteComment(HttpServletRequest req, HttpServletResponse res){
+		logger.info("controller : deleteComment메소드 호출");
+		//front : key는 "p_comment_step" && value는 숫자를 가져오면 된다. (comment_step는 댓글의 시퀀스 번호임)
+		Map<String,Object> pmap = new HashMap<>();
+		//값을 넣어줌
+		pmap.put("pr_comment_step", req.getParameter("p_comment_step"));
+		String result = itemLogic.deleteComment(pmap);
+		//여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
+		//- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
+		AjaxDataPrinter.out(res,result);
+	}
+	
+	//댓글 수정 - 댓글인지 대댓글인지 구분
+	public void updateComment(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("controller : updateComment메소드 호출");
+		//front : key는 "pr_comment_step" && value는 숫자를 가져오면 된다. (comment_step는 댓글의 시퀀스 번호임)
+		//        key는 "pr_comment_msg" && value는 수정한 대화 내용
+		////한글 처리
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.bindPost(pmap);
+		String result = itemLogic.updateComment(pmap);
+		////여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
+		////- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
+		AjaxDataPrinter.out(res,result);
+	
+	}
+
+	
+	//사용자가 상품을 등록 시에
+	public ModelAndView insertItem(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("controller : insertItem메소드 호출");
+		//front : key는 pr_BM_TITLE   /   pr_BM_CONTENT  /  pr_BM_PRICE  /   pr_SELLER_NICKNAME  /  pr_CATEGORY_NAME  
+		//      value는   제목                 내용              가격                닉네임                  카테고리         
+		//        key는 "Img1" "img2" ....
+		ModelAndView mav = new ModelAndView();
+		//한글 처리
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.multiBind(pmap);
+		//사이즈 초과시 에러를 전송시킴
+		if(pmap.containsKey("error")) {
+			System.out.println(pmap.get("error"));
+			//페이지 전송
+			mav.setViewName("itemTest");
+			return mav;
+		}
+		//상품의 내용, 상품의 사진들을 저장한다.
+		itemLogic.insertItem(pmap);
+		//페이지 전송
+		mav.setViewName("itemTest");
+		return mav;
+	}
+	
+	//안드로이드 - 사용자가 상품을 등록 시에
+	public void andInsertItem(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("controller : insertItem메소드 호출");
+		//front : key는 pr_BM_TITLE   /   pr_BM_CONTENT  /  pr_BM_PRICE  /   pr_SELLER_NICKNAME  /  pr_CATEGORY_NAME  
+		//      value는   제목                 내용              가격                닉네임                  카테고리         
+		//        key는 "Img1" "img2" ....
+		//한글 처리
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.bindPost(pmap);
+		System.out.println(pmap.get("pr_CATEGORY_NAME"));
+		//사이즈 초과시 에러를 전송시킴
+		if(pmap.containsKey("error")) {
+			System.out.println(pmap.get("error"));
+		}
+		//상품의 내용, 상품의 사진들을 저장한다.
+		itemLogic.insertItem(pmap);
+	}
+	
+	
 	//안드로이드: 댓글 등록 - 댓글인지 대댓글인지 구분
 	public void andInsertComment(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("controller : insertComment메소드 호출");
@@ -431,19 +419,8 @@ public class ItemController extends MultiActionController {
 		itemLogic.insertComment(pmap);
 	}
 	
-	//댓글 삭제 - 댓글인지 대댓글인지 구분
-	public void deleteComment(HttpServletRequest req, HttpServletResponse res){
-		logger.info("controller : deleteComment메소드 호출");
-		//front : key는 "p_comment_step" && value는 숫자를 가져오면 된다. (comment_step는 댓글의 시퀀스 번호임)
-		Map<String,Object> pmap = new HashMap<>();
-		//값을 넣어줌
-		pmap.put("pr_comment_step", req.getParameter("p_comment_step"));
-		String result = itemLogic.deleteComment(pmap);
-		//여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
-		//- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
-		AjaxDataPrinter.out(res,result);
-	}
-	//댓글 삭제 - 댓글인지 대댓글인지 구분
+	
+	//안드 댓글 삭제 - 댓글인지 대댓글인지 구분
 	public void andDeleteComment(HttpServletRequest req, HttpServletResponse res){
 		logger.info("controller : andDeleteComment메소드 호출");
 		//front : key는 "p_comment_step" && value는 숫자를 가져오면 된다. (comment_step는 댓글의 시퀀스 번호임)
@@ -452,85 +429,6 @@ public class ItemController extends MultiActionController {
 		pmap.put("pr_comment_step", req.getParameter("p_comment_step"));
 		String result = itemLogic.deleteComment(pmap);
 	}
-	
-	
-	//댓글 수정 - 댓글인지 대댓글인지 구분
-	public void updateComment(HttpServletRequest req, HttpServletResponse res) {
-		logger.info("controller : updateComment메소드 호출");
-		//front : key는 "pr_comment_step" && value는 숫자를 가져오면 된다. (comment_step는 댓글의 시퀀스 번호임)
-		//        key는 "pr_comment_msg" && value는 수정한 대화 내용
-		////한글 처리
-		//HashMapBinder hmb = new HashMapBinder(req);
-		//Map<String,Object> pmap = new HashMap<>();
-		//hmb.bind(pmap);
-		//String result = itemLogic.updateComment(pmap);
-		////여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
-		////- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
-		//AjaxDataPrinter.out(res,result);
-		
-		HashMapBinder hmb = new HashMapBinder(req);
-		Map<String,Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
-		pmap.put("pr_comment_step",223);
-		pmap.put("pr_comment_msg","호호로로로로로로로롤");
-		String result = itemLogic.updateComment(pmap);
-		////여기에는 result가 들어가는데 "true"면 댓글이 잘 삭제되고, "false"이면 해당 댓글이 존재하지 않는 다는 것임(상품이 없던가, 댓글이 없는 거겠지) 
-		////- 재로딩 처리해서 없는 페이지면 다시 목록으로, 있는 페이지라면 보여주면 되겠지
-		AjaxDataPrinter.out(res,result);
-
-	}
-
-	
-	//사용자가 상품을 등록 시에
-	public ModelAndView insertItem(HttpServletRequest req, HttpServletResponse res) {
-		logger.info("controller : insertItem메소드 호출");
-		//front : key는 pr_BM_TITLE   /   pr_BM_CONTENT  /  pr_BM_PRICE  /   pr_SELLER_NICKNAME  /  pr_CATEGORY_NAME  
-		//      value는   제목                 내용              가격                닉네임                  카테고리         
-		//        key는 "Img1" "img2" ....
-		//ModelAndView mav = new ModelAndView();
-		////한글 처리
-		//HashMapBinder hmb = new HashMapBinder(req);
-		//Map<String,Object> pmap = new HashMap<>();
-		//hmb.multiBind(pmap);
-		////사이즈 초과시 에러를 전송시킴
-		//if(pmap.containsKey("error")) {
-		//	System.out.println(pmap.get("error"));
-		//	//페이지 전송
-		//	mav.setViewName("itemTest");
-		//	return mav;
-		//}
-		////상품의 내용, 상품의 사진들을 저장한다.
-		//itemLogic.insertItem(pmap);
-		////페이지 전송
-		//mav.setViewName("itemTest");
-		//return mav;
-		
-		ModelAndView mav = new ModelAndView();
-		//한글 처리
-		HashMapBinder hmb = new HashMapBinder(req);
-		Map<String,Object> pmap = new HashMap<>();
-		hmb.multiBind(pmap);
-		pmap.put("pr_BM_TITLE","내용" );
-		pmap.put("pr_BM_CONTENT","내용" );
-		pmap.put("pr_BM_PRICE",3000);
-		pmap.put("pr_SELLER_NICKNAME","바나나" );
-		pmap.put("pr_CATEGORY_NAME","기타" );
-		//사이즈 초과시 에러를 전송시킴
-		if(pmap.containsKey("error")) {
-			System.out.println(pmap.get("error"));
-			//페이지 전송
-			mav.setViewName("itemTest");
-			return mav;
-		}
-		//상품의 내용, 상품의 사진들을 저장한다.
-		itemLogic.insertItem(pmap);
-		//페이지 전송
-		mav.setViewName("itemTest");
-		return mav;
-	}
-	
-	
-	
 	
 	
 	

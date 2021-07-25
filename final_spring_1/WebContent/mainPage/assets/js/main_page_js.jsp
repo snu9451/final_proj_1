@@ -286,7 +286,6 @@ function insertComment(comment){
 	let commentgroup = commentType_No[0]==0 ? 0 : 1;//댓글이면 0, 대댓글이면 댓글의 그룹번호를 가져옴
 // 	let msg = document.querySelector(".form-control").value; //메세지 내용
 	let msg = $('#nds_comment').val();
-	
 	let item = {"pr_comment_pos":commentType_No[0],"pr_comment_group":commentgroup,"pr_comment_msg":msg,"pr_bm_no":commentType_No[1]};
     $.ajax({
     	type: "POST",
@@ -323,9 +322,15 @@ function insertComment(comment){
     });
 };
 
+//대댓글 창 열려있는지 확인
+let commentWindow = 0;
 //대댓글 달기
 function pdCommentBtn(pdComment){
-	console.log("Dfdf");
+	if(commentWindow == 1){
+		alert("답글 창이 이미 열려 있습니다.");
+		return;
+	}
+	commentWindow = 1;
 	let pdCommentform ="";
 	pdCommentform +="					<form action=''>";
 	pdCommentform +="						<div class='input-group'>                                                                                             ";
@@ -334,26 +339,123 @@ function pdCommentBtn(pdComment){
 	pdCommentform +="							</div>                                                                                                            ";
 	pdCommentform +="							<textarea class='form-control' id='nds_comment' aria-label='댓글 작성란'></textarea>                              ";
 	pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
-	pdCommentform +="								<button type='button' class='btn btn-primary' onclick='insertComment(this)'>댓글등록</button>";
+	pdCommentform +="								<button type='button' class='btn btn-primary' onclick='insertCommentTwo(this)' id="+pdComment.id+" style='color:black;'>댓글등록</button>";
+	pdCommentform +="								<button type='button' class='btn btn-primary' onclick='insertCommentNo(this)' style='color:black;'>취소</button>";
 	pdCommentform +="							</div>                                                                                                            ";
 	pdCommentform +="						</div>                                                                                                                ";
 	pdCommentform +="					</form>                                                                                                                   ";
 	pdComment.parentNode.parentNode.parentNode.parentNode.parentNode.innerHTML+=pdCommentform;
 }; 
 
+
+//대댓글 버튼 취소
+function insertCommentNo(pdComment){
+	pdComment.parentNode.parentNode.remove();
+	commentWindow = 0;
+}
+
+//대댓글 작성하기
+function insertCommentTwo(pdComment){
+	let words=pdComment.parentNode.parentNode.parentNode.childNodes[1].childNodes[3].value; //메세지 내용
+	let commentType_No = pdComment.id.split('-');
+	//pdComment.id는 댓글의 번호 - 대댓글은 댓글의 번호를 그룹번호로 사용
+	let item = {"pr_comment_pos":1,"pr_comment_group":commentType_No[0],"pr_comment_msg":words,"pr_bm_no":commentType_No[1]};
+    $.ajax({
+    	type: "POST",
+    	url: "http://localhost:9696/item/insertComment.nds",
+		data: item,
+    	success:function(data){
+    		console.log("Df");
+    		pdComment.parentNode.parentNode.parentNode.parentNode.insertAdjacentHTML('afterend',data);
+    		$('#nds_comment').val("");
+    	},
+    	error:function(e){
+    		alert("에러: "+e.responseText);
+    	}
+    });
+};
+
+//댓글 수정 취소를 누르면 다시 원래 값이 들어가야한다. 그래서 전역변수 처리
+let history;
+//댓글 수정창 열려있는지 확인
+let commentUpdateWindow = 0;
 //댓글 수정
 function pdCommentupdateBtn(pdComment){
-	let history = pdComment.parentNode.parentNode.parentNode.parentNode.nextElementSibling.innerText;
+	let commentNo = pdComment.id.split('-');
+	if(commentUpdateWindow == 1){
+		alert("댓글 수정 중 입니다.");
+		return;
+	}
+	commentUpdateWindow = 1;
+	history = pdComment.parentNode.parentNode.parentNode.parentNode.nextElementSibling.innerText;
 	let pdCommentform ="";
 	pdCommentform +="					<form action=''>";
-	pdCommentform +="							<textarea class='w-100' row='2' readonly>"+history+"</textarea> ";
-	pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
-	pdCommentform +="								<button type='button' class='btn btn-primary' onclick='insertComment(this)'>댓글수정</button>";
+	if(commentNo[1]==1){
+		pdCommentform +="							<textarea class='w-100' row='2' value=''>"+history.substring(7)+"</textarea> ";	
+	}else{
+		pdCommentform +="							<textarea class='w-100' row='2' value=''>"+history+"</textarea> ";
+	}
+		pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
+		pdCommentform +="								<button type='button' class='btn btn-primary' onclick='updateComment(this)' id="+pdComment.id+" style='color:black;'>댓글수정</button>";			
+	pdCommentform +="								<button type='button' class='btn btn-primary' onclick='updateCommentNo(this)' id="+pdComment.id+" style='color:black;'>취소</button>";
 	pdCommentform +="							</div> ";
 	pdCommentform +="					</form>  ";
 	pdComment.parentNode.parentNode.parentNode.parentNode.nextElementSibling.innerHTML=pdCommentform;
 };
 
+//댓글 수정 버튼 취소
+function updateCommentNo(pdComment){
+	let commentNo = pdComment.id.split('-');
+	let pdCommentform;
+	if(commentNo[1]==1){
+		pdCommentform ="<p class='w-100' row='2' readonly>&nbsp&nbsp&nbsp&nbsp&nbsp";
+		pdCommentform +="<i class='fas fa-level-up-alt' style='transform:rotate(90deg);'></i>&nbsp&nbsp"+history.substring(7);
+		pdCommentform +="</p> ";
+	}
+	else{		
+		pdCommentform ="<p class='w-100' row='2' readonly>"+history+"</p> ";
+	}
+	pdComment.parentNode.parentNode.innerHTML=pdCommentform;
+	commentUpdateWindow = 0;
+	pdComment.parentNode.remove();
+}
+
+//댓글 수정 버튼 클릭
+function updateComment(pdComment){
+	let commentNo = pdComment.id.split('-');
+	let updateNum = document.getElementById(pdComment.id);
+	let words = updateNum.parentNode.parentNode.parentNode.parentNode.nextElementSibling.childNodes[1].childNodes[1].value;
+	if(words.length==0){
+		alert("글을 입력해주세요!");
+		return;
+	}
+	let item = {"pr_comment_step":commentNo[0],"pr_comment_msg":words};
+	$.ajax({
+    	type: "POST",
+    	url: "http://localhost:9696/item/updateComment.nds",
+		data: item,
+    	success:function(data){
+			if(data=="true"){
+				if(commentNo[1]==0){
+					let pdCommentform ="<p class='w-100' row='2' readonly>"+words+"</p> ";
+					pdComment.parentNode.parentNode.innerHTML=pdCommentform;
+					commentUpdateWindow = 0;
+				}else{
+					let pdCommentform ="<p class='w-100' row='2' readonly>&nbsp&nbsp&nbsp&nbsp&nbsp";
+					pdCommentform +="<i class='fas fa-level-up-alt' style='transform:rotate(90deg);'></i>&nbsp&nbsp"+words;
+					pdCommentform +="</p> ";
+					pdComment.parentNode.parentNode.innerHTML=pdCommentform;
+					commentUpdateWindow = 0;					
+				}
+			}else{
+				alert("댓글 수정에 실패했습니다.");
+			}
+    	},
+    	error:function(e){
+    		alert("에러: "+e.responseText);
+    	}
+    });
+}
 
 /* ==================================== KEY ======================================== */
 

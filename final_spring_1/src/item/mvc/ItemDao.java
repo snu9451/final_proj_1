@@ -85,6 +85,14 @@ public class ItemDao {
 		}
 		
 	}
+	//상품 삭제 시
+	public void deleteItem(Map<String, Object>  pmap) {
+		logger.info("Dao : deleteItem메소드 호출");
+		//프로시져
+		sqlSessionTemplate.selectOne("proc_board_master_delete",pmap);
+		logger.info("pmap ===> "+pmap);
+	}
+	
 	//상품의 내용만 가져옴 - 사용자가 상품하나를 자세히 볼 때
 	public List<Map<String, Object>> selectItemDetailContext(Map<String, Object> pmap) {
 		logger.info("Dao : selectItemDetailContext메소드 호출");
@@ -105,13 +113,6 @@ public class ItemDao {
 	}
 	
 	
-	//상품 삭제 시
-	public void deleteItem(Map<String, Object>  pmap) {
-		logger.info("Dao : deleteItem메소드 호출");
-		//프로시져
-		sqlSessionTemplate.selectOne("proc_board_master_delete",pmap);
-		logger.info("pmap ===> "+pmap);
-	}
 	//상품 판매 완료 처리 
 	public String updateItemToConfirm(Map<String, Object> pmap) {
 		logger.info("Dao : updateItemToConfirm메소드 호출");

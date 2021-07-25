@@ -197,12 +197,12 @@
 									<ul class="d-flex align-items-end mb-0">
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_POS").toString())==0){ %>
 										<li>
-											<button class="pd__comment__btn" id="">답글</button>
+											<button class="pd__comment__btn"  onclick="pdCommentBtn(this)" id="<%= itemComments.get(i).get("COMMENT_GROUP") %>-<%= BM_NO %>">답글</button>
 										</li>
 									<% } %>
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_ME").toString())==1){ %>
 										<li>
-											<button class="pd__comment__btn" id="">수정</button>
+											<button class="pd__comment__btn" id="<%= itemComments.get(i).get("COMMENT_STEP") %>-<%= itemComments.get(i).get("COMMENT_POS") %>" onclick="pdCommentupdateBtn(this)">수정</button>
 										</li>
 										<li>
 											<button class="pd__comment__btn" id="<%= itemComments.get(i).get("COMMENT_STEP") %>" onclick='deleteComment(this)' >삭제</button>
@@ -221,7 +221,6 @@
 							<div id="comment_txt" style="padding-left: 10px; padding-right: 10px;">
 							<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_POS").toString())==1){ %>
 								<p class="w-100" row="2" readonly>
-<%-- 									&nbsp&nbsp&nbsp<i class="fas fa-angle-double-right"></i> <%= itemComments.get(i).get("COMMENT_MSG") %> --%>
 									&nbsp&nbsp&nbsp&nbsp&nbsp<i class="fas fa-level-up-alt" style="transform:rotate(90deg);"></i>&nbsp&nbsp<%= itemComments.get(i).get("COMMENT_MSG") %>
 								</p>
 							<% } else {%>
