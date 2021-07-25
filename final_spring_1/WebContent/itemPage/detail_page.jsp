@@ -16,7 +16,7 @@
 	int seller_me 		   = itemContext.get("seller_me")!= null ? Integer.parseInt(itemContext.get("seller_me").toString()):0;         //1 이면 판매자와 내가 동일 인물임 0이면 아니고 
 	
 	//신고날짜 받아오기
-	String report_date       = itemContext.get("TO_CHAR(SYSDATE,'YYYY/MM/DDHH24:MI:SS')")!= null ? itemContext.get("TO_CHAR(SYSDATE,'YYYY/MM/DDHH24:MI:SS')").toString():"";     //팔린건지 상품의 상태
+	String report_date       = itemContext.get("TO_CHAR(SYSDATE,'YYYY-MM-DDHH24:MI:SS')")!= null ? itemContext.get("TO_CHAR(SYSDATE,'YYYY-MM-DDHH24:MI:SS')").toString():"";     //팔린건지 상품의 상태
 	//결과값[4.png] 사진
 	List<String> imgs = (List<String>) request.getAttribute("itemImgs");
 	//결과값 댓글 itemComments
@@ -326,9 +326,9 @@ $(document).ready(function(){
 			});
 		}
 		
-		//각 댓글의 회원닉네임을 담을 변수
+/* 		//각 댓글의 회원닉네임을 담을 변수
 		let comment_userNickname;
-		$(".pd__comment__btn").click(function(event){
+ 		$(".pd__comment__btn").click(function(event){
 			//댓글의 회원닉네임
 			comment_userNickname = event.target.parentNode.parentNode.parentNode.previousSibling.previousSibling.childNodes[1].innerText;
 			//회원 신고 모달 show
@@ -337,7 +337,7 @@ $(document).ready(function(){
 			$("#report_user_modal").on('shown.bs.modal', function(){
 				$("#report_bad_user").text(comment_userNickname);
 			})
-		})
+		}) */
 	</script>
 	<!-- <script src="../itemPage/assets/js/main_page2.js"></script> -->
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->

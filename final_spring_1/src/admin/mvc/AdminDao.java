@@ -121,4 +121,10 @@ public class AdminDao {
 		logger.info("boardReport 메소드 호출");
 		sqlSessionTemplate.selectOne("proc_report_board", pmap);
 	}
+
+	public void memReport(Map<String, Object> pmap) {
+		logger.info("memReport 메소드 호출");
+		sqlSessionTemplate.selectOne("proc_mem_board", pmap);
+		
+	}
 }
