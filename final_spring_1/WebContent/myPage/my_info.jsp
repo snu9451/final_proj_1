@@ -13,7 +13,6 @@
 <%@ include file="../myPage/source_h.jsp" %>
 <%@ include file="../myPage/assets/js/myInfo_js.jsp" %>
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->
-
 </head>
 <body>
 

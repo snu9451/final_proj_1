@@ -36,8 +36,15 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		"/mainPage/main_page.nds",
 		"/mainPage/reqJoinView.nds",
 		"/item/selectItemList.nds",
+		"/item/andselectItemList.nds",
+		"/item/andselectBySearch.nds",
 		"/item/selectBySearch.nds",
 		"/item/selectByCategory.nds",
+		"/item/andselectItemDetail.nds",
+		"/item/andDeleteComment.nds",
+		"/item/andInsertComment.nds",
+		"/item/andDeleteItem.nds",
+		"/item/andInsertItem.nds"
 	};
 	
 	@Override
@@ -56,6 +63,9 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 //			logger.info("관리자페이지 요청111111111111111");
 //			return false;
 //		}
+		if(req.getRequestURI().equals("/member/NaverLogin.nds")) {
+			return true;
+		}
 		for(int i=0; i<excludedURIs.length; i++) {
 			if(excludedURIs[i].equals(req.getRequestURI())) {
 				logger.info("비회원도 이용 가능한 페이지 || 예외url 요청입니다.");

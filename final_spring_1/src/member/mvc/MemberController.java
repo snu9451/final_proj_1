@@ -1,11 +1,13 @@
 package member.mvc;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -14,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -21,27 +26,29 @@ import com.google.gson.Gson;
 
 import errand.mvc.ErrandLogic;
 import nds.util.AjaxDataPrinter;
+import nds.util.Converter;
 import nds.util.CookiesMap;
 import nds.util.HashMapBinder;
 import nds.util.Mail;
 import nds.util.SMS;
 
 public class MemberController extends MultiActionController {
-	
+
 	// 스프링에 의해 객체주입을 받을 것이므로, 인스턴스화 하지 않고 null로 선언만 해둠.
 	private MemberLogic memberLogic = null;
 	// 로그 출력을 위함.
 	Logger logger = Logger.getLogger(MemberController.class);
-	
-	
 
-	
-	/*	=======================================================================================
-								Ｍ　Ｅ　Ｔ　Ｈ　Ｏ　Ｄ　　　Ａ　Ｒ　Ｅ　Ａ
-	======================================================================================== */
-	// ===================================== [[ SELECT ]] =====================================
+	/*
+	 * =============================================================================
+	 * ========== Ｍ Ｅ Ｔ Ｈ Ｏ Ｄ Ａ Ｒ Ｅ Ａ
+	 * =============================================================================
+	 * ===========
+	 */
+	// ===================================== [[ SELECT ]]
+	// =====================================
 	// 닉네임 중복 검사
-	public void selectNickName(HttpServletRequest req, HttpServletResponse res)	{	// ♣ 완료
+	public void selectNickName(HttpServletRequest req, HttpServletResponse res) { // ♣ 완료
 		logger.info("selectNickName 메소드 호출 성공!");
 		// 해당 닉네임을 갖는 회원을 조회한다.
 		// request객체로 받아온 정보를 map으로 옮겨 담는 작업
@@ -572,7 +579,7 @@ public class MemberController extends MultiActionController {
 			AjaxDataPrinter.out(res, "text/html", "success");
 		}
 		// 존재하지 않는 이메일이라면
-		else if(result == 0) {
+		else if (result == 0) {
 			logger.info("존재하지 않는 이메일이 입력되었음");
 			// (존재하지 않는 이메일이라) 실패하였음을 Front에 알림(AJAX)
 			AjaxDataPrinter.out(res, "text/html", "fail");
@@ -626,7 +633,7 @@ public class MemberController extends MultiActionController {
 //		String jo = g.toJson("[{\"name\":\"은영\"}]");
 //		AjaxDataPrinter.out(res, "application/json", jo);	// nds.util 패키지에 만들어 둔 공통코드입니다.
 //		logger.info(req.getSession().getAttribute("login"));
-		// mainpage.jsp로 이동해서 Front에서 처리해주면 됨. (mem_email이 req에 있으면 이메일을 화면에 띄워주기) 
+		// mainpage.jsp로 이동해서 Front에서 처리해주면 됨. (mem_email이 req에 있으면 이메일을 화면에 띄워주기)
 //		mav.setViewName("mainpage/mainpage");
 //		return mav;
 	}
@@ -740,129 +747,24 @@ public class MemberController extends MultiActionController {
 			}
 			////////////////////////////////////////////////////////////////////////////////
 		}
-		
-//		// 입력된 사용자의 정보를 가지고 DB에서 조회한다.
-//		Map<String, Object> rmap = new HashMap<String, Object>();
-////		int imsi = memberLogic.selectIsMember(pmap);
-////		logger.info("imsi ===> "+imsi);
-//		rmap = memberLogic.selectMember(pmap);
-//		logger.info(rmap);
-//		// 조회 결과가 없으면 rmap은  null임
-//		if(rmap == null) {
-//			// resultMsg를 전송 (AJAX)
-//			AjaxDataPrinter.out(res, "text/html", "fail");
-//		}
-//		// 로그인 성공 시(해당 email과 pw로 조회한 결과가 row 하나인 경우)
-//		else {
-//			// ================================================= [[ 아이디저장 ]] =================================================
-//			// 아이디 저장에 체크했다면 - isSavedIdChecked(프론트에서 담아줘야 함) == true
-//			isSavedIdChecked = (String)pmap.get("isSavedIdChecked");
-//			if("true".equals(isSavedIdChecked)) {
-//				Cookie cookie = cookies.getCookie(sessionKey);
-//				String sessionValue = cookies.getValue(sessionKey);
-//				logger.info(sessionValue);
-//				// 쿠키에 NDS_SKEY가 있는 경우라면
-//				if(sessionValue!=null) {
-//					logger.info("쿠키에 NDS_SKEY가 있는 경우");
-//					// [DB]에서 이메일과 sessionValue에 해당하는 로우의 유효기간을 갱신하고, 권한을 S로 설정한다. (update)
-//					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-//					pmap.put("mem_sessionid",sessionValue);
-//					pmap.put("a_or_s","S");
-//					logger.info(pmap);
-//					memberLogic.uiToSession(pmap);
-////					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 있는 경우::아이디 저장 처리 결과 ===> "+result);
-////					if(result == 1) { // 처리 결과가 성공이라면
-//						// 쿠키의 유효기간을 갱신한다.
-//						cookie.setMaxAge(60*60*24*30);
-//						cookie.setPath("/");
-//						res.addCookie(cookie);
-//						logger.info("NDS_SKEY값::"+sessionValue);
-////					}
-//				}
-//
-//				// 쿠키에 NDS_SKEY가 없는 경우라면
-//				else {
-//					logger.info("쿠키에 NDS_SKEY가 없는 경우");
-//					// NDS_SKEY를 발급하고, [DB]에 insert한 후, 쿠키에 저장해주어야 한다.
-//					sessionValue = memberLogic.getRandomCode("NUL", 20);	// 대소문자숫자로 구성된 20자리의 랜덤코드 생성
-//					// 이메일과 sessionValue에 해당하는 로우를 insert한다. 권한은 S로 설정한다. (insert)
-//					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-//					pmap.put("mem_sessionid",sessionValue);
-//					pmap.put("a_or_s","S");
-//					logger.info(pmap);
-//					memberLogic.uiToSession(pmap);
-////					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 없는 경우::아이디 저장 처리 결과 ===> "+result);
-////					if(result == 1) {
-//						Cookie cookie_ = new Cookie(sessionKey, sessionValue);
-//						cookie_.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
-//						cookie_.setPath("/");
-//						res.addCookie(cookie_);
-//						logger.info("NDS_SKEY값::"+sessionValue);
-////					}
-//					
-//				}
-//			}
-//			// ================================================= [[ 자동로그인 ]] =================================================
-//			// 자동로그인에 체크했다면 - isAutoLoginChecked(프론트에서 담아줘야 함) == true
-//			isAutoLoginChecked = (String)pmap.get("isAutoLoginChecked");
-//			if("true".equals(isAutoLoginChecked)) {
-//				Cookie cookie = cookies.getCookie(sessionKey);
-//				String sessionValue = cookies.getValue(sessionKey);
-//				// 쿠키에 NDS_SKEY가 있는 경우라면
-//				if(sessionValue!=null) {
-//					logger.info("쿠키에 NDS_SKEY가 있는 경우");
-//					// [DB]에서 이메일과 sessionValue에 해당하는 로우의 유효기간을 갱신하고, 권한을 S로 설정한다. (update)
-//					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-//					pmap.put("mem_sessionid",sessionValue);
-//					pmap.put("a_or_s","A");
-//					logger.info(pmap);
-//					memberLogic.uiToSession(pmap);
-////					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 있는 경우::자동 로그인 처리 결과 ===> "+result);
-////					if(result == 1) { // 처리 결과가 성공이라면
-////						 쿠키의 유효기간을 갱신한다.
-//						cookie.setMaxAge(60*60*24*30);
-//						cookie.setPath("/");
-//						res.addCookie(cookie);
-//						logger.info("NDS_SKEY값::"+sessionValue);
-////					}
-//				}
-//				
-//				// 쿠키에 NDS_SKEY가 없는 경우라면
-//				else {
-//					logger.info("쿠키에 NDS_SKEY가 없는 경우");
-//					// NDS_SKEY를 발급하고, [DB]에 insert한 후, 쿠키에 저장해주어야 한다.
-//					sessionValue = memberLogic.getRandomCode("NUL", 20);	// 20자리의 랜덤코드 생성
-//					// 이메일과 sessionValue에 해당하는 로우를 insert한다. 권한은 S로 설정한다. (insert)
-//					// 해당 이메일로 session 테이블에서 조회한 결과가 1건이면 update, 0건이면 insert ================================= [[ 프로시저1 ]]
-//					logger.info(pmap);
-//					pmap.put("mem_sessionid",sessionValue);
-//					pmap.put("a_or_s","A");
-//					memberLogic.uiToSession(pmap);
-////					logger.info("[1:success/0:fail]쿠키에 NDS_SKEY가 없는 경우::자동 로그인 처리 결과 ===> "+result);
-////					if(result == 1) {
-//						Cookie cookie_ = new Cookie(sessionKey, sessionValue);
-//						cookie_.setMaxAge(60*60*24*30); 	// 초 단위 (한달)
-//						cookie_.setPath("/");
-//						res.addCookie(cookie_);
-//						logger.info("NDS_SKEY값::"+sessionValue);
-////					}
-//					AjaxDataPrinter.out(res, "text/html", (String)rmap.get("MEM_NICKNAME"));
-//				}
-//			}
-//			// 로그인 성공시 공통적으로 처리해 줄 사항; 세션에 사용자정보(MemberVO) 담아주기.
-//			// 참고로, Front에서는 session에 login이 있는지를 체크함으로써 로그인 성공여부를 판단할 수 있음.
-//			// map(rmap)으로 가져온 정보를 VO로 옮겨담기 - 공통코드
-//			MemberVO mvo = new MemberVO();
-//			logger.info("mvo 주소번지: "+mvo);
-//			logger.info(rmap);
-//			Converter.MAPtoVO(rmap, mvo, "mem_email");
-//			Converter.MAPtoVO(rmap, mvo, "mem_nickname");
-//			logger.info(mvo.getMem_email());
-//			HttpSession session = req.getSession();
-//			session.setAttribute("login", mvo);
-//			AjaxDataPrinter.out(res, "text/html", (String)rmap.get("MEM_NICKNAME"));
-//		}
-//
+
+  	// 네이버로 로그인 시
+	private NaverLoginApi naverloginapi = null;
+	public void setNaverLoginApi(NaverLoginApi naverloginapi) {
+		this.naverloginapi = naverloginapi;
+	}
+	
+	 public void naverLogin(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		 logger.info("네이버 로그인");
+		 HashMapBinder hmb = new HashMapBinder(req);
+		 Map<String,String> map = naverloginapi.process(); 
+		 HttpSession session = req.getSession();
+		 session.setAttribute("state", map.get("state"));
+		 res.sendRedirect(map.get("apiURL"));
+	}
+	 
+
+
 	}
 	// 로그아웃
 	public void doLogout(HttpServletRequest req, HttpServletResponse res) {
@@ -936,24 +838,7 @@ public class MemberController extends MultiActionController {
 //		AjaxDataPrinter.out(res, "text/html", "인증번호가 발송되었습니다.");
 		AjaxDataPrinter.out(res, "text/html", randomCode);
 	}
-	// 회원가입 링크 클릭 시
-//	public ModelAndView reqJoinView(HttpServletRequest req, HttpServletResponse res) {	// ♣ 완료
-//		ModelAndView mav = new ModelAndView();
-//		HttpSession session = req.getSession();
-//		// selectEmail.nds 로 발급받은 회원가입 링크로 유효시간 내에 접속 시 세션에 join이라는 속성이 존재한다.
-//		String join = (String)session.getAttribute("join");
-//		if(join == null) {
-//			// 유효하지 않은 접근임을 안내하는 페이지로 이동.
-//			mav.setViewName("/WEB-INF/views/member/invalid.jsp");	////////////////////////////////prefix suffix 설정하면 이 부분 변경해주어야 함.
-//		}
-//		else {
-//			// 메인페이지로 이동함과 동시에 회원가입 모달을 띄워줄 수 있도록 joinForm이라는 신호를 보냄.
-//			mav.addObject("joinForm","on");
-//			// 정상적인 접근. 메인 페이지로 이동.
-//			mav.setViewName("mainpage/main_page");
-//		}
-//		return mav;
-//	}
+
 	// 회원가입 링크 클릭 시
 	public ModelAndView reqJoinView(HttpServletRequest req, HttpServletResponse res) {
 		ModelAndView mav = new ModelAndView();
@@ -990,6 +875,46 @@ public class MemberController extends MultiActionController {
 	public ModelAndView getMainPage(HttpServletRequest req, HttpServletResponse res) {
 		Map<String,Object> pmap = new HashMap<>();
 		List<Map<String, Object>> rankList = memberLogic.rankList(pmap);
+    if(req.getSession().getAttribute("state")!=null&&req.getSession().getAttribute("login")==null) {
+			logger.info("네이버 로그인 시 값 받아오기 시작");
+			//타입을 json으로 바꿔줘야됨
+			res.setContentType("application/json");
+            res.setCharacterEncoding("UTF-8");
+     		String memberinfo = naverloginapi.profile(req);
+     		// String형식인 apiResult를 json형태로 바꿈
+     		JSONParser parser = new JSONParser();
+     		Object obj = parser.parse(memberinfo);
+     		JSONObject jsonObj = (JSONObject) obj;
+     		//데이터 파싱	//Top레벨 단계 _response 파싱
+     		JSONObject response_obj = (JSONObject)jsonObj.get("response");
+     		//{"profile_image":"https:\/\/phinf.pstatic.net\/contact\/20191116_290\/1573879971051S6e5Y_JPEG\/profileImage.jpg","gender":"F",
+     		//"mobile":"010-8970-1255","id":"cYUI2WDjdWe3wCbF2teMfTjPmhuRVeAQ2BHBlcuphmk","age":"20-29","email":"goodlucky1215@naver.com","mobile_e164":"+821089701255"}
+     		System.out.println(response_obj);
+     		//login한 회원의 값담기
+     		Map<String, Object> pmap = new HashMap<String, Object>();
+     		pmap.put("mem_email", response_obj.get("email"));//이메일
+     		//이미 가입된 회원이면 정보만 가져오면 되고, 아직 회원이 아니라면 가입 후 정보를 가져온다.
+     		Map<String, Object> rmap  = null;
+    		rmap = memberLogic.selectEmail(pmap);
+    		if (rmap == null) {
+    			// mem_email, mem_phone, mem_pw, mem_nickname, mem_age, mem_gender
+    			pmap.put("mem_gender", response_obj.get("gender"));//성별
+    			pmap.put("mem_phone", response_obj.get("mobile").toString().replace("-", ""));//전화번호
+    			pmap.put("mem_nickname", response_obj.get("id"));//임시 닉네임
+    			pmap.put("mem_age", response_obj.get("age").toString().substring(0, 2));//나이
+    			pmap.put("mem_pw", ""); //비밀번호는 null처리
+    			pmap.put("issocial", 'T'); //네이버 가입시
+    			memberLogic.insertMember(pmap);
+    		}
+			// 이메일을 이용해서 사용자 정보를 가져오기
+			Map<String, Object> login = new HashMap<String, Object>();
+     		login = memberLogic.selectMemberAdmin(pmap); // selectMemberAdmin을 통하면 회원의 이메일만으로 정보를 모두 조회할 수 있다.
+     		//if(login.get("MEM_NICKNAME").toString().length()>10) login.put("mem_nickname",login.get("mem_nickname").toString().substring(0, 10));
+			// 가져온 사용자 정보를 세션에 담기
+			HttpSession session = req.getSession();
+			session.setAttribute("login", login);
+			System.out.println(login);
+		}
 		ModelAndView mav = new ModelAndView("/mainPage/main_page.jsp");
 		logger.info(rankList);
 		mav.addObject("rankList", rankList);
@@ -1062,9 +987,10 @@ public class MemberController extends MultiActionController {
 	public ModelAndView membertest(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("membertest 메소드 호출 성공!");
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("member/membertest");	// /WEB-INF/views/xxx.jsp
+		mav.setViewName("member/membertest"); // /WEB-INF/views/xxx.jsp
 		return mav;
 	}
+
 	public void ajaxHtml(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("ajaxHtml 메소드 호출 성공!");
 		logger.info("mylist ===> "+(String)req.getAttribute("mylist112"));

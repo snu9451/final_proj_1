@@ -71,7 +71,7 @@ $(document).ready(function(){
 								<% for(int i=0;i<imgs.size();i++){ %>
 									<div class="items " style="position: relative; ">
 									   <img style="width: 100%; height: 100%; opacity: 0.1; border-radius:12px;" src="../itemUpload/assets/img/itemupload/<%= imgs.get(i) %>" alt="" />
-<!-- 									    <div style='font-size: 3.5rem; width: 100%; position: absolute; top: 50%; text-align: center;'> 판매완료 </div> -->
+ 									    <div style='font-size: 3.5rem; width: 100%; position: absolute; top: 50%; text-align: center;'> 판매완료 </div>
 									</div>	
 							<% }}else if("S".equals(BM_STATUS)) { %>
 								<% for(int i=0;i<imgs.size();i++){ %>
@@ -208,13 +208,13 @@ $(document).ready(function(){
 								<div>
 									<ul class="d-flex align-items-end mb-0">
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_POS").toString())==0){ %>
-										 <li>                                                                                                         
-             							    <button class="pd__comment__btn" id="" onclick="pdCommentBtn(this)">답글</button>                                                       
-            							</li> 
+										<li>
+											<button class="pd__comment__btn"  onclick="pdCommentBtn(this)" id="<%= itemComments.get(i).get("COMMENT_GROUP") %>-<%= BM_NO %>">답글</button>
+										</li>
 									<% } %>
 									<% if(Integer.parseInt(itemComments.get(i).get("COMMENT_ME").toString())==1){ %>
 										<li>
-											<button class="pd__comment__btn" id="" onclick="pdCommentupdateBtn(this)">수정</button>      
+											<button class="pd__comment__btn" id="<%= itemComments.get(i).get("COMMENT_STEP") %>-<%= itemComments.get(i).get("COMMENT_POS") %>" onclick="pdCommentupdateBtn(this)">수정</button>
 										</li>
 										<li>
 											<button class="pd__comment__btn" id="<%= itemComments.get(i).get("COMMENT_STEP") %>" onclick='deleteComment(this)' >삭제</button>

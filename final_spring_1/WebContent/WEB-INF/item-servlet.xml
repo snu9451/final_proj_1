@@ -31,28 +31,28 @@
 		<property name="mappings">
 		
 			<props>
-				<prop key="/item/selectItemList.nds">item-controller</prop> <!--  12 -->
-				<prop key="/item/selectByCategory.nds">item-controller</prop>           <!-- 1 UI생기면 할게 -->
-				<prop key="/item/selectBySearch.nds">item-controller</prop><!-- 12  -->
-				<prop key="/item/updateItem.nds">item-controller</prop>                 <!-- 1 -->
-				<prop key="/item/selectItemDetail.nds">item-controller</prop><!--12  -->
-				<prop key="/item/editItem.nds">item-controller</prop>         <!-- 12 -->
-				<prop key="/item/deleteItem.nds">item-controller</prop><!-- 12  -->
-				<prop key="/item/updateItemConfirm.nds">item-controller</prop><!-- 12 -->
-				<prop key="/item/likeItem.nds">item-controller</prop><!-- 12 -->
 				<prop key="/item/selectComment.nds">item-controller</prop>   <!-- 12  -->
-				<prop key="/item/insertComment.nds">item-controller</prop>   <!-- 12  -->
-				<prop key="/item/deleteComment.nds">item-controller</prop>  <!-- 12 -->
-				<prop key="/item/updateComment.nds">item-controller</prop>            <!--  1 -->
-				<prop key="/item/insertItem.nds">item-controller</prop>              <!-- 1  -->
 				<prop key="/item/itemUploadPage.nds">item-controller</prop>
-				<prop key="/item/andInsertItem.nds">item-controller</prop>
-				<prop key="/item/andDeleteComment.nds">item-controller</prop>
-				<prop key="/item/andInsertComment.nds">item-controller</prop>
-				<prop key="/item/andDeleteItem.nds">item-controller</prop>              <!-- 1  -->
+				<prop key="/item/selectItemList.nds">item-controller</prop>
 				<prop key="/item/andselectItemList.nds">item-controller</prop>
+				<prop key="/item/selectByCategory.nds">item-controller</prop> 
+				<prop key="/item/selectBySearch.nds">item-controller</prop>
 				<prop key="/item/andselectBySearch.nds">item-controller</prop>
+				<prop key="/item/updateItem.nds">item-controller</prop>        
+				<prop key="/item/selectItemDetail.nds">item-controller</prop>
 				<prop key="/item/andselectItemDetail.nds">item-controller</prop>
+				<prop key="/item/editItem.nds">item-controller</prop>     <!-- 아이템 삭제랑 아이템 올리는 거랑 좋아요 -->
+				<prop key="/item/deleteItem.nds">item-controller</prop>
+				<prop key="/item/andDeleteItem.nds">item-controller</prop>
+				<prop key="/item/updateItemConfirm.nds">item-controller</prop>
+				<prop key="/item/likeItem.nds">item-controller</prop>
+				<prop key="/item/insertComment.nds">item-controller</prop>
+				<prop key="/item/andInsertComment.nds">item-controller</prop>
+				<prop key="/item/deleteComment.nds">item-controller</prop> 
+				<prop key="/item/andDeleteComment.nds">item-controller</prop>
+				<prop key="/item/updateComment.nds">item-controller</prop>      
+				<prop key="/item/insertItem.nds">item-controller</prop> 
+				<prop key="/item/andInsertItem.nds">item-controller</prop> 
 			</props>
 		</property>
 	</bean>
@@ -75,13 +75,13 @@
 				<prop key="/item/updateComment.nds">updateComment</prop>
 				<prop key="/item/insertItem.nds">insertItem</prop>
 				<prop key="/item/itemUploadPage.nds">itemUploadPage</prop>
-				<prop key="/item/andInsertItem.nds">andInsertItem</prop>
 				<prop key="/item/andDeleteComment.nds">andDeleteComment</prop> 
 				<prop key="/item/andInsertComment.nds">andInsertComment</prop>
 				<prop key="/item/andDeleteItem.nds">andDeleteItem</prop>
 				<prop key="/item/andselectItemDetail.nds">andSelectItemDetail</prop>
 				<prop key="/item/andselectBySearch.nds">andSelectBySearch</prop>
 				<prop key="/item/andselectItemList.nds">andSelectItemList</prop>
+				<prop key="/item/andInsertItem.nds">andInsertItem</prop> 
 			</props>
 		</property>
 	</bean>	
