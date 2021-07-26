@@ -68,6 +68,35 @@
 		</div>
 	</div>
 	<!-- =============================================== ▲ 회원 신고 모달 ▲ ================================================= -->
+	<!-- 회원 신고 성공 -->
+	<div>
+	  <div class="modal fade" id="reportSuccess_mem" tabindex="-1" role="dialog" aria-labelledby="logIn" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered" role="document">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <h3 class="modal-title" id="exampleModalLongTitle" style="font-size : 20px; font-weight:bold">
+	          <i class="fas fa-question-circle" style="color : green"></i> 회원 신고</h3>
+	          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	            <span aria-hidden="true">&times;</span>
+	          </button>
+	        </div>
+	        <div class="modal-body text-center d-flex justify-content-center">
+	          <div class="col-12 log__box d-flex flex-column justify-content-center">
+	            <div>
+		            <div class="col-12 d-flex flex-column">
+		          		<h4 style="font-size : 20px; font-weight:bold">해당 회원이 신고되었습니다.</h4>
+		          		<h4 style="font-size : 15px; color: red; font-weight:bold">(관리자 확인 후 조치 될 예정입니다.)</h4>
+		            </div>
+	            </div>
+	          </div>
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-primary" onclick="location.reload(true)" data-dismiss="modal">닫기</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 <body>
 	<script>
 	$(document).ready(function(){
@@ -93,18 +122,14 @@
 		 	let form = $("#report_content_user")[0];
 			//<form> 안에 name속성을 가진 input 태그들의 value를 담아놓음.
 		 	let formData = new FormData(form);
-			console.log('pr_mem_nickname_to = '+formData.get('pr_mem_nickname_to'));
-			console.log('pr_report_type = '+formData.get('pr_report_type'));
-			console.log('pr_report_msg = '+formData.get('pr_report_msg'));
-			console.log('pr_img_real_name = '+formData.get('pr_img_real_name'));
-/*  		 	$.ajax({ 
+  		 	$.ajax({ 
 		 		url: '/admin/memReport.nds',
 		 		type: 'POST', 
 		 		data: formData, 
 		 		success: function (data) {
 		 			console.log(data);
 		 			$("#report_user_modal").modal('hide');
-		 			//$("#reportSuccess").modal('show');
+		 			$("#reportSuccess_mem").modal('show');
 		 		}, 
 				error: function (data) {
 					alert("내용을 기입해주세요."); 
@@ -112,7 +137,7 @@
 				cache: false, 
 				contentType: false, 
 				processData: false 
-			}); */
+			});
 		})
 	});
 	</script>

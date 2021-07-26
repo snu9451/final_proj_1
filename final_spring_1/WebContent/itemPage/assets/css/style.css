@@ -241,7 +241,7 @@ input[type="checkbox"] {
 }
 
 .input__on-off:checked + .label__on-off {
-  background-color: var(--main-color);
+  background-color: var(--sub-color);
 }
 
 .input__on-off:checked + .label__on-off .on {

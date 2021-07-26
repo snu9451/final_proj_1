@@ -16,6 +16,7 @@
     //심부름 요청자/라이더 전환
     function switchRider() {
       if ($("#switch1").is(":checked")) {
+		$("#header").css("animation","rider_gradient 1s ease-in forwards");
         removeAllMarkers();
         markerContainer = new Map();
         refAreaOffAll("users");
@@ -28,6 +29,7 @@
 //        removeErrand();//심부름 마커 삭제 감시
 //		onSuccessGeolocation();
       } else {
+		$("#header").css("animation","regist_gradient 1s ease-in forwards");
         removeAllMarkers();
 		removeMyLoc();
         markerContainer = new Map();

@@ -10,7 +10,7 @@
 				<!-- 중고거래 상품 갤러리-->
 				<div class="row hidden" id = "itemAll">
 					<div
-						class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0"
+						class="col-lg-4 col-md-4 col-4 d-flex align-items-stretch mt-4 mt-md-0"
 						data-aos="zoom-in" data-aos-delay="200">
 						<!-- 인기상품 아이콘 -->
 						<a class="position-absolute text-decoration-none ml-1" href="#">

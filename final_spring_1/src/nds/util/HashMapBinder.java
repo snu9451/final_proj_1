@@ -45,7 +45,7 @@ public class HashMapBinder {
 	}
 	public HashMapBinder(HttpServletRequest request,String j) {
 		this.request = request;
-		realFolder = "D:\\workspace_final\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\final_spring_1\\admin\\assets\\img";
+		realFolder = "E:\\workspace_final\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\final_spring_1\\admin\\assets\\img";
 		logger.info("admin용 hashmapbinder");
 	}
 	public void profileBind(Map<String,Object> target) {
