@@ -186,9 +186,6 @@ pageEncoding="UTF-8"%>
   	  	//게시물 개수 보여주기
   	  	$("#itemCount").text("");
   	  	$("#itemCount").text("전체: "+count);
-  	  	
-  	  	
-  	  	
   	  setPage();
       },
       error: function (e) {
@@ -253,12 +250,7 @@ pageEncoding="UTF-8"%>
   	  	//게시물 개수 보여주기
   	  	$("#itemCount").text("");
   	  	$("#itemCount").text("전체: "+count);
-  	  	
-  	  	
-  	  	
-  	  	
   	  setPage();
-  	  	
       },
       error: function (e) {
         //@param-XMLHttpRequest

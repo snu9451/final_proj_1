@@ -6,6 +6,8 @@
     let timer = setInterval(createMyMap,100);//0.1초마다 createMyMap 실행
     let riderTimer;//라이더 위치 갱신용 타이머(5초마다)
     let locKey = "";
+	let juso_lat = "";//위도
+	let juso_lng = "";//경도
     $(document).ready(function() {
       getLoc();
       $("#switch1").change(switchRider);
@@ -80,6 +82,7 @@
         +"<span id='errandDetail' style='display:none;' errId="+arr.errandKey+"><br>"
         +arr.errand_content
         +"<br>요청자:"+arr.mem_email
+        +"<br>주소:"+arr.juso
         +"<br>요청시각:"+arr.errand_request_date
         +"</span>";
       errand_registed.classList.add("errand_regist");
@@ -119,6 +122,7 @@
 				console.log(e);
 			}
 		});
+		destModal.find("#errandInfo_addr").text(arr.juso)
 		destModal.find("#errandInfo_item").children("h1").text(arr.errand_item);
 		destModal.find("#errandInfo_mainContent").text(arr.errand_content);
 		destModal.find("#errandInfo_itemPr").text(arr.errand_item_price_req);
@@ -216,8 +220,9 @@
     }
     //심부름을 파이어베이스에 등록
     function insertErrand() {
-      let newErrandKey = refArea.child(myArea).child("errand").push().key;
-      refArea.child(myArea).child("errand").child(newErrandKey).set(
+      let errandArea = lng_rows*Math.floor((lat_st-juso_lat)/lat_50m)+Math.floor((juso_lng-lng_st)/lng_50m);
+      let newErrandKey = refArea.child(errandArea).child("errand").push().key;
+      refArea.child(errandArea).child("errand").child(newErrandKey).set(
           {
             errand_item : $('#errandItem').val(),
             errand_request_date : getTime(),
@@ -227,12 +232,13 @@
                 + $('#errandCost').val() * 1,
             errand_content : $('#errandDetail').val(),
             mem_email : mem_email,
-            errand_lat : my_lat,
-            errand_lng : my_lng,
+            errand_lat : juso_lat,
+            errand_lng : juso_lng,
+            juso : $("#roadAddrPart1").val(),
             rider : "",
             status : 0
       });
-      refArea.child("errand").child(mem_email).update({[newErrandKey] : myArea});
+      refArea.child("errand").child(mem_email).update({[newErrandKey] : errandArea});
       let alertData = {
           content : "심부름이 등록되었습니다.",
           type : "insertErrand",
@@ -268,7 +274,8 @@
 				  	errand_total_price : errandData.errand_total_price,
 		            errand_request_date : errandData.errand_request_date,
 		            mem_email : errandData.mem_email,
-					area_no : area_st
+					area_no : area_st,
+					juso : errandData.juso
 		          };
 		          newErrandMarker(arr);
 		        });

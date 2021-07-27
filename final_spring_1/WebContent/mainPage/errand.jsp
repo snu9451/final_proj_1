@@ -13,14 +13,33 @@ $(document).ready(function(){
     });
 });
 function goPopup() {
-	 console.log('sdsddd');
+	 console.log('도로명주소 팝업');
 	 var pop = window.open("../mainPage/jusopopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
 }
-function jusoCallBack(roadAddrPart1,addrDetail,roadAddrPart2) {
-	 document.form.roadAddrPart1.value = roadAddrPart1 +" "+addrDetail; // 도로명주소
-// 	 document.form.addrDetail.value = addrDetail; // 고객입력 상세주소
-//  	 document.form.roadAddrPart2.value = roadAddrPart2; // 참고주소
+
+function jusoCallBack(roadAddrPart1, roadAddrPart2) {
+	document.form.roadAddrPart1.value = roadAddrPart1; // 도로명주소
+	console.log(roadAddrPart1);
+	console.log(roadAddrPart2);
+	
+
+	$.ajax({
+		type:'get',
+		dataType:'jsonp',
+		//url: 'https://maps.googleapis.com/maps/api/geocode/json?address='+ roadAddrPart1 +" "+addrDetail +'&key=AIzaSyCEmqQ4K57QwvoLwjRVR0Dv19wOkswp2mQ',
+		url: 'https://apis.vworld.kr/new2coord.do?q='+ roadAddrPart1 +'&output=json&epsg=epsg:4326&apiKey=61B185CB-BB1D-30E4-B7BB-28C3DCA2D898',
+		success:function(data){
+			let value = Object.values(data);
+			juso_lat = value[1]*1;
+			juso_lng = value[0]*1;
+			console.log("위도 : " + juso_lat +", 경도 : " + juso_lng);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
 }
+
 
 </script>
   <!-- =============================================== ▼ 심부름 모달 ▼ ================================================= -->
@@ -63,7 +82,7 @@ function jusoCallBack(roadAddrPart1,addrDetail,roadAddrPart2) {
                 <i class="fas fa-map-marker-alt mr-1" style="color: rgb(0, 89, 255); font-size: 20px;"></i>
                 현재 나의 위치:
               </label>
-              	<input type="text" class="col-6 form-control" id="roadAddrPart1" placeholder="주소를 검색해주세요." disabled>
+              	<input type="text" style="font-size: 15px;" class="col-6 form-control" id="roadAddrPart1" placeholder="주소를 검색해주세요." disabled>
               <button type="button" id="searchAddr" onclick="javascript:goPopup();" class="col-3 btn btn-primary">주소검색</button>
             </div>
               </form>

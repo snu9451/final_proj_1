@@ -10,7 +10,7 @@
 	String inputYn = request.getParameter("inputYn"); 
 	String roadAddrPart1 = request.getParameter("roadAddrPart1"); 
 	String roadAddrPart2 = request.getParameter("roadAddrPart2"); 
- 	String addrDetail = request.getParameter("addrDetail"); 
+// 	String addrDetail = request.getParameter("addrDetail"); 
 // 	String roadFullAddr = request.getParameter("roadFullAddr"); 
 // 	String engAddr = request.getParameter("engAddr"); 
 // 	String jibunAddr = request.getParameter("jibunAddr"); 
@@ -44,7 +44,7 @@
  function init() {
 	 var url = location.href;
 	 var confmKey = "devU01TX0FVVEgyMDIxMDcyNTE5NDcyMDExMTQ0OTk=";
-	 var resultType = "3"; // 도로명주소 검색결과 화면 출력내용, 1 : 도로명, 2 : 도로명+지번+상세보기(관련지번, 관할주민센터), 3 : 도로명+상세보기(상세건물명), 4 : 도로명+지번+상세보기(관련지번, 관할주민센터, 상세건물명)
+	 var resultType = "1"; // 도로명주소 검색결과 화면 출력내용, 1 : 도로명, 2 : 도로명+지번+상세보기(관련지번, 관할주민센터), 3 : 도로명+상세보기(상세건물명), 4 : 도로명+지번+상세보기(관련지번, 관할주민센터, 상세건물명)
 	 var inputYn= "<%=inputYn%>";
 	 
 	 if(inputYn != "Y") {
@@ -55,7 +55,7 @@
 	  // document.form.action="https://www.juso.go.kr/addrlink/addrMobileLinkUrl.do"; // 모바일 웹인 경우, 인터넷망
 		 document.form.submit();
 	 } else {
-		 opener.jusoCallBack("<%=roadAddrPart1%>","<%=addrDetail%>","<%=roadAddrPart2%>");
+		 opener.jusoCallBack("<%=roadAddrPart1%>", "<%=roadAddrPart2%>");
  		 window.close();
 	 }
  }
