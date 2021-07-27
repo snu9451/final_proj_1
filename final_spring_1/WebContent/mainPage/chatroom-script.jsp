@@ -174,6 +174,14 @@
 	}
 	//채팅방에 입장했을 때 UI생성
 	function init(){
+		if(roomKey!="null"){
+			firebase.database().ref("chatrooms/users/"+mem_email).update({
+				[roomKey] : true
+			});
+			firebase.database().ref("chatrooms/users/"+dest_email).update({
+				[roomKey] : true
+			});
+		}
 		getChatMsg();
 	}
 	//채팅방 새로 개설
@@ -191,6 +199,12 @@
 				"<%=mem_email%>" : 0,
 				"<%=dest_email%>" : 0
 			}
+		});
+		firebase.database().ref("chatrooms/users/"+mem_email).update({
+			[roomKey] : true
+		});
+		firebase.database().ref("chatrooms/users/"+dest_email).update({
+			[roomKey] : true
 		});
  		init();
 	}

@@ -597,6 +597,12 @@ function starRatingModal(alertKey, dest_email, dest_nickname, dest_img){
 				[dest_email] : 0
 			}
 		});
+		firebase.database().ref("chatrooms/users/"+mem_email).update({
+			[roomKey] : true
+		});
+		firebase.database().ref("chatrooms/users/"+dest_email).update({
+			[roomKey] : true
+		});
 //		init();
 	}
   //수락할 시 status를 1로 설정
