@@ -219,8 +219,8 @@ public class ItemController extends MultiActionController {
 		logger.info("controller : andSelectItemDetail메소드 호출");
 		//front : key는  "pr_bm_no" ,pr_MEM_EMAIL,pr_MEM_NICKNAME / value 값은 상품 번호
 		Map<String,Object> pmap = new HashMap<>();
-		String pr_MEM_EMAIL = "grape@good.com";
-		String pr_MEM_NICKNAME = "포도";
+		String pr_MEM_EMAIL = "banana@good.com";
+		String pr_MEM_NICKNAME = "바나나";
 		//값들을 넣어줌
 		int pr_bm_no = Integer.parseInt(req.getParameter("pr_bm_no").toString());
 		//상품의 내용을 가져온다.
@@ -383,15 +383,15 @@ public class ItemController extends MultiActionController {
 	
 	//안드로이드 - 사용자가 상품을 등록 시에
 	public void andInsertItem(HttpServletRequest req, HttpServletResponse res) {
-		logger.info("controller : insertItem메소드 호출");
+		logger.info("controller : andInsertItem메소드 호출");
 		//front : key는 pr_BM_TITLE   /   pr_BM_CONTENT  /  pr_BM_PRICE  /   pr_SELLER_NICKNAME  /  pr_CATEGORY_NAME  
 		//      value는   제목                 내용              가격                닉네임                  카테고리         
 		//        key는 "Img1" "img2" ....
 		//한글 처리
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
-		hmb.bindPost(pmap);
-		System.out.println(pmap.get("pr_CATEGORY_NAME"));
+		hmb.multiBind(pmap);
+		//System.out.println(pmap.get("file"));
 		//사이즈 초과시 에러를 전송시킴
 		if(pmap.containsKey("error")) {
 			System.out.println(pmap.get("error"));

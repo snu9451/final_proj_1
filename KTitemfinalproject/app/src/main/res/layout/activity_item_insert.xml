@@ -101,28 +101,22 @@
         android:hint="  내용을 입력 해주세요.  "
         android:textSize="15dp"
         />
-<!--    <androidx.recyclerview.widget.RecyclerView
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/insertItemImg"
-        android:layout_marginTop="10dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/imgsitem"
-        app:layout_constraintTop_toBottomOf="@+id/insertItemText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/insertItemImgButton"
-        />-->
-    <ImageView
-        android:id="@+id/insertItemImg"
         android:layout_marginTop="10dp"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        tools:listitem="@layout/imgsitem"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
         app:layout_constraintTop_toBottomOf="@+id/insertItemText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/insertItemImgButton"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:itemCount="5" />
+
     <Button
         android:id="@+id/insertItemImgButton"
         android:layout_width="wrap_content"

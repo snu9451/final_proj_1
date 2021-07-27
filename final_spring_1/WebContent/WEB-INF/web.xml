@@ -13,6 +13,7 @@
 		</param-value>
 	</context-param>
 	
+	
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
@@ -43,5 +44,5 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.nds</url-pattern>
 	</servlet-mapping>
-  
+	
 </web-app>

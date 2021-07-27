@@ -62,6 +62,7 @@ class ItemDetailActivity:AppCompatActivity() {
 
         //인터페이스인 itemService를 가져옴
         itemService = retrofit.create(ItemService::class.java)
+
         //아이템 번호 넘기기, 실패시 1로 넘겨 받기
         itemDetailConnect(intent.getIntExtra("bm_no",1))
 
@@ -164,7 +165,7 @@ class ItemDetailActivity:AppCompatActivity() {
     override fun onOptionsItemSelected(menuBt: MenuItem): Boolean {
         when(menuBt.itemId){
             R.id.delete_myItem->
-                itemDeleteConnect("buy")
+                itemDeleteConnect("sel")
         }
         return super.onOptionsItemSelected(menuBt)
     }
@@ -178,6 +179,8 @@ class ItemDetailActivity:AppCompatActivity() {
                     return
                 }
                 Toast.makeText(applicationContext,"상품 삭제가 완료되었습니다.",Toast.LENGTH_SHORT).show()
+                //finish를 하면 현재 화면이 아예 종료된다.
+                finish()
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

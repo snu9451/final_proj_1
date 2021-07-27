@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.util.xml.DomUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -30,7 +32,8 @@ public class HashMapBinder {
 	public HashMapBinder(HttpServletRequest request) {
 		this.request = request;
 		//realFolder = "D:\\portfolio_kosmo\\lab_spring4\\spring4_1_1\\WebContent\\pds";
-		realFolder = "C:\\final_proj_1\\final_spring_1\\WebContent\\imgg";
+		//realFolder = "C:\\final_proj_1\\final_spring_1\\WebContent\\imgg";
+		realFolder = "C:\\final_proj_1\\final_spring_1\\WebContent\\itemPage\\assets\\img\\board_Img";
 	}
 	public void multiBind(Map<String,Object> target) {
 		try {
@@ -51,6 +54,7 @@ public class HashMapBinder {
 		Enumeration files = multi.getFileNames(); //파일명정보를 배열로 만들다(files에 name들이 담겨있다)
 		while(files.hasMoreElements()){
 		    String name = (String)files.nextElement(); //각각의 파일 name을 String name에 담는다.
+		    System.out.println("dfdfdf====>"+name);
 		    String filename = multi.getFilesystemName(name); //각각의 파일 name을 통해서 파일의 정보를 얻는다.
 		    if(filename!=null) {
 		    	Map<String,Object> map = new HashMap<>();
@@ -70,6 +74,7 @@ public class HashMapBinder {
 		}
 		target.put("itemImgs",imgs);
 	}////////end of bind
+	
 			
 	public void bindPost(Map<String,Object> target) {
 		Enumeration en = request.getParameterNames();//배열 구조체 묶음

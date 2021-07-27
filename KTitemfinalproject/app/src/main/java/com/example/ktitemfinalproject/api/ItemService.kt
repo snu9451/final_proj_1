@@ -2,11 +2,11 @@ package com.example.ktitemfinalproject.api
 
 import com.example.ktitemfinalproject.model.ItemDetailDto
 import com.example.ktitemfinalproject.model.Items
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ItemService {
     //받아오는 주소와 output은 json형태
@@ -30,7 +30,7 @@ interface ItemService {
     ): Call<ItemDetailDto>
 
     //아이템 삭제
-    @POST("/item/andselectItemDetail.nds?")
+    @POST("/item/andDeleteItem.nds")
     fun getItemDeleteByName(
         @Query("pr_bm_no") item_no: Int, //삭제할 물품
         @Query("br_sel_buy") br_sel_buy: String //구매자가 삭제하는지 판매자가 삭제하는지
@@ -51,4 +51,17 @@ interface ItemService {
         @Query("pr_comment_pos") pos: Int,
         @Query("pr_bm_no") bm_no: Int
     ): Call<ResponseBody>
+
+    //아이템 등록 - @Multipart는 이미지리서 , @Headers는 한글 처리
+    @Multipart
+    @POST("/item/andInsertItem.nds")
+    fun getItemInsertByName(
+        @PartMap params: Map<String,@JvmSuppressWildcards RequestBody>,
+        @Part file1: MultipartBody.Part?,
+        @Part file2: MultipartBody.Part?,
+        @Part file3: MultipartBody.Part?,
+        @Part file4: MultipartBody.Part?,
+        @Part file5: MultipartBody.Part?
+    ): Call<ResponseBody>
+
 }

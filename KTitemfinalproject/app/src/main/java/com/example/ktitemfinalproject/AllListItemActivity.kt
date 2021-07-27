@@ -78,6 +78,7 @@ class AllListItemActivity : AppCompatActivity() {
         //아이템 목록 받아옴.
         itemListConnect("like_rank")
 
+        //탭 레이아웃
     }
 
     private fun initItemListRecyclerView(){
@@ -238,5 +239,11 @@ class AllListItemActivity : AppCompatActivity() {
                 }
 
             })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //새로고침 => 삭제나 아이템 추가시
+        startActivity(intent)
     }
 }
