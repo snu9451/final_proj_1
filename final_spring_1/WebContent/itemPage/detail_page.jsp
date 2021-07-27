@@ -221,7 +221,7 @@ $(document).ready(function(){
 										</li>
 									<% } else {%>
 										<li>
-											<button class="pd__comment__btn" id="" data-toggle="modal" data-target="#report_user_modal">
+											<button class="pd__comment__btn" id="" data-toggle="modal" data-target="">
 												회원신고 <i class="fas fa-exclamation warn"
 													style="color: red; font-size: 20px; font-weight: bold;"></i>
 											</button>
@@ -324,6 +324,19 @@ $(document).ready(function(){
 				}
 			});
 		}
+		
+/* 		//각 댓글의 회원닉네임을 담을 변수
+		let comment_userNickname;
+ 		$(".pd__comment__btn").click(function(event){
+			//댓글의 회원닉네임
+			comment_userNickname = event.target.parentNode.parentNode.parentNode.previousSibling.previousSibling.childNodes[1].innerText;
+			//회원 신고 모달 show
+			$("#report_user_modal").modal('show');
+			//회원 신고 모달이 나타났을 때 실행되는 함수
+			$("#report_user_modal").on('shown.bs.modal', function(){
+				$("#report_bad_user").text(comment_userNickname);
+			})
+		}) */
 	</script>
 	<!-- <script src="../itemPage/assets/js/main_page2.js"></script> -->
   <!-- =============================================== ▲ ＳＣＲＩＰＴ ▲ ================================================= -->

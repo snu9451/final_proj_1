@@ -302,7 +302,7 @@ $('#addComment').click(function(){
 		let msg = $('#nds_comment').val();
 		let pr_bm_no = $('#i_bm_no').val();
 		//commentType_No[0]
-		let item = {"pr_comment_pos":commentType_No,
+		let item = {"pr_comment_pos":"0",
 					"pr_comment_group":commentgroup,
 					"pr_comment_msg":msg,
 					"pr_bm_no":pr_bm_no};

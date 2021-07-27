@@ -267,8 +267,41 @@ input[type="checkbox"] {
   z-index: 997;
   padding: 5px 0;
   background-color: var(--sub-color);
+  background: linear-gradient(-45deg, #f79a28, #ffc37b, #7c9ecc, #4a658a);
+  background-size: 400% 400%;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 }
+
+@keyframes rider_gradient {
+	0% {
+		background-position: 0% ;
+	}
+	50% {
+		background-position: 50% ;
+	}
+	75% {
+		background-position: 75% ;
+	}
+	100% {
+		background-position: 100% ;
+	}
+}
+
+@keyframes regist_gradient {
+	0% {
+		background-position: 100% ;
+	}
+	50% {
+		background-position: 75% ;
+	}
+	75% {
+		background-position: 50% ;
+	}
+	100% {
+		background-position: 0% ;
+	}
+}
+
 #active{
   opacity: 1;
   transition: all 0.5s;
@@ -893,6 +926,12 @@ section {
     opacity: 0;
     visibility: hidden;
   }
+}
+
+@media (max-width: 1850px) {
+	#search__rank {
+		visibility: hidden;
+	}
 }
 
 /*--------------------------------------------------------------

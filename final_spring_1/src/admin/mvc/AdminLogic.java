@@ -122,4 +122,10 @@ public class AdminLogic {
 		logger.info("boardReport 메소드 호출");
 		adminDao.boardReport(pmap);
 	}
+
+	public void memReport(Map<String, Object> pmap) {
+		logger.info("memReport 메소드 호출");
+		adminDao.memReport(pmap);
+		
+	}
 }

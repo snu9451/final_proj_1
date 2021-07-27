@@ -246,4 +246,17 @@ public class AdminController extends MultiActionController {
 		logger.info(pmap);
 		adminLogic.boardReport(pmap);
 	}
+	
+	public void memReport(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("memReport 호출 성공");
+		HashMapBinder hmb = new HashMapBinder(req, "j");
+		Map<String, Object> pmap = new HashMap<>();
+		hmb.adminBind(pmap); // 신고된 게시글 번호 담음
+		HttpSession session = req.getSession();
+		Map<String, Object> mvo = (Map<String, Object>)session.getAttribute("login");
+		String mem_email = (String)mvo.get("MEM_EMAIL");
+		pmap.put("pr_mem_email", mem_email);
+		logger.info(pmap);
+		adminLogic.memReport(pmap);
+	}
 }
