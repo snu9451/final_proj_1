@@ -46,7 +46,11 @@ public class AdminDao {
 		return adminModal2;
 	}
 	
-	
+	public List<Map<String, Object>> reportType() {
+		List<Map<String, Object>> reportType = null;
+		reportType = sqlSessionTemplate.selectList("reportType"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		return reportType;
+	}
 	
 	
 	

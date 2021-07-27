@@ -333,7 +333,7 @@
 								+"</td>"
 								+"<td>"+data[i].MEM_CREATE_DATE+"</td>"
 								+"<td>"
-						         +"<a style=\"cursor: pointer;\" onClick=\"window.open('admin_modal1.nds?mem_email="+data[i].MEM_EMAIL+"', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].MEM_EMAIL+"</a>"
+						         +"<a style=\"cursor: pointer;\" onClick=\"window.open('admin_modal1.nds?mem_email="+data[i].MEM_EMAIL+"&reportType=0', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].MEM_EMAIL+"</a>"
 						         +"</td>"
 								+"<td>"+data[i].MEM_NICKNAME+"</td>";
 						if(data[i].MEM_GENDER=="M")
@@ -374,7 +374,7 @@
 								+"</td>"
 								+"<td>"+data[i].MEM_CREATE_DATE+"</td>"
 								+"<td>"
-						         +"<a style=\"cursor: pointer;\" onClick=\"window.open('admin_modal1.nds?mem_email="+data[i].MEM_EMAIL+"', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].MEM_EMAIL+"</a>"
+						         +"<a style=\"cursor: pointer;\" onClick=\"window.open('admin_modal1.nds?mem_email="+data[i].MEM_EMAIL+"&reportType=0', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].MEM_EMAIL+"</a>"
 						         +"</td>"
 								+"<td>"+data[i].MEM_NICKNAME+"</td>";
 						if(data[i].MEM_GENDER=="M")

@@ -126,6 +126,16 @@ public class AdminController extends MultiActionController {
 		 */
 	}
 
+	public void reportType (HttpServletRequest req, HttpServletResponse res) {
+		logger.info("reportType 호출 성공");
+		List<Map<String,Object>> reportType = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
+		reportType=adminLogic.reportType();
+		Gson g = new Gson();
+		String jsondata = g.toJson(reportType);
+		AjaxDataPrinter.out(res, "application/json", jsondata);
+	}
+	
+	
 	// (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 바꾸기)
 	public void initReportNumber(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("initReportNumber 메소드 호출");

@@ -137,6 +137,13 @@ SELECT mem.mem_create_date,
   </if>
  </update>
  
+ <!-- 신고종류선택 -->
+ <select id="reportType" resultType="map" >
+ 	SELECT report_type
+  		FROM report_mem_type
+	 WHERE report_type = #{report_type}
+	 
+ </select> 
 <!-- 회원 검색 --> 
  <select id="proc_member_all_select" parameterType="java.util.Map">
   select mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, mem.mem_age, mem.report_count

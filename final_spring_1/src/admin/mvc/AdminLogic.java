@@ -58,7 +58,11 @@ public class AdminLogic {
 		return adminModal2;
 	}
 	
-	
+	public List<Map<String,Object>> reportType() {
+		List<Map<String,Object>> reportType = null;
+		reportType = adminDao.reportType();
+		return reportType;
+	}
 	
 	
 	
