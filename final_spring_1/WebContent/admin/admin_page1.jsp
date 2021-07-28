@@ -53,7 +53,7 @@
             <!-- NAVBAR -->
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="brand">
-                    <a href="#"><img
+                    <a href="/admin/admin_page1.jsp"><img
                         src="assets/img/mybro_favicon.png"
                         alt="nds Logo"
                         style="width: 120px;"></a>
@@ -110,11 +110,11 @@
                             <h3 style="color: whitesmoke; margin-left: 1vw;">관리자페이지</h3>
 
                             <li>
-                                <a href="admin_page1.nds" class="active">
+                                <a href="admin_page1.jsp" class="active">
                                     <span>회원관리</span></a>
                             </li>
                             <li>
-                                <a href="admin_page2.nds"" class="">
+                                <a href="admin_page2.jsp" class="">
                                     <span>게시글관리</span></a>
                             </li>
                         </ul>
@@ -156,7 +156,7 @@
                                             </form>
                                             <thead>
                                                 <tr>
-                                                    <th style="text-align: center;" width="8%">체크</th>
+                                                    <th style="text-align: center;" width="8%"><input type="checkbox" id="all_select"></th>
                                                     <th style="text-align: center;" width="10%">가입일</th>
                                                     <th style="text-align: center;" width="26%">이메일</th>
                                                     <th style="text-align: center;" width="22%">닉네임</th>
@@ -245,9 +245,6 @@
         <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
         <script src="assets/scripts/klorofil-common.js"></script>
         <script>
-//             getPagination('#products');
-        </script>
-        <script>
         $(document).ready(function(){
         	getReportBoard();
         	$("#reportOnly").off("click").on("click", checkFunc);
@@ -258,29 +255,66 @@
 				$("#reportOnly").removeClass("active");        		
         	}
         	else {
-				getReportOnly();
+				getReportOnlyMem();
 				$("#reportOnly").addClass("active");        		
         	}
         }
+        
+    	$('#all_select').click(function (){
+			if ($("input:checkbox[id='all_select']").prop("checked")){
+				$("input[type=checkbox]").prop("checked",true)
+			}else{
+				$("input[type=checkbox]").prop("checked",false);
+			}
+			console.log("다눌러짐");
+			console.log($('#ckBox0').prop('checked'));
+			console.log($('#ckBox1').prop('checked'));
+			console.log($('#ckBox2').prop('checked'));
+			});
+		
+    	
         	function outMember(){
         		console.log("탈퇴버튼눌렸다~~");
-        		$.ajax({
-        			url: '/admin/outMember.nds',
-         			dataType:'json',
-        			success:function(){
-        				
-//         				let i = 0; 
-						$('#ckBox').prop('checked',true);
-       					 $('#ckBox').is(':checked');
-        				console.log("ll");
-        				
-        				
-        			},
-        			error:function(e){
-						console.log(e);
-					}
-        		});
-        	}	
+				for(let i of $("#reportTable").children("tr"))    {
+				    if($(i).css("display")=="none")
+				        break;
+				    if($(i).find("input").prop("checked")==true) {
+		        		$.ajax({
+		        			url: '/admin/outMember.nds',
+		        			data : { mem_email : $($(i).children("td")[2]).text() },
+		        			success:function(){
+		        				
+		        			},
+		        			error:function(e){
+								console.log(e);
+							}
+		        		});
+				    }
+				}
+				location.reload(true);
+        	}
+// 				arr=[];
+// 				for(let i of $("#reportTable").children("tr"))    {
+// 				    if($(i).css("display")=="none")
+// 				        break;
+// 				    if($(i).find("input").prop("checked")==true) {
+// 				        arr.push($($(i).children("td")[2]).text());
+// 						let	mem_email = arr.shift();
+// 		        		$.ajax({
+// 		        			url: '/admin/outMember.nds',
+// 		        			data : { mem_email : mem_email },
+// 		        			success:function(){
+		        				
+// 		        			},
+// 		        			error:function(e){
+// 								console.log(e);
+// 							}
+// 		        		});
+// 				    }
+// 				}
+//         	}	
+
+	   
        
         function getReportBoard(){
         	console.log("getReportBoard");
@@ -295,11 +329,11 @@
 						let html = 
 							"<tr>"
 								+"<td>"
-								+"<label><input id=\"ckBox"+i+"\" type=\"checkbox\"></label>"
+								+"<label><input id=\"ckBox\" type=\"checkbox\" name=\"ckck\"></label>"
 								+"</td>"
 								+"<td>"+data[i].MEM_CREATE_DATE+"</td>"
 								+"<td>"
-						         +"<a href=\"\" onClick=\"window.open('admin_modal1.nds', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].MEM_EMAIL+"</a>"
+						         +"<a style=\"cursor: pointer;\" onClick=\"window.open('admin_modal1.nds?mem_email="+data[i].MEM_EMAIL+"', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].MEM_EMAIL+"</a>"
 						         +"</td>"
 								+"<td>"+data[i].MEM_NICKNAME+"</td>";
 						if(data[i].MEM_GENDER=="M")
@@ -321,8 +355,8 @@
 	        });
         }
         
-        function getReportOnly(){
-        	console.log("getReportOnly");
+        function getReportOnlyMem(){
+        	console.log("getReportOnlyMem");
 			$.ajax({
 	        	url: '/admin/admin_page1.nds',
 	        	dataType:'json',
@@ -336,11 +370,11 @@
 						let html = 
 							"<tr>"
 								+"<td>"
-								+"<label><input id=\"ckBox"+i+"\" type=\"checkbox\"></label>"
+								+"<label><input id=\"ckBox\" type=\"checkbox\" type=\"checkbox\"></label>"
 								+"</td>"
 								+"<td>"+data[i].MEM_CREATE_DATE+"</td>"
 								+"<td>"
-						         +"<a href=\"\" onClick=\"window.open('admin_modal1.nds', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].MEM_EMAIL+"</a>"
+						         +"<a style=\"cursor: pointer;\" onClick=\"window.open('admin_modal1.nds?mem_email="+data[i].MEM_EMAIL+"', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].MEM_EMAIL+"</a>"
 						         +"</td>"
 								+"<td>"+data[i].MEM_NICKNAME+"</td>";
 						if(data[i].MEM_GENDER=="M")
@@ -363,7 +397,7 @@
 	        });
         }
         
-        
+     
         </script>
     </body>
 

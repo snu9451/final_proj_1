@@ -47,12 +47,7 @@
 	<%@ include file="../admin/paging_js.jsp" %>
 	<script src="https://kit.fontawesome.com/ce3585cab0.js" crossorigin="anonymous"></script>
 </head>
-<style>
-.active{
-	color: #337ab7;
-	opacity: 1;
-}
-</style>
+
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
@@ -87,17 +82,12 @@
 						href="#" class="notification-item"> <span class="dot bg-success"></span>Your
 						request has been approved</a> </li> <li> <a href="#" class="more">See all
 						notifications</a> </li> </ul> </li> -->
-                            <div>
-                            <button class="admin-logout" onclick="window.close()" style="background-color: #e9e8d4; border: solid 2px rgb(131, 122, 111); border-radius: 7px;"> 
-                            <li class="dropdown">
-                                    <span style="font-size:20px;color:rgb(131, 122, 111);"><b>관리자&nbsp&nbsp</b></span>
-                            </li>
-                            <li class="dropdown">
-								<span style="font-size:20px;color:rgb(131, 122, 111);"><b>로그아웃&nbsp</b></span><i style="font-size:20px;color:rgb(131, 122, 111);" class="fas fa-sign-out-alt"></i>
-                            </li>
-                            </button>
-                           
-                            </div>
+						<li class="dropdown">
+								<span style="font-size:20px;color:rgb(131, 122, 111);"><b>관리자&nbsp&nbsp</b></span>
+						</li>
+						<li class="dropdown">
+							<span style="font-size:20px;color:rgb(131, 122, 111);"><b>로그아웃&nbsp</b></span><i style="font-size:20px;color:rgb(131, 122, 111);" class="fas fa-sign-out-alt"></i>
+						</li>
 						<!-- <li> <a class="update-pro"
 						href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro"
 						title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i>
@@ -114,7 +104,7 @@
 							<h3 style="color: whitesmoke; margin-left: 1vw;">관리자페이지</h3> 
 				
 						<li><a href="admin_page1.jsp" class=""> <span>회원관리</span></a></li>
-						<li><a href="admin_page2.jsp" class="active"> <span>게시글관리</span></a></li>
+						<li><a href="admin_page2.nds" class="active"> <span>게시글관리</span></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -145,7 +135,7 @@
 							<!-- BASIC TABLE -->
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title"><label><i id="reportOnly2" class="far fa-check-circle"></i></label> &nbsp신고된 게시글만 보기</h3>
+									<h3 class="panel-title"><label><i class="far fa-check-circle"></i></label> &nbsp신고된 게시글만 보기</h3>
 								</div>
 								<div class="panel-body">
 									<table class="table" id="products">
@@ -158,14 +148,46 @@
 												<th style="text-align: center;" width="8%">글번호</th>
 												<th style="text-align: center;" width="35%">제목</th>
 												<th style="text-align: center;" width="15%">작성자</th>
-												<th style="text-align: center;" width="13%">작성일</th>
+												<th style="text-align: center;" width="10%">작성일</th>
 												<th style="text-align: center;" width="10%">조회수</th>
 												<th style="text-align: center;" width="10%">신고횟수</th>
 											</tr>
 										</thead>
-										<tbody id="reportTable2"style="text-align: center;">
+										<tbody style="text-align: center;">
 											
+												<%for(int i=0; i<adminPage2.size() ; i++){
+          		bm_no = adminPage2.get(i).get("BM_NO").toString();
+          		bm_title = adminPage2.get(i).get("BM_TITLE").toString();
+          		seller_nickname = adminPage2.get(i).get("SELLER_NICKNAME").toString();
+          		bm_date = adminPage2.get(i).get("BM_DATE").toString();
+          		bm_date = bm_date.substring(0,10);
+          		bm_date = bm_date.replace("-",".");
+          		bm_hit = adminPage2.get(i).get("BM_HIT").toString();
+          		report_count = adminPage2.get(i).get("REPORT_COUNT").toString();
+          	
+	%>
 	
+		<tr>
+			<td>
+			<label><input type="checkbox" id="del_target"></label>
+			</td>
+			<td> <%=bm_no %></td>
+			<td>
+	         <a href="" onClick="window.open('admin_modal2.nds', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')"> <%=bm_title%></a>
+	        
+	         </td>
+			<td> <%=seller_nickname %></td>
+			<td> 
+	
+			<%=bm_date%>
+			</td>
+			<td> <%=bm_hit %></td>
+			<td> <%=report_count %></td>
+		</tr>
+	<%
+	}
+	%> 
+											
 										</tbody>
 									</table>
 								</div>
@@ -237,154 +259,16 @@
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
 	<script>
-// 		getPagination('#products');
-
-		  $(document).ready(function(){
-        	getReportBoard2();
-        	$("#reportOnly2").off("click").on("click", checkFunc2);
-        });
-        function checkFunc2(){
-        	if($("#reportOnly2").hasClass("active")) {
-				getReportBoard2();
-				$("#reportOnly2").removeClass("active");        		
-        	}
-        	else {
-				getReportOnlyBoard();
-				$("#reportOnly2").addClass("active");        		
-        	}
-        }
-        
-//     	$('#all_select').click(function (){
-// 			if ($("input:checkbox[id='all_select']").prop("checked")){
-// 				$("input[type=checkbox]").prop("checked",true)
-// 			}else{
-// 				$("input[type=checkbox]").prop("checked",false);
-// 			}
-// 			console.log("다눌러짐");
-// 			console.log($('#ckBox0').prop('checked'));
-// 			console.log($('#ckBox1').prop('checked'));
-// 			console.log($('#ckBox2').prop('checked'));
-// 			});
+		getPagination('#products');
 		
-    	
-//         	function outMember(){
-//         		console.log("탈퇴버튼눌렸다~~");
-// 				for(let i of $("#reportTable").children("tr"))    {
-// 				    if($(i).css("display")=="none")
-// 				        break;
-// 				    if($(i).find("input").prop("checked")==true) {
-// 		        		$.ajax({
-// 		        			url: '/admin/outMember.nds',
-// 		        			data : { mem_email : $($(i).children("td")[2]).text() },
-// 		        			success:function(){
-		        				
-// 		        			},
-// 		        			error:function(e){
-// 								console.log(e);
-// 							}
-// 		        		});
-// 				    }
-// 				}
-// 				location.reload(true);
-//         	}
-        	
-        	
-// 				arr=[];
-// 				for(let i of $("#reportTable").children("tr"))    {
-// 				    if($(i).css("display")=="none")
-// 				        break;
-// 				    if($(i).find("input").prop("checked")==true) {
-// 				        arr.push($($(i).children("td")[2]).text());
-// 						let	mem_email = arr.shift();
-// 		        		$.ajax({
-// 		        			url: '/admin/outMember.nds',
-// 		        			data : { mem_email : mem_email },
-// 		        			success:function(){
-		        				
-// 		        			},
-// 		        			error:function(e){
-// 								console.log(e);
-// 							}
-// 		        		});
-// 				    }
-// 				}
-//         	}	
-
-	   
-       
-        function getReportBoard2(){
-        	console.log("getReportBoard2");
-	        $.ajax({
-	        	url: '/admin/admin_page2.nds',
-	        	dataType:'json',
-				success:function(data){
-					document.querySelector("#reportTable2").innerHTML="";
-					for(let i=0; i<data.length;i++) {
-						data[i].BM_DATE = data[i].BM_DATE.substring(0, 10);
-						data[i].BM_DATE = data[i].BM_DATE.replaceAll("-", ".");
-						let html = 
-							"<tr>"
-								+"<td>"
-								+"<label><input id=\"ckBox\" type=\"checkbox\" name=\"ckck\"></label>"
-								+"</td>"
-								+"<td>"+data[i].BM_NO+"</td>"
-								+"<td>"
-						         +"<a style=\"cursor: pointer;\" onClick=\"window.open('admin_modal2.nds?bm_no="+data[i].BM_NO+"', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].BM_TITLE+"</a>"
-						         +"</td>"
-								+"<td>"+data[i].SELLER_NICKNAME+"</td>"
-								+"<td>"+data[i].BM_DATE+"</td>"
-								+"<td>"+data[i].BM_HIT+"</td>"
-								+"<td>"+data[i].REPORT_COUNT+"</td>"
-							+"</tr>";
-						document.querySelector("#reportTable2").innerHTML+=html;
-					}
-					getPagination('#products');
-					
-				},
-				error:function(e){
-					console.log(e);
-				}
-	        });
-        }
-        
-        function getReportOnlyBoard(){
-        	console.log("getReportOnlyBoard");
-			$.ajax({
-	        	url: '/admin/admin_page2.nds',
-	        	dataType:'json',
-				success:function(data){
-					document.querySelector("#reportTable2").innerHTML="";
-					for(let i=0; i<data.length;i++) {
-						if(data[i].REPORT_COUNT == 0)
-							continue;
-						data[i].BM_DATE = data[i].BM_DATE.substring(0, 10);
-						data[i].BM_DATE = data[i].BM_DATE.replaceAll("-", ".");
-						let html = 
-							"<tr>"
-								+"<td>"
-								+"<label><input id=\"ckBox\" type=\"checkbox\" name=\"ckck\"></label>"
-								+"</td>"
-								+"<td>"+data[i].BM_NO+"</td>"
-								+"<td>"
-						         +"<a style=\"cursor: pointer;\" onClick=\"window.open('admin_modal2.nds?bm_no="+data[i].BM_NO+"', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].BM_TITLE+"</a>"
-						         +"</td>"
-								+"<td>"+data[i].SELLER_NICKNAME+"</td>"
-								+"<td>"+data[i].BM_DATE+"</td>"
-								+"<td>"+data[i].BM_HIT+"</td>"
-								+"<td>"+data[i].REPORT_COUNT+"</td>"
-							+"</tr>";
-						document.querySelector("#reportTable2").innerHTML+=html;
-					}
-					getPagination('#products');
-					
-					
-				},
-				error:function(e){
-					console.log(e);
-				}
-	        });
-        }
 		
+		$('#all_select').click(function (){
+			if ($("input:checkbox[id='all_select']").prop("checked")){
+				$("input[type=checkbox]").prop("checked",true)
+			}else{
+				$("input[type=checkbox]").prop("checked",false);
+			}
+		});
 		
 		
 		
