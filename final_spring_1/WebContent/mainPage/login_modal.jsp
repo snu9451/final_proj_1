@@ -47,7 +47,7 @@
 							     
 	      					<div id="naverIdLogin" align="center">
 							    <a href="http://localhost:9696/member/NaverLogin.nds">
-							        <img src="https://static.nid.naver.com/oauth/big_g.PNG" width="80%" height="60"/> 
+							        <img src="https://static.nid.naver.com/oauth/big_g.PNG" width="70%"/> 
 							    </a>
 							</div>
 					</div>

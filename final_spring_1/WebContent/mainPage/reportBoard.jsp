@@ -116,23 +116,29 @@
 // 	$('#report_content_board').submit();
 //  });
  $("#report_btn").on("click", function (event) { /// event.preventDefault(); 
- 	let form = $('#report_content_board')[0]; 
- 	let formData = new FormData(form); 
- 	$.ajax({ 
- 		url: '/admin/boardReport.nds',
- 		type: 'POST', 
- 		data: formData, 
- 		success: function (data) {
- 			$("#report_board").modal('hide');
- 			$("#reportSuccess").modal('show');
- 		}, 
-		error: function (data) {
-			alert("내용을 기입해주세요."); 
-		}, 
-		cache: false, 
-		contentType: false, 
-		processData: false 
-	});
+ 	let fileCheck = $("#report_file_board").val();
+ 	if(!fileCheck){
+     	alert("내용 기입 및 파일을 첨부해 주세요");
+    	return false;
+ 	} else {
+	 	let form = $('#report_content_board')[0]; 
+	 	let formData = new FormData(form); 
+	 	$.ajax({ 
+	 		url: '/admin/boardReport.nds',
+	 		type: 'POST', 
+	 		data: formData, 
+	 		success: function (data) {
+	 			$("#report_board").modal('hide');
+	 			$("#reportSuccess").modal('show');
+	 		}, 
+			error: function (data) {
+		     	alert("내용 기입 및 파일을 첨부해 주세요");
+			}, 
+			cache: false, 
+			contentType: false, 
+			processData: false 
+		});
+ 	}
  });
 
 

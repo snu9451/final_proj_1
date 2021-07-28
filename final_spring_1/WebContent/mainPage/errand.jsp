@@ -8,7 +8,7 @@ $(document).ready(function(){
         flag2 = $("#errandItemPr").val().length > 0 ? true : false;
   		console.log(flag2);
         flag3 = $("#errandCost").val().length > 3 ? true : false;
-  		console.log(flag2);
+  		console.log(flag3);
 	    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3));
     });
 });
@@ -82,7 +82,7 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
                 <i class="fas fa-map-marker-alt mr-1" style="color: rgb(0, 89, 255); font-size: 20px;"></i>
                 현재 나의 위치:
               </label>
-              	<input type="text" style="font-size: 15px;" class="col-6 form-control" id="roadAddrPart1" placeholder="주소를 검색해주세요." disabled>
+              	<input type="text" style="font-size: 15px;" class="col-6 form-control" id="roadAddrPart1" placeholder="(선택사항) 주소를 검색해주세요." disabled>
               <button type="button" id="searchAddr" onclick="javascript:goPopup();" class="col-3 btn btn-primary">주소검색</button>
             </div>
               </form>
