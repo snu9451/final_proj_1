@@ -1,17 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script>
-$(document).ready(function(){
-    $("#errandItem, #errandItemPr, #errandCost").on("propertychange change keyup paste input", function () {
-        flag1 = $("#errandItem").val().length > 0 ? true : false;
-  		console.log(flag1);
-        flag2 = $("#errandItemPr").val().length > 0 ? true : false;
-  		console.log(flag2);
-        flag3 = $("#errandCost").val().length > 3 ? true : false;
-  		console.log(flag3);
-	    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3));
-    });
-});
+
 function goPopup() {
 	 console.log('도로명주소 팝업');
 	 var pop = window.open("../mainPage/jusopopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
@@ -22,7 +12,6 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
 	console.log(roadAddrPart1);
 	console.log(roadAddrPart2);
 	
-
 	$.ajax({
 		type:'get',
 		dataType:'jsonp',
@@ -39,6 +28,19 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
 		}
 	});
 }
+$(document).ready(function(){
+    $("#errandItem, #errandItemPr, #errandCost, #roadAddrPart1").on("propertychange click change keyup cut copy paste input", function () {
+        flag1 = $("#errandItem").val().length > 0 ? true : false;
+  		console.log(flag1);
+        flag2 = $("#errandItemPr").val().length > 0 ? true : false;
+  		console.log(flag2);
+        flag3 = $("#errandCost").val().length > 3 ? true : false;
+  		console.log(flag3);
+        flag4 = $("#roadAddrPart1").val().length > 0 ? true : false;
+  		console.log(flag4);
+	    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3 && flag4));
+    });
+});
 
 
 </script>
@@ -82,7 +84,7 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
                 <i class="fas fa-map-marker-alt mr-1" style="color: rgb(0, 89, 255); font-size: 20px;"></i>
                 현재 나의 위치:
               </label>
-              	<input type="text" style="font-size: 15px;" class="col-6 form-control" id="roadAddrPart1" placeholder="(선택사항) 주소를 검색해주세요." disabled>
+              	<input type="text" style="font-size: 15px;" class="col-6 form-control" id="roadAddrPart1" placeholder="주소를 검색해주세요." readonly>
               <button type="button" id="searchAddr" onclick="javascript:goPopup();" class="col-3 btn btn-primary">주소검색</button>
             </div>
               </form>

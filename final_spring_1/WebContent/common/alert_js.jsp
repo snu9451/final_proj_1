@@ -3,12 +3,12 @@
     pageEncoding="UTF-8"%>
 <%	
 
-if(session.getAttribute("login") != null){
-	int indexOfDot = mem_email.indexOf(".");
-	if(indexOfDot>=0){
-		mem_email = mem_email.substring(0,indexOfDot);
-	}
-}
+// if(session.getAttribute("login") != null){
+// 	int indexOfDot = mem_email.indexOf(".");
+// 	if(indexOfDot>=0){
+// 		mem_email = mem_email.substring(0,indexOfDot);
+// 	}
+// }
 %>
 <style>
 .outer-star::before, .inner-star::before {
@@ -79,6 +79,8 @@ const lng_en = 132.0;
 const lng_50m = 0.00056
 const lng_rows = Math.ceil((lng_en-lng_st)/lng_50m);
 let mem_email = "<%=mem_email%>";//현재 접속자의 이메일
+if(mem_email!="null")
+	mem_email = mem_email.substr(0,mem_email.lastIndexOf("."));
 let myArea;
 class Stack {
 	  constructor() {
