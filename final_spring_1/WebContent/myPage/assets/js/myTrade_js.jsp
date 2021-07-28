@@ -278,7 +278,13 @@ pageEncoding="UTF-8"%>
 				  url: "/member/deleteTradeRec.nds",
 				  success: function(){
 					  //페이지 새로고침
-					  location.reload();
+					  if(filter == "buy"){
+						  buyAction();
+						  $("#delete").modal('hide');
+					  }	else{
+						  sellAction();
+						  $("#delete").modal('hide');
+					  }
 				  }
 			  });
 		  });
