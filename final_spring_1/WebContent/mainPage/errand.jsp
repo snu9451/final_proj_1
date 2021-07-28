@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <script>
 
+let flag1 = false;
+let flag2 = false;
+let flag3 = false;
+let flag4 = false;
 function goPopup() {
 	 console.log('도로명주소 팝업');
 	 var pop = window.open("../mainPage/jusopopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
@@ -22,6 +26,9 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
 			juso_lat = value[1]*1;
 			juso_lng = value[0]*1;
 			console.log("위도 : " + juso_lat +", 경도 : " + juso_lng);
+			flag4 = true;
+			console.log(flag4);
+		    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3 && flag4));
 		},
 		error:function(e){
 			console.log(e);
@@ -29,16 +36,14 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
 	});
 }
 $(document).ready(function(){
-    $("#errandItem, #errandItemPr, #errandCost, #roadAddrPart1").on("propertychange click change keyup cut copy paste input", function () {
+    $("#errandItem, #errandItemPr, #errandCost").on("propertychange click change keyup cut copy paste input", function () {
         flag1 = $("#errandItem").val().length > 0 ? true : false;
-  		console.log(flag1);
         flag2 = $("#errandItemPr").val().length > 0 ? true : false;
-  		console.log(flag2);
         flag3 = $("#errandCost").val().length > 3 ? true : false;
+  		console.log(flag1);
+  		console.log(flag2);
   		console.log(flag3);
-        flag4 = $("#roadAddrPart1").val().length > 0 ? true : false;
-  		console.log(flag4);
-	    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3 && flag4));
+		console.log(flag4);
     });
 });
 
