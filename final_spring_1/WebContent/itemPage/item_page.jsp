@@ -26,7 +26,7 @@
 		
 %>
 <!-- =================================================================== [[ HTML 영역 시작 ]] ================================================================== -->
-	<div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" style="margin-bottom: 20px;" data-aos="zoom-in" data-aos-delay="50">
+	<div class="col-lg-4 col-md-6 col-12 d-flex align-items-stretch mt-4 mt-md-0" style="margin-bottom: 20px;" data-aos="zoom-in" data-aos-delay="50">
 <%
 	if("like_rank".equals(pr_choice)){
 		if(i<3){

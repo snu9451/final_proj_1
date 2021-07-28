@@ -18,7 +18,7 @@ response.setDateHeader("Expires",0);
 			<i class="icofont-envelope-open"></i><span class="badge badge-danger badge-counter">0</span>
 		</a>
 	</li>
-	<li><a href=""><%=mem_nickname%></a></li>
+	<li><a href="/myPage/my_info.nds"><%=mem_nickname%></a></li>
 	<li><a id="h_itemInsert" style="cursor:pointer;">상품판매</a></li>
 	<li><a data-toggle="modal" data-target="#coinCharge" style="cursor:pointer;">코인충전</a></li>
 	<li><a id="h_myPage" style="cursor:pointer;">마이페이지</a></li>

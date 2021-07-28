@@ -33,14 +33,16 @@ public class AdminDao {
 		adminPage2 = sqlSessionTemplate.selectList("board_select"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
 		return adminPage2;
 	}
-	public List<Map<String, Object>> getAdminModal1() {
+	public List<Map<String, Object>> getAdminModal1(Map<String, Object> pmap) {
 		List<Map<String, Object>> adminModal1 = null;
-		adminModal1 = sqlSessionTemplate.selectList("report_member"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		adminModal1 = sqlSessionTemplate.selectList("report_member", pmap); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		logger.info("adminModal1 ===> "+adminModal1);
 		return adminModal1;
 	}
-	public List<Map<String, Object>> getAdminModal2() {
+	public List<Map<String, Object>> getAdminModal2(Map<String, Object> pmap) {
 		List<Map<String, Object>> adminModal2 = null;
-		adminModal2 = sqlSessionTemplate.selectList("report_board"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		adminModal2 = sqlSessionTemplate.selectList("report_board",pmap); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석.
+		logger.info("adminModal1 ===> "+adminModal2);
 		return adminModal2;
 	}
 	
@@ -120,5 +122,11 @@ public class AdminDao {
 	public void boardReport(Map<String, Object> pmap) {
 		logger.info("boardReport 메소드 호출");
 		sqlSessionTemplate.selectOne("proc_report_board", pmap);
+	}
+
+	public void memReport(Map<String, Object> pmap) {
+		logger.info("memReport 메소드 호출");
+		sqlSessionTemplate.selectOne("proc_mem_board", pmap);
+		
 	}
 }

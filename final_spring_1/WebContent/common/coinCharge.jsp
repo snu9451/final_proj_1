@@ -67,14 +67,16 @@
   </div>
 <script>
 $(document).ready(function(){
-	$.ajax({ 
-	 	url : "/member/selectMyCoin.nds",
-		success : function(data) {
-			$('#curCoin').text(data);
-		},
-		error : function(e){
-		}
-	});
+	if("<%=mem_email%>"!="null") {
+		$.ajax({ 
+		 	url : "/member/selectMyCoin.nds",
+			success : function(data) {
+				$('#curCoin').text(data);
+			},
+			error : function(e){
+			}
+		});
+	}
 });
 </script>
 <!-- =============================================== ▲ 코인 충전 완료 모달 ▲ ================================================= -->
