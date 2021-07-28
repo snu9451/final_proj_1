@@ -36,7 +36,7 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
 	});
 }
 $(document).ready(function(){
-    $("#errandItem, #errandItemPr, #errandCost").on("propertychange click change keyup cut copy paste input", function () {
+    $("#errandItem, #errandItemPr, #errandCost").on("propertychange click change keyup paste input", function () {
         flag1 = $("#errandItem").val().length > 0 ? true : false;
         flag2 = $("#errandItemPr").val().length > 0 ? true : false;
         flag3 = $("#errandCost").val().length > 3 ? true : false;
