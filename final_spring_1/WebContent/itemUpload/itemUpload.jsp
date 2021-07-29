@@ -100,13 +100,14 @@ function insAction(){
                }else {
                 		for(int i = 1 ; i <= 5 ; i++){%>
 		                <div>
-		                  <button type="button" id="delPic<%=i%>" class="btn btn-secondary btn-sm delPic<%=i%>">X</button>
 		                  <input type='file' id="imgInput<%=i%>" accept="image/*" style="display: none;" name="img<%=i%>" />
 		                  <label class="img_add" for="imgInput<%=i%>" >
 		   	            <%  	if(array[i-1] != null){ %> 
+		                  <button type="button" id="delPic<%=i%>" style="visibility:visible" class="btn btn-secondary btn-sm delPic<%=i%>">X</button>
 		                  			<img class="img_upload" id="image_section<%=i%>" src="../itemUpload/assets/img/itemupload/<%=array[i-1] %>"/>
 			           	<% 		}
 		   	            		else{%>
+		                  <button type="button" id="delPic<%=i%>" class="btn btn-secondary btn-sm delPic<%=i%>">X</button>
 		                  			<img class="img_upload" id="image_section<%=i%>" src="../itemUpload/assets/img/itemupload/default.png"/>
 	           			<%  	} %>
 		                  </label>
