@@ -64,6 +64,7 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
           <div class="d-flex flex-column">
             <h3 class="modal-title" id="exampleModalLongTitle">심부름 등록</h3>
             <label>어떤 심부름을 등록하실 건가요?? 상세 정보를 입력해주세요 : )</label>
+            <span style="color: rgb(211, 69, 69); font-weight:bold; font-size: 15px;">(상세 내용을 제외한 모든 항목은 필수 입력 사항입니다.)</span>
           </div>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -84,10 +85,9 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
               <input type="text" class="form-control col-8" id="errandCost"
                 placeholder="심부름 금액은 최소 1,000원부터 입니다 : )"><span class="col-auto">원</span>
             </div>
-            <hr>
-            <div class="form-group">
-              <label for="">심부름 상세 내용 입력</label>
-              <textarea type="text" class="form-control" id="errandDetail" placeholder="상세 내용을 입력해주세요."></textarea>
+            <div class="form-group" style="background-color: aliceblue;">
+              <label style="color: darkgray;" for="">심부름 상세 내용 입력<span style="color: darkgray; font-size: 15px;">&nbsp(선택 사항)</span></label>
+              <textarea style="background-color: aliceblue;" type="text" class="form-control" id="errandDetail" placeholder="상세 내용을 입력해주세요."></textarea>
             </div>
               <form name="form" id="form" method="post">
             <div class="form-inline justify-content-between align-items-center mb-2">
@@ -109,6 +109,7 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
                 </span>
               </small>
             </div>
+            <hr>
             <div class="form-inline justify-content-end align-items-center mb-2">
               <h2 class="col-auto text-center mb-0" style="font-weight: bold;">총금액:</h2>
               <div class="col-9 d-flex justify-content-end align-items-baseline">
