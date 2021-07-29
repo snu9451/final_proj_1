@@ -28,14 +28,14 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
 			console.log("위도 : " + juso_lat +", 경도 : " + juso_lng);
 			flag4 = true;
 			console.log(flag4);
-		    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3 && flag4));
+			vaildCheck();
 		},
 		error:function(e){
 			console.log(e);
 		}
 	});
 }
-$(document).ready(function(){
+$(document).ready(function (){
     $("#errandItem, #errandItemPr, #errandCost").on("propertychange click change keyup paste input", function () {
         flag1 = $("#errandItem").val().length > 0 ? true : false;
         flag2 = $("#errandItemPr").val().length > 0 ? true : false;
@@ -44,8 +44,12 @@ $(document).ready(function(){
   		console.log(flag2);
   		console.log(flag3);
 		console.log(flag4);
+		vaildCheck();
     });
 });
+function vaildCheck(){
+	    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3 && flag4));
+};
 
 
 </script>
