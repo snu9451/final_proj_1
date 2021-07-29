@@ -300,39 +300,44 @@ pageEncoding="UTF-8"%>
       pr_bm_no: pr_bm_no,
     };
     console.log(item);
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:9696/item/insertComment.nds",
-      data: item,
-      success: function (data) {
-        $("#pd__comment__list").append(data);
-        $("#nds_comment").val("");
-        console.log(data);
-        // 	    		if(data['result']=='true') {
-        //댓글이라면
-        // 					if(data['COMMENT_POS']==0){
-        // 						document.querySelector("#pd__comment__list").innerHTML=comment_make(data)+document.querySelector("#pd__comment__list").innerHTML;
-        // 					}
-        // 				//대댓글이라면
-        // 				else{
-        // 					console.log("e대댓글");
-        // 				}
-        // 				document.querySelector(".form-control").value ="";
-        // 	 			}
-        //     		else if(data['result']=="itemFalse") {
-        // 				alert("해당 글이 존재하지 않습니다.");
-        // 			}
-        //     		else if(data['result']=="comentFalse") {
-        // 				alert("댓글이 존재하지 않습니다.");
-        // 			}
-        // 			else{
-        // 				alert("로그인 후 이용가능합니다!");
-        // 			}
-      },
-      error: function (e) {
-        alert("에러: " + e.responseText);
-      },
-    });
+    if(msg == ""){
+    	alert("내용을 입력해주세요.")
+    	return false;
+    }else{
+	    $.ajax({
+	      type: "POST",
+	      url: "http://localhost:9696/item/insertComment.nds",
+	      data: item,
+	      success: function (data) {
+	        $("#pd__comment__list").append(data);
+	        $("#nds_comment").val("");
+	        console.log(data);
+	        // 	    		if(data['result']=='true') {
+	        //댓글이라면
+	        // 					if(data['COMMENT_POS']==0){
+	        // 						document.querySelector("#pd__comment__list").innerHTML=comment_make(data)+document.querySelector("#pd__comment__list").innerHTML;
+	        // 					}
+	        // 				//대댓글이라면
+	        // 				else{
+	        // 					console.log("e대댓글");
+	        // 				}
+	        // 				document.querySelector(".form-control").value ="";
+	        // 	 			}
+	        //     		else if(data['result']=="itemFalse") {
+	        // 				alert("해당 글이 존재하지 않습니다.");
+	        // 			}
+	        //     		else if(data['result']=="comentFalse") {
+	        // 				alert("댓글이 존재하지 않습니다.");
+	        // 			}
+	        // 			else{
+	        // 				alert("로그인 후 이용가능합니다!");
+	        // 			}
+	      },
+	      error: function (e) {
+	        alert("에러: " + e.responseText);
+	      },
+	    });
+    }
   }
 
   /* ==================================== KEY ======================================== */

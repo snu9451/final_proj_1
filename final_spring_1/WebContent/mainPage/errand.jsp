@@ -6,6 +6,24 @@ let flag1 = false;
 let flag2 = false;
 let flag3 = false;
 let flag4 = false;
+
+$(document).ready(function (){
+    $("#errandItem, #errandItemPr, #errandCost").on("propertychange click change keyup paste input", function () {
+        flag1 = $("#errandItem").val().length > 0 ? true : false;
+        flag2 = $("#errandItemPr").val().length > 0 ? true : false;
+        flag3 = $("#errandCost").val().length > 3 ? true : false;
+  		console.log(flag1);
+  		console.log(flag2);
+  		console.log(flag3);
+		console.log(flag4);
+		vaildCheck();
+    });
+});
+
+function vaildCheck(){
+    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3 && flag4));
+}
+
 function goPopup() {
 	 console.log('도로명주소 팝업');
 	 var pop = window.open("../mainPage/jusopopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
@@ -35,22 +53,6 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
 		}
 	});
 }
-$(document).ready(function (){
-    $("#errandItem, #errandItemPr, #errandCost").on("propertychange click change keyup paste input", function () {
-        flag1 = $("#errandItem").val().length > 0 ? true : false;
-        flag2 = $("#errandItemPr").val().length > 0 ? true : false;
-        flag3 = $("#errandCost").val().length > 3 ? true : false;
-  		console.log(flag1);
-  		console.log(flag2);
-  		console.log(flag3);
-		console.log(flag4);
-		vaildCheck();
-    });
-});
-function vaildCheck(){
-	    $("#errandBtn").attr("disabled", !(flag1 && flag2 && flag3 && flag4));
-};
-
 
 </script>
   <!-- =============================================== ▼ 심부름 모달 ▼ ================================================= -->
