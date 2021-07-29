@@ -18,7 +18,11 @@ response.setDateHeader("Expires",0);
 			<i class="icofont-envelope-open"></i><span class="badge badge-danger badge-counter">0</span>
 		</a>
 	</li>
-	<li><a href="/myPage/my_info.nds"><%=mem_nickname%></a></li>
+	<li style="padding: 10px 0 10px 48px !important;">
+		<span><img class="img_upload" id="image_section" 
+			style="vertical-align: middle; width: 50px; height: 50px; border-radius: 50%; border: 2px solid #ffc37b;" 
+			src="../myPage/assets/img/profile/<%=mem_img%>"/></span></li>
+	<li style="padding: 10px 0 10px 5px !important;"><a href="/myPage/my_info.nds"><%=mem_nickname%></a></li>
 	<li><a id="h_itemInsert" style="cursor:pointer;">상품판매</a></li>
 	<li><a data-toggle="modal" data-target="#coinCharge" style="cursor:pointer;">코인충전</a></li>
 	<li><a id="h_myPage" style="cursor:pointer;">마이페이지</a></li>
