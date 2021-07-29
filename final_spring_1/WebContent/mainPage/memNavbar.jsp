@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.*"%>
 <%
+
 response.setHeader("Cache-Control","no-cache");
 response.setHeader("Pragma","no-cache");
 response.setDateHeader("Expires",0);
@@ -19,8 +21,7 @@ response.setDateHeader("Expires",0);
 		</a>
 	</li>
 	<li style="padding: 10px 0 10px 48px !important;">
-		<span><img class="img_upload" id="image_section" 
-			style="vertical-align: middle; width: 50px; height: 50px; border-radius: 50%; border: 2px solid #ffc37b;" 
+		<span><img id="navProfile" style="vertical-align: middle; width: 50px; height: 50px; border-radius: 50%; border: 2px solid #ffc37b;" 
 			src="../myPage/assets/img/profile/<%=mem_img%>"/></span></li>
 	<li style="padding: 10px 0 10px 5px !important;"><a href="/myPage/my_info.nds"><%=mem_nickname%></a></li>
 	<li><a id="h_itemInsert" style="cursor:pointer;">상품판매</a></li>
@@ -40,5 +41,10 @@ $(document).ready(function(){
 	}
 });
 </script>
+<style>
+.active{
+	border: 2px solid #627ea4;
+}
+</style>
 			<!-- 언제나 채팅이 오는 것을 인지할 수 있게 navbar에 채팅방알림 코드 include함 -->
 	<%@ include file="../common/chatAlert.jsp" %>

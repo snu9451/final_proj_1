@@ -116,14 +116,14 @@ function addAction(){
 		type: 'POST', 
 		data: formData, 
 		success: function (data) {
-		$('#imgChangeSuccs').modal('show');
+			$('#imgChangeSuccs').modal('show');
 		}, 
-	error: function (data) {
+		error: function (data) {
 		alert("프로필 사진 변경에 실패하였습니다."); 
-	}, 
-	cache: false, 
-	contentType: false, 
-	processData: false 
+		}, 
+		cache: false, 
+		contentType: false, 
+		processData: false 
 	});
 
 }

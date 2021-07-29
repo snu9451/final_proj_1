@@ -56,7 +56,7 @@ response.setDateHeader("Expires",0);
 		mem_nickname = login.get("MEM_NICKNAME").toString();
 		mem_email = login.get("MEM_EMAIL").toString();
 		mem_star = Double.parseDouble(String.valueOf(login.get("MEM_STAR")));
-		mem_img = String.valueOf(login.get("MEM_IMG"));
+		mem_img = login.get("MEM_IMG").toString();
 		coin_remain = Integer.parseInt(String.valueOf(login.get("COIN_REMAIN")));
 		//mem_nickname = memberMap.get("MEM_NICKNAME").toString();
 		//mem_star = Double.parseDouble(String.valueOf(memberMap.get("MEM_STAR")));
