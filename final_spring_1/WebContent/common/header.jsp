@@ -8,7 +8,7 @@
   <script defer src="../common/init-firebase.js"></script>
 
   <!-- ========================================= ▼ ＨＥＡＤＥＲ ▼ ========================================= -->
-  <header id="header" class="fixed-top d-flex align-items-end">
+  <header id="header" class="fixed-top d-flex align-items-center">
   	<!-- drop down 시작 -->
   	<div class="dropdown">
   		<button class="btn btn-secondary dropdown-toggle" type="button" id="category_drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
