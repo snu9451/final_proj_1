@@ -30,9 +30,9 @@
 		<nav class="nav-menu d-none d-lg-block">
 		<ul>
 <%
-response.setHeader("Cache-Control","no-cache");
-response.setHeader("Pragma","no-cache");
-response.setDateHeader("Expires",0);
+// response.setHeader("Cache-Control","no-cache");
+// response.setHeader("Pragma","no-cache");
+// response.setDateHeader("Expires",0);
 %>
 
 <%
@@ -56,7 +56,7 @@ response.setDateHeader("Expires",0);
 		mem_nickname = login.get("MEM_NICKNAME").toString();
 		mem_email = login.get("MEM_EMAIL").toString();
 		mem_star = Double.parseDouble(String.valueOf(login.get("MEM_STAR")));
-		mem_img = login.get("MEM_IMG").toString();
+		mem_img = String.valueOf(login.get("MEM_IMG"));
 		coin_remain = Integer.parseInt(String.valueOf(login.get("COIN_REMAIN")));
 		//mem_nickname = memberMap.get("MEM_NICKNAME").toString();
 		//mem_star = Double.parseDouble(String.valueOf(memberMap.get("MEM_STAR")));

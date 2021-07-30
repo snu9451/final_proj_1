@@ -23,7 +23,7 @@ $(document).ready(function(){
 		      success: function (data) {
 //	 	    	alert(data+', '+data[0]+', '+data[0].length);
 		        for(let i=0; i<data.length; i++){
-		          $("#category_item").append("<li name=\"menu_item\" class=\"dropdown-item\">" + data[i] + "</li>");
+		          $("#category_item").append("<li style=\"cursor:pointer;\" name=\"menu_item\" class=\"dropdown-item\">" + data[i] + "</li>");
 		        }
 		          $('.dropdown-item').each(function(index){
 		        	$('.dropdown-item').eq(index).on('click', function(data){

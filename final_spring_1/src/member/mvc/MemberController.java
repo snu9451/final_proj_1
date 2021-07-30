@@ -312,6 +312,8 @@ public class MemberController extends MultiActionController {
 		
 		logger.info(pmap);
 		int result = memberLogic.updateMember(pmap);
+		mvo.put("MEM_IMG",pmap.get("change_img"));
+		session.setAttribute("login", mvo);
 		logger.info("프로필 사진 업데이트 결과 ===> "+result);
 //		try {
 //			//메소드 실행 후 서버에 사진이 업로드되기 전에 redirect 되면 사진이 엑박으로 뜸 그래서 1초 후 redirect되도록 sleep걸어둠
