@@ -864,6 +864,29 @@ public class MemberController extends MultiActionController {
 //		}
 //
 	}
+	// 안드로이드 로그인
+	public void doLoginAndroid(HttpServletRequest req, HttpServletResponse res) {
+		// req 객체에 담긴 요청정보를 Map에 옮겨담기
+		Map<String, Object> pmap = new HashMap<String, Object>();
+//		HashMapBinder hmb = new HashMapBinder(req);
+//		hmb.bind(pmap);
+//		String mem_email = (String)pmap.get("mem_email");
+//		String mem_pw = (String)pmap.get("mem_pw");
+		String mem_email = (String)req.getHeader("mem_email");
+		String mem_pw = (String)req.getHeader("mem_pw");
+		logger.info("안드로이드::입력된 이메일 ===>"+mem_email);
+		logger.info("안드로이드::입력된 비밀번호 ===>"+mem_pw);
+		pmap.put("mem_email", mem_email);
+		pmap.put("mem_pw", mem_pw);
+//		int result = memberLogic.selectIsMember(pmap);
+		Map<String, Object> rmap = memberLogic.selectMember(pmap);
+		if(rmap != null) { // 성공인 경우
+			AjaxDataPrinter.out(res, "text/plain;charset=utf-8", (String)rmap.get("MEM_NICKNAME"));
+		} else { // 실패인 경우
+			AjaxDataPrinter.out(res, "text/plain;charset=utf-8", "login fail");	
+		}
+		
+	}
 	// 로그아웃
 	public void doLogout(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
