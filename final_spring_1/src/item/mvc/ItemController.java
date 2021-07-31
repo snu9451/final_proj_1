@@ -364,7 +364,7 @@ public class ItemController extends MultiActionController {
 		Map<String,Object> login = (Map<String,Object>)session.getAttribute("login");
 		String pr_MEM_EMAIL = (String)login.get("MEM_EMAIL");
 		//값들을 넣어줌
-		pmap.put("pr_MEM_EMAIL","apple@good.com"); //세션에서 원래는 아이디 가져와기
+		pmap.put("pr_MEM_EMAIL",pr_MEM_EMAIL); //세션에서 원래는 아이디 가져와기
 		pmap.put("pr_bm_no", req.getParameter("pr_bm_no"));
 		// like = 1이면 찜하기 된거고, -1이면 찜하기 취소 된 거임, 0이면 로그인 안한 사람.
 		int like = itemLogic.likeItem(pmap);
