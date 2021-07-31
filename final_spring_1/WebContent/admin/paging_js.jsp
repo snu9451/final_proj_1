@@ -65,16 +65,6 @@ function getPagination(table) {
               '<span class="sr-only">(current)</span></span>\
       </li>'
             )
-          $('.pagination #prev')
-            .before(
-              '<li data-page="' +
-              i +
-              '">\
-        <span>' +
-              i++ +
-              '<span class="sr-only">(current)</span></span>\
-      </li>'
-            )
             .show();
         } // end for i
       } // end if row count > max rows

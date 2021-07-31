@@ -35,14 +35,14 @@ public class AdminLogic {
 //		return adminPage;
 //	}
 	//--------------------------------------------------------
-	public List<Map<String,Object>> getAdminPage1() {
+	public List<Map<String,Object>> getAdminPage1(Map<String, Object> pmap) {
 		List<Map<String,Object>> adminPage1 = null;
-		adminPage1 = adminDao.getAdminPage1();
+		adminPage1 = adminDao.getAdminPage1(pmap);
 		return adminPage1;
 	}
-	public List<Map<String,Object>> getAdminPage2() {
+	public List<Map<String,Object>> getAdminPage2(Map<String, Object> pmap) {
 		List<Map<String,Object>> adminPage2 = null;
-		adminPage2 = adminDao.getAdminPage2();
+		adminPage2 = adminDao.getAdminPage2(pmap);
 		return adminPage2;
 	}
 	public List<Map<String,Object>> getAdminModal1(Map<String, Object> pmap) {
@@ -58,7 +58,11 @@ public class AdminLogic {
 		return adminModal2;
 	}
 	
-	
+	public List<Map<String,Object>> reportType() {
+		List<Map<String,Object>> reportType = null;
+		reportType = adminDao.reportType();
+		return reportType;
+	}
 	
 	
 	

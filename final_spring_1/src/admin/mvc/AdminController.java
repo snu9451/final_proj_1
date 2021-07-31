@@ -54,7 +54,10 @@ public class AdminController extends MultiActionController {
 //	public ModelAndView getAdminPage1(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("getAdminPage1 호출 성공");
 		List<Map<String,Object>> adminPage1 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
-		adminPage1=adminLogic.getAdminPage1();
+		Map<String, Object> pmap = new HashMap<String, Object>(); //request 객체에 담긴 정보(키-값쌍)를 map으로 옮겨담자.
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pmap);
+		adminPage1=adminLogic.getAdminPage1(pmap);
 //		ModelAndView mav = new ModelAndView("/admin/admin_page1.jsp");
 //		mav.addObject("adminPage1", adminPage1);
 //		logger.info("getAdminPage1:"+adminPage1);
@@ -67,7 +70,10 @@ public class AdminController extends MultiActionController {
 	public void getAdminPage2(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("getAdminPage2 호출 성공");
 		List<Map<String,Object>> adminPage2 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
-		adminPage2=adminLogic.getAdminPage2();
+		Map<String, Object> pmap = new HashMap<String, Object>(); //request 객체에 담긴 정보(키-값쌍)를 map으로 옮겨담자.
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pmap);
+		adminPage2=adminLogic.getAdminPage2(pmap);
 //		ModelAndView mav = new ModelAndView("/admin/admin_page2.jsp");
 //		mav.addObject("adminPage2", adminPage2);
 //		logger.info("getAdminPage2:"+adminPage2);
@@ -117,7 +123,7 @@ public class AdminController extends MultiActionController {
 		hmb.bind(pmap); // 탈퇴시킬 회원의 정보를 담음
 
 		int result = adminLogic.outMember(pmap); // update는 1건이(n건) 업데이트 되었습니다여서 int로
-		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
+//		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
 
 		// 테스트
 		/*
@@ -127,6 +133,16 @@ public class AdminController extends MultiActionController {
 		 */
 	}
 
+	public void reportType (HttpServletRequest req, HttpServletResponse res) {
+		logger.info("reportType 호출 성공");
+		List<Map<String,Object>> reportType = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
+		reportType=adminLogic.reportType();
+		Gson g = new Gson();
+		String jsondata = g.toJson(reportType);
+		AjaxDataPrinter.out(res, "application/json", jsondata);
+	}
+	
+	
 	// (회원, 게시글)신고횟수 초기화 시키기(처리여부 F를 T로 바꾸기)
 	public void initReportNumber(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		logger.info("initReportNumber 메소드 호출");
@@ -138,7 +154,7 @@ public class AdminController extends MultiActionController {
 		// 프론트에서 선택된 회원들의 이메일을 List 형식으로 전송
 		int result = adminLogic.initReportNumber(pmap); // update는 1건이(n건) 업데이트 되었습니다여서 int로
 
-		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
+//		res.sendRedirect("/WEB-INF/admin/getAdminPageMember.nds");
 		// 테스트
 //		Map<String, Object> pmap = new HashMap<String, Object>();
 //		pmap.put("mem_email", "water@good.com");

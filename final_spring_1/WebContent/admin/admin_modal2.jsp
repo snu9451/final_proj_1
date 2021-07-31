@@ -9,7 +9,13 @@
 	String bm_title = null;
 	String mem_email = null;
 	String report_msg = null;
-	String report_date  = null;
+	String report_date = null;
+	int pr_reportType = 0;
+	if(request.getParameter("reportType")!=null)
+		pr_reportType = Integer.parseInt(request.getParameter("reportType"));
+	int bm_no = Integer.parseInt(request.getParameter("bm_no"));
+	String[] reportTypeString = {"분류", "도배", "욕설,비방" ,"홍보,영리목적", "불법,도박", "음란,유해", "기타"};
+	String pr_reportTypeString = reportTypeString[pr_reportType];
 %>        
 <!doctype html>
 <html lang="en">
@@ -82,8 +88,9 @@
                                     <div class="panel-heading" style="text-align: left;">
                                         <h1 class="panel-title" style="display: inline-block;"><label></label>신고내역 &nbsp </h1>
                                         <form style="display: inline-block;">
-                                            <select name="language" >
+                                            <select name="language" id="reportType">
                                             <option>분류</option>
+                                            <option>도배</option>
                                             <option>욕설·비방</option>
                                             <option>홍보·영리목적</option>
                                             <option>불법·도박</option>
@@ -114,6 +121,9 @@
                        report_type = adminModal2.get(i).get("REPORT_TYPE").toString();
                        bm_title = adminModal2.get(i).get("BM_TITLE").toString();
                        mem_email = adminModal2.get(i).get("MEM_EMAIL").toString();
+                 	  if(!report_type.equals(pr_reportTypeString) && pr_reportType!=0) {
+                		  continue;
+                	  }
                        report_msg = adminModal2.get(i).get("REPORT_MSG").toString();
                        report_date = adminModal2.get(i).get("REPORT_DATE").toString();
                        report_date = report_date.substring(0,10);
@@ -177,7 +187,6 @@
             <footer>
                 <div class="container-fluid"></div>
             </footer>
-        </div>
         <!-- END WRAPPER -->
         <!-- Javascript -->
         <script src="assets/vendor/jquery/jquery.min.js"></script>
@@ -199,6 +208,13 @@
 </div>
 
 <script>
+	$(document).ready(function(){
+		document.querySelector("#reportType").selectedIndex = <%=pr_reportType%>;
+		console.log("<%=pr_reportTypeString%>");
+		$("#reportType").on('change',function(){
+		    location.href="http://localhost:9696/admin/admin_modal2.nds?bm_no=<%=bm_no%>&reportType="+document.querySelector("#reportType").selectedIndex;
+		});
+	});
 function open(rpt_msg) {
     document.querySelector(".modal").classList.remove("hidden");
     $("#reportModal").children(".modalBox").children("p").text(rpt_msg);
@@ -216,13 +232,11 @@ function open(rpt_msg) {
 
         <!-- 팝업창 닫기 함수 -->
         <script>
-            function btn_close(){
-            	console.log("이게 왜 안눌러짐?");
-            	console.log("눌러지는데 안꺼지네 ㅡㅡ");
-                window.close();
-            	console.log("닫고 출력해라");
-            }
-            getPagination('#products');
+	        function btn_close(){
+	            window.close();
+	            console.log("A");
+	        }
+	        getPagination('#products');
         </script>
 
     </body>

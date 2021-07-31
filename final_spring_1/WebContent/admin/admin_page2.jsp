@@ -194,28 +194,29 @@
 											</nav>
 										</div>
 										<div>
-										  <button class="my-buttons">선택항목 삭제</button>
-										  <button class="my-buttons">신고횟수 초기화</button>
+										  <button class="my-buttons" onclick="deleteItem()">선택항목 삭제</button>
+										  <button class="my-buttons" onclick="initReportNum()">신고횟수 초기화</button>
 										</div>
 									  </div>
 										<div class="select-input">
-										  <select class="form-control my-search-select" name="cond">
-											<option>검색조건</option>
-											<option>이메일</option>
-											<option>닉네임</option>
+										  <select id="search_filter" class="form-control my-search-select" name="cond">
+											<option>글번호</option>
+											<option>제목</option>
+											<option>작성자</option>
 										</select>
-										<form class="navbar-form navbar-left">
-											<div class="input-group">
-												<input
-													type="text"
-													value=""
-													class="form-control"
-													placeholder="검색어를 입력하세요.">
-												<span class="input-group-btn">
-													<button type="button" class="btn btn-primary">검색</button>
-												</span>
-											</div>
-										</form>
+                                      <form class="navbar-form navbar-left" action="javascript:search()">
+                                          <div class="input-group">
+                                              <input
+                                              	  id="search_words"
+                                                  type="text"
+                                                  value=""
+                                                  class="form-control"
+                                                  placeholder="검색어를 입력하세요.">
+                                              <span class="input-group-btn">
+                                                  <button type="button" id="btn_search" class="btn btn-primary" onclick="search()">검색</button>
+                                              </span>
+                                          </div>
+                                      </form>
 										</div>
 									<!-- </div> -->
 								</div>
@@ -310,7 +311,48 @@
 // 				}
 //         	}	
 
-	   
+	   function search(){
+    		let filter;
+    		let search_words=$("#search_words").val();
+    		if($("#search_filter").val()=="글번호")
+    			filter={bm_no: search_words};
+    		else if($("#search_filter").val()=="제목")
+    			filter={bm_title: search_words};
+    		else if($("#search_filter").val()=="작성자")
+    			filter={seller_nickname: search_words};
+    		$.ajax({
+	        	url: '/admin/admin_page2.nds',
+	        	data: filter,
+	        	dataType:'json',
+				success:function(data){
+					document.querySelector("#reportTable2").innerHTML="";
+					for(let i=0; i<data.length;i++) {
+						data[i].BM_DATE = data[i].BM_DATE.substring(0, 10);
+						data[i].BM_DATE = data[i].BM_DATE.replaceAll("-", ".");
+						let html = 
+							"<tr>"
+								+"<td>"
+								+"<label><input id=\"ckBox\" type=\"checkbox\" name=\"ckck\"></label>"
+								+"</td>"
+								+"<td>"+data[i].BM_NO+"</td>"
+								+"<td>"
+						         +"<a style=\"cursor: pointer;\" onClick=\"window.open('admin_modal2.nds?bm_no="+data[i].BM_NO+"', '', 'width=1350, height=690, scrollbars=no, resizable=no, toolbars=no, menubar=no')\">"+data[i].BM_TITLE+"</a>"
+						         +"</td>"
+								+"<td>"+data[i].SELLER_NICKNAME+"</td>"
+								+"<td>"+data[i].BM_DATE+"</td>"
+								+"<td>"+data[i].BM_HIT+"</td>"
+								+"<td>"+data[i].REPORT_COUNT+"</td>"
+							+"</tr>";
+						document.querySelector("#reportTable2").innerHTML+=html;
+					}
+					getPagination('#products');
+					
+				},
+				error:function(e){
+					console.log(e);
+				}
+	        });
+    	}
        
         function getReportBoard2(){
         	console.log("getReportBoard2");
@@ -384,6 +426,45 @@
 				}
 	        });
         }
+
+    	function deleteItem(){
+    		console.log("deleteItem");
+			for(let i of $("#reportTable2").children("tr"))    {
+			    if($(i).css("display")=="none")
+			        continue;
+			    if($(i).find("input").prop("checked")==true) {
+	        		$.ajax({
+	        			url: '/item/deleteItem.nds',
+	        			data : { br_sel_buy : "sel", pr_bm_no : $($(i).children("td")[1]).text() },
+	        			success:function(){
+	        				location.reload(true);
+	        			},
+	        			error:function(e){
+							console.log(e);
+						}
+	        		});
+			    }
+			}
+    	}
+
+    	function initReportNum(){
+			for(let i of $("#reportTable2").children("tr"))    {
+			    if($(i).css("display")=="none")
+			        continue;
+			    if($(i).find("input").prop("checked")==true) {
+	        		$.ajax({
+	        			url: '/admin/initReportNumber.nds',
+	        			data : { bm_no : $($(i).children("td")[1]).text() },
+	        			success:function(){
+	        				location.reload(true);
+	        			},
+	        			error:function(e){
+							console.log(e);
+						}
+	        		});
+			    }
+			}
+    	}
 		
 		
 		
