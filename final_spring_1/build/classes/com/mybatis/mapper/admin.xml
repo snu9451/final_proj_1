@@ -113,12 +113,19 @@ SELECT mem.mem_create_date,
            rmi.img_real_name
       FROM report_mem rm, report_mem_img rmi
       WHERE rm.mem_email_to = #{mem_email}
-        and rm.report_no = rmi.report_no
+        AND rm.report_no = rmi.report_no
         AND report_ishandle = 'F'
       ORDER BY rm.report_no DESC
  </select> 
  <select id="report_board" parameterType="java.util.Map" resultType="map">
-	  SELECT bm.bm_no, rb.report_no, rb.report_type, rb.mem_email, rb.report_msg, rb.report_date, rbi.img_real_name, bm.bm_title
+	  SELECT bm.bm_no, 
+	  		 rb.report_no, 
+	  		 rb.report_type, 
+	  		 rb.mem_email, 
+	  		 rb.report_msg, 
+	  		 rb.report_date, 
+	  		 rbi.img_real_name, 
+	  		 bm.bm_title
 	  FROM   board_master bm, report_board rb, report_board_img rbi
 	  WHERE  bm.bm_no = #{bm_no}
 	  AND    rb.report_ishandle = 'F'
