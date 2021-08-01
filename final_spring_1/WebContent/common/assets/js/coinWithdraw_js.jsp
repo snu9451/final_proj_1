@@ -167,7 +167,7 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
  		
  		//[출금하기] 눌렀을 때 이벤트
  		btn_coinWithdraw.click(function(){
- 			let cost = getCost.text();
+ 			let cost = $("#input_withdrawCost").val();
  			let account = input_account;
 			let data = "pr_trans_price="+cost+"&pr_account_num="+input_account;
 			swal("출금하시겠습니까??","", "info",{

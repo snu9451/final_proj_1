@@ -75,7 +75,7 @@ public class ItemController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		//카테고리 메뉴 이름이 여기에 들어가게 된다.
-		hmb.bindPost(pmap);
+		hmb.bind(pmap);
 //		pmap.put("pr_categori","디지털기기");
 		//관련 카테고리 아이템들을 가져온다.
 		List<Map<String,Object>> items = itemLogic.selectByCategory(pmap);
@@ -438,7 +438,7 @@ public class ItemController extends MultiActionController {
 		
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
+		hmb.bindPost(pmap);
 		//pmap.put("pr_comment_step",223);
 		//pmap.put("pr_comment_msg","호호로로로로로로로롤");
 		String result = itemLogic.updateComment(pmap);
