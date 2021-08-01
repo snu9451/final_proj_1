@@ -241,7 +241,7 @@
 									<span class="input-group-text">댓글 작성란</span>
 								</div>
 								<textarea class="form-control" aria-label="댓글 작성란"></textarea>
-								<div class="input-group-prepend">
+								<div class="input-group-prepend" style='background-color:#007bff'>
 									<button type="button" class="btn btn-primary" id="0-<%= BM_NO %>" onclick='insertComment(this)'>댓글등록</button>
 								</div>
 							</div>

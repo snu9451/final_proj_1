@@ -177,7 +177,7 @@ function pdCommentBtn(pdComment){
 	pdCommentform +="								<span class='input-group-text'>댓글 작성란</span>                                                             ";
 	pdCommentform +="							</div>                                                                                                            ";
 	pdCommentform +="							<textarea class='form-control' id='nds_comment' aria-label='댓글 작성란'></textarea>                              ";
-	pdCommentform +="							<div class='input-group-prepend'>                                                                                 ";
+	pdCommentform +="							<div class='input-group-prepend' style='background-color:#007bff'>                                                                                 ";
 	pdCommentform +="								<button type='button' class='btn btn-primary' id='0-<%= BM_NO %>' onclick='insertComment(this)'>댓글등록</button>";
 	pdCommentform +="							</div>                                                                                                            ";
 	pdCommentform +="						</div>                                                                                                                ";

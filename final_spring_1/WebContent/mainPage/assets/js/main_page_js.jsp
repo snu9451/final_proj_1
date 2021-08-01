@@ -208,7 +208,7 @@ pageEncoding="UTF-8"%>
     pdCommentform +=
       "							<textarea class='form-control' id='nds_comment' aria-label='댓글 작성란'></textarea>                              ";
     pdCommentform +=
-      "							<div class='input-group-prepend'>                                                                                 ";
+      "							<div class='input-group-prepend' style='background-color:#007bff'>                                                                                 ";
     pdCommentform +=
       "								<button type='button' class='btn btn-primary' onclick='insertComment(this)'>댓글등록</button>";
     pdCommentform +=
