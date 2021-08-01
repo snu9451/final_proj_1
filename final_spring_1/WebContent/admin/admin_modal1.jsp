@@ -10,6 +10,7 @@
 	String mem_email_from = null;
 	String report_msg = null;
 	String report_date  = null;
+	String report_img  = null;
 	int pr_reportType = 0;
 	if(request.getParameter("reportType")!=null)
 		pr_reportType = Integer.parseInt(request.getParameter("reportType"));
@@ -119,6 +120,7 @@
                     	  }
                        mem_email_from = adminModal1.get(i).get("MEM_EMAIL_FROM").toString();
                        report_msg = adminModal1.get(i).get("REPORT_MSG").toString();
+                       report_img = adminModal1.get(i).get("IMG_REAL_NAME").toString();
                        report_date = adminModal1.get(i).get("REPORT_DATE").toString();
                        report_date = report_date.substring(0,10);
                        report_date = report_date.replace("-",".");
@@ -129,7 +131,7 @@
                              <td><%=mem_email_to %></td>
                              <td><%=mem_email_from %></td>
                              <td>
-                                 <a href="javascript:open('<%=report_msg%>')"><%=report_msg%> </a>
+                                 <a href="javascript:open('<%=report_msg%>', '<%=report_img%>')"><%=report_msg%> </a>
                              </td>
                              <td><%=report_date%></td>
                           </tr>
@@ -191,12 +193,13 @@
                     <!-- 신고메시지 모달 -->
 <div class="modal hidden" id="reportModal">
     <div class="bg"></div>
-    <div class="modalBox">
-      <p style="min-height: 130px;">일이삼사구십 일팔구십일이삼삼사육칠팔구십오육칠팔구십일칠팔구십일이삼사오육칠팔구십 </p>
-      
+    <div class="modalBox" style="text-align: center;">
+
+<!--       <a> -->
+<!-- 	      <img style="width:350px; height:350px;" src="../admin/assets/img/rpt_img" alt="your image"/> -->
+<!--       </a> -->
       <div class="modal-footer">
           <button class="closeBtn">확인</button>
-  
       </div>
     </div>
   </div>
@@ -209,18 +212,20 @@
   		    location.href="http://localhost:9696/admin/admin_modal1.nds?mem_email=<%=mem_email_to%>&reportType="+document.querySelector("#reportType").selectedIndex;
   		});
   	});
-    function open(rpt_msg) {
+    function open(rpt_msg, rpt_img) {
       console.log("모달창 뜬다요~");
       console.log("<%=pr_reportType%>");
       document.querySelector(".modal").classList.remove("hidden");
-      $("#reportModal").children(".modalBox").children("p").text(rpt_msg);
+//       $("#reportModal").children(".modalBox").children("p").text(rpt_msg);
+      $("#reportModal").children(".modalBox").html('<p style="min-height: 130px;">'+rpt_msg+'</p><hr><img style="width:350px; height:350px;" src="../admin/assets/img/'+rpt_img+'" alt="your image"/><div class="modal-footer"><button class="closeBtn">확인</button></div>');
+
+      document.querySelector(".closeBtn").addEventListener("click", close);
     }
   
     const close = () => {
       document.querySelector(".modal").classList.add("hidden");
     }
   
-    document.querySelector(".closeBtn").addEventListener("click", close);
     document.querySelector(".bg").addEventListener("click", close);
   
     
