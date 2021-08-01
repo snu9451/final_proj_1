@@ -80,11 +80,11 @@
 	   SET 
 	   <if test='check_type=="check_first"'>
 	    check_first = #{check_val},
-	   	CHECK_FIRST_TIME = TO_CHAR(sysdate, 'YYYY/MM/DD HH24:MI:SS')
+	   	CHECK_FIRST_TIME = TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS')
 	   </if>
 	   <if test='check_type=="check_second"'>
 	    check_second = #{check_val},
-	   	CHECK_SECOND_TIME = TO_CHAR(sysdate, 'YYYY/MM/DD HH24:MI:SS')
+	   	CHECK_SECOND_TIME = TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS')
 	   </if>
 	 WHERE errandKey = #{errandKey}
    </update>
@@ -96,7 +96,7 @@
    <update id="updateErrandFinish" parameterType="map">
 	UPDATE errand
 	   SET errand_item_price_fin = errand_item_price_nds,
-	   	   errand_finish_date = TO_CHAR(sysdate, 'YYYY/MM/DD HH24:MI:SS'),
+	   	   errand_finish_date = TO_CHAR(sysdate, 'YYYY-MM-DD HH24:MI:SS'),
 	   	   errand_status = 'S'
 	 WHERE errandKey = #{errandKey}
    </update>
