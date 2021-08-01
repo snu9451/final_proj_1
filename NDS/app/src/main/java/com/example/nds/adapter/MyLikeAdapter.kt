@@ -19,7 +19,7 @@ class MyLikeAdapter: ListAdapter<Mylike, MyLikeAdapter.MyLikeViewHolder>(diffUti
             // 이미지 가져오기
             Glide
                 .with(binding.biFileimageView.context)
-                .load("http://172.30.1.36:9696/itemUpload/assets/img/itemupload/" + myLikeModel.biFile)
+                .load("http://192.168.0.24:9696/itemUpload/assets/img/itemupload/" + myLikeModel.biFile)
                 .into(binding.biFileimageView)
         }
     }

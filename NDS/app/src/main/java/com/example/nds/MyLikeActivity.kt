@@ -27,7 +27,7 @@ class MyLikeActivity : AppCompatActivity() {
         binding.myLikeRecyclerView.adapter = adapter
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://172.30.1.36:9696")
+            .baseUrl("http://192.168.0.24:9696")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -47,7 +47,6 @@ class MyLikeActivity : AppCompatActivity() {
                     Log.e(TAG, "성공!")
                     Log.e(TAG, "${response.body()}")
                     adapter.submitList(response.body()?.orEmpty())
-                    binding.likeTextView.text = response.body()?.size.toString()
                 }
 
                 override fun onFailure(call: Call<List<Mylike>>, t: Throwable) {

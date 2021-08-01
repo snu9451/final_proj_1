@@ -15,21 +15,19 @@
         android:layout_marginBottom="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:text="전체 : "
-            android:padding="5dp"
             android:layout_gravity="center"
             android:textColor="@color/white"
             android:background="@color/maincol"
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/errandReqTextView"
-            android:layout_width="wrap_content"
+            android:id="@+id/et_errandReq"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="5dp"
             android:textColor="@color/white"
             android:background="@color/maincol"
             android:textSize="20dp" />
@@ -123,19 +121,16 @@
         android:layout_marginBottom="10dp">
 
         <TextView
-            android:id="@+id/errandReqTextView2"
-            android:layout_width="wrap_content"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:text="전체 : "
-            android:padding="5dp"
             android:textColor="@color/white"
             android:textSize="20dp" />
 
         <TextView
             android:id="@+id/tv_errandReq2"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:textColor="@color/white"
             android:background="@android:color/transparent"
             android:textSize="20dp" />
@@ -204,8 +199,8 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
-        </TableRow>
 
+        </TableRow>
     </TableLayout>
 
 </LinearLayout>

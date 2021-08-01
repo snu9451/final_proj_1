@@ -2,17 +2,13 @@ package com.example.nds
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayoutStates
 import androidx.constraintlayout.widget.ConstraintLayoutStates.TAG
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.example.nds.adapter.WalletAdapter
 import com.example.nds.service.CoinTransService
 import com.example.nds.databinding.ActivityMyWalletBinding
 import com.example.nds.model.CoinTrans
-import com.example.nds.model.MyInfo
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -20,7 +16,6 @@ class MyWalletActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyWalletBinding
     private lateinit var adapter: WalletAdapter
     private lateinit var coinTransService: CoinTransService
-    private lateinit var coinRemain: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,23 +32,21 @@ class MyWalletActivity : AppCompatActivity() {
             .build()
 
         coinTransService = retrofit.create(CoinTransService::class.java)
-
+         
         // 내 지갑 보기 불러오기
         coinTransService.getcoinTrans("banana@good.com")
-            .enqueue(object: Callback<List<CoinTrans>> {
+            .enqueue(object: Callback<List<CoinTrans>>{
                 override fun onResponse(
                     call: Call<List<CoinTrans>>,
                     response: Response<List<CoinTrans>>
                 ) {
-                    if(response.isSuccessful.not()) {
+                    if(response.isSuccessful.not()){
                         Log.e(TAG, "NOT!!! SUCCESS")
                         return;
                     }
                     Log.e(TAG, "성공!")
                     Log.e(TAG, "${response.body()}")
                     adapter.submitList(response.body()?.orEmpty())
-                    coinRemain = response.body()?.get(0)?.transRemain.toString()
-                    binding.getCoinTextView.text = coinRemain
                 }
 
                 override fun onFailure(call: Call<List<CoinTrans>>, t: Throwable) {

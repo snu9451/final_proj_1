@@ -41,7 +41,7 @@ class MyErrandResFragment : Fragment(R.layout.fragment_my_errand_res) {
         val view = binding.root
 
         // 내가 수행한 심부름 목록 불러오기
-        errandResService.getErrandRes("banana@good.com", "nds")
+        errandResService.getErrandRes("banana@good.com")
             .enqueue(object: Callback<List<ErrandRes>>{
                 override fun onResponse(
                     call: Call<List<ErrandRes>>,
@@ -54,7 +54,6 @@ class MyErrandResFragment : Fragment(R.layout.fragment_my_errand_res) {
                     Log.e(TAG, "성공!")
                     Log.e(TAG, "${response.body()}")
                     adapter.submitList(response.body()?.orEmpty())
-                    binding.errandResTextView.text = response.body()?.size.toString()
                 }
 
                 override fun onFailure(call: Call<List<ErrandRes>>, t: Throwable) {

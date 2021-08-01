@@ -33,7 +33,7 @@ class MyTradeSellFragment : Fragment(R.layout.fragment_my_trade_sell) {
 
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.0.24:9696")
+            .baseUrl("http://192.168.1.166:9696")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -42,7 +42,7 @@ class MyTradeSellFragment : Fragment(R.layout.fragment_my_trade_sell) {
         val view = binding.root
 
         // 판매내역 불러오기
-        tradeSellService.getTradeSell("포도", "sel")
+        tradeSellService.getTradeSell("바나나")
             .enqueue(object: Callback<List<TradeSell>>{
                 override fun onResponse(
                     call: Call<List<TradeSell>>,
@@ -55,7 +55,6 @@ class MyTradeSellFragment : Fragment(R.layout.fragment_my_trade_sell) {
                     Log.e(TAG, "성공!")
                     Log.e(TAG, "${response.body()}")
                     adapter.submitList(response.body()?.orEmpty())
-                    binding.tradeSellTextView.text = response.body()?.size.toString()
                 }
 
                 override fun onFailure(call: Call<List<TradeSell>>, t: Throwable) {

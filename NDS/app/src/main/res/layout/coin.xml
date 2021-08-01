@@ -26,7 +26,6 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:text="입/출금"
-            android:textStyle="bold"
             android:textAlignment="viewEnd"
             android:textColor="@color/black"
             android:textSize="18sp" />
