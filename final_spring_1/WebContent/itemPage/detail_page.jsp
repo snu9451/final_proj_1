@@ -221,7 +221,7 @@ $(document).ready(function(){
 										</li>
 									<% } else {%>
 										<li>
-											<button class="pd__comment__btn" id="" data-toggle="modal" data-target="">
+											<button class="pd__comment__userReport" id="pd__comment__userReport" data-toggle="modal" data-target="">
 												회원신고 <i class="fas fa-exclamation warn"
 													style="color: red; font-size: 20px; font-weight: bold;"></i>
 											</button>

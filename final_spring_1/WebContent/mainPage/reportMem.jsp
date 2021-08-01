@@ -104,7 +104,7 @@
 
 	//각 댓글의 회원닉네임을 담을 변수
 	let comment_userNickname;
-		$(".pd__comment__btn").on('click', function(event){
+		$(".pd__comment__userReport").on('click', function(event){
 		//댓글의 회원닉네임
 		comment_userNickname = event.target.parentNode.parentNode.parentNode.previousSibling.previousSibling.childNodes[1].innerText;
 		//신고대상자 회원 닉네임
