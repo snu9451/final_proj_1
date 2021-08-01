@@ -61,10 +61,17 @@ SELECT mem.mem_create_date,
                  LEFT OUTER JOIN
                     (  SELECT mem_email_to, COUNT (*) mem_count
                          FROM report_mem
+                        WHERE report_ishandle = 'F'
                      GROUP BY mem_email_to) me
                  ON mem.mem_email = me.mem_email_to
            WHERE mem.mem_active = 'T'
         ORDER BY mem.mem_create_date DESC) mem
+  <if test="mem_email!=null">
+  WHERE mem.mem_email = #{mem_email}
+  </if>
+  <if test="mem_nickname!=null">
+  WHERE mem.mem_nickname = #{mem_nickname}
+  </if>
  </select>
  
  <!--전체게시글목록조회  -->
@@ -80,8 +87,18 @@ SELECT mem.mem_create_date,
            LEFT OUTER JOIN
               (  SELECT bm_no, COUNT (*) board_count
                    FROM report_board
+  	  			  WHERE report_ishandle = 'F'
                GROUP BY bm_no) me
            ON bm.bm_no = me.bm_no
+  <if test="bm_no!=null">
+  WHERE bm.bm_no = #{bm_no}
+  </if>
+  <if test="bm_title!=null">
+  WHERE bm.bm_title LIKE '%' || #{bm_title} || '%'
+  </if>
+  <if test="seller_nickname!=null">
+  WHERE bm.seller_nickname = #{seller_nickname}
+  </if>
      ORDER BY bm_no desc
  </select> 
  
@@ -95,6 +112,8 @@ SELECT mem.mem_create_date,
            rm.report_date
   	FROM report_mem rm
   	WHERE rm.mem_email_to = #{mem_email}
+  	  AND report_ishandle = 'F'
+  	ORDER BY rm.report_no DESC
  </select> 
  <!-- 신고된 게시글-->
   <select id="report_board" parameterType="java.util.Map" resultType="map">
@@ -109,8 +128,10 @@ SELECT mem.mem_create_date,
       FROM report_board rb 
     LEFT OUTER JOIN board_master bm 
     ON rb.bm_no = bm.bm_no
+    WHERE rb.report_ishandle = 'F'
     ORDER BY rb.bm_no)
     WHERE bm_no = #{bm_no}
+  	ORDER BY report_no DESC
  </select> 
  
  
@@ -137,6 +158,13 @@ SELECT mem.mem_create_date,
   </if>
  </update>
  
+ <!-- 신고종류선택 -->
+ <select id="reportType" resultType="map" >
+ 	SELECT report_type
+  		FROM report_mem_type
+	 WHERE report_type = #{report_type}
+	 
+ </select> 
 <!-- 회원 검색 --> 
  <select id="proc_member_all_select" parameterType="java.util.Map">
   select mem.mem_create_date, mem.mem_email, mem.mem_nickname, mem.mem_gender, mem.mem_age, mem.report_count

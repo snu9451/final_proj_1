@@ -14,7 +14,22 @@
 		if(indexOfDot>=0){
 			mem_email = mem_email.substring(0,indexOfDot);
 		}
-	} else{
+	}
+	/* =================안드로이드를 위한 코드 추가=====================[김은영] */
+	else if(request.getHeader("mem_email") != null) {
+		mem_email = (String)request.getHeader("mem_email");
+		System.out.println("이메일: "+mem_email);
+		login = new HashMap<>();
+		login.put("MEM_EMAIL", mem_email);
+		session.setAttribute("login", login);
+		int indexOfDot = mem_email.indexOf(".");
+		if(indexOfDot>=0){
+			mem_email = mem_email.substring(0,indexOfDot);
+		}
+		System.out.println("안드로이드에서 로그인한 이메일: " + mem_email);
+	}
+	/* =================안드로이드를 위한 코드 추가=====================[김은영] */
+	else{
 %>
 <script type="text/javascript">
 		alert("로그인 세션이 만료됐습니다. 다시 로그인 해주세요");

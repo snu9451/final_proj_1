@@ -3,8 +3,8 @@ html,
 body {
   width: 100%;
   height: 100%;
-  min-width: 550px;
-  min-height: 700px;
+  min-width: 200px;
+  min-height: 550px;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -25,7 +25,7 @@ input::-webkit-inner-spin-button {
 .notice {
   width:100%;
   min-height:136px;
-  min-width: 550px;
+  min-width: 200px;
   height:15%;
   background-color: rgba( 255, 255, 255, 0.95);
   border-radius: 0px 0px 40px 40px;
@@ -175,7 +175,7 @@ input::-webkit-inner-spin-button {
   align: left;
   display: inline-block;
   border-radius: 10px 10px 10px 10px;
-  max-width: 400px;
+  max-width: 75%;
 }
 /* 자신의 말풍선 */
 .me {
@@ -186,14 +186,14 @@ input::-webkit-inner-spin-button {
   align: right;
   display: inline-block;
   border-radius: 10px 10px 10px 10px;
-  max-width: 400px;
+  max-width: 75%;
 }
 /* 업로드한 이미지 */
 .img_inserted {
   min-width: 100px;
   min-height: 100px;
-  max-width: 350px;
-  max-height: 350px;
+  max-width: 100%;
+  max-height: 100%;
   vertical-align: bottom;
 }
 /* 읽음표시 */

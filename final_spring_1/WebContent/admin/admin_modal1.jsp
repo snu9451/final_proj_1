@@ -10,6 +10,11 @@
 	String mem_email_from = null;
 	String report_msg = null;
 	String report_date  = null;
+	int pr_reportType = 0;
+	if(request.getParameter("reportType")!=null)
+		pr_reportType = Integer.parseInt(request.getParameter("reportType"));
+	String[] reportTypeString = {"분류","전문판매업자","비매너 사용자","욕설","성희롱","기타"};
+	String pr_reportTypeString = reportTypeString[pr_reportType];
 %>    
 <!doctype html>
 <html lang="en">
@@ -78,7 +83,7 @@
                                     <div class="panel-heading" style="text-align: left;">
                                         <h1 class="panel-title" style="display: inline-block;"><label></label>신고내역 &nbsp </h1>
                                         <form style="display: inline-block;">
-                                            <select name="language" >
+                                            <select name="language" id=reportType>
                                             <option>분류</option>
                                             <option>전문판매업자</option>
                                             <option>비매너사용자</option>
@@ -109,6 +114,9 @@
                        report_no = adminModal1.get(i).get("REPORT_NO").toString();
                        report_type = adminModal1.get(i).get("REPORT_TYPE").toString();
                        mem_email_to = adminModal1.get(i).get("MEM_EMAIL_TO").toString();
+                    	  if(!report_type.equals(pr_reportTypeString) && pr_reportType!=0) {
+                    		  continue;
+                    	  }
                        mem_email_from = adminModal1.get(i).get("MEM_EMAIL_FROM").toString();
                        report_msg = adminModal1.get(i).get("REPORT_MSG").toString();
                        report_date = adminModal1.get(i).get("REPORT_DATE").toString();
@@ -194,8 +202,16 @@
   </div>
   
   <script>
+  	$(document).ready(function(){
+  		document.querySelector("#reportType").selectedIndex = <%=pr_reportType%>;
+  		console.log("<%=pr_reportTypeString%>");
+  		$("#reportType").on('change',function(){
+  		    location.href="http://localhost:9696/admin/admin_modal1.nds?mem_email=<%=mem_email_to%>&reportType="+document.querySelector("#reportType").selectedIndex;
+  		});
+  	});
     function open(rpt_msg) {
       console.log("모달창 뜬다요~");
+      console.log("<%=pr_reportType%>");
       document.querySelector(".modal").classList.remove("hidden");
       $("#reportModal").children(".modalBox").children("p").text(rpt_msg);
     }
@@ -207,6 +223,8 @@
     document.querySelector(".closeBtn").addEventListener("click", close);
     document.querySelector(".bg").addEventListener("click", close);
   
+    
+    
   </script>
 
 

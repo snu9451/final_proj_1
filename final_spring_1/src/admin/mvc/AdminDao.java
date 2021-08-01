@@ -23,14 +23,14 @@ public class AdminDao {
 //		return adminPage;
 //	}
 	//------------------------------
-	public List<Map<String, Object>> getAdminPage1() {
+	public List<Map<String, Object>> getAdminPage1(Map<String, Object> pmap) {
 		List<Map<String, Object>> adminPage1 = null;
-		adminPage1 = sqlSessionTemplate.selectList("member_select"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		adminPage1 = sqlSessionTemplate.selectList("member_select", pmap); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
 		return adminPage1;
 	}
-	public List<Map<String, Object>> getAdminPage2() {
+	public List<Map<String, Object>> getAdminPage2(Map<String, Object> pmap) {
 		List<Map<String, Object>> adminPage2 = null;
-		adminPage2 = sqlSessionTemplate.selectList("board_select"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		adminPage2 = sqlSessionTemplate.selectList("board_select", pmap); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
 		return adminPage2;
 	}
 	public List<Map<String, Object>> getAdminModal1(Map<String, Object> pmap) {
@@ -46,7 +46,11 @@ public class AdminDao {
 		return adminModal2;
 	}
 	
-	
+	public List<Map<String, Object>> reportType() {
+		List<Map<String, Object>> reportType = null;
+		reportType = sqlSessionTemplate.selectList("reportType"); //세션템플릿은 오라클에 접속해서 데이터를 가져오기 위한 녀석. 
+		return reportType;
+	}
 	
 	
 	
