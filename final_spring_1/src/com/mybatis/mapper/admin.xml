@@ -104,35 +104,45 @@ SELECT mem.mem_create_date,
  
  <!-- 신고된 회원 -->
   <select id="report_member" parameterType="java.util.Map" resultType="map">
-	SELECT rm.report_no,
+    SELECT rm.report_no,
            rm.report_type,
            rm.mem_email_to,
            rm.mem_email_from,
            rm.report_msg,
-           rm.report_date
-  	FROM report_mem rm
-  	WHERE rm.mem_email_to = #{mem_email}
-  	  AND report_ishandle = 'F'
-  	ORDER BY rm.report_no DESC
+           rm.report_date,
+           rmi.img_real_name
+      FROM report_mem rm, report_mem_img rmi
+      WHERE rm.mem_email_to = #{mem_email}
+        and rm.report_no = rmi.report_no
+        AND report_ishandle = 'F'
+      ORDER BY rm.report_no DESC
  </select> 
- <!-- 신고된 게시글-->
-  <select id="report_board" parameterType="java.util.Map" resultType="map">
-	SELECT report_no, report_type, bm_title, mem_email, report_msg, report_date
-	FROM (SELECT rb.report_no,
-     	   rb.report_type,
-       	   bm.bm_title,
-       	   rb.mem_email,
-       	   rb.report_msg,
-       	   rb.report_date,
-       	   bm.bm_no    
-      FROM report_board rb 
-    LEFT OUTER JOIN board_master bm 
-    ON rb.bm_no = bm.bm_no
-    WHERE rb.report_ishandle = 'F'
-    ORDER BY rb.bm_no)
-    WHERE bm_no = #{bm_no}
-  	ORDER BY report_no DESC
- </select> 
+ <select id="report_board" parameterType="java.util.Map" resultType="map">
+	  SELECT bm.bm_no, rb.report_no, rb.report_type, rb.mem_email, rb.report_msg, rb.report_date, rbi.img_real_name, bm.bm_title
+	  FROM   board_master bm, report_board rb, report_board_img rbi
+	  WHERE  bm.bm_no = #{bm_no}
+	  AND    rb.report_ishandle = 'F'
+	  AND    rb.report_no = rbi.report_no
+	  AND    bm.bm_no = rb.bm_no
+	  ORDER  BY rb.report_no DESC
+ </select>
+<!-- <select id="report_board" parameterType="java.util.Map" resultType="map"> -->
+<!-- 	SELECT report_no, report_type, bm_title, mem_email, report_msg, report_date -->
+<!-- 	FROM (SELECT rb.report_no, -->
+<!--      	   rb.report_type, -->
+<!--        	   bm.bm_title, -->
+<!--        	   rb.mem_email, -->
+<!--        	   rb.report_msg, -->
+<!--        	   rb.report_date, -->
+<!--        	   bm.bm_no     -->
+<!--       FROM report_board rb  -->
+<!--     LEFT OUTER JOIN board_master bm  -->
+<!--     ON rb.bm_no = bm.bm_no -->
+<!--     WHERE rb.report_ishandle = 'F' -->
+<!--     ORDER BY rb.bm_no) -->
+<!--     WHERE bm_no = #{bm_no} -->
+<!--   	ORDER BY report_no DESC -->
+<!--  </select> -->
  
  
  

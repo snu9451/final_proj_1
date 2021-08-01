@@ -9,6 +9,7 @@
 	String bm_title = null;
 	String mem_email = null;
 	String report_msg = null;
+	String report_img = null;
 	String report_date = null;
 	int pr_reportType = 0;
 	if(request.getParameter("reportType")!=null)
@@ -125,6 +126,7 @@
                 		  continue;
                 	  }
                        report_msg = adminModal2.get(i).get("REPORT_MSG").toString();
+                       report_img = adminModal2.get(i).get("IMG_REAL_NAME").toString();
                        report_date = adminModal2.get(i).get("REPORT_DATE").toString();
                        report_date = report_date.substring(0,10);
                        report_date = report_date.replace("-",".");
@@ -135,7 +137,7 @@
                                                     <td><%=bm_title%></td>
                                                     <td><%=mem_email%></td>
                                                     <td>
-                                                    <a href="javascript:open('<%=report_msg%>')"><%=report_msg%></a>
+                                                    <a href="javascript:open('<%=report_msg%>', '<%=report_img%>')"><%=report_msg%></a>
                                                     </td>
                                                     <td><%=report_date%></td>
                                                 </tr>
@@ -198,7 +200,6 @@
 <div class="modal hidden" id="reportModal">
   <div class="bg"></div>
   <div class="modalBox">
-    <p style="min-height: 130px;"> </p>
     
     <div class="modal-footer">
         <button class="closeBtn">확인</button>
@@ -215,16 +216,16 @@
 		    location.href="http://localhost:9696/admin/admin_modal2.nds?bm_no=<%=bm_no%>&reportType="+document.querySelector("#reportType").selectedIndex;
 		});
 	});
-function open(rpt_msg) {
+function open(rpt_msg, rpt_img) {
     document.querySelector(".modal").classList.remove("hidden");
-    $("#reportModal").children(".modalBox").children("p").text(rpt_msg);
+    $("#reportModal").children(".modalBox").html('<p style="min-height: 130px;">'+rpt_msg+'</p><hr><img style="width:350px; height:350px;" src="../admin/assets/img/'+rpt_img+'" alt="your image"/><div class="modal-footer"><button class="closeBtn">확인</button></div>');
+	  document.querySelector(".closeBtn").addEventListener("click", close);
   }
 
   function close() {
     document.querySelector(".modal").classList.add("hidden");
   }
 
-  document.querySelector(".closeBtn").addEventListener("click", close);
   document.querySelector(".bg").addEventListener("click", close);
 
 </script>
