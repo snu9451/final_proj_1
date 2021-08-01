@@ -66,7 +66,7 @@ $(document).ready(function(){
 					<div
 						class="col-4 col-lg-4 d-flex justify-content-center align-items-center p-0"
 						id="pd__img__box">
-						<div class="owl-carousel text-center" id="pd__img__carousel" style="border : 5px solid #ffc37b; border-radius:12px; height:350px;">
+						<div class="owl-carousel text-center d-flex justify-content-center align-items-center" id="pd__img__carousel" style="border : 5px solid #ffc37b; border-radius:12px; height:350px;">
 							<% if("C".equals(BM_STATUS)) { %>
 								<% for(int i=0;i<imgs.size();i++){ %>
 									<div class="items " style="position: relative; ">
@@ -221,7 +221,7 @@ $(document).ready(function(){
 										</li>
 									<% } else {%>
 										<li>
-											<button class="pd__comment__btn" id="" data-toggle="modal" data-target="">
+											<button class="pd__comment__userReport" id="pd__comment__userReport" data-toggle="modal" data-target="">
 												회원신고 <i class="fas fa-exclamation warn"
 													style="color: red; font-size: 20px; font-weight: bold;"></i>
 											</button>

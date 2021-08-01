@@ -12,7 +12,9 @@ response.setDateHeader("Expires",0);
 		String trans_date 		= null;
 		String trans_content 	= null;
 		String trans_price 		= null;
- 		String trans_remain 	= walletRec.get(0).get("TRANS_REMAIN").toString();
+		String trans_remain 	= "0";
+		if(walletRec.size() > 0)
+ 			trans_remain 	= walletRec.get(0).get("TRANS_REMAIN").toString();
 //		int trans_remain 	= Integer.parseInt(walletRec.get("TRANS_REMAIN").toString());
 		String trans_io			= null;
 %>
