@@ -119,7 +119,7 @@
 		//[신고하기]버튼 클릭시 실행되는 함수
 		$("#report_btn_user").on('click', function(){
 			if(!$("#report_file_user").val()){
-				return alert("파일을 첨부해 주세요!!");
+				return swal("신고관련 파일을 첨부해 주세요!!","","warning");
 			} else {
 			//<form>태그 초기화
 		 	let form = $("#report_content_user")[0];

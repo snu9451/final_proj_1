@@ -491,6 +491,23 @@
   <!--   blockContentTypeSniffingEnabled                                    -->
   <!--                       Should the header that blocks content type     -->
   <!--                       sniffing be added to every response? [true]    -->
+<filter>
+
+    <filter-name>CORS</filter-name>
+
+    <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+
+</filter>
+
+ 
+
+<filter-mapping>
+
+    <filter-name>CORS</filter-name>
+
+    <url-pattern>/*</url-pattern>  <!-- url을 지정할 경우 /tpw/xns.xnsBoilerplateApi.ajax -->
+
+</filter-mapping>
 <!--
     <filter>
         <filter-name>httpHeaderSecurity</filter-name>

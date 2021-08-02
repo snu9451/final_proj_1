@@ -35,18 +35,18 @@ public class HashMapBinder {
 		this.request = request;
 		
 		//realFolder = "C:\\Users\\chokiseol\\Desktop\\final\\final_proj_1\\final_spring_1\\WebContent\\itemUpload\\assets\\img\\itemupload";
-		realFolder = "D:\\workspace_java80\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\final_spring_1\\itemUpload\\assets\\img\\itemupload";
+		realFolder = "D:\\workspace_final\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\final_spring_1\\itemUpload\\assets\\img\\itemupload";
 		logger.info("itemupload용 hashmapbinder");
 	}
 	public HashMapBinder(HttpServletRequest request,int i) {
 		this.request = request;
-		realFolder = "D:\\workspace_java80\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\final_spring_1\\myPage\\assets\\img\\profile";
+		realFolder = "D:\\workspace_final\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\final_spring_1\\myPage\\assets\\img\\profile";
 
 		logger.info("profileimg용 hashmapbinder");
 	}
 	public HashMapBinder(HttpServletRequest request,String j) {
 		this.request = request;
-		realFolder = "D:\\workspace_java80\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\final_spring_1\\admin\\assets\\img";
+		realFolder = "D:\\workspace_final\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\final_spring_1\\admin\\assets\\img";
 		logger.info("admin용 hashmapbinder");
 	}
 	public void profileBind(Map<String,Object> target) {

@@ -118,7 +118,7 @@
  $("#report_btn").on("click", function (event) { /// event.preventDefault(); 
  	let fileCheck = $("#report_file_board").val();
  	if(!fileCheck){
-     	alert("내용 기입 및 파일을 첨부해 주세요");
+ 		swal("신고관련 파일을 첨부해 주세요!!","","warning");
     	return false;
  	} else {
 	 	let form = $('#report_content_board')[0]; 

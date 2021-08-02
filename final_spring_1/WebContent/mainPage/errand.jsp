@@ -99,16 +99,16 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
               <button type="button" id="searchAddr" onclick="javascript:goPopup();" class="col-3 btn btn-primary">주소검색</button>
             </div>
               </form>
-            <div class="form-row justify-content-center mb-1">
+<!--             <div class="form-row justify-content-center mb-1">
               <span class="mr-1"><i class="fas fa-exclamation warn"
                   style="color: red; font-size: 20px; font-weight: bold;"></i></span>
-              <small class="text-center">
+               <small class="text-center">
                 <span>심부름 요청은 등록 후 <span class="warn" style="color: red; font-weight: bold;">30분간 유지되며</span>
                   30분동안 심부름이 매칭되지 않았을 때,<br>
                   <span class="warn" style="color: red; font-weight: bold;">자동으로 등록이 취소됩니다.</span>
                 </span>
               </small>
-            </div>
+            </div> -->
             <hr>
             <div class="form-inline justify-content-end align-items-center mb-2">
               <h2 class="col-auto text-center mb-0" style="font-weight: bold;">총금액:</h2>

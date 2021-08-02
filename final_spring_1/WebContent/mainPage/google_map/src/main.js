@@ -14,7 +14,7 @@
 	  $("#errand_modal").find("#errandBtn").off("click").on("click", function(){
 		if(!isNaN($("#totalCost").text()*1)) {
 			if($("#totalCost").text()*1 > $("#curCoin").text()*1) {
-				swal("현재 소지 코인이 충분하지 않습니다.","소지한 코인을 다시 확인해주세요.","warning");
+				swal("현재 소지 코인("+$("#curCoin").text()+")이 충분하지 않습니다.("+$("#totalCost").text()+")","소지한 코인을 다시 확인해주세요.","warning");
 			}
 			else {
 				$("#errand_modal").find("#errandBtn").attr("data-dismiss","modal");
