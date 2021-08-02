@@ -26,7 +26,6 @@
           <div class="form-group ">
          	 <label>현재 남은 코인 : </label>
          	 <label id="currentCoin" style="font-size:30px; color : #ffc37b; font-weight:bold;">
-         	 	<%=coin_remain %>
          	 </label>
          	 <label> 원</label> 
              <input type="hidden" value="<%=mem_email %>" id="mem_email"/> 
@@ -82,5 +81,21 @@
       </div>
     </div>
   </div>
+  
+  <script>
+  $(document).ready(function(){
+	if("<%=mem_email%>"!="null") {
+		$.ajax({ 
+		 	url : "/member/selectMyCoin.nds",
+		 	async : false,
+			success : function(data) {
+				$("#currentCoin").text($("h4#remainCoin").text());
+			},
+			error : function(e){
+			}
+		});
+	}
+  });
+  </script>
   <!-- =============================================== ▲ 코인 출금 모달 ▲ ================================================= -->
   <%@ include file="../common/assets/js/coinWithdraw_js.jsp" %>

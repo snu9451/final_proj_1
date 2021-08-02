@@ -4,7 +4,6 @@
 
 //출금 모달창이 나타났을때 실행되는 함수
 $("#coinWithdraw").on('shown.bs.modal', function() {
-	console.log('shown modal');
 	
 	//유효성 검사를 위한 변수 선언
 	let inputCoin = false;
@@ -12,7 +11,7 @@ $("#coinWithdraw").on('shown.bs.modal', function() {
 	let inputSecurityCode = false;
 	
 	//현재 소지 코인 String -> Num 형변환
-	let currentCoin = Number($("#currentCoin").text());
+	let currentCoin = $("h4#remainCoin").text()*1;
 	
 	//[출금하기] 버튼 
 	let btn_coinWithdraw = $("#btn_coinWithdraw");

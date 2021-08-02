@@ -117,7 +117,7 @@ function jusoCallBack(roadAddrPart1, roadAddrPart2) {
               </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" disabled="true" id="errandBtn" class="btn btn-primary" data-dismiss="modal">심부름 등록하기</button>
+              <button type="submit" disabled="true" id="errandBtn" class="btn btn-primary">심부름 등록하기</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
             </div>
         </div>
