@@ -217,7 +217,7 @@
       console.log("<%=pr_reportType%>");
       document.querySelector(".modal").classList.remove("hidden");
 //       $("#reportModal").children(".modalBox").children("p").text(rpt_msg);
-      $("#reportModal").children(".modalBox").html('<p style="min-height: 130px;">'+rpt_msg+'</p><hr><img style="width:350px; height:350px;" src="../admin/assets/img/'+rpt_img+'" alt="your image"/><div class="modal-footer"><button class="closeBtn">확인</button></div>');
+      $("#reportModal").children(".modalBox").html('<p style="min-height: 130px;">'+rpt_msg+'</p><hr><a href="../admin/assets/img/'+rpt_img+'"><img style="width:350px; height:350px;" src="../admin/assets/img/'+rpt_img+'" alt="your image"/></a><div class="modal-footer"><button class="closeBtn">확인</button></div>');
 
       document.querySelector(".closeBtn").addEventListener("click", close);
     }

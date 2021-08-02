@@ -138,7 +138,7 @@ $(document).ready(function(){
 							</div>
 						</div>
 						<div class="mt-3" id="pd__middle">
-							<p><%= BM_CONTENT %></p>
+							<pre style="font-size:1.5rem; font-family: var(--main-font)"><%= BM_CONTENT %></pre>
 						</div>
 						<div class="position-relative">
 							<div class="d-flex justify-content-between mt-3" id="pd__bottom">

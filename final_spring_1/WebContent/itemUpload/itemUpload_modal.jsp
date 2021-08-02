@@ -23,7 +23,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" onClick="location.href='http://localhost:9696/mainPage/main_page.nds'" class="btn btn-primary" data-dismiss="modal">확인</button>
+            <button type="button" onClick="history.go(-1)" class="btn btn-primary" data-dismiss="modal">확인</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
           </div>
         </div>
