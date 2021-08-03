@@ -67,7 +67,7 @@
             lat : my_lat,
             lng : my_lng
           },
-          zoom : 16,
+          zoom : 17,
         });
         switchRider();
         clearInterval(timer);
