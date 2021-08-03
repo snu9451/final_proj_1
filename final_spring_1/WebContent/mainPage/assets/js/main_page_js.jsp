@@ -294,7 +294,7 @@ let commentWindow = 0;
 //대댓글 달기
 function pdCommentBtn(pdComment){
 	if(commentWindow == 1){
-		alert("답글 창이 이미 열려 있습니다.");
+// 		alert("답글 창이 이미 열려 있습니다.");
 		return;
 	}
 	commentWindow = 1;
@@ -332,6 +332,8 @@ function insertCommentTwo(pdComment){
     		console.log("Df");
     		pdComment.parentNode.parentNode.parentNode.parentNode.insertAdjacentHTML('afterend',data);
     		$('#nds_comment').val("");
+    		pdComment.parentNode.parentNode.remove();
+    		commentWindow = 0;
     	},
     	error:function(e){
     		alert("에러: "+e.responseText);
