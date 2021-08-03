@@ -149,7 +149,7 @@ public class MemberController extends MultiActionController {
 		String mem_nickname = req.getParameter("mem_nickname").toString();
 		pmap.put("mem_nickname", mem_nickname);
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bindPost(pmap);
+		hmb.bind(pmap);
 		Map<String, Object> rmap = memberLogic.selectNickName(pmap);
 		Map<String, Object> pmap1 = new HashMap<String, Object>();
 		List<Map<String, Object>> sellList = memberLogic.sellList(pmap);
@@ -854,11 +854,11 @@ public class MemberController extends MultiActionController {
 		String receiver = (String)pmap.get("mem_phone");
 		// 랜덤한 인증코드 생성
 		String randomCode = memberLogic.getRandomCode("ON", 6);
-		randomCode = "123456";	// 테스트용 인증코드 :: 시연할 때에는 이 부분 지우고 해야함.
+//		randomCode = "123456";	// 테스트용 인증코드 :: 시연할 때에는 이 부분 지우고 해야함.
 		// 메세지로 보낼 내용 설정
 		String content= "【내동생】 인증번호 [ "+randomCode+" ]를 정확히 입력해주세요.";
 		SMS sms = new SMS();
-//		sms.send(receiver, content);
+		sms.send(receiver, content);
 		// 인증코드는 사용자가 회원가입을 확정하는 시점에 Front에서 비교할 수 있도록 request 객체에 담아준다.
 //		req.setAttribute("phCode", randomCode);
 //		AjaxDataPrinter.out(res, "text/html", "인증번호가 발송되었습니다.");

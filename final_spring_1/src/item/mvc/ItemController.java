@@ -106,7 +106,7 @@ public class ItemController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		//검색어를 가져오게 된다. + 검색 타입을(제목, 내용, 작성자) 가져온다.
-		hmb.bindPost(pmap);		
+		hmb.bind(pmap);		
 		pmap.put("pr_search", pmap.get("pr_search"));
 		pmap.put("pr_search_order","제목");
 		//검색어 아이템들을 가져온다.
