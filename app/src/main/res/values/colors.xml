@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ndsblue_light">#8AAEE2</color>
+    <color name="ndsblue_dark">#627EA4</color>
+    <color name="ndsyellow_light">#FFC37B</color>
+    <color name="ndsyellow_dark">#F68657</color>
+    <color name="black">#FF000000</color>
+    <color name="gray95">#959595</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#C4C4C4</color>
+    <color name="red">#DC3545</color>
+    <color name="green">#28A745</color>
+    <color name="blue">#007BFF</color>
+    <color name="orange">#FFC107</color>
+    <color name="orangeb">#FF737B</color>
+    <color name="btncol">#FDD888</color>
+    <color name="tabcol">#CCCCCC</color>
+    <color name="maincol">#627EA4</color>
+    <color name="line">#FFEFD1</color>
+    <color name="transparent">#00FFFFFF</color>
+</resources>
