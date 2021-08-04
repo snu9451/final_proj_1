@@ -56,7 +56,7 @@ public class AdminController extends MultiActionController {
 		List<Map<String,Object>> adminPage1 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
 		Map<String, Object> pmap = new HashMap<String, Object>(); //request 객체에 담긴 정보(키-값쌍)를 map으로 옮겨담자.
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bind(pmap);
+		hmb.bindPost(pmap);
 		adminPage1=adminLogic.getAdminPage1(pmap);
 //		ModelAndView mav = new ModelAndView("/admin/admin_page1.jsp");
 //		mav.addObject("adminPage1", adminPage1);
@@ -72,7 +72,7 @@ public class AdminController extends MultiActionController {
 		List<Map<String,Object>> adminPage2 = null; //타겟은 직접 컨트롤러->로직->다오를 갔다 오는 녀석이고 보더리스트는 각 위치에 배정되어 있는 놈.
 		Map<String, Object> pmap = new HashMap<String, Object>(); //request 객체에 담긴 정보(키-값쌍)를 map으로 옮겨담자.
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bind(pmap);
+		hmb.bindPost(pmap);
 		adminPage2=adminLogic.getAdminPage2(pmap);
 //		ModelAndView mav = new ModelAndView("/admin/admin_page2.jsp");
 //		mav.addObject("adminPage2", adminPage2);

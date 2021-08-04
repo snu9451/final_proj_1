@@ -69,8 +69,8 @@ let roomKey = "null";
 // let refErrand = "";//errand테이블 접근할 주소
 let refArea = "";//rider테이블 접근할 주소
 let refAlert = "";//alert테이블 접근할 주소
-let my_lat = 1.0;//현재 자신의 위도
-let my_lng = 1.0;//현재 자신의 경도
+let my_lat = 37.478741605;//현재 자신의 위도
+let my_lng = 126.878687269;//현재 자신의 경도
 const lat_st = 38.45;
 const lat_en = 33.1;
 const lat_50m = 0.00045;
@@ -133,8 +133,10 @@ $(document).ready(function() {
   //접속자의 현재 위치를 my_lat, my_lng 전역변수에 저장
   function getLoc() {
     let watchID = navigator.geolocation.getCurrentPosition(function(position) {
-      my_lat = position.coords.latitude;
-      my_lng = position.coords.longitude;
+//       my_lat = position.coords.latitude;
+//       my_lng = position.coords.longitude;
+	  my_lat = 37.478741605;//현재 자신의 위도
+	  my_lng = 126.878687269;//현재 자신의 경도
       console.log(position.coords.latitude, position.coords.longitude);
       myArea = lng_rows*Math.floor((lat_st-my_lat)/lat_50m)+Math.floor((my_lng-lng_st)/lng_50m);
     });
